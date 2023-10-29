@@ -1,0 +1,85 @@
+
+body {
+    padding-top: 80px; /* adjust based on the height of your navbar */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f4f6;
+}
+
+.navbar {
+    background-color: #007BFF;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* to ensure the navbar is always on top */
+    border-bottom: 3px solid #0056b3; /* Adjust the border color and size as needed */
+}
+
+/* Ensure the links are on the far right */
+.navbar-nav {
+    margin-left: 70%;
+}
+
+.navbar-brand {
+    margin-left: 10%;  /* Adjust the percentage to move the logo right */
+}
+
+.login-container {
+    max-width: 1200px;
+    width: 90%;
+    display: flex;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.login-form {
+    flex: 1;
+    padding: 60px 40px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form h2 {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.login-form button {
+    width: 100%;  /* extending the button to full width */
+}
+
+.login-image {
+    flex: 2;
+    background: #f3f4f6 url('/images/login-back.png') no-repeat center center;
+    height: auto;
+}
+
+footer {
+    background-color: #222;
+    color: #fff;
+    font-size: 14px;
+    bottom: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 999;
+}
+
+footer p {
+    margin: 10px 0;
+}
+
+footer i {
+    color: red;
+}
+
+footer a {
+    color: #3c97bf;
+    text-decoration: none;
+}

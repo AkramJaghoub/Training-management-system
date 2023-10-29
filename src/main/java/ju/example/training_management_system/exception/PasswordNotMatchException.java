@@ -1,0 +1,8 @@
+package ju.example.training_management_system.exception;
+
+public class PasswordNotMatchException extends Exception{
+
+    public PasswordNotMatchException(){
+        super("Password does not match try again");
+    }
+}
