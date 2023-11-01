@@ -18,7 +18,6 @@ body {
     padding: 20px 0;
 }
 
-
 .navbar-nav li {
     margin-right: 50px;
 }
@@ -36,7 +35,7 @@ body {
     margin-left: 10%;
 }
 
-.login-container {
+.register-container {
     max-width: 1400px;
     width: 95%;
     display: flex;
@@ -46,27 +45,29 @@ body {
     height: 70vh;
 }
 
-.login-form {
+.register-form {
     flex: 1;
-    padding: 80px 60px;
+    padding: 5px 2px;
     background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    order: 2;
 }
 
-.login-form h2 {
-    margin-bottom: 40px;
+
+.register-form h2 {
+    margin-bottom: 1px;
     text-align: center;
-    font-size: 24px;
+    font-size: 22px;
 }
 
-.login-form button {
+.register-form button {
     border: none;
     width: 100%;
-    height: 45px;
-    margin-top: 40px;
+    height: 45px; /* Reduced height */
+    margin-top: 30px; /* Reduced margin */
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -76,17 +77,18 @@ body {
     color: #fff;
     text-transform: uppercase;
     font-size: 18px; /* Reduced font size */
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     transition: all 0.5s;
     position: relative;
     overflow: hidden;
     border-radius: 10px;
 }
 
-.login-image {
-    flex: 2;
-    background: #f3f4f6 url('/images/login.png') no-repeat center center;
+.register-image {
+    flex: 1;
+    background: #f3f4f6 url('images/login.png') no-repeat center center;
     background-size: cover;
+    order: 1; /* to move the image to the left */
 }
 
 .input-with-icon {
@@ -133,20 +135,9 @@ body {
     padding-right: 40px;
 }
 
-
-.forgot-password{
+.login{
     text-decoration: none;
-    position: absolute;
-    right: 0;
-    bottom: -30px;
-    font-size: 14px;
-    text-align: left;
-    color: black
-}
-
-.register{
-    text-decoration: none;
-    color: black
+    color: black;
 }
 
 footer {

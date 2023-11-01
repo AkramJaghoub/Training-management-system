@@ -1,6 +1,7 @@
 package ju.example.training_management_system.model;
 
 import jakarta.persistence.*;
+import ju.example.training_management_system.model.users.User;
 import lombok.Getter;
 import lombok.Setter;
 

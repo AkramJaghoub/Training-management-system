@@ -4,41 +4,39 @@ import ju.example.training_management_system.database.DatabaseProperties;
 import ju.example.training_management_system.exception.PasswordNotMatchException;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.Role;
-import ju.example.training_management_system.model.User;
+import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class AuthenticationService {
 
     private final UserRepository userRepository;
     private final DatabaseProperties databaseProperties;
 
-    private final static Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
-
-    public boolean isValidUser(User user) {
+    public boolean isValidUser(String email, String password) {
 
         try {
 
-            logger.info("trying to find user with the email {}", user.getEmail());
-            User storedUser = userRepository.findByEmail(user.getEmail());
+            log.info("trying to find user with the email {}", email);
+            User storedUser = userRepository.findByEmail(email);
 
             if (storedUser == null) {
-                logger.info("user with the email {} wasn't found", user.getEmail());
+                log.info("user with the email {} wasn't found", email);
                 throw new UserNotFoundException();
             }
 
-            logger.info("user with the email {} was found now validating their password", user.getEmail());
-            if (!storedUser.getPassword().equals(user.getPassword())) {
-                logger.info("user with the email {} their password is incorrect try again", user.getEmail());
+            log.info("user with the email {} was found now validating their password", email);
+            if (!storedUser.getPassword().equals(password)) {
+                log.info("user with the email {} their password is incorrect try again", email);
                 throw new PasswordNotMatchException();
             }
 
-            logger.info("validation for user with the email {} was successful entering user's interface...", user.getEmail());
+            log.info("validation for user with the email {} was successful entering user's interface...", email);
             return true;  // user's email was found and their password is correct
 
         } catch (UserNotFoundException | PasswordNotMatchException ex) {
@@ -47,10 +45,10 @@ public class AuthenticationService {
         }
     }
 
-    public boolean isAdmin(User user) {
+    public boolean isAdmin(String email, String password) {
         String dbUsername = databaseProperties.getDatabaseUsername();
         String dbPassword = databaseProperties.getDatabasePassword();
-        return !user.getEmail().equals(dbUsername) || !user.getPassword().equals(dbPassword);
+        return email.equals(dbUsername) && password.equals(dbPassword);
     }
 
     public Role getUserRole(String email){

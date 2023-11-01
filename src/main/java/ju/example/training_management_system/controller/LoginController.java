@@ -1,13 +1,10 @@
 package ju.example.training_management_system.controller;
 
 import ju.example.training_management_system.model.Role;
-import ju.example.training_management_system.model.User;
 import ju.example.training_management_system.service.AuthenticationService;
 import ju.example.training_management_system.service.ResetPasswordService;
 import ju.example.training_management_system.util.Utils;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +16,6 @@ public class LoginController {
 
     private final AuthenticationService authenticationService;
     private final ResetPasswordService resetPasswordService;
-    private static final Logger logger = (Logger) LoggerFactory.getLogger(LoginController.class);
-
 
     @GetMapping("/login")
     public String getLoginPage(){
@@ -28,21 +23,22 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    @ResponseBody
-    public ResponseEntity<?> login(@RequestBody User user, Model model) {
+    public ResponseEntity<String> login(@RequestParam("email") String email,
+                                        @RequestParam("password") String password,
+                                        Model model) {
 
-        if (!authenticationService.isAdmin(user)) {
+        if (authenticationService.isAdmin(email, password)) {
             Role role = Role.ADMIN;
             return ResponseEntity.ok(Utils.getRequiredDashboard(role)); // return early for admin
         }
 
-        Role role = authenticationService.getUserRole(user.getEmail());
+        Role role = authenticationService.getUserRole(email);
 
-        if (!authenticationService.isValidUser(user)) {
+        if (!authenticationService.isValidUser(email, password)) {
             return ResponseEntity.badRequest().body("Invalid credentials");
         }
 
-        model.addAttribute("email", user.getEmail());
+        model.addAttribute("email", email);
         // TODO: Implement Spring security, JWT, two-factor authentication
         return ResponseEntity.ok(Utils.getRequiredDashboard(role));
     }
@@ -65,7 +61,6 @@ public class LoginController {
     @GetMapping("/reset-password")
     public String getResetPasswordPage(@RequestParam("token") String token,
                                        Model model) {
-        System.out.println("gggggggggggggggggggg");
         if (!resetPasswordService.isTokenExpired(token)) {
             model.addAttribute("errorMessage", "Password reset link has expired.");
             return "error-page";

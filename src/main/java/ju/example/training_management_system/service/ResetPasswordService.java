@@ -1,11 +1,10 @@
 package ju.example.training_management_system.service;
 
 import ju.example.training_management_system.model.PasswordResetToken;
-import ju.example.training_management_system.model.User;
+import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.TokenRepository;
 import ju.example.training_management_system.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
