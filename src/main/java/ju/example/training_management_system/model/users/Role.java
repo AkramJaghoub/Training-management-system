@@ -1,8 +1,6 @@
-package ju.example.training_management_system.model;
+package ju.example.training_management_system.model.users;
 
 import ju.example.training_management_system.exception.NoRoleFoundException;
-
-import java.util.Locale;
 
 public enum Role {
     ADMIN,

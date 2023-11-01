@@ -1,6 +1,6 @@
 package ju.example.training_management_system.util;
 
-import ju.example.training_management_system.model.Role;
+import ju.example.training_management_system.model.users.Role;
 
 public final class Utils {
 

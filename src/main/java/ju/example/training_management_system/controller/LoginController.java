@@ -1,6 +1,6 @@
 package ju.example.training_management_system.controller;
 
-import ju.example.training_management_system.model.Role;
+import ju.example.training_management_system.model.users.Role;
 import ju.example.training_management_system.service.AuthenticationService;
 import ju.example.training_management_system.service.ResetPasswordService;
 import ju.example.training_management_system.util.Utils;
@@ -26,6 +26,7 @@ public class LoginController {
     public ResponseEntity<String> login(@RequestParam("email") String email,
                                         @RequestParam("password") String password,
                                         Model model) {
+
 
         if (authenticationService.isAdmin(email, password)) {
             Role role = Role.ADMIN;

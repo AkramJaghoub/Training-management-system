@@ -1,10 +1,11 @@
 package ju.example.training_management_system.service;
 
 import ju.example.training_management_system.exception.UserAlreadyExistException;
-import ju.example.training_management_system.model.Role;
+import ju.example.training_management_system.model.users.Role;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.model.users.UserFactory;
 import ju.example.training_management_system.repository.UserRepository;
+import ju.example.training_management_system.util.PasswordHashingUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,9 @@ public class RegisterService {
         String roleStr = (String) userData.get("role");
         Role role = Role.toRole(roleStr);
         User user = UserFactory.createUser(role, userData);
+        assert user != null;
+        String hashedPassword = PasswordHashingUtil.hashPassword(user.getPassword());
+        user.setPassword(hashedPassword);
         try {
             if (userRepository.existsByEmail(user.getEmail())) {
                 throw new UserAlreadyExistException();

@@ -3,9 +3,10 @@ package ju.example.training_management_system.service;
 import ju.example.training_management_system.database.DatabaseProperties;
 import ju.example.training_management_system.exception.PasswordNotMatchException;
 import ju.example.training_management_system.exception.UserNotFoundException;
-import ju.example.training_management_system.model.Role;
+import ju.example.training_management_system.model.users.Role;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.UserRepository;
+import ju.example.training_management_system.util.PasswordHashingUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,9 @@ public class AuthenticationService {
             }
 
             log.info("user with the email {} was found now validating their password", email);
-            if (!storedUser.getPassword().equals(password)) {
+
+            String hashedPassword = PasswordHashingUtil.hashPassword(password);
+            if (!storedUser.getPassword().equals(hashedPassword)) {
                 log.info("user with the email {} their password is incorrect try again", email);
                 throw new PasswordNotMatchException();
             }

@@ -1,7 +1,6 @@
 package ju.example.training_management_system.model.users;
 
 import jakarta.persistence.*;
-import ju.example.training_management_system.model.Role;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
