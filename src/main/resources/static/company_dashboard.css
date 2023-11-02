@@ -9,7 +9,7 @@
     width: 100%;
     min-height: 100vh;
     background: #eceaff;
-    color: #525252
+    color: #525252;
 }
 
 .nav{
@@ -27,21 +27,26 @@
 }
 
 .user-pic{
-    width: 40px;
+    width: 35px;
     border-radius: 50%;
     cursor: pointer;
-    margin-left: 30px;
+    position: relative;
+    bottom: 5.5%;
+    right: 1.5%;
+    border: 2px solid #fff;
+    padding: 2px;
 }
 
 nav ul{
     width: 100%;
-    text-align: right;
+    position: relative;
+    left: 60%;
 }
 
 nav ul li{
     display: inline-block;
     list-style: none;
-    margin: 10px 20px;
+    margin: 10px 30px;
 }
 
 nav ul li a{
@@ -49,12 +54,27 @@ nav ul li a{
     text-decoration: none;
 }
 
+nav ul li .profile{
+    position: relative;
+}
+
+nav ul li.profile a {
+    position: relative;
+    top: 25px;
+}
+
+nav ul li.profile a:after{
+    content: "\25BC";
+    display: inline-block;
+    margin-left: 5px;
+}
+
 .sub-menu-wrap{
     position: absolute;
-    top: 10%;
+    top: 90%;
     right: 10%;
     width: 320px;
-    max-height: 0px;
+    max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s;
 }
@@ -82,6 +102,8 @@ nav ul li a{
     width: 60px;
     border-radius: 50%;
     margin-right: 15px;
+    border: 2px solid #000;
+    padding: 2px;
 }
 
 .sub-menu hr{
@@ -140,4 +162,3 @@ footer a {
     color: #3c97bf;
     text-decoration: none;
 }
-
