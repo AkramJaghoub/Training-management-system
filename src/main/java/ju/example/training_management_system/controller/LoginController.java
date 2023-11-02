@@ -23,25 +23,25 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam("email") String email,
+    public String login(@RequestParam("email") String email,
                                         @RequestParam("password") String password,
                                         Model model) {
 
 
         if (authenticationService.isAdmin(email, password)) {
             Role role = Role.ADMIN;
-            return ResponseEntity.ok(Utils.getRequiredDashboard(role)); // return early for admin
+            return Utils.getRequiredDashboard(role); // return early for admin
         }
 
         Role role = authenticationService.getUserRole(email);
 
         if (!authenticationService.isValidUser(email, password)) {
-            return ResponseEntity.badRequest().body("Invalid credentials");
+            return "invalid credentials";
         }
 
         model.addAttribute("email", email);
         // TODO: Implement Spring security, JWT, two-factor authentication
-        return ResponseEntity.ok(Utils.getRequiredDashboard(role));
+        return Utils.getRequiredDashboard(role);
     }
 
     @GetMapping("/forget-password")

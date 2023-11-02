@@ -9,9 +9,9 @@ public final class Utils {
 
     public static String getRequiredDashboard(Role role) {
         return switch (role) {
-            case ADMIN -> "admin_dashboard";
-            case COMPANY -> "company_dashboard";
-            case STUDENT -> "student_dashboard";
+            case ADMIN -> "admin-dashboard";
+            case COMPANY -> "company-dashboard";
+            case STUDENT -> "student-dashboard";
         };
     }
 }

@@ -23,9 +23,9 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody Map<String, Object> userData) {
-
+    public String register(@RequestBody Map<String, Object> userData){
         registerService.registerUser(userData);
-        return Utils.getRequiredDashboard((Role) userData.get("role"));
+        Role role = Role.toRole((String) userData.get("role"));
+        return Utils.getRequiredDashboard(role);
     }
 }

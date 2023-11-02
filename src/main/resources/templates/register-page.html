@@ -12,51 +12,38 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="/images/logo.png" alt="Logo" width="150">
-        </a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Knowledge box</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<div class="hero">
+    <nav class="nav">
+        <img src ="/images/logo.png" class="logo" alt="logo">
+        <ul>
+            <li><a href="#">Home</a> </li>
+            <li><a href="#">About Us</a> </li>
+            <li><a href="#">Knowledge Box</a> </li>
+        </ul>
+    </nav>
 
 <div class="register-container">
-    <div class="register-form">
-        <h2>Registration</h2>
+        <div class="register-form">
+            <h2>Registration</h2>
 
-        <div class="role-selection mb-3">
-            <input type="radio" name="role" value="STUDENT" id="studentRole" checked>
-            <label for="studentRole">Student</label>
+            <div class="role-selection mb-3">
+                <input type="radio" name="role" value="STUDENT" id="studentRole" checked>
+                <label for="studentRole">Student</label>
 
-            <input type="radio" name="role" value="COMPANY" id="companyRole">
-            <label for="companyRole">Company</label>
-        </div>
-
-        <!-- Replace this section with the form structure from the first HTML code -->
-        <!-- Start of replaced form structure -->
-        <form id="registrationForm" th:action="@{/register}" method="post">
-            <div id="roleSpecificFields">
+                <input type="radio" name="role" value="COMPANY" id="companyRole">
+                <label for="companyRole">Company</label>
             </div>
 
-            <button type="submit" class="btn btn-primary mb-3">Create Account</button>
-            <p>Already have an account? <a href="/login" class="login">Login</a></p>
-        </form>
-        <!-- End of replaced form structure -->
+            <form id="registrationForm" th:action="@{/register}" method="post">
+                <div id="roleSpecificFields">
+                </div>
+
+                <button type="submit" class="btn btn-primary mb-3">Create Account</button>
+                <p>Already have an account? <a href="/login" class="login">Login</a></p>
+            </form>
+        </div>
+        <div class="register-image"></div>
     </div>
-    <div class="register-image"></div>
 </div>
 
 
@@ -73,10 +60,8 @@
         const data = new FormData(form);
         const jsonData = {};
 
-        // Set the "role" field based on the selected radio button
         jsonData['role'] = document.querySelector('input[name="role"]:checked').value;
 
-        // Include other form fields in jsonData
         data.forEach(function(value, key) {
             jsonData[key] = value;
         });

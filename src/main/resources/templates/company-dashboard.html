@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/company_dashboard.css">
+    <title>Login Page</title>
+</head>
+
+<body>
+
+
+<div class="hero">
+    <nav class="nav">
+        <img src ="/images/logo.png" class="logo" alt="logo">
+        <ul>
+            <li><a href="#">Home</a> </li>
+            <li><a href="#">Community</a> </li>
+            <li><a href="#">About</a> </li>
+        </ul>
+        <img src ="/images/default_profile.png" alt="profile_picture" class="user-pic" onclick="toggleMenu()">
+
+        <div class="sub-menu-wrap" id="subMenu">
+            <div class="sub-menu">
+                <div class="user-info">
+                    <img src ="/images/default_profile.png" alt="profile_picture">
+                    <h3>Akram Jaghoub</h3>
+                </div>
+                <hr>
+                <a href="#" class="sub-menu-link">
+                    <img src="/images/profile.png" alt="manage_profile">
+                    <p>Manage Profile</p>
+                </a>
+
+                <a href="#" class="sub-menu-link">
+                    <img src="/images/help.png" alt="help">
+                    <p>Help</p>
+                </a>
+
+                <a href="#" class="sub-menu-link">
+                    <img src="/images/logout.png" alt="logout">
+                    <p>Logout</p>
+                </a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+
+<footer>
+    <p>
+        &copy; <span id="currentYear"></span> Training Management System. All rights reserved.
+    </p>
+</footer>
+
+<script>
+    let subMenu = document.getElementById("subMenu");
+
+    function toggleMenu(){
+        subMenu.classList.toggle("open-menu");
+    }
+</script>
+
+</body>
+
+</html>
