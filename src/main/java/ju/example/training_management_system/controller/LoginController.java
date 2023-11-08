@@ -1,14 +1,16 @@
 package ju.example.training_management_system.controller;
 
+import jakarta.servlet.http.HttpSession;
 import ju.example.training_management_system.model.users.Role;
 import ju.example.training_management_system.service.AuthenticationService;
 import ju.example.training_management_system.service.ResetPasswordService;
-import ju.example.training_management_system.util.Utils;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+
+// TODO: Implement Spring security, JWT, two-factor authentication
 
 @Controller
 @AllArgsConstructor
@@ -24,13 +26,12 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@RequestParam("email") String email,
-                                        @RequestParam("password") String password,
-                                        Model model) {
-
+                        @RequestParam("password") String password,
+                        HttpSession session) {
 
         if (authenticationService.isAdmin(email, password)) {
             Role role = Role.ADMIN;
-            return Utils.getRequiredDashboard(role); // return early for admin
+            return "redirect:/" + role.toString().toLowerCase() + "/dashboard"; // return early for admin
         }
 
         Role role = authenticationService.getUserRole(email);
@@ -39,9 +40,8 @@ public class LoginController {
             return "invalid credentials";
         }
 
-        model.addAttribute("email", email);
-        // TODO: Implement Spring security, JWT, two-factor authentication
-        return Utils.getRequiredDashboard(role);
+        session.setAttribute("email", email);
+        return "redirect:/" + role.toString().toLowerCase() + "/dashboard";
     }
 
     @GetMapping("/forget-password")

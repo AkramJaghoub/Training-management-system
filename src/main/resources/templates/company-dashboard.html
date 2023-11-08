@@ -7,32 +7,32 @@
     <link rel="stylesheet" href="/company_dashboard.css">
     <title>Login Page</title>
 </head>
-
 <body>
-
 
 <div class="hero">
     <nav class="nav">
         <img src ="/images/logo.png" class="logo" alt="logo">
         <ul>
             <li><a href="#">Home</a> </li>
-            <li><a href="#">Community</a> </li>
-            <li><a href="#">About</a> </li>
+            <li><a href="#">About Us</a> </li>
+            <li><a href="#">Post Job</a> </li>
             <li class="profile"><a href="#" id="profileLink" onclick="toggleMenu()">Me</a></li>
-        </ul>
+            </ul>
         <img src ="/images/default_profile.png" alt="profile_picture" class="user-pic" onclick="toggleMenu()">
 
         <div class="sub-menu-wrap" id="subMenu">
             <div class="sub-menu">
                 <div class="user-info">
                     <img src ="/images/default_profile.png" alt="profile_picture">
-                    <h3>Akram Jaghoub</h3>
+                    <h3 th:text="${companyName}"></h3>
                 </div>
                 <hr>
-                <a href="#" class="sub-menu-link">
+
+                <a href="/company/manage-profile" class="sub-menu-link">
                     <img src="/images/profile.png" alt="manage_profile">
                     <p>Manage Profile</p>
                 </a>
+
 
                 <a href="#" class="sub-menu-link">
                     <img src="/images/help.png" alt="help">
