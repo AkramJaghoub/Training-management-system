@@ -1,10 +1,10 @@
 package ju.example.training_management_system.controller;
 
 import jakarta.servlet.http.HttpSession;
-import ju.example.training_management_system.model.users.Role;
-import ju.example.training_management_system.service.AuthenticationService;
+import ju.example.training_management_system.dto.LoginDto;
+import ju.example.training_management_system.service.LoginService;
 import ju.example.training_management_system.service.ResetPasswordService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.*;
 // TODO: Implement Spring security, JWT, two-factor authentication
 
 @Controller
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class LoginController {
 
-    private final AuthenticationService authenticationService;
+    private final LoginService loginService;
+
     private final ResetPasswordService resetPasswordService;
 
     @GetMapping("/login")
@@ -25,23 +26,10 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam("email") String email,
-                        @RequestParam("password") String password,
+    public String login(@RequestBody LoginDto loginDto,
                         HttpSession session) {
 
-        if (authenticationService.isAdmin(email, password)) {
-            Role role = Role.ADMIN;
-            return "redirect:/" + role.toString().toLowerCase() + "/dashboard"; // return early for admin
-        }
-
-        Role role = authenticationService.getUserRole(email);
-
-        if (!authenticationService.isValidUser(email, password)) {
-            return "invalid credentials";
-        }
-
-        session.setAttribute("email", email);
-        return "redirect:/" + role.toString().toLowerCase() + "/dashboard";
+        return loginService.loginUser(loginDto, session);
     }
 
     @GetMapping("/forget-password")

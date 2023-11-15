@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Post a Job</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="/post.css">
+</head>
+<body>
+
+<div class="hero">
+  <nav class="nav">
+    <img src ="/images/logo.png" class="logo" alt="logo">
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About Us</a></li>
+      <li><a href="/company/job/post">Post Job</a> </li>
+      <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="32" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 10 16">
+        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+      </svg>
+      </li>
+    </ul>
+<!--    <img src ="/images/default_profile.png" alt="profile_picture" class="user-pic" onclick="toggleMenu()">-->
+
+    <div class="sub-menu-wrap" id="subMenu">
+      <div class="sub-menu">
+        <div class="user-info">
+          <img src ="/images/default_profile.png" alt="profile_picture">
+          <h3 th:text="${companyName}"></h3>
+        </div>
+        <hr>
+
+        <a href="/company/manage-profile" class="sub-menu-link">
+          <img src="/images/profile.png" alt="manage_profile">
+          <p>Manage Profile</p>
+        </a>
+
+
+        <a href="#" class="sub-menu-link">
+          <img src="/images/help.png" alt="help">
+          <p>Help</p>
+        </a>
+
+        <a href="#" class="sub-menu-link">
+          <img src="/images/logout.png" alt="logout">
+          <p>Logout</p>
+        </a>
+      </div>
+    </div>
+
+  </nav>
+
+  <div class="centered-form">
+    <h4 class="modal-title text-center">Post a Job</h4>
+    <hr>
+    <form id="postAdForm" method="post" th:action="@{/company/job/post/{email}(email=${email})}">
+      <div class="form-group">
+        <label for="jobTitle">Job Title:</label>
+        <input type="text" class="form-control" id="jobTitle" name="jobTitle" required>
+      </div>
+      <div class="form-group">
+        <label for="internsRequired">Number of Interns Required:</label>
+        <input type="number" class="form-control" id="internsRequired" name="internsRequired" required>
+      </div>
+      <div class="form-group">
+        <label for="jobDuration">Job Duration:</label>
+        <input type="number" class="form-control" id="jobDuration" name="jobDuration" required>
+      </div>
+      <div class="form-group">
+        <label>Job Type:</label>
+        <div class="d-flex">
+          <div class="custom-control custom-radio mr-4">
+            <input type="radio" id="fullTime" name="jobType" class="custom-control-input" value="FULL_TIME" required>
+            <label class="custom-control-label" for="fullTime">Full-time</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input type="radio" id="partTime" name="jobType" class="custom-control-input" value="PART_TIME" required>
+            <label class="custom-control-label" for="partTime">Part-time</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="workMode">Work Mode:</label>
+        <select class="form-control" id="workMode" name="workMode" required>
+          <option value="REMOTE">Remote</option>
+          <option value="ON_SITE">On-site</option>
+          <option value="HYBRID">Hybrid</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="description">Job Description:</label>
+        <textarea class="form-control" id="description" name="description" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Post</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <p>
+    &copy; <span id="currentYear"></span> Training Management System. All rights reserved.
+  </p>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const descriptionTextarea = document.getElementById('description');
+    const maxHeight = 170;
+
+    function resizeTextarea() {
+      if (descriptionTextarea.scrollHeight < maxHeight) {
+        descriptionTextarea.style.height = 'auto';
+        descriptionTextarea.style.height = descriptionTextarea.scrollHeight + 'px';
+      } else {
+        descriptionTextarea.style.overflowY = 'scroll';
+        descriptionTextarea.style.height = maxHeight + 'px';
+      }
+    }
+
+    descriptionTextarea.addEventListener('input', resizeTextarea, false);
+  });
+
+  let subMenu = document.getElementById("subMenu");
+
+  function toggleMenu(){
+    subMenu.classList.toggle("open-menu");
+  }
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById('postAdForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const formData = new FormData(this);
+      const userData = Object.fromEntries(formData);
+      const userDataJson = JSON.stringify(userData);
+
+      fetch(this.action, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: userDataJson,
+      })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                if(response.redirected) {
+                  window.location.href = response.url;
+                } else {
+                  return response.json();
+                }
+              })
+              .then(data => {
+              })
+              .catch(error => {
+                console.error('Error:', error);
+              });
+    });
+  });
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

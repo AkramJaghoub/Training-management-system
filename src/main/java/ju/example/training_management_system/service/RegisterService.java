@@ -1,22 +1,24 @@
 package ju.example.training_management_system.service;
 
+import jakarta.transaction.Transactional;
 import ju.example.training_management_system.exception.UserAlreadyExistException;
 import ju.example.training_management_system.model.users.Role;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.model.users.UserFactory;
 import ju.example.training_management_system.repository.UserRepository;
 import ju.example.training_management_system.util.PasswordHashingUtil;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class RegisterService {
 
     UserRepository userRepository;
 
+    @Transactional
     public String registerUser(Map<String, Object> userData) {
         String roleStr = (String) userData.get("role");
         Role role = Role.toRole(roleStr);

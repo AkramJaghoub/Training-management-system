@@ -18,7 +18,7 @@
   <nav class="nav">
     <img src ="/images/logo.png" class="logo" alt="logo">
     <ul>
-      <li><a href="#">Home</a> </li>
+      <li><a href="/tms/home">Home</a> </li>
       <li><a href="#">About Us</a> </li>
       <li><a href="#">Knowledge Box</a> </li>
     </ul>
@@ -63,6 +63,37 @@
     }
     return true;
   }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const formData = new FormData(this);
+      const userData = Object.fromEntries(formData);
+      const userDataJson = JSON.stringify(userData);
+
+      fetch(this.action, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: userDataJson,
+      })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                if(response.redirected) {
+                  window.location.href = response.url;
+                } else {
+                  return response.json();
+                }
+              })
+              .then(data => {
+              })
+              .catch(error => {
+                console.error('Error:', error);
+              });
+    });
+  });
 
 </script>
 

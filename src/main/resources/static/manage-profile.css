@@ -924,23 +924,6 @@ a.text-white:focus {
     position: relative;
 }
 
-.footer {
-    padding: 2.5rem 0;
-    background: #f7fafc;
-}
-
-.footer .nav .nav-item .nav-link {
-    color: #8898aa !important;
-}
-
-.footer .nav .nav-item .nav-link:hover {
-    color: #525f7f !important;
-}
-
-.footer .copyright {
-    font-size: .875rem;
-}
-
 .form-control-label {
     font-size: .875rem;
     font-weight: 600;
@@ -1003,4 +986,17 @@ p {
     padding-bottom: .25rem;
     letter-spacing: .04em;
     text-transform: uppercase;
+}
+
+footer p {
+    margin: 10px 0;
+}
+
+footer i {
+    color: red;
+}
+
+footer a {
+    color: #3c97bf;
+    text-decoration: none;
 }

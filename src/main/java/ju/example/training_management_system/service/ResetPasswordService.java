@@ -4,7 +4,7 @@ import ju.example.training_management_system.model.PasswordResetToken;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.TokenRepository;
 import ju.example.training_management_system.repository.UserRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ResetPasswordService {
 
     private final JavaMailSender emailSender;

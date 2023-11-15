@@ -3,16 +3,15 @@ package ju.example.training_management_system.service;
 import ju.example.training_management_system.database.DatabaseProperties;
 import ju.example.training_management_system.exception.PasswordNotMatchException;
 import ju.example.training_management_system.exception.UserNotFoundException;
-import ju.example.training_management_system.model.users.Role;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.UserRepository;
 import ju.example.training_management_system.util.PasswordHashingUtil;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class AuthenticationService {
 
@@ -52,10 +51,5 @@ public class AuthenticationService {
         String dbUsername = databaseProperties.getDatabaseUsername();
         String dbPassword = databaseProperties.getDatabasePassword();
         return email.equals(dbUsername) && password.equals(dbPassword);
-    }
-
-    public Role getUserRole(String email){
-        User user = userRepository.findByEmail(email);
-        return user.getRole();
     }
 }
