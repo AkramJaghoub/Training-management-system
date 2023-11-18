@@ -168,7 +168,7 @@ button{
 }
 
 .nav__logo-img{
-  width: 1.25rem;
+  width: 4.5rem;
 }
 
 .nav__link,
@@ -360,7 +360,7 @@ button{
 }
 
 .button:hover{
-  background-color: var(--first-color-alt);
+  color: var(--text-color);
 }
 
 .button__icon{
@@ -663,7 +663,7 @@ button{
 }
 
 .footer__logo-img{
-  width: 20px;
+  width: 4rem;
 }
 
 .footer__description{
