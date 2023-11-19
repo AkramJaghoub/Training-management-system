@@ -3,137 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/register.css">
+
+    <!--=============== FAVICON ===============-->
+    <link rel="icon" href="/login-page/assets/img/tero.png" type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>Register</title>
+
+    <!--=============== BOXICONS ===============-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+
+    <!--=============== SWIPER CSS ===============-->
+    <link rel="stylesheet" href="/login-page/assets/css/swiper-bundle.min.css">
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="/main/css/styles.css">
+    <link rel="stylesheet" href="/register.css">
+
+    <title>Tero internships finder</title>
 </head>
 <body>
+<!--==================== HEADER ====================-->
+<header class="header" id="header">
+    <nav class="nav container">
+        <a href="/tms/home" class="nav__logo">
+            <img src="/login-page/assets/img/tero.png" alt="" class="nav__logo-img">
+        </a>
 
-<div class="hero">
-    <nav class="nav">
-        <img src ="/images/logo.png" class="logo" alt="logo">
-        <ul>
-            <li><a href="/tms/home">Home</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Knowledge Box</a></li>
-        </ul>
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a href='/tms/home' class="nav__link active-link">Home</a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="#about" class="nav__link">About</a>
+                </li>
+
+                <li class="nav__item">
+                    <a href="#trick" class="nav__link">Knowledge box</a>
+                </li>
+
+                <li>
+                    <a href="/login" class="button button--ghost">Login</a>
+                </li>
+
+            </ul>
+
+            <div class="nav__close" id="nav-close">
+                <i class='bx bx-x'></i>
+            </div>
+
+        </div>
+
+        <div class="nav__toggle" id="nav-toggle">
+            <i class='bx bx-grid-alt'></i>
+        </div>
+
     </nav>
+</header>
 
-    <div class="container" id="container">
-        <div class="form-container sign-up-container">
-            <form action="/register" method="POST">
-                <input type="hidden" name="role" value="STUDENT" />
-                <h1>Create Account</h1>
-                <div class="mb-3 input-with-icon">
-                    <i class="fas fa-user"></i>
-                    <input id="firstName" name="firstName" type="text" placeholder="First Name" />
-                </div>
+<main class="main">
 
-                <div class="mb-3 input-with-icon">
-                    <i class="fas fa-user"></i>
-                    <input type="text" name="lastName" placeholder="Last Name" />
-                </div>
+    <section class="home container" id="home">
+        <div class="home__content" >
+            <div class="home__group">
+                <div class="fcontainer" id="fcontainer">
+                    <div class="form-container sign-up-container">
+                        <form action="/register" method="POST">
+                            <input type="hidden" name="role" value="STUDENT" />
+                            <h1>Create Account</h1>
+                            <div class="mb-3 input-with-icon">
+                                <i class="fas fa-user"></i>
+                                <input id="firstName" name="firstName" type="text" placeholder="First Name" />
+                            </div>
 
-                <div class="mb-3 input-with-icon">
-                    <i class="fas fa-university"></i>
-                    <input type="text" name="university" placeholder="University" />
-                </div>
+                            <div class="mb-3 input-with-icon">
+                                <i class="fas fa-user"></i>
+                                <input type="text" name="lastName" placeholder="Last Name" />
+                            </div>
 
-                <div class="mb-3 input-with-icon">
-                    <i class="fas fa-book"></i>
-                    <input type="text" name="major" placeholder="Major" />
-                </div>
+                            <div class="mb-3 input-with-icon">
+                                <i class="fas fa-university"></i>
+                                <input type="text" name="university" placeholder="University" />
+                            </div>
 
-                <div class="mb-3 input-with-icon">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" name="email" placeholder="Email" />
-                </div>
+                            <div class="mb-3 input-with-icon">
+                                <i class="fas fa-book"></i>
+                                <input type="text" name="major" placeholder="Major" />
+                            </div>
 
-                <div class="mb-3 input-with-icon">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" name="password" placeholder="Password" />
-                </div>
+                            <div class="mb-3 input-with-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" name="email" placeholder="Email" />
+                            </div>
 
-                <button>Sign Up</button>
-                <p style="margin-bottom: 5rem;">Already have an account? <a href="/login" class="login">Login</a></p>
-            </form>
-        </div>
+                            <div class="mb-3 input-with-icon">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" name="password" placeholder="Password" />
+                            </div>
 
-        <div class="form-container sign-in-container">
-            <form action="/register" style="margin-top: 7rem;" method="POST">
-                <input type="hidden" name="role" value="COMPANY" />
-                <h1>Create Account</h1>
-                <div class="mb-3 input-with-icon">
-                    <i class="fas fa-building"></i>
-                    <label>
-                        <input type="text" name="name" placeholder="Company Name" />
-                    </label>
-                </div>
-
-                <div class="mb-3 input-with-icon">
-                    <i class="fas fa-envelope"></i>
-                    <label>
-                        <input type="email" name="email" placeholder="Email" />
-                    </label>
-                </div>
-
-                <div class="mb-3 input-with-icon">
-                    <i class="fas fa-industry"></i>
-                    <label>
-                        <input type="text" name="industry" placeholder="Industry" />
-                    </label>
-                </div>
-
-                <div class="mb-3 input-with-icon">
-                    <i class="fas fa-lock"></i>
-                    <label>
-                        <input type="password" name="password" placeholder="Password" />
-                    </label>
-                </div>
-
-                <button>Sign Up</button>
-                <p>Already have an account? <a href="/login" class="login">Login</a></p>
-            </form>
-        </div>
-
-        <div class="overlay-container">
-            <div class="overlay">
-                <container class="overlay-panel overlay-left tcontainer">
-                    <div class="box1">
-                        <h1>Hey Student!</h1>
-                        <p>Make the most of your professional life</p>
-                        <p style="font-weight: bold">OR</p>
-                        <button class="ghost" id="companySignUp">Sign Up As A Company</button>
+                            <button>Sign Up</button>
+                            <p style="margin-bottom: 5rem;">Already have an account? <a href="/login" class="login">Login</a></p>
+                        </form>
                     </div>
-                    <div class="box2">
-                        <img src="/images/student.jpeg" alt="Student">
+
+                    <div class="form-container sign-in-container">
+                        <form action="/register" style="margin-top: 7rem;" method="POST">
+                            <input type="hidden" name="role" value="COMPANY" />
+                            <h1>Create Account</h1>
+                            <div class="mb-3 input-with-icon">
+                                <i class="fas fa-building"></i>
+                                <label>
+                                    <input type="text" name="name" placeholder="Company Name" />
+                                </label>
+                            </div>
+
+                            <div class="mb-3 input-with-icon">
+                                <i class="fas fa-envelope"></i>
+                                <label>
+                                    <input type="email" name="email" placeholder="Email" />
+                                </label>
+                            </div>
+
+                            <div class="mb-3 input-with-icon">
+                                <i class="fas fa-industry"></i>
+                                <label>
+                                    <input type="text" name="industry" placeholder="Industry" />
+                                </label>
+                            </div>
+
+                            <div class="mb-3 input-with-icon">
+                                <i class="fas fa-lock"></i>
+                                <label>
+                                    <input type="password" name="password" placeholder="Password" />
+                                </label>
+                            </div>
+
+                            <button>Sign Up</button>
+                            <p>Already have an account? <a href="/login" class="login">Login</a></p>
+                        </form>
                     </div>
-                </container>
-                <container class="overlay-panel overlay-right tcontainer">
-                    <div class="box1">
-                        <h1>Hey Company!</h1>
-                        <p>Find your talented skilled youth in one place</p>
-                        <p style="font-weight: bold">OR</p>
-                        <button class="ghost" id="studentSignUp">Sign Up As A Student</button>
+
+                    <div class="overlay-container">
+                        <div class="overlay">
+                            <container class="overlay-panel overlay-left tcontainer">
+                                <div class="box1">
+                                    <h1>Hey Student!</h1>
+                                    <p>Make the most of your professional life</p>
+                                    <p style="font-weight: bold">OR</p>
+                                    <button class="ghost" id="companySignUp">Sign Up As A Company</button>
+                                </div>
+                                <div class="box2">
+                                    <img src="/images/student.jpeg" alt="Student">
+                                </div>
+                            </container>
+                            <container class="overlay-panel overlay-right tcontainer">
+                                <div class="box1">
+                                    <h1>Hey Company!</h1>
+                                    <p style="margin-top: 1rem">Find your talented skilled youth in one place</p>
+                                    <p style="font-weight: bold">OR</p>
+                                    <button class="button button--ghost" id="studentSignUp">Sign Up As A Student</button>
+                                </div>
+                                <div class="box2">
+                                    <img src="/images/company.jpeg" alt="Company">
+                                </div>
+                            </container>
+                        </div>
                     </div>
-                    <div class="box2">
-                        <img src="/images/company.jpeg" alt="Company">
-                    </div>
-                </container>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 
-    <footer>
-        <p>
-            &copy; <span id="currentYear"></span> Training Management System. All rights reserved.
-        </p>
-    </footer>
-    <script>
+</main>
+
+<!--==================== FOOTER ====================-->
+<footer class="footer section">
+    <div class="footer__container container grid">
+        <div class="footer__content">
+            <a href="/tms/home" class="footer__logo">
+                <img src="/login-page/assets/img/tero.png" alt="" class="footer__logo-img">
+            </a>
+
+            <p class="footer__description">Enjoy the Best internships <br> of your career.</p>
+
+            <div class="footer__social">
+                <a href="https://www.facebook.com/" target="_blank" class="footer__social-link">
+                    <i class='bx bxl-facebook'></i>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank" class="footer__social-link">
+                    <i class='bx bxl-instagram-alt' ></i>
+                </a>
+                <a href="https://twitter.com/" target="_blank" class="footer__social-link">
+                    <i class='bx bxl-twitter' ></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer__content">
+            <h3 class="footer__title">About</h3>
+
+            <ul class="footer__links">
+                <li>
+                    <a href="#" class="footer__link">About Us</a>
+                </li>
+                <li>
+                    <a href="#" class="footer__link">Features</a>
+                </li>
+                <li>
+                    <a href="#" class="footer__link">News</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="footer__content">
+            <h3 class="footer__title">Our Services</h3>
+
+            <ul class="footer__links">
+                <li>
+                    <a href="#" class="footer__link">Pricing</a>
+                </li>
+                <li>
+                    <a href="#" class="footer__link">Discounts</a>
+                </li>
+                <li>
+                    <a href="#" class="footer__link">Shipping mode</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="footer__content">
+            <h3 class="footer__title">Our Company</h3>
+
+            <ul class="footer__links">
+                <li>
+                    <a href="#" class="footer__link">Blog</a>
+                </li>
+                <li>
+                    <a href="#" class="footer__link">About us</a>
+                </li>
+                <li>
+                    <a href="#" class="footer__link">Our mission</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <span class="footer__copy">&#169; Tero. All rights reserved</span>
+</footer>
+
+<!--=============== SCROLL UP ===============-->
+<a href="#" class="scrollup" id="scroll-up">
+    <i class='bx bx-up-arrow-alt scrollup__icon'></i>
+</a>
+
+<!--=============== SCROLL REVEAL ===============-->
+<script src="/login-page/assets/js/scrollreveal.min.js"></script>
+
+<!--=============== SWIPER JS ===============-->
+<script src="/login-page/assets/js/swiper-bundle.min.js"></script>
+
+<!--=============== MAIN JS ===============-->
+<script src="/login-page/assets/js/main.js"></script>
+
+<script src="/login-page/assets/js/formSubmission.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
         const studentSignUpButton = document.getElementById('studentSignUp');
+        console.log(studentSignUpButton);
         const companySignUpButton = document.getElementById('companySignUp');
-        const container = document.getElementById('container');
+        console.log(companySignUpButton);
+        const container = document.getElementById('fcontainer');
+        console.log(container);
+
 
         studentSignUpButton.addEventListener('click', () => {
             container.classList.add("right-panel-active");
@@ -143,36 +288,36 @@
             container.classList.remove("right-panel-active");
         });
 
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        const registrationForms = document.querySelectorAll("form[action='/register']");
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const registrationForms = document.querySelectorAll("form[action='/register']");
+        registrationForms.forEach(form => {
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
 
-            registrationForms.forEach(form => {
-                form.addEventListener("submit", function(event) {
-                    event.preventDefault();
+                const formData = new FormData(this);
+                const userData = Object.fromEntries(formData);
+                const userDataJson = JSON.stringify(userData);
 
-                    const formData = new FormData(this);
-                    const userData = Object.fromEntries(formData);
-                    const userDataJson = JSON.stringify(userData);
-
-                    fetch(this.action, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: userDataJson,
+                fetch(this.action, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: userDataJson,
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        window.location.href = data.redirectUrl;
                     })
-                        .then(response => response.json())
-                        .then(data => {
-                            window.location.href = data.redirectUrl;
-                        })
-                        .catch((error) => {
-                            console.error('Error:', error);
-                        });
-                });
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
             });
         });
-    </script>
+    });
+
+
+</script>
+
 </body>
 </html>
