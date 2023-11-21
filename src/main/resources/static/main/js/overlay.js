@@ -10,8 +10,6 @@ companySignUpButton.addEventListener('click', () => {
     container.classList.remove("right-panel-active");
 });
 
-document.getElementById('currentYear').textContent = new Date().getFullYear();
-
 document.addEventListener("DOMContentLoaded", () => {
     const registrationForms = document.querySelectorAll("form[action='/register']");
 

@@ -21,6 +21,7 @@ public class ResetPasswordService {
     private final UserRepository userRepository;
 
     public void sendEmail(String email) {
+        System.out.println(email);
         User user = userRepository.findByEmail(email);
         System.out.println(user.getEmail());
         String resetLink = generateResetToken(user);

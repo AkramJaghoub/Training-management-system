@@ -16,14 +16,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class RegisterService {
 
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public String registerUser(Map<String, Object> userData) {
         String roleStr = (String) userData.get("role");
         Role role = Role.toRole(roleStr);
         User user = UserFactory.createUser(role, userData);
-        assert user != null;
         String hashedPassword = PasswordHashingUtil.hashPassword(user.getPassword());
         user.setPassword(hashedPassword);
         try {

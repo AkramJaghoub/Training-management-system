@@ -43,6 +43,7 @@ public class LoginController {
 
     @PostMapping("/forget-password")
     public String forgetPassword(@RequestParam("email") String email){
+        System.out.println(email);
         resetPasswordService.sendEmail(email);
         return "forget-password";
     }

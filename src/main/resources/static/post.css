@@ -7,10 +7,10 @@
     box-sizing: border-box;
 }
 
-:root{
-    --main-color: #0661c2;
-    --second-color: #007BFF
-}
+/:root{/
+     /*    --main-color: #0661c2;*/
+     /*    --second-color: #007BFF*/
+ /}/
 
 p {
     font-size: 14px;
@@ -202,4 +202,3 @@ footer a {
     color: #3c97bf;
     text-decoration: none;
 }
-

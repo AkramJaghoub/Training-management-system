@@ -116,7 +116,7 @@ button{
   font-size: var(--normal-font-size);
 }
 
-/*=============== REUSABLE CSS CLASSES ===============*/
+/*/=============== REUSABLE CSS CLASSES ===============/*/
 .section{
   padding: 4.5rem 0 2rem;
 }
@@ -127,7 +127,7 @@ button{
   text-align: center;
 }
 
-/*=============== LAYOUT ===============*/
+/*/=============== LAYOUT ===============/*/
 .container{
   max-width: 968px;
   margin-left: var(--mb-1-5);
@@ -139,10 +139,10 @@ button{
 }
 
 .main{
-  overflow: hidden; /*For animation*/
+  overflow: hidden; /For animation/
 }
 
-/*=============== HEADER ===============*/
+/*/=============== HEADER ===============/*/
 .header{
   width: 100%;
   background: var(--body-color);
@@ -152,7 +152,7 @@ button{
   z-index: var(--z-fixed);
 }
 
-/*=============== NAV ===============*/
+/*/=============== NAV ===============/*/
 .nav{
   height: var(--header-height);
   display: flex;
@@ -238,6 +238,7 @@ button{
 /* Change background header */
 .scroll-header{
   background: var(--container-color);
+  z-index: 200;
 }
 
 /* Active link */
@@ -256,7 +257,7 @@ button{
   border-radius: 50%;
 }
 
-/*=============== HOME ===============*/
+/*/=============== HOME ===============/*/
 .home__content{
   row-gap: 1rem;
 }
@@ -349,7 +350,7 @@ button{
   border-radius: .5rem;
 }
 
-/*=============== BUTTONS ===============*/
+/*/=============== BUTTONS ===============/*/
 .button{
   display: inline-block;
   background-color: var(--first-color);
@@ -359,6 +360,7 @@ button{
   font-weight: var(--font-medium);
   transition: .3s;
 }
+
 
 .button:hover{
   color: var(--text-color);
@@ -389,7 +391,7 @@ button{
   column-gap: .5rem;
 }
 
-/*=============== CATEGORY ===============*/
+/*/=============== CATEGORY ===============/*/
 .category__container{
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem 2rem;
@@ -409,11 +411,11 @@ button{
   margin-bottom: var(--mb-0-25);
 }
 
-.category__data:hover .category__img{
+.category_data:hover .category_img{
   transform: translateY(-.5rem);
 }
 
-/*=============== ABOUT ===============*/
+/*/=============== ABOUT ===============/*/
 .about__container{
   row-gap: 2rem;
 }
@@ -432,7 +434,7 @@ button{
   animation: floating 2s ease-in-out infinite;
 }
 
-/*=============== TRICK OR TREAT ===============*/
+/*/=============== TRICK OR TREAT ===============/*/
 .trick__container{
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
@@ -484,15 +486,15 @@ button{
   color: var(--title-color);
 }
 
-.trick__content:hover .trick__img{
+.trick_content:hover .trick_img{
   transform: translateY(-.5rem);
 }
 
-.trick__content:hover .trick__button{
+.trick_content:hover .trick_button{
   right: 0;
 }
 
-/*=============== DISCOUNT ===============*/
+/*/=============== DISCOUNT ===============/*/
 .discount__container{
   background: var(--container-color);
   border-radius: 1rem;
@@ -514,7 +516,7 @@ button{
   justify-self: center;
 }
 
-/*=============== NEW ARRIVALS ===============*/
+/*/=============== NEW ARRIVALS ===============/*/
 .new__container{
   padding-top: 1rem;
 }
@@ -588,15 +590,15 @@ button{
   font-size: 1.25rem;
 }
 
-.new__content:hover .new__img{
+.new_content:hover .new_img{
   transform: translateY(-.5rem);
 }
 
-.new__content:hover .new__button{
+.new_content:hover .new_button{
   right: 0;
 }
 
-/*=============== NEWSLETTER ===============*/
+/*/=============== NEWSLETTER ===============/*/
 .newsletter__description{
   text-align: center;
   margin-bottom: var(--mb-1-5);
@@ -621,7 +623,7 @@ button{
   color: var(--text-color);
 }
 
-/*=============== FOOTER ===============*/
+/*/=============== FOOTER ===============/*/
 .footer{
   position: relative;
   overflow: hidden;
@@ -716,7 +718,7 @@ button{
   margin-top: 4.5rem;
 }
 
-/*=============== SCROLL UP ===============*/
+/*/=============== SCROLL UP ===============/*/
 .scrollup{
   position: fixed;
   background: var(--container-color);
@@ -745,7 +747,7 @@ button{
   bottom: 3rem;
 }
 
-/*=============== SCROLL BAR ===============*/
+/*/=============== SCROLL BAR ===============/*/
 ::-webkit-scrollbar{
   width: 0.6rem;
   background: #413e3e;
@@ -757,7 +759,7 @@ button{
 }
 
 
-/*===============  BREAKPOINTS ===============*/
+/*/===============  BREAKPOINTS ===============/*/
 /* For small devices */
 @media screen and (max-width: 320px){
   .container{
@@ -1011,7 +1013,7 @@ button{
   }
 }
 
-/*=============== KEYFRAMES ===============*/
+/*/=============== KEYFRAMES ===============/*/
 @keyframes floating {
   0% { transform: translate(0,  0px); }
   50%  { transform: translate(0, 15px); }

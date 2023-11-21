@@ -1,5 +1,4 @@
 
-
     function handleForgotPasswordLink() {
     const email = document.getElementById("email").value;
     const forgotPasswordLink = document.getElementById("forgotPassword");
