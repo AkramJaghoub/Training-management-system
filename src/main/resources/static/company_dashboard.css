@@ -55,12 +55,6 @@ nav ul li.profile a:after{
     margin-left: 3rem;
 }
 
-.sub-menu-wrap::after {
-        transform: translateX(-50%);
-        border: 10px solid transparent; / Creates the triangle /
-        border-bottom-color: #2a4d69; / Same as menu background-color */
-}
-
 .sub-menu-wrap.open-menu{
     max-height: 400px;
 }
