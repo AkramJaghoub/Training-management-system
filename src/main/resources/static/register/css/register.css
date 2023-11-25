@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 :root{
-    --t-color: #f;
+    --t-color: #5A8349F9;
     --t-color-alt: rgba(90, 131, 73, 0.37);
+    --bs-link-hover-color: #012e6c;
 }
 p{
     margin-top: 1.5rem;
@@ -21,9 +22,10 @@ p{
 .hero{
     width: 100%;
     min-height: 100vh;
-    background: #eceaff;
+    background-color: transparent;
     color: #525252
 }
+
 
 form {
     background-color: #FFFFFF;
@@ -41,36 +43,6 @@ form {
     margin-bottom: .5rem;
 }
 
-.input-with-icon input {
-    padding-left: 50px;
-    border: none;
-    border-bottom: .1rem solid #aaaaaa;
-    width: 100%;
-    height: 45px; /* Reduced height */
-    background-color: transparent;
-    outline: none;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
-}
-
-.input-with-icon input:focus {
-    border-bottom-color: var(--main-color);
-    box-shadow: none;
-}
-
-.input-with-icon i {
-    position: absolute;
-    left: 10px;
-    top: 65%;
-    transform: translateY(-50%);
-    font-size: 15px;
-    color: #000;
-    transition: color 0.3s ease;
-}
-
-.input-with-icon input:focus + i {
-    color: var(--main-color);
-}
 
 input {
     background-color: #eee;
@@ -101,16 +73,15 @@ input {
 
 .fcontainer {
     border-radius: 10px;
-    box-shadow: 0px 14px 28px rgba(0,0,0,0.25),
-    0 10px 10px rgba(0,0,0,0.22);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    display: flex;
     position: relative;
     overflow: hidden;
-    width: 900px;
+    width: 70%;
     max-width: 100%;
-    height: 50rem;
-    margin-left: 30rem;
+    height: 45rem;
+    margin-left: 16.5rem;
     margin-top: 5rem;
-/right: 34%;/
 }
 
 .form-container {
@@ -130,7 +101,9 @@ input {
 .sign-in-container h1, .sign-up-container h1{
     color: var(--t-color);
 }
-
+.sign-in-container p, .sign-up-container p{
+    color: var(--t-color);
+}
 .container.right-panel-active .sign-in-container {
     transform: translateX(100%);
 }
@@ -164,7 +137,7 @@ input-with-icon {
     outline: none;
     font-size: 16px;
     transition: border-color 0.3s ease;
-    color: white;
+    color: #000;
 }
 
 .input-with-icon input:focus {
@@ -179,7 +152,7 @@ input-with-icon {
     top: 65%;
     transform: translateY(-50%);
     font-size: 15px;
-    color: var(--text-color);
+    color: var(--t-color);
     transition: color 0.3s ease;
     padding-bottom: 20px;
 }
@@ -274,4 +247,7 @@ input-with-icon {
 
 .container.right-panel-active .overlay-right {
     transform: translateX(20%);
+}
+.login:hover{
+    color: var(--bs-link-hover-color);
 }

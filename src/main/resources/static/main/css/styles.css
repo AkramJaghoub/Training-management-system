@@ -694,6 +694,7 @@ button{
 .footer__title{
   font-size: var(--h3-font-size);
   margin-bottom: var(--mb-1);
+  padding-left: 1.9rem;
 }
 
 .footer__links{

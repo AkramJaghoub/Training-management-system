@@ -1,8 +1,14 @@
+:root{
+    --t-color: #5A8349F9;
+    --t-color-alt: rgba(90, 131, 73, 0.37);
+    --bs-link-hover-color: #012e6c;
+}
 .hero{
     width: 100%;
     min-height: 100vh;
     background-color : transparent;
-    color: #525252
+    color: #525252;
+    margin-top: -4rem;
 }
 
 .login-container {
@@ -88,9 +94,11 @@
     outline: none;
     font-size: 16px;
     transition: border-color 0.3s ease;
-    color: white;
+    color: #000000;
 }
-
+.input-with-icon input:after {
+    color: #000000;
+}
 .input-with-icon input:focus {
     border-bottom-color: green;
     box-shadow: none;
@@ -98,7 +106,7 @@
 }
 
 .input-with-icon input::placeholder {
-    color: var(--text-color);
+    color: var(--t-color-alt);
 }
 
 .input-with-icon i {
@@ -107,7 +115,7 @@
     top: 65%;
     transform: translateY(-50%);
     font-size: 15px;
-    color: var(--text-color);
+    color: var(--t-color);
     transition: color 0.3s ease;
 }
 
