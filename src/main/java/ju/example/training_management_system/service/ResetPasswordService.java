@@ -1,14 +1,23 @@
 package ju.example.training_management_system.service;
 
+import jakarta.mail.internet.MimeMessage;
+import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.PasswordResetToken;
+import ju.example.training_management_system.model.users.Company;
+import ju.example.training_management_system.model.users.Student;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.TokenRepository;
 import ju.example.training_management_system.repository.UserRepository;
+import ju.example.training_management_system.util.PasswordHashingUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -19,20 +28,49 @@ public class ResetPasswordService {
     private final JavaMailSender emailSender;
     private final TokenRepository tokenRepository;
     private final UserRepository userRepository;
+    private final SpringTemplateEngine templateEngine;
 
     public void sendEmail(String email) {
-        System.out.println(email);
         User user = userRepository.findByEmail(email);
-        System.out.println(user.getEmail());
         String resetLink = generateResetToken(user);
-        System.out.println(resetLink);
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("akram.jaghoub51@gmail.com");
-        message.setTo(user.getEmail()); // Send the email to the user's email address
-        message.setSubject("Password Reset Link");
-        message.setText(resetLink);
-        emailSender.send(message);
+
+        try {
+            MimeMessage message = emailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
+
+            helper.setFrom("akram.jaghoub51@gmail.com");
+            helper.setTo(user.getEmail());
+            helper.setSubject("Password Reset Link");
+
+            Context context = new Context();
+
+            String name = null;
+            User existingUser = userRepository.findByEmail(email);
+
+            if (existingUser == null) {
+                throw new UserNotFoundException();
+            }
+
+            if ((existingUser instanceof Company company)) {
+                name = company.getName();
+            }
+
+            if ((existingUser instanceof Student student)) {
+                name = student.getFirstName() + " " + student.getLastName();
+            }
+
+            context.setVariable("name", name);
+            context.setVariable("resetLink", resetLink);
+
+            String content = templateEngine.process("reset-password-template", context);
+            helper.setText(content, true);
+
+            emailSender.send(message);
+        } catch (Exception e) {
+           e.printStackTrace();
+        }
     }
+
 
     private String generateResetToken(User user) {
         UUID uuid = UUID.randomUUID();
@@ -53,16 +91,20 @@ public class ResetPasswordService {
 
     private boolean hasExpired(LocalDateTime expiryDateTime) {
         LocalDateTime currentDateTime = LocalDateTime.now();
-        return expiryDateTime.isAfter(currentDateTime); // if the expiry is before the current then it is expired (ex: 11:10 - 11:15) then it is expired
+        // if the expiry is before the current then it is expired (ex: 11:10 - 11:15) then it is expired
+        return expiryDateTime.isAfter(currentDateTime);
     }
 
     public void resetPassword(String email, String newPassword, String token) {
         User user = userRepository.findByEmail(email);
         if (user != null){
-            user.setPassword(newPassword);
+            String hashedPassword = PasswordHashingUtil.hashPassword(newPassword);
+            user.setPassword(hashedPassword);
             userRepository.save(user);
         }
+        System.out.println(token + " .............");
         PasswordResetToken resetToken = tokenRepository.findByToken(token);
+        System.out.println(resetToken.getToken() + " sssssssssssss");
         tokenRepository.delete(resetToken);
     }
 

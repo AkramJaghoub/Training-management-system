@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
 // TODO: Implement Spring security, JWT, two-factor authentication
 
 @Controller
