@@ -102,9 +102,7 @@ public class ResetPasswordService {
             user.setPassword(hashedPassword);
             userRepository.save(user);
         }
-        System.out.println(token + " .............");
         PasswordResetToken resetToken = tokenRepository.findByToken(token);
-        System.out.println(resetToken.getToken() + " sssssssssssss");
         tokenRepository.delete(resetToken);
     }
 
