@@ -31,6 +31,8 @@ public class Advertisement {
     @Enumerated(EnumType.STRING)
     private WorkMode workMode;
 
+    @Lob
+    @Column(columnDefinition="LONGTEXT")
     private String description;
 
     @ManyToOne

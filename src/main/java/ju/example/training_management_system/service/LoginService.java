@@ -31,6 +31,5 @@ public class LoginService {
 
         session.setAttribute("email", email);
         return "redirect:/" + role.toString().toLowerCase() + "/dashboard";
-
     }
 }

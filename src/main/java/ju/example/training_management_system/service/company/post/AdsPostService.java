@@ -11,6 +11,9 @@ import ju.example.training_management_system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.ListResourceBundle;
+
 @Service
 @RequiredArgsConstructor
 public class AdsPostService {
@@ -42,5 +45,9 @@ public class AdsPostService {
         }catch (PostAlreadyExistsException ex){
             System.out.println(ex.getMessage());
         }
+    }
+
+    public List<Advertisement> getAllAdvertisements() {
+        return advertisementRepository.findAll();
     }
 }

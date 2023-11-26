@@ -3,6 +3,7 @@
     --t-color-alt: rgba(90, 131, 73, 0.37);
     --bs-link-hover-color: #012e6c;
 }
+
 .hero{
     width: 100%;
     min-height: 100vh;

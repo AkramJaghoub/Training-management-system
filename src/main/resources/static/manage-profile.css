@@ -1,29 +1,15 @@
-*{
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
+:root{
+    --t-color: #5A8349F9;
+    --t-color-alt: rgba(90, 131, 73, 0.37);
+    --bs-link-hover-color: #012e6c;
 }
 
 .hero{
     width: 100%;
     min-height: 100vh;
-    background: #eceaff;
+    background-color : transparent;
     color: #525252;
-}
-
-.nav{
-    background-color: #007BFF;
-    width: 100%;
-    padding: 10px 10%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-}
-
-.logo{
-    width: 120px;
+    margin-top: -4rem;
 }
 
 .user-pic{
@@ -37,22 +23,6 @@
     padding: 2px;
 }
 
-nav ul{
-    width: 100%;
-    position: relative;
-    left: 60%;
-}
-
-nav ul li{
-    display: inline-block;
-    list-style: none;
-    margin: 10px 30px;
-}
-
-nav ul li a{
-    color: #fff;
-    text-decoration: none;
-}
 
 nav ul li .profile{
     position: relative;
@@ -69,10 +39,6 @@ nav ul li.profile a:after{
     margin-left: 5px;
 }
 
-.a{
-    text-decoration: none;
-}
-
 .sub-menu-wrap{
     position: absolute;
     top: 90%;
@@ -81,6 +47,7 @@ nav ul li.profile a:after{
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s;
+    margin-left: 3rem;
 }
 
 .sub-menu-wrap.open-menu{
@@ -91,6 +58,8 @@ nav ul li.profile a:after{
     background: #fff;
     padding: 20px;
     margin: 10px;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .user-info{
@@ -100,6 +69,9 @@ nav ul li.profile a:after{
 
 .user-info h3{
     font-weight: 500;
+    color: rgb(128, 128, 128);
+    margin-left: 1rem;
+    margin-top: .4rem;
 }
 
 .user-info img{
@@ -126,6 +98,12 @@ nav ul li.profile a:after{
     margin: 12px 0;
 }
 
+.sub-menu-link svg{
+    margin-right: 1rem;
+    margin-bottom: .7rem;
+}
+
+
 .sub-menu-link p{
     width: 100%;
 }
@@ -140,19 +118,16 @@ nav ul li.profile a:after{
 
 .sub-menu-link:hover p{
     font-weight: 600;
+    color: var(--bs-link-hover-color);
+}
+
+.sub-menu-link:hover svg{
+    color: gray;
 }
 
 
 @-ms-viewport {
     width: auto;
-}
-
-figcaption,
-footer,
-header,
-main,
-section {
-    display: block;
 }
 
 p {
@@ -277,7 +252,7 @@ a>code {
     color: inherit;
 }
 
-.container {
+.hcontainer {
     width: 100%;
     margin-right: auto;
     margin-left: auto;
@@ -287,25 +262,25 @@ a>code {
 }
 
 @media (min-width: 576px) {
-    .container {
+    .hcontainer {
         max-width: 540px;
     }
 }
 
 @media (min-width: 768px) {
-    .container {
+    .hcontainer {
         max-width: 720px;
     }
 }
 
 @media (min-width: 992px) {
-    .container {
+    .hcontainer {
         max-width: 960px;
     }
 }
 
 @media (min-width: 1200px) {
-    .container {
+    .hcontainer {
         max-width: 1140px;
     }
 }
@@ -618,7 +593,7 @@ a>code {
 }
 
 @media (min-height: 500px) {
-    .container {
+    .hcontainer {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -986,17 +961,4 @@ p {
     padding-bottom: .25rem;
     letter-spacing: .04em;
     text-transform: uppercase;
-}
-
-footer p {
-    margin: 10px 0;
-}
-
-footer i {
-    color: red;
-}
-
-footer a {
-    color: #3c97bf;
-    text-decoration: none;
 }

@@ -12,6 +12,6 @@ public class HomePageController {
 
     @GetMapping("/home")
     public String getHomePage(){
-        return "home-page.html";
+        return "home-page";
     }
 }

@@ -1,0 +1,168 @@
+article {
+    --img-scale: 1.001;
+    --title-color: #333; /* Changed to a neutral color */
+    --link-icon-translate: -20px;
+    --link-icon-opacity: 0;
+    position: relative;
+    border-radius: 16px;
+    background: linear-gradient(120deg, #f6d365 0%, #fda085 100%); /* Gradient background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), /* Soft initial shadow */
+    0 1px 3px rgba(0, 0, 0, 0.08);
+    transform-origin: center;
+    transition: all 0.4s ease-in-out;
+    overflow: hidden;
+}
+
+article:hover {
+    --img-scale: 1.1; /* Zoom effect on hover */
+    --title-color: #28666e; /* Title color change on hover */
+    --link-icon-translate: 0;
+    --link-icon-opacity: 1;
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2), /* Deeper shadow on hover */
+    0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+article a::after {
+    position: absolute;
+    inset-block: 0;
+    inset-inline: 0;
+    cursor: pointer;
+    content: "";
+}
+
+/* basic article elements styling */
+article h2 {
+    margin: 0 0 18px 0;
+    font-family: 'Open Sans', sans-serif; /* Changed to a more modern font */
+    font-size: 1.9rem;
+    letter-spacing: 0.06em;
+    color: var(--title-color);
+    transition: color 0.3s ease-out;
+}
+
+figure {
+    margin: 0;
+    padding: 0;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+
+article img {
+    max-width: 100%;
+    height: auto; /* Changed to maintain aspect ratio */
+    object-fit: cover; /* Ensures the image covers the figure area */
+    transform-origin: center;
+    transform: scale(var(--img-scale));
+    transition: transform 0.4s ease-in-out;
+}
+
+.article-body {
+    padding: 20px; /* Adjusted padding */
+}
+
+article a {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: #28666e;
+    font-weight: bold; /* Added for emphasis */
+}
+
+article a:focus, article a:hover {
+    outline: none; /* Removes outline to match modern styles */
+    color: #333; /* Color change for interactivity */
+}
+
+article a .icon {
+    min-width: 24px;
+    width: 24px;
+    height: 24px;
+    margin-left: 5px;
+    transform: translateX(var(--link-icon-translate));
+    opacity: var(--link-icon-opacity);
+    transition: all 0.3s;
+}
+
+.articles {
+    display: grid;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 24px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+@media screen and (max-width: 960px) {
+    article {
+        /* Adjustments for smaller screens */
+    }
+    .article-body p {
+        display: none; /* Hide paragraph text on smaller screens */
+    }
+}
+
+@container card (min-width: 380px) {
+    .article-wrapper {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: 16px;
+    }
+    .article-body {
+        padding-left: 0;
+    }
+    figure {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    figure img {
+        height: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+    }
+}
+
+.sr-only:not(:focus):not(:active) {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
