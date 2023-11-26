@@ -2,15 +2,18 @@ package ju.example.training_management_system.controller;
 
 import jakarta.servlet.http.HttpSession;
 import ju.example.training_management_system.dto.AdvertisementDto;
+import ju.example.training_management_system.model.company.advertisement.Advertisement;
 import ju.example.training_management_system.model.users.Role;
 import ju.example.training_management_system.service.company.CompanyService;
 import ju.example.training_management_system.service.company.post.AdsPostService;
 import ju.example.training_management_system.util.Utils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -57,7 +60,6 @@ public class CompanyController {
         return null;
     }
 
-
     @GetMapping("/job/post")
     public String getPostAdsForm(HttpSession session, Model model){
         String email = (String) session.getAttribute("email");
@@ -72,5 +74,11 @@ public class CompanyController {
                           @PathVariable("email") String email){
         adsPostService.postAd(postDto, email);
         return "job-post";
+    }
+
+    @GetMapping("/get/ads")
+    public ResponseEntity<List<Advertisement>> getAllAdvertisements() {
+        List<Advertisement> advertisements = adsPostService.getAllAdvertisements();
+        return ResponseEntity.ok(advertisements);
     }
 }
