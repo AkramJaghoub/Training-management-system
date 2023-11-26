@@ -19,6 +19,7 @@
 
     <!--=============== CSS ===============-->
     <link rel="stylesheet" href="/main/css/styles.css">
+    <link rel="stylesheet" href="/widget.css">
     <link rel="stylesheet" href="/company_dashboard.css">
 
     <title>Tero internships finder</title>
@@ -35,7 +36,7 @@
         <div class="nav__menu" id="nav-menu">
             <ul class="nav__list">
                 <li class="nav__item">
-                    <a href='/tms/home' class="nav__link active-link">Home</a>
+                    <a href='/company/dashboard' class="nav__link active-link">Home</a>
                 </li>
 
                 <li class="nav__item">
@@ -43,7 +44,7 @@
                 </li>
 
                 <li class="nav__item">
-                    <a href="#trick" class="nav__link">Knowledge box</a>
+                    <a href="/company/job/post" class="nav__link">Post Job</a>
                 </li>
 
 
@@ -105,34 +106,18 @@
 </header>
 
 
-<section class="home container" id="home">
-    <div class="home__content" >
-        <div class="home__group">
-            <div class="hero">
-                <div class="login-container">
-                    <div class="login-form">
-                        <h1>Welcome Back!</h1>
-                        <form action="/login" method="post" id="loginForm">
-                            <div class="mb-3 input-with-icon">
-                                <i class="fas fa-envelope"></i>
-                                <label for="email"></label><input type="text" class="form-control" id="email" name="email" placeholder="Email">
-                            </div>
-                            <div class="mb-3 password-container input-with-icon">
-                                <i class="fas fa-lock"></i>
-                                <label for="password"></label><input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                                <a href="/forget-password" onclick="return handleForgotPasswordLink();" id="forgotPassword" class="forgot-password">Forgot Password?</a>
-                            </div>
-                            <button type="submit">Login</button>
-                            <center> <p> Don't have an account? <a href="/register" class="register">Register</a></p></center>
-                        </form>
-                    </div>
+<main class="main">
+    <section class="home container" id="home">
+        <div class="home__content" >
+            <div class="home__group">
+                <div class="hero">
+                    <section class="articles">
+                    </section>
                 </div>
             </div>
         </div>
-
-    </div>
-</section>
-
+    </section>
+</main>
 
 <!--==================== FOOTER ====================-->
 <footer class="footer section" style="margin-top: -15rem">
@@ -202,6 +187,120 @@
 
     function toggleMenu(){
         subMenu.classList.toggle("open-menu");
+    }
+</script>
+
+<a href="#" class="scrollup" id="scroll-up">
+    <i class='bx bx-up-arrow-alt scrollup__icon'></i>
+</a>
+
+<!--=============== SCROLL REVEAL ===============-->
+<script src="/main/js/scrollreveal.min.js"></script>
+
+<!--=============== SWIPER JS ===============-->
+<script src="/main/js/swiper-bundle.min.js"></script>
+
+<!--=============== MAIN JS ===============-->
+<script src="/main/js/main.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetchAdvertisements();
+    });
+
+    function fetchAdvertisements() {
+        fetch('/company/get/ads')
+            .then(response => response.json())
+            .then(data => {
+                updateAdvertisements(data);
+            })
+            .catch(error => console.error('Error fetching advertisements:', error));
+    }
+
+    function updateAdvertisements(advertisements) {
+        const articlesContainer = document.querySelector('.articles');
+        articlesContainer.innerHTML = '';
+
+        advertisements.forEach(ad => {
+            const article = document.createElement('article');
+            const articleWrapper = document.createElement('div');
+            articleWrapper.classList.add('article-wrapper');
+
+            const articleBody = document.createElement('div');
+            articleBody.classList.add('article-body');
+
+            const title = document.createElement('h2');
+            title.textContent = ad.jobTitle;
+
+            const internsRequired = document.createElement('p');
+            internsRequired.textContent = 'Interns Required: ' + ad.internsRequired;
+
+            const duration = document.createElement('p');
+            duration.textContent = 'Duration: ' + ad.jobDuration + ' months';
+
+            const jobType = document.createElement('p');
+            jobType.textContent = 'Type: ' + ad.jobType;
+
+            const workMode = document.createElement('p');
+            workMode.textContent = 'Mode: ' + ad.workMode;
+
+            const readMoreLink = document.createElement('a');
+            readMoreLink.href = '#';
+            readMoreLink.textContent = 'Read more';
+            readMoreLink.onclick = function(event) {
+                event.preventDefault();
+                showDescription(ad.description);
+            };
+
+            articleBody.appendChild(title);
+            articleBody.appendChild(internsRequired);
+            articleBody.appendChild(duration);
+            articleBody.appendChild(jobType);
+            articleBody.appendChild(workMode);
+            articleBody.appendChild(readMoreLink);
+
+            articleWrapper.appendChild(articleBody);
+            article.appendChild(articleWrapper);
+            articlesContainer.appendChild(article);
+        });
+    }
+
+    function showDescription(description) {
+        const modal = document.createElement('div');
+        modal.classList.add('modal');
+
+        const modalContent = document.createElement('div');
+        modalContent.classList.add('modal-content');
+
+        const closeSpan = document.createElement('span');
+        closeSpan.classList.add('close');
+        closeSpan.innerHTML = '&times;';
+        closeSpan.onclick = function() {
+            modal.style.display = "none";
+            modal.remove();
+        };
+
+        const descriptionParagraph = document.createElement('p');
+        descriptionParagraph.textContent = description;
+
+        modalContent.appendChild(closeSpan);
+        modalContent.appendChild(descriptionParagraph);
+        modal.appendChild(modalContent);
+
+        document.body.appendChild(modal);
+
+        modal.style.display = "block";
+    }
+
+    // Close the modal if user clicks outside of it
+    window.onclick = function(event) {
+        const modals = document.getElementsByClassName('modal');
+        for (let i = 0; i < modals.length; i++) {
+            if (event.target === modals[i]) {
+                modals[i].style.display = "none";
+                modals[i].remove();
+            }
+        }
     }
 </script>
 
