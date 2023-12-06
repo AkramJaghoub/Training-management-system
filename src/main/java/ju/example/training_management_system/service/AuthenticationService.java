@@ -42,7 +42,7 @@ public class AuthenticationService {
             return true;  // user's email was found and their password is correct
 
         } catch (UserNotFoundException | PasswordNotMatchException ex) {
-            ex.printStackTrace();
+            log.info("error while authenticating the user with email {}", email);
             return false; // user's email wasn't found or password is incorrect
         }
     }

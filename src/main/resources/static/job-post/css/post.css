@@ -43,8 +43,8 @@ nav ul li.profile a:after{
 
 .sub-menu-wrap{
     position: absolute;
-    top: 90%;
-    right: 10%;
+    top: 75%;
+    left: 72.7%;
     width: 320px;
     max-height: 0;
     overflow: hidden;
@@ -52,13 +52,23 @@ nav ul li.profile a:after{
     margin-left: 3rem;
 }
 
+.profile-arrow {
+    color: #FAF9F6;
+    position: relative;
+    top: -13px;
+    left: 99.5%;
+    display: inline-block;
+    transform: rotate(180deg);
+}
+
 .sub-menu-wrap.open-menu{
     max-height: 400px;
 }
 
 .sub-menu{
-    background: #fff;
-    padding: 20px;
+    height: 16.1rem;
+    background: #FAF9F6;
+    padding: 0 20px;
     margin: 10px;
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -76,13 +86,13 @@ nav ul li.profile a:after{
     margin-top: .4rem;
 }
 
-.user-info img{
-    width: 60px;
-    border-radius: 50%;
-    margin-right: 15px;
-    border: 2px solid #000;
-    padding: 2px;
-}
+/*.user-info img{*/
+/*    width: 60px;*/
+/*    border-radius: 50%;*/
+/*    margin-right: 15px;*/
+/*    border: 2px solid #000;*/
+/*    padding: 2px;*/
+/*}*/
 
 .sub-menu hr{
     border: 0;
@@ -105,7 +115,6 @@ nav ul li.profile a:after{
     margin-bottom: .7rem;
 }
 
-
 .sub-menu-link p{
     width: 100%;
 }
@@ -127,11 +136,9 @@ nav ul li.profile a:after{
     color: rgb(128, 128, 128);
 }
 
-
-
 .centered-form {
     margin: 0 auto;
-    width: 50%;
+    width: 100%;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 4px;

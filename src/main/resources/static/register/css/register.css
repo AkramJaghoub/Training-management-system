@@ -214,6 +214,14 @@ input-with-icon {
     transition: transform 0.6s ease-in-out;
 }
 
+.box1 button:hover {
+    color: #FFFFFF;
+}
+
+.box1 button:hover {
+    color: #FFFFFF;
+}
+
 .container.right-panel-active .overlay {
     transform: translateX(50%);
 }

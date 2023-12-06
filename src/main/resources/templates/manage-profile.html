@@ -29,7 +29,6 @@
 
 
 <header class="header" id="header">
-    <nav class="nav container">
         <a href="/tms/home" class="nav__logo">
             <img src="/main/img/tero.png" alt="" class="nav__logo-img">
         </a>
@@ -102,8 +101,6 @@
         <div class="nav__toggle" id="nav-toggle">
             <i class='bx bx-grid-alt'></i>
         </div>
-
-    </nav>
 </header>
 
 
@@ -119,15 +116,14 @@
                                 <div class="card card-profile shadow">
                                     <div class="row justify-content-center">
                                         <div class="col-lg-3 order-lg-2">
-                                            <div class="card-profile-image">
-                                                <a href="#" onclick="openCameraModal()">
-                                                    <img src="/images/default_profile.png" class="rounded-circle" id="profilePic">
-                                                    <div class="profile-image-overlay">
-                                                        <i class="fa fa-camera"></i>
-                                                    </div>
-                                                </a>
-                                            </div>
-
+<!--                                            <div class="card-profile-image">-->
+<!--                                                <a href="#" onclick="openCameraModal()">-->
+<!--                                                    <img src="/images/default_profile.png" class="rounded-circle" id="profilePic">-->
+<!--                                                    <div class="profile-image-overlay">-->
+<!--                                                        <i class="fa fa-camera"></i>-->
+<!--                                                    </div>-->
+<!--                                                </a>-->
+<!--                                            </div>-->
                                         </div>
                                     </div>
                                     <div class="card-body pt-0 pt-md-4">
@@ -207,10 +203,66 @@
     </section>
 </main>
 
-<footer>
-    <p>
-        &copy; <span id="currentYear"></span> Training Management System. All rights reserved.
-    </p>
+<footer class="footer section">
+    <div class="footer__container container grid">
+        <div class="footer__content">
+            <a href="/tms/home" class="footer__logo">
+                <img src="/main/img/tero.png" alt="" class="footer__logo-img">
+            </a>
+
+            <p class="footer__description">Enjoy the Best internships <br> of your career.</p>
+        </div>
+
+        <div class="footer__content">
+            <h3 class="footer__title" id="about">About</h3>
+
+            <ul class="footer__links">
+                <li>
+                    <a href="#about" class="footer__link">About Us</a>
+                </li>
+                <li>
+                    <a href="#" class="footer__link">Features</a>
+                </li>
+                <li>
+                    <a href="#" class="footer__link">News</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="footer__content">
+            <h3 class="footer__title">Our Services</h3>
+
+            <ul class="footer__links">
+                <li>
+                    <a href="#" class="footer__link">Pricing</a>
+                </li>
+                <li>
+                    <a href="#" class="footer__link">Discounts</a>
+                </li>
+                <li>
+                    <a href="#" class="footer__link">Shipping mode</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="footer__content">
+            <h3 class="footer__title">Our Company</h3>
+
+            <ul class="footer__links">
+                <li>
+                    <a href="#" class="footer__link">Blog</a>
+                </li>
+                <li>
+                    <a href="#" class="footer__link">About us</a>
+                </li>
+                <li>
+                    <a href="#" class="footer__link">Our mission</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <span class="footer__copy">&#169; Tero. All rights reserved</span>
 </footer>
 
 <script>

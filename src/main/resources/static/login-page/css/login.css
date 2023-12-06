@@ -25,6 +25,13 @@
     transform: translateY(10%);
 }
 
+.error-message{
+    padding: 10px 40px;
+    margin-left: 2.5rem;
+    color: red;
+    display: none;
+}
+
 .login-form {
     flex: 1;
     padding: 80px 60px;
@@ -154,4 +161,83 @@
 
 .register:hover{
     color: var(--bs-link-hover-color);
+}
+
+/* Default styles (for desktop) go here */
+
+/* Default styles (for desktop) */
+
+/* ... Your existing CSS ... */
+
+/* Tablet devices (screens less than 768px) */
+@media screen and (max-width: 768px) {
+    .hero {
+        margin-top: -2rem; /* Adjust margin */
+    }
+
+    .login-container {
+        flex-direction: column; /* Stack elements vertically */
+        height: auto; /* Adjust height */
+        transform: translateY(5%);
+    }
+
+    .login-form {
+        padding: 40px 30px; /* Adjust padding */
+        width: 90%; /* Adjust width */
+    }
+
+    .login-form h1 {
+        font-size: 32px; /* Adjust font size */
+    }
+
+    .input-with-icon input {
+        width: 100%; /* Full width */
+    }
+
+    .login-image {
+        display: block; /* Show image */
+        height: 200px; /* Adjust height */
+    }
+
+    /* Other adjustments as needed */
+}
+
+/* Mobile devices (screens less than 480px) */
+@media screen and (max-width: 480px) {
+    .hero {
+        /* Adjustments for mobile layout */
+    }
+
+    .login-container {
+        transform: translateY(0);
+        margin-top: 0;
+    }
+
+    .login-form {
+        padding: 20px 20px; /* Adjust padding */
+    }
+
+    .login-form h1 {
+        font-size: 28px; /* Adjust font size */
+    }
+
+    .input-with-icon input, .password-container.input-with-icon input {
+        padding-left: 30px; /* Adjust padding */
+        font-size: 14px; /* Adjust font size */
+    }
+
+    .input-with-icon i {
+        left: 5px; /* Adjust icon position */
+    }
+
+    .login-form button {
+        margin-top: 2rem; /* Adjust margin */
+        font-size: 16px; /* Adjust font size */
+    }
+
+    .forgot-password {
+        font-size: 12px; /* Adjust font size */
+    }
+
+    /* Other adjustments as needed */
 }

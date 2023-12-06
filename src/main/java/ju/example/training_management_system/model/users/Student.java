@@ -11,10 +11,10 @@ import java.util.Map;
 @NoArgsConstructor
 public class Student extends User {
 
-    String firstName;
-    String lastName;
-    String university;
-    String major;
+    private String firstName;
+    private String lastName;
+    private String university;
+    private String major;
 
     public Student(String email, String password){
         super(email, password);

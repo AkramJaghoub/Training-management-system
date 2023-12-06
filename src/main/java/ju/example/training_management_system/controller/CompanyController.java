@@ -65,6 +65,8 @@ public class CompanyController {
         String email = (String) session.getAttribute("email");
         if(email != null){
             model.addAttribute("email", email);
+            String companyName = companyService.getCompanyName(email);
+            model.addAttribute("companyName", companyName);
         }
         return "job-post";
     }

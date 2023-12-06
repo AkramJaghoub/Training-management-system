@@ -11,8 +11,8 @@ import java.util.Map;
 @NoArgsConstructor
 public class Company extends User {
 
-    String name;
-    String industry;
+    private String name;
+    private String industry;
 
     public Company(String email, String password) {
         super(email, password);
