@@ -2,9 +2,12 @@ package ju.example.training_management_system.controller;
 
 import jakarta.servlet.http.HttpSession;
 import ju.example.training_management_system.dto.LoginDto;
+import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.service.LoginService;
 import ju.example.training_management_system.service.ResetPasswordService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +28,10 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginDto loginDto,
-                        HttpSession session) {
-
-        return loginService.loginUser(loginDto, session);
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto,
+                                   HttpSession session) {
+        ApiResponse response = loginService.loginUser(loginDto, session);
+        return new ResponseEntity<>(response, response.getStatus());
     }
 
     @GetMapping("/forget-password")

@@ -28,7 +28,6 @@
 <body>
 <!--==================== HEADER ====================-->
 <header class="header" id="header">
-    <nav class="nav container">
         <a href="/tms/home" class="nav__logo">
             <img src="/main/img/tero.png" alt="" class="nav__logo-img">
         </a>
@@ -61,7 +60,6 @@
             <i class='bx bx-grid-alt'></i>
         </div>
 
-    </nav>
 </header>
 
 <main class="main">
@@ -74,6 +72,7 @@
                         <div class="login-form">
                             <h1>Welcome Back!</h1>
                             <form action="/login" method="post" id="loginForm">
+                                <div class="error-message" id="errorMessage"></div>
                                 <div class="mb-3 input-with-icon">
                                     <i class="fas fa-envelope"></i>
                                     <label for="email"></label><input type="text" class="form-control" id="email" name="email" placeholder="Email">
@@ -172,7 +171,7 @@
 <!--=============== MAIN JS ===============-->
 <script src="/main/js/main.js"></script>
 
-<script src="/main/js/formSubmission.js"></script>
+<script src="/login-page/js/formSubmission.js"></script>
 
 </body>
 </html>

@@ -1,50 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
-*{
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
-}
-
-/:root{/
-     /*    --main-color: #0661c2;*/
-     /*    --second-color: #007BFF*/
- /}/
-
-p {
-    font-size: 14px;
-    font-weight: 100;
-    line-height: 20px;
-    letter-spacing: 0.5px;
-    margin: 20px 0 30px;
-}
-
-a{
-    text-decoration: none;
-    font-weight: bold;
+:root{
+    --t-color: #5A8349F9;
+    --t-color-alt: rgba(90, 131, 73, 0.37);
+    --bs-link-hover-color: #012e6c;
 }
 
 .hero{
     width: 100%;
     min-height: 100vh;
-    background: #eceaff;
-    color: #525252
-}
-
-.nav{
-    background-color: var(--main-color);
-    width: 100%;
-    padding: 10px 10%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    height: 80px
-}
-
-.logo{
-    width: 120px;
+    background-color : transparent;
+    color: #525252;
+    margin-top: -4rem;
 }
 
 .user-pic{
@@ -58,22 +25,6 @@ a{
     padding: 2px;
 }
 
-nav ul{
-    width: 100%;
-    position: relative;
-    left: 60%;
-}
-
-nav ul li{
-    display: inline-block;
-    list-style: none;
-    margin: 10px 30px;
-}
-
-nav ul li a{
-    color: #fff;
-    text-decoration: none;
-}
 
 nav ul li .profile{
     position: relative;
@@ -98,6 +49,7 @@ nav ul li.profile a:after{
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s;
+    margin-left: 3rem;
 }
 
 .sub-menu-wrap.open-menu{
@@ -108,6 +60,8 @@ nav ul li.profile a:after{
     background: #fff;
     padding: 20px;
     margin: 10px;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .user-info{
@@ -117,6 +71,9 @@ nav ul li.profile a:after{
 
 .user-info h3{
     font-weight: 500;
+    color: rgb(128, 128, 128);
+    margin-left: 1rem;
+    margin-top: .4rem;
 }
 
 .user-info img{
@@ -143,6 +100,12 @@ nav ul li.profile a:after{
     margin: 12px 0;
 }
 
+.sub-menu-link svg{
+    margin-right: 1rem;
+    margin-bottom: .7rem;
+}
+
+
 .sub-menu-link p{
     width: 100%;
 }
@@ -157,7 +120,14 @@ nav ul li.profile a:after{
 
 .sub-menu-link:hover p{
     font-weight: 600;
+    color: var(--bs-link-hover-color);
 }
+
+.sub-menu-link:hover svg{
+    color: rgb(128, 128, 128);
+}
+
+
 
 .centered-form {
     margin: 0 auto;
@@ -168,7 +138,7 @@ nav ul li.profile a:after{
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -176,29 +146,4 @@ nav ul li.profile a:after{
 #description {
     overflow-y: auto;
     max-height: 170px;
-}
-
-footer {
-    background-color: var(--main-color);
-    color: #fff;
-    font-size: 14px;
-    bottom: 0;
-    position: fixed;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 999;
-}
-
-footer p {
-    margin: 10px 0;
-}
-
-footer i {
-    color: red;
-}
-
-footer a {
-    color: #3c97bf;
-    text-decoration: none;
 }
