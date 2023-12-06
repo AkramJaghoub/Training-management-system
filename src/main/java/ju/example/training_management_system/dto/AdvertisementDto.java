@@ -13,6 +13,10 @@ public class AdvertisementDto {
 
     private int jobDuration;
 
+    private String country;
+
+    private String city;
+
     private JobType jobType;
 
     private WorkMode workMode;

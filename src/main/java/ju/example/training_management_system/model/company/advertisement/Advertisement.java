@@ -25,6 +25,10 @@ public class Advertisement {
 
     private int jobDuration;
 
+    private String country;
+
+    private String city;
+
     @Enumerated(EnumType.STRING)
     private JobType jobType;
 
@@ -43,6 +47,8 @@ public class Advertisement {
                 .jobTitle(postDto.getJobTitle())
                 .internsRequired(postDto.getInternsRequired())
                 .jobDuration(postDto.getJobDuration())
+                .country(postDto.getCountry())
+                .city(postDto.getCity())
                 .jobType(postDto.getJobType())
                 .workMode(postDto.getWorkMode())
                 .description(postDto.getDescription())

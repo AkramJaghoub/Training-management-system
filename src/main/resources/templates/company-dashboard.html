@@ -15,12 +15,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 
     <!--=============== SWIPER CSS ===============-->
-    <link rel="stylesheet" href="/main/css/swiper-bundle.min.css">
 
     <!--=============== CSS ===============-->
     <link rel="stylesheet" href="/main/css/styles.css">
-    <link rel="stylesheet" href="/widget.css">
-    <link rel="stylesheet" href="/company_dashboard.css">
+    <link rel="stylesheet" href="/company-dashboard/css/widget.css">
+    <link rel="stylesheet" href="/company-dashboard/css/company_dashboard.css">
 
     <title>Tero internships finder</title>
 </head>
@@ -28,7 +27,6 @@
 
 <!--==================== HEADER ====================-->
 <header class="header" id="header">
-    <nav class="nav container">
         <a href="/tms/home" class="nav__logo">
             <img src="/main/img/tero.png" alt="" class="nav__logo-img">
         </a>
@@ -47,15 +45,15 @@
                     <a href="/company/job/post" class="nav__link">Post Job</a>
                 </li>
 
-
                 <li class="nav__item"><a href="#" id="profileLink" onclick="toggleMenu()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="black" class="bi bi-person-circle" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                         <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                     </svg>
                 </a></li>
                     <div class="sub-menu-wrap" id="subMenu">
                         <div class="sub-menu">
+                            <span class="profile-arrow">&#9660;</span>
                             <div class="user-info">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="gray" class="bi bi-person-circle" viewBox="0 0 16 16">
                                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -71,7 +69,6 @@
                                 </svg>
                                 <p>Manage Profile</p>
                             </a>
-
 
                             <a href="#" class="sub-menu-link">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
@@ -101,8 +98,6 @@
         <div class="nav__toggle" id="nav-toggle">
             <i class='bx bx-grid-alt'></i>
         </div>
-
-    </nav>
 </header>
 
 
@@ -126,7 +121,6 @@
             <a href="/tms/home" class="footer__logo">
                 <img src="/main/img/tero.png" alt="" class="footer__logo-img">
             </a>
-
             <p class="footer__description">Enjoy the Best internships <br> of your career.</p>
         </div>
 
@@ -194,115 +188,10 @@
     <i class='bx bx-up-arrow-alt scrollup__icon'></i>
 </a>
 
-<!--=============== SCROLL REVEAL ===============-->
-<script src="/main/js/scrollreveal.min.js"></script>
-
-<!--=============== SWIPER JS ===============-->
-<script src="/main/js/swiper-bundle.min.js"></script>
-
 <!--=============== MAIN JS ===============-->
 <script src="/main/js/main.js"></script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        fetchAdvertisements();
-    });
-
-    function fetchAdvertisements() {
-        fetch('/company/get/ads')
-            .then(response => response.json())
-            .then(data => {
-                updateAdvertisements(data);
-            })
-            .catch(error => console.error('Error fetching advertisements:', error));
-    }
-
-    function updateAdvertisements(advertisements) {
-        const articlesContainer = document.querySelector('.articles');
-        articlesContainer.innerHTML = '';
-
-        advertisements.forEach(ad => {
-            const article = document.createElement('article');
-            const articleWrapper = document.createElement('div');
-            articleWrapper.classList.add('article-wrapper');
-
-            const articleBody = document.createElement('div');
-            articleBody.classList.add('article-body');
-
-            const title = document.createElement('h2');
-            title.textContent = ad.jobTitle;
-
-            const internsRequired = document.createElement('p');
-            internsRequired.textContent = 'Interns Required: ' + ad.internsRequired;
-
-            const duration = document.createElement('p');
-            duration.textContent = 'Duration: ' + ad.jobDuration + ' months';
-
-            const jobType = document.createElement('p');
-            jobType.textContent = 'Type: ' + ad.jobType;
-
-            const workMode = document.createElement('p');
-            workMode.textContent = 'Mode: ' + ad.workMode;
-
-            const readMoreLink = document.createElement('a');
-            readMoreLink.href = '#';
-            readMoreLink.textContent = 'Read more';
-            readMoreLink.onclick = function(event) {
-                event.preventDefault();
-                showDescription(ad.description);
-            };
-
-            articleBody.appendChild(title);
-            articleBody.appendChild(internsRequired);
-            articleBody.appendChild(duration);
-            articleBody.appendChild(jobType);
-            articleBody.appendChild(workMode);
-            articleBody.appendChild(readMoreLink);
-
-            articleWrapper.appendChild(articleBody);
-            article.appendChild(articleWrapper);
-            articlesContainer.appendChild(article);
-        });
-    }
-
-    function showDescription(description) {
-        const modal = document.createElement('div');
-        modal.classList.add('modal');
-
-        const modalContent = document.createElement('div');
-        modalContent.classList.add('modal-content');
-
-        const closeSpan = document.createElement('span');
-        closeSpan.classList.add('close');
-        closeSpan.innerHTML = '&times;';
-        closeSpan.onclick = function() {
-            modal.style.display = "none";
-            modal.remove();
-        };
-
-        const descriptionParagraph = document.createElement('p');
-        descriptionParagraph.textContent = description;
-
-        modalContent.appendChild(closeSpan);
-        modalContent.appendChild(descriptionParagraph);
-        modal.appendChild(modalContent);
-
-        document.body.appendChild(modal);
-
-        modal.style.display = "block";
-    }
-
-    // Close the modal if user clicks outside of it
-    window.onclick = function(event) {
-        const modals = document.getElementsByClassName('modal');
-        for (let i = 0; i < modals.length; i++) {
-            if (event.target === modals[i]) {
-                modals[i].style.display = "none";
-                modals[i].remove();
-            }
-        }
-    }
-</script>
+<script src="/company-dashboard/js/company-dashboard.js"></script>
 
 </body>
 

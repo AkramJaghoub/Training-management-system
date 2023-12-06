@@ -25,10 +25,7 @@ public class AdsPostService {
     public void postAd(AdvertisementDto adDto, String email) {
 
         try {
-
             Advertisement ad = new Advertisement().toEntity(adDto);
-            System.out.println(ad.getJobType());
-            System.out.println(ad.getWorkMode());
 
             if (advertisementRepository.existsByJobTitle(ad.getJobTitle())) {
                 throw new PostAlreadyExistsException("A post with the same title already exists!");
@@ -37,13 +34,12 @@ public class AdsPostService {
             User user = userRepository.findByEmail(email);
 
             if(user instanceof Company company) {
-                System.out.println(company.getId());
                 ad.setCompany(company);
             }
 
             advertisementRepository.save(ad);
         }catch (PostAlreadyExistsException ex){
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
