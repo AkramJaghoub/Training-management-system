@@ -11,19 +11,19 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String email;
+  private String email;
 
-    private String password;
+  private String password;
 
-    @Enumerated(EnumType.STRING)
-    public Role role;
+  @Enumerated(EnumType.STRING)
+  public Role role;
 
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
+  public User(String email, String password) {
+    this.email = email;
+    this.password = password;
+  }
 }

@@ -163,12 +163,6 @@
     color: var(--bs-link-hover-color);
 }
 
-/* Default styles (for desktop) go here */
-
-/* Default styles (for desktop) */
-
-/* ... Your existing CSS ... */
-
 /* Tablet devices (screens less than 768px) */
 @media screen and (max-width: 768px) {
     .hero {

@@ -7,20 +7,19 @@ import lombok.Data;
 @Data
 public class AdvertisementDto {
 
-    private String jobTitle;
+  private String jobTitle;
 
-    private int internsRequired;
+  private int internsRequired;
 
-    private int jobDuration;
+  private int jobDuration;
 
-    private String country;
+  private String country;
 
-    private String city;
+  private String city;
 
-    private JobType jobType;
+  private JobType jobType;
 
-    private WorkMode workMode;
+  private WorkMode workMode;
 
-    private String description;
-
+  private String description;
 }

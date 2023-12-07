@@ -43,7 +43,7 @@ public class AdsPostService {
         }
     }
 
-    public List<Advertisement> getAllAdvertisements() {
-        return advertisementRepository.findAll();
+    public List<Advertisement> getAllAdvertisementsForCompany(String companyName) {
+        return advertisementRepository.findByCompanyName(companyName);
     }
 }

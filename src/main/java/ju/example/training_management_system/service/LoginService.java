@@ -12,28 +12,27 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LoginService {
 
-    private final AuthenticationService authenticationService;
-    private final UserService userService;
+  private final AuthenticationService authenticationService;
+  private final UserService userService;
 
-    public ApiResponse loginUser(LoginDto loginDto, HttpSession session) {
+  public ApiResponse loginUser(LoginDto loginDto, HttpSession session) {
 
-        String email = loginDto.getEmail();
-        String password = loginDto.getPassword();
+    String email = loginDto.getEmail();
+    String password = loginDto.getPassword();
 
-        if (authenticationService.isAdmin(email, password)) {
-            Role role = Role.ADMIN;
-            return new ApiResponse(role.toString().toLowerCase() + "/dashboard",
-                    HttpStatus.OK); // return early for admin
-        }
-
-        Role role = userService.getUserRole(email);
-
-        if (!authenticationService.isValidUser(email, password)) {
-            return new ApiResponse("Wrong email or password", HttpStatus.BAD_REQUEST);
-        }
-
-        session.setAttribute("email", email);
-        return new ApiResponse(role.toString().toLowerCase() + "/dashboard",
-                HttpStatus.OK);
+    if (authenticationService.isAdmin(email, password)) {
+      Role role = Role.ADMIN;
+      return new ApiResponse(
+          role.toString().toLowerCase() + "/dashboard", HttpStatus.OK); // return early for admin
     }
+
+    Role role = userService.getUserRole(email);
+
+    if (!authenticationService.isValidUser(email, password)) {
+      return new ApiResponse("Wrong email or password", HttpStatus.BAD_REQUEST);
+    }
+
+    session.setAttribute("email", email);
+    return new ApiResponse(role.toString().toLowerCase() + "/dashboard", HttpStatus.OK);
+  }
 }
