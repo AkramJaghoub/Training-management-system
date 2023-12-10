@@ -17,9 +17,9 @@ public class CompanyService {
 
     private final UserRepository userRepository;
 
-    public String getCompanyName(String email){
+    public String getCompanyName(String email) {
         User user = userRepository.findByEmail(email);
-        if(user instanceof Company company) {
+        if (user instanceof Company company) {
             System.out.println(company.getName());
             return company.getName();
         }

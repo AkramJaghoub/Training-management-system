@@ -15,42 +15,45 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Advertisement {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  private String jobTitle;
+    private String jobTitle;
 
-  private int internsRequired;
+    private int internsRequired;
 
-  private int jobDuration;
+    private int jobDuration;
 
-  private String country;
+    private String country;
 
-  private String city;
+    private String city;
 
-  @Enumerated(EnumType.STRING)
-  private JobType jobType;
+    @Enumerated(EnumType.STRING)
+    private JobType jobType;
 
-  @Enumerated(EnumType.STRING)
-  private WorkMode workMode;
+    @Enumerated(EnumType.STRING)
+    private WorkMode workMode;
 
-  @Lob
-  @Column(columnDefinition = "LONGTEXT")
-  private String description;
+    private String imageUrl;  // URL to the image
 
-  @ManyToOne private Company company;
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
+    private String description;
 
-  public Advertisement toEntity(AdvertisementDto postDto) {
-    return Advertisement.builder()
-        .jobTitle(postDto.getJobTitle())
-        .internsRequired(postDto.getInternsRequired())
-        .jobDuration(postDto.getJobDuration())
-        .country(postDto.getCountry())
-        .city(postDto.getCity())
-        .jobType(postDto.getJobType())
-        .workMode(postDto.getWorkMode())
-        .description(postDto.getDescription())
-        .build();
-  }
+    @ManyToOne
+    private Company company;
+
+    public Advertisement toEntity(AdvertisementDto postDto) {
+        return Advertisement.builder()
+                .jobTitle(postDto.getJobTitle())
+                .internsRequired(postDto.getInternsRequired())
+                .jobDuration(postDto.getJobDuration())
+                .country(postDto.getCountry())
+                .city(postDto.getCity())
+                .jobType(postDto.getJobType())
+                .workMode(postDto.getWorkMode())
+                .description(postDto.getDescription())
+                .build();
+    }
 }

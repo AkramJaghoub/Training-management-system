@@ -106,8 +106,7 @@
             <div class="centered-form">
               <h4 class="modal-title text-center">Post a Job</h4>
               <hr>
-              <form id="postAdForm" method="post" th:action="@{/company/job/post/{email}(email=${email})}">
-                <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
+              <form id="postAdForm" method="post" th:action="@{/company/job/post/{email}(email=${email})}" enctype="multipart/form-data">                <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
                   <label for="jobTitle">Job Title:</label>
                   <input type="text" class="form-control" id="jobTitle" name="jobTitle" required>
                 </div>
@@ -160,6 +159,13 @@
                     <option value="HYBRID">Hybrid</option>
                   </select>
                 </div>
+
+                <div class="form-group mb-3">
+                  <label for="jobImage" class="form-label">Job Image:</label>
+                  <input class="form-control" type="file" id="jobImage" name="jobImage" accept="image/*">
+                  <span id="imageError" class="form-text text-danger" style="display: none;">Please upload a 400x300 image.</span>
+                </div>
+
 
                 <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
                   <label for="description">Job Description:</label>
@@ -251,7 +257,6 @@
         descriptionTextarea.style.height = maxHeight + 'px';
       }
     }
-
     descriptionTextarea.addEventListener('input', resizeTextarea, false);
   });
 
@@ -260,41 +265,30 @@
   function toggleMenu(){
     subMenu.classList.toggle("open-menu");
   }
+
+  // document.getElementById('jobImage').addEventListener('change', function(e) {
+  //   const file = e.target.files[0];
+  //   const img = new Image();
+  //   img.src = URL.createObjectURL(file);
+  //
+  //   img.onload = function() {
+  //     const width = img.naturalWidth;
+  //     const height = img.naturalHeight;
+  //
+  //     URL.revokeObjectURL(img.src);
+  //
+  //     const imageError = document.getElementById('imageError');
+  //     if (width !== 400 || height !== 300) {
+  //       imageError.style.display = 'block'; // Show error message
+  //       e.target.value = ''; // Clear the file input
+  //     } else {
+  //       imageError.style.display = 'none'; // Hide error message
+  //     }
+  //   };
+  // });
 </script>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById('postAdForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      const formData = new FormData(this);
-      const userData = Object.fromEntries(formData);
-      const userDataJson = JSON.stringify(userData);
-
-      fetch(this.action, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: userDataJson,
-      })
-              .then(response => {
-                if (!response.ok) {
-                  throw new Error('Network response was not ok');
-                }
-                if (response.redirected) {
-                  window.location.href = response.url;
-                } else {
-                  return response.json();
-                }
-              })
-              .then(data => {
-              })
-              .catch(error => {
-                console.error('Error:', error);
-              })
-    })
-  })
-</script>
 <script src="/main/js/main.js"></script>
-<script src="/job-post/js/post.js"></script>
+<script src="/job-post/js/country-api.js"></script>
 </body>
 </html>

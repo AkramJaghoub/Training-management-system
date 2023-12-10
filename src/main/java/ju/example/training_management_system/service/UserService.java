@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
 
-  private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-  public Role getUserRole(String email) {
-    User user = userRepository.findByEmail(email);
-    return user.getRole();
-  }
+    public Role getUserRole(String email) {
+        User user = userRepository.findByEmail(email);
+        return user.getRole();
+    }
 }

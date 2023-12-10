@@ -17,12 +17,12 @@ function updateAdvertisements(advertisements) {
 
     advertisements.forEach(ad => {
         const article = document.createElement('article');
-        const articleWrapper = document.createElement('div');
-        articleWrapper.classList.add('article-wrapper');
+        // Create and append figure with image
 
+
+        // Create and append article body content
         const articleBody = document.createElement('div');
         articleBody.classList.add('article-body');
-
         const title = document.createElement('h2');
         title.textContent = ad.jobTitle;
 
@@ -53,8 +53,8 @@ function updateAdvertisements(advertisements) {
         articleBody.appendChild(workMode);
         articleBody.appendChild(readMoreLink);
 
-        articleWrapper.appendChild(articleBody);
-        article.appendChild(articleWrapper);
+        // Append articleBody to article
+        article.appendChild(articleBody);
         articlesContainer.appendChild(article);
     });
 }
@@ -99,6 +99,7 @@ function showDescription(ad) {
 
 window.onclick = function(event) {
     const modals = document.getElementsByClassName('modal');
+
     for (let i = 0; i < modals.length; i++) {
         if (event.target === modals[i]) {
             modals[i].style.display = "none";

@@ -10,7 +10,6 @@ import ju.example.training_management_system.repository.TokenRepository;
 import ju.example.training_management_system.repository.UserRepository;
 import ju.example.training_management_system.util.PasswordHashingUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -67,7 +66,7 @@ public class ResetPasswordService {
 
             emailSender.send(message);
         } catch (Exception e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -84,7 +83,7 @@ public class ResetPasswordService {
         return "http://localhost:8080/reset-password?token=" + token.getToken();
     }
 
-    public boolean isTokenExpired(String token){
+    public boolean isTokenExpired(String token) {
         PasswordResetToken resetToken = tokenRepository.findByToken(token);
         return resetToken != null && this.hasExpired(resetToken.getExpiryDateTime());
     }
@@ -97,7 +96,7 @@ public class ResetPasswordService {
 
     public void resetPassword(String email, String newPassword, String token) {
         User user = userRepository.findByEmail(email);
-        if (user != null){
+        if (user != null) {
             String hashedPassword = PasswordHashingUtil.hashPassword(newPassword);
             user.setPassword(hashedPassword);
             userRepository.save(user);

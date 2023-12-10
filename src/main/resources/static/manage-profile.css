@@ -640,7 +640,7 @@ a>code {
 @media (min-width: 768px) {
 
     .pt-md-4 {
-        padding-top: 7.5rem !important;
+        padding-top: 5.5rem !important;
     }
 }
 
@@ -672,6 +672,7 @@ a>code {
 
 .text-center {
     text-align: center !important;
+    margin-top: 3.125rem;
 }
 
 .text-uppercase {
@@ -866,7 +867,7 @@ a.text-white:focus {
     display: none;
 }
 
-.profile-pic img {
+.profile-pic svg {
     position: absolute;
     object-fit: cover;
     width: 165px;
@@ -900,7 +901,7 @@ a.text-white:focus {
     height: 2em;
 }
 
-.card-profile-image img {
+.card-profile-image svg {
     position: absolute;
     left: 50%;
     max-width: 100px;
