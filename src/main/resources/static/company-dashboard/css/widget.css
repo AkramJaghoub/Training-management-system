@@ -19,15 +19,7 @@ article {
     margin: 3.125rem auto; /* Top margin and auto horizontal margin for centering */
     border-radius: 10px; /* Rounded corners for the border */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow for depth */
-}
-
-article:hover {
-    --img-scale: 1.1;
-    --title-color: #28666e;
-    --link-icon-translate: 0;
-    --link-icon-opacity: 1;
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2),
-    0 8px 12px rgba(0, 0, 0, 0.15);
+    background-color: #FAF9F6;
 }
 
 article a::after {
@@ -36,12 +28,13 @@ article a::after {
     inset-inline: 0;
     cursor: pointer;
     content: "";
+    z-index: -1; /* Make sure it's below interactive elements */
 }
 
 article h2 {
     margin: 0 0 18px 0;
     font-family: 'Open Sans', sans-serif;
-    font-size: 1.9rem;
+    font-size: 1.5rem;
     letter-spacing: 0.06em;
     color: var(--title-color);
     transition: color 0.3s ease-out;
@@ -52,17 +45,102 @@ article h2 {
     padding: 20px;
 }
 
+.article-button {
+    margin: 5px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button .update-button{
+    z-index: 100; /* Higher value to ensure it's on top of other elements */
+    position: relative; /* z-index only works on positioned elements */
+}
+
+.delete-button {
+    /* existing styles */
+    font-size: 100px;
+    padding: 0; /* Removes padding if not needed */+++-
+    border: none; /* Ensures there's no border */
+    background-color: transparent;
+}
+
+.menu-container {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 200; /* Higher than other elements */
+    padding: 5px 0; /* Top and bottom padding */
+    min-width: 100px; /* Minimum width, adjust as needed */
+}
+
+.menu-container a {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Vertically align items */
+    padding: 8px 10px;
+    color: #333;
+    font-weight: 400;
+    font-size: 1rem;
+    text-decoration: none;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu-container a:hover {
+    background-color: #f5f5f5;
+    color: #000;
+}
+
+.menu-container a:last-child {
+    border-bottom: none;
+}
+
+/* Styling for the icon */
+.menu-container a iconify-icon {
+    margin-right: 10px; /* Space between icon and text */
+    font-size: 20px; /* Adjust size as needed */
+    min-width: 24px; /* Ensure consistent width for all icons */
+}
+
+/* Ensure text alignment */
+.menu-container a span {
+    flex-grow: 1; /* Allows text to take up remaining space */
+    text-align: left; /* Align text to the left */
+}
+
+.menu-icon {
+    cursor: pointer;
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    z-index: 100;
+}
+
+/* Targeting the iconify-icon specifically */
+
+.update-button {
+    background-color: #4caf50;
+    color: white;
+}
+
+.update-button:hover {
+    background-color: #43a047;
+}
+
 article a {
     display: inline-flex;
     align-items: center;
     text-decoration: none;
     color: #28666e;
     font-weight: bold;
-}
-
-article a:focus, article a:hover {
-    outline: none;
-    color: #333;
 }
 
 article a .icon {
@@ -73,6 +151,10 @@ article a .icon {
     transform: translateX(var(--link-icon-translate));
     opacity: var(--link-icon-opacity);
     transition: all 0.3s;
+}
+
+.menu-icon{
+
 }
 
 .articles {
@@ -140,7 +222,7 @@ article a .icon {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 15;
     left: 0;
     top: 0;
     width: 100%;
@@ -149,6 +231,17 @@ article a .icon {
     background-color: rgb(0, 0, 0);
     background-color: rgba(0, 0, 0, 0.4);
 }
+
+.view-description:hover {
+        text-decoration: none;
+        color: inherit; /* Keeps the color the same on hover */
+}
+
+    /* General targeting, affects all links within '.article-body' */
+    .article-body a:hover {
+        text-decoration: none;
+        color: inherit; /* Keeps the color the same on hover */
+    }
 
 .modal-content {
     background-color: #fefefe;
@@ -173,17 +266,36 @@ article a .icon {
     font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
 .modal-body {
     font-family: 'Open Sans', sans-serif;
     color: #333;
     line-height: 1.6;
     max-height: calc(80vh - 40px);
     overflow-y: auto;
+}
+
+
+.dialog-container {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: -100%; /* Start off-screen */
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 1000; /* Make sure it's on top */
+    align-items: center;
+    justify-content: center;
+    transition: top 0.5s ease; /* Slide down effect */
+}
+
+.dialog {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dialog button {
+    margin: 10px;
+    /* Add more button styling here */
 }

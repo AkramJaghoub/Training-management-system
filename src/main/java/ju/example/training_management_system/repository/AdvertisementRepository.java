@@ -11,4 +11,6 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
   boolean existsByJobTitle(String jobTitle);
 
   List<Advertisement> findByCompanyName(String companyName);
+
+    void deleteByJobTitleAndCompanyName(String companyName, String position);
 }

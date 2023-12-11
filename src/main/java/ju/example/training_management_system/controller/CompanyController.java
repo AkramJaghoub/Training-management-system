@@ -3,11 +3,6 @@ package ju.example.training_management_system.controller;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
 import ju.example.training_management_system.dto.AdvertisementDto;
 import ju.example.training_management_system.model.company.advertisement.Advertisement;
 import ju.example.training_management_system.model.users.Role;
@@ -20,6 +15,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/company")
@@ -72,8 +71,7 @@ public class CompanyController {
     }
 
     @PostMapping("/job/post/{email}")
-    public String postAds(
-            @ModelAttribute AdvertisementDto postDto, @PathVariable("email") String email) throws IOException {
+    public String postAds(@ModelAttribute AdvertisementDto postDto, @PathVariable("email") String email) throws IOException {
         adsPostService.postAd(postDto, email);
         return "job-post";
     }
@@ -83,11 +81,19 @@ public class CompanyController {
         String email = (String) session.getAttribute("email");
         if (email != null) {
             String companyName = companyService.getCompanyName(email);
-            List<Advertisement> advertisements =
-                    adsPostService.getAllAdvertisementsForCompany(companyName);
+            List<Advertisement> advertisements = adsPostService.getAllAdvertisementsForCompany(companyName);
             return ResponseEntity.ok(advertisements);
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
+    }
+
+    @PostMapping("/delete/ad/{position}")
+    public void deleteAd(@PathVariable("position") String position, HttpSession session) {
+        String email = (String) session.getAttribute("email");
+        if (email != null) {
+            String companyName = companyService.getCompanyName(email);
+            adsPostService.deleteAd(companyName, position);
         }
     }
 }

@@ -48,12 +48,12 @@ public class AdsPostService {
 
             User user = userRepository.findByEmail(email);
 
-            if(user instanceof Company company) {
+            if (user instanceof Company company) {
                 ad.setCompany(company);
             }
 
             advertisementRepository.save(ad);
-        }catch (PostAlreadyExistsException ex){
+        } catch (PostAlreadyExistsException ex) {
             ex.printStackTrace();
         }
     }
@@ -66,8 +66,7 @@ public class AdsPostService {
         }
         try {
             String filename = System.currentTimeMillis() + "-" + file.getOriginalFilename();
-            Path destinationFile = rootLocation.resolve(Paths.get(filename))
-                    .normalize().toAbsolutePath();
+            Path destinationFile = rootLocation.resolve(Paths.get(filename)).normalize().toAbsolutePath();
 
             if (!destinationFile.getParent().equals(rootLocation.toAbsolutePath())) {
                 throw new StorageException("Cannot store file outside current directory.");
@@ -85,5 +84,9 @@ public class AdsPostService {
 
     public List<Advertisement> getAllAdvertisementsForCompany(String companyName) {
         return advertisementRepository.findByCompanyName(companyName);
+    }
+
+    public void deleteAd(String companyName, String position) {
+        advertisementRepository.deleteByJobTitleAndCompanyName(companyName, position);
     }
 }
