@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+import static ju.example.training_management_system.util.Utils.getRequiredDashboard;
+
 @Controller
 @RequestMapping("/company")
 @RequiredArgsConstructor
@@ -47,7 +49,7 @@ public class CompanyController {
 
         session.setAttribute("email", email);
 
-        return Utils.getRequiredDashboard(Role.COMPANY);
+        return "company-dashboard";
     }
 
     @GetMapping("/manage-profile")

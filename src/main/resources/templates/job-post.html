@@ -116,40 +116,48 @@
                         <h4 class="modal-title text-center">Post a Job</h4>
                         <hr>
                         <form id="postAdForm">
-                            <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
+                            <div class="form-group mb-3">
                                 <label for="jobTitle">Job Title:</label>
                                 <input class="form-control" id="jobTitle" name="jobTitle" required type="text">
-                                <!-- Display the error message if it exists -->
                                 <div class="mb-3 error-message" id="jobTitleError"></div>
                             </div>
 
-                            <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
+                            <!-- Number of Interns Required -->
+                            <div class="form-group mb-3">
                                 <label for="internsRequired">Number of Interns Required:</label>
                                 <input class="form-control" id="internsRequired" name="internsRequired" required
                                        type="number">
+                                <div class="mb-3 error-message" id="internsRequiredError"></div>
                             </div>
 
-                            <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
+                            <!-- Job Duration -->
+                            <div class="form-group mb-3">
                                 <label for="jobDuration">Job Duration:</label>
                                 <input class="form-control" id="jobDuration" name="jobDuration" required type="number">
+                                <div class="mb-3 error-message" id="jobDurationError"></div>
                             </div>
 
-                            <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
+                            <!-- Country Select -->
+                            <div class="form-group mb-3">
                                 <label for="countrySelect">Country:</label>
-                                <select class="form-control" id="countrySelect" name="dumb" required>
+                                <select class="form-control" id="countrySelect" name="countrySelect" required>
                                     <option value="">Select a Country</option>
+                                    <!-- Country options -->
                                 </select>
+                                <div class="mb-3 error-message" id="countrySelectError"></div>
                             </div>
 
-                            <input id="selectedCountryName" name="country" type="hidden">
-
-                            <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
+                            <!-- City Select -->
+                            <div class="form-group mb-3">
                                 <label for="citySelect">City:</label>
-                                <select class="form-control" disabled id="citySelect" name="city" required>
+                                <select class="form-control" id="citySelect" name="citySelect" required>
                                     <option value="">Select a City</option>
+                                    <!-- City options -->
                                 </select>
+                                <div class="mb-3 error-message" id="citySelectError"></div>
                             </div>
 
+                            <!-- Job Type -->
                             <div class="form-group mb-3">
                                 <label>Job Type:</label>
                                 <div class="d-flex">
@@ -164,8 +172,10 @@
                                         <label class="form-check-label" for="partTime">Part-time</label>
                                     </div>
                                 </div>
+                                <div class="mb-3 error-message" id="jobTypeError"></div>
                             </div>
 
+                            <!-- Work Mode -->
                             <div class="form-group mb-3">
                                 <label for="workMode">Work Mode:</label>
                                 <select class="form-control" id="workMode" name="workMode" required>
@@ -173,18 +183,21 @@
                                     <option value="ON_SITE">On-site</option>
                                     <option value="HYBRID">Hybrid</option>
                                 </select>
+                                <div class="mb-3 error-message" id="workModeError"></div>
                             </div>
 
+                            <!-- Job Image -->
                             <div class="form-group mb-3">
                                 <label class="form-label" for="jobImage">Job Image:</label>
                                 <input accept="image/*" class="form-control" id="jobImage" name="jobImage" type="file">
-                                <!--                  <span id="imageError" class="form-text text-danger" style="display: none;">Please upload a 400x300 image.</span>-->
+                                <div class="mb-3 error-message" id="jobImageError"></div>
                             </div>
 
-
-                            <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
+                            <!-- Job Description -->
+                            <div class="form-group mb-3">
                                 <label for="description">Job Description:</label>
                                 <textarea class="form-control" id="description" name="description" required></textarea>
+                                <div class="mb-3 error-message" id="descriptionError"></div>
                             </div>
                             <button class="btn btn-primary" type="button" id="submitButton">Post</button>
                         </form>

@@ -140,12 +140,13 @@
                                     <input class="form-control" id="internsRequired" name="internsRequired"
                                            required
                                            type="number">
+                                    <div class="mb-3 error-message" id="internsRequiredError"></div>
                                 </div>
 
-                                <div class="form-group mb-3">
-                                    <label for="jobDuration">Job Duration (Months):</label>
-                                    <input class="form-control" id="jobDuration" name="jobDuration" required
-                                           type="number">
+                                <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
+                                    <label for="jobDuration">Job Duration:</label>
+                                    <input class="form-control" id="jobDuration" name="jobDuration" required type="number">
+                                    <div class="mb-3 error-message" id="jobDurationError"></div>
                                 </div>
 
                                 <div class="form-group mb-3">

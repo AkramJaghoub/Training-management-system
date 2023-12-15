@@ -44,7 +44,7 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
     })
         .then(response => response.json())
         .then(data => {
-            if (data.status === "BAD_REQUEST") {
+            if (data.status === 400) {
                 loginError.textContent = data.message; // Displaying error message
                 loginError.style.display = 'block'; // Ensure the error message is visible
             } else {

@@ -127,7 +127,7 @@ input {
     animation: show 0.6s;
 }
 
-input-with-icon {
+.input-with-icon {
     position: relative;
     margin-bottom: 20px;
 }
@@ -265,4 +265,8 @@ input-with-icon {
 
 .login:hover {
     color: var(--bs-link-hover-color);
+}
+
+.error-message{
+    color: #FF0000;
 }

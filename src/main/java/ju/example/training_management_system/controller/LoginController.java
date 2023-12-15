@@ -33,8 +33,8 @@ public class LoginController {
     }
 
     @GetMapping("/forget-password")
-    public String getForgetPasswordPage(
-            @RequestParam(value = "email", required = false) String email, Model model) {
+    public String getForgetPasswordPage(@RequestParam(value = "email", required = false) String email,
+                                        Model model) {
         if (email != null) {
             model.addAttribute("email", email);
         }

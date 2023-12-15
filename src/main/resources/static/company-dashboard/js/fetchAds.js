@@ -299,7 +299,6 @@ function showUpdateForm(ad) {
     form.jobDuration.value = ad.jobDuration;
     form.description.value = ad.description;
 
-    console.log(ad.jobImage);
     const jobImageInput = form.querySelector('[name="jobImage"]');
     if (jobImageInput) {
         const file = new File([ad.jobImage], 'jobImage.png', {type: 'image/png'}); // You can adjust the filename and type as needed
@@ -336,10 +335,8 @@ function showUpdateForm(ad) {
     adIdInput.type = 'hidden';
     adIdInput.name = 'id';
     adIdInput.value = article.dataset.adId;
-    console.log(article.dataset.adId + " vvvvvvvv");
     form.appendChild(adIdInput);
 
-    console.log(ad.country);
     // Populate country select and then cities
     const countrySelect = document.querySelector('#countrySelect');
     populateCountrySelect(countrySelect, globalCountries, ad.country);
@@ -428,6 +425,31 @@ function submitUpdateForm(ad) {
     if (country) {
         // Replace the country code with the country name in the formData
         formData.set('country', country.name);
+    }
+
+    document.getElementById('jobTitleError').textContent = '';
+    document.getElementById('internsRequiredError').textContent = '';
+    document.getElementById('jobDurationError').textContent = '';
+
+    const internsRequired = form.elements['internsRequired'].value;
+    const jobDuration = form.elements['jobDuration'].value;
+
+    let isValid = true;
+
+    // Validate Number of Interns
+    if (isNaN(internsRequired) || internsRequired === "") {
+        document.getElementById('internsRequiredError').textContent = 'Please enter a valid number for interns required.';
+        isValid = false;
+    }
+
+    // Validate Job Duration
+    if (isNaN(jobDuration) || jobDuration === "") {
+        document.getElementById('jobDurationError').textContent = 'Please enter a valid number for job duration.';
+        isValid = false;
+    }
+
+    if (!isValid) {
+        return;
     }
 
     // Include the advertisement ID in the formData

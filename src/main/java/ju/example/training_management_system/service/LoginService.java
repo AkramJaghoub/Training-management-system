@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import static ju.example.training_management_system.util.Utils.getRequiredDashboard;
+
 @Service
 @RequiredArgsConstructor
 public class LoginService {
@@ -22,8 +24,7 @@ public class LoginService {
 
         if (authenticationService.isAdmin(email, password)) {
             Role role = Role.ADMIN;
-            return new ApiResponse(
-                    role.toString().toLowerCase() + "/dashboard", HttpStatus.OK); // return early for admin
+            return new ApiResponse(getRequiredDashboard(role), HttpStatus.OK); // return early for admin
         }
 
         if (!authenticationService.isValidUser(email, password)) {
@@ -33,6 +34,6 @@ public class LoginService {
         Role role = userService.getUserRole(email);
 
         session.setAttribute("email", email);
-        return new ApiResponse(role.toString().toLowerCase() + "/dashboard", HttpStatus.OK);
+        return new ApiResponse(getRequiredDashboard(role), HttpStatus.OK);
     }
 }
