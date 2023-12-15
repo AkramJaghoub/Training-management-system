@@ -18,10 +18,10 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
     if (!emailValue || !passwordValue) {
         // Show an error message for missing email or password
         if (!emailValue) {
-            emailError.textContent = 'Email field is required.';
+            emailError.textContent = 'Email field is required';
         }
         if (!passwordValue) {
-            passwordError.textContent = 'Password field is required.';
+            passwordError.textContent = 'Password field is required';
         }
         return; // Exit early, no need to proceed further
     }
@@ -30,7 +30,7 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple regex for email validation
     if (!emailRegex.test(emailValue)) {
         // Show an error message for invalid email format
-        emailError.textContent = 'Please enter a valid email address.';
+        emailError.textContent = 'Please enter a valid email address';
         return; // Exit early, no need to proceed further
     }
 
@@ -53,7 +53,7 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
         })
         .catch(error => {
             console.error('Error:', error);
-            loginError.textContent = 'An error occurred. Please try again.';
+            loginError.textContent = 'An error occurred. Please try again';
         });
 });
 

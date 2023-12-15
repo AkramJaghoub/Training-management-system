@@ -45,38 +45,38 @@ document.addEventListener('DOMContentLoaded', function () {
             userData.major = form.elements['major'].value;
 
             if (email.trim() === "") {
-                document.getElementById('studentEmailError').textContent = 'email is required.';
+                document.getElementById('studentEmailError').textContent = 'email is required';
                 isValid = false;
             }
 
             if (password.trim() === "") {
-                document.getElementById('studentPasswordError').textContent = 'Password is required.';
+                document.getElementById('studentPasswordError').textContent = 'Password is required';
                 isValid = false;
             }
 
             if (firstName.trim() === "") {
-                document.getElementById('studentFirstNameError').textContent = 'First Name is required.';
+                document.getElementById('studentFirstNameError').textContent = 'First Name is required';
                 isValid = false;
             }
 
             if (lastName.trim() === "") {
-                document.getElementById('studentLastNameError').textContent = 'Last Name is required.';
+                document.getElementById('studentLastNameError').textContent = 'Last Name is required';
                 isValid = false;
             }
 
             if (university.trim() === "") {
-                document.getElementById('studentUniversityError').textContent = 'University is required.';
+                document.getElementById('studentUniversityError').textContent = 'University is required';
                 isValid = false;
             }
 
             if (major.trim() === "") {
-                document.getElementById('studentMajorError').textContent = 'Major is required.';
+                document.getElementById('studentMajorError').textContent = 'Major is required';
                 isValid = false;
             }
 
 
             if (email && !emailRegex.test(email)) {
-                document.getElementById('studentEmailError').textContent = 'Please enter a valid email address.';
+                document.getElementById('studentEmailError').textContent = 'Please enter a valid email address';
                 isValid = false;
             }
             if (password && !passwordRegex.test(password)) {
@@ -105,27 +105,27 @@ document.addEventListener('DOMContentLoaded', function () {
             const companyName = form.elements['name'].value;
 
             if (email.trim() === "") {
-                document.getElementById('companyEmailError').textContent = 'Email is required.';
+                document.getElementById('companyEmailError').textContent = 'Email is required';
                 isValid = false;
             }
 
             if (password.trim() === "") {
-                document.getElementById('companyPasswordError').textContent = 'Password is required.';
+                document.getElementById('companyPasswordError').textContent = 'Password is required';
                 isValid = false;
             }
 
             if (industry.trim() === "") {
-                document.getElementById('companyIndustryError').textContent = 'Industry is required.';
+                document.getElementById('companyIndustryError').textContent = 'Industry is required';
                 isValid = false;
             }
 
             if (companyName.trim() === "") {
-                document.getElementById('companyNameError').textContent = 'Company Name is required.';
+                document.getElementById('companyNameError').textContent = 'Company Name is required';
                 isValid = false;
             }
 
             if (email && !emailRegex.test(email)) {
-                document.getElementById('companyEmailError').textContent = 'Please enter a valid email address.';
+                document.getElementById('companyEmailError').textContent = 'Please enter a valid email address';
                 isValid = false;
             }
             if (password && !passwordRegex.test(password)) {

@@ -65,42 +65,43 @@
 <main class="main">
     <div class="hero">
         <div class="fcontainer container" id="fcontainer">
-            <div class="form-container sign-in-container ">
-                <form id="companyRegisterForm" style="margin-top: 7rem;">
+            <div class="form-container sign-in-container">
+                <form id="companyRegisterForm">
                     <input name="role" type="hidden" value="COMPANY"/>
                     <h1>Create Account</h1>
-                    <div class="mb-3 input-with-icon">
+                    <div class="mb-3 input-with-icon form-group">
                         <i class="fas fa-building"></i>
                         <label>
-                            <input name="name" placeholder="Company Name" type="text"/>
-                            <div class="error-message" id="companyNameError"></div>
+                            <input class="form-control" name="name" placeholder="Company Name" type="text"/>
+                            <div class="mb-3 error-message" id="companyNameError"></div>
                         </label>
                     </div>
 
-                    <div class="mb-3 input-with-icon">
+                    <div class="mb-3 input-with-icon form-group">
                         <i class="fas fa-envelope"></i>
                         <label>
-                            <input name="email" placeholder="Email" type="email"/>
-                            <div class="error-message" id="companyEmailError"></div>
+                            <input class="form-control" name="email" placeholder="Email" type="email"/>
+                            <div class="mb-3 error-message" id="companyEmailError"></div>
                         </label>
                     </div>
 
-                    <div class="mb-3 input-with-icon">
+                    <div class="mb-3 input-with-icon form-group">
                         <i class="fas fa-industry"></i>
                         <label>
-                            <input name="industry" placeholder="Industry" type="text"/>
-                            <div class="error-message" id="companyIndustryError"></div>
+                            <input class="form-control" name="industry" placeholder="Industry" type="text"/>
+                            <div class="mb-3 error-message" id="companyIndustryError"></div>
                         </label>
                     </div>
 
-                    <div class="mb-3 input-with-icon">
+                    <div class="mb-3 input-with-icon form-group">
                         <i class="fas fa-lock"></i>
                         <label>
-                            <input name="password" placeholder="password" type="password"/>
-                            <div class="error-message" id="companyPasswordError"></div>
+                            <input class="form-control" name="password" placeholder="password" type="password"/>
+                            <div class="mb-3 error-message" id="companyPasswordError"></div>
                         </label>
                     </div>
                     <button class="button-home">Sign Up</button>
+                    <!--                    <button class="btn btn-primary" type="button">Sign Up</button>-->
                     <p>Already have an account? <a class="login" href="/login">Login</a></p>
                 </form>
             </div>
@@ -108,43 +109,61 @@
             <div class=" form-container sign-up-container ">
                 <form id="studentRegisterForm">
                     <input name="role" type="hidden" value="STUDENT"/>
-                    <h1><span style="color:#5A8349F9">Create</span>Account</h1>
-                    <div class="mb-3 input-with-icon">
-                        <i class="fas fa-user"></i>
-                        <input id="firstName" name="firstName" placeholder="First Name" type="text"/>
-                        <div class="error-message" id="studentFirstNameError"></div>
+                    <h1>Create Account</h1>
+
+                    <div class="name-container">
+                        <div class="mb-3 input-with-icon form-group">
+                            <i class="fas fa-user"></i>
+                            <label for="firstName">
+                                <input class="form-control" id="firstName" name="firstName" placeholder="First Name"
+                                       type="text"/>
+                            </label>
+                            <div class="mb-3 error-message" id="studentFirstNameError"></div>
+                        </div>
+
+                        <div class="mb-3 input-with-icon form-group">
+                            <i class="fas fa-user"></i>
+                            <label>
+                                <input class="form-control" name="lastName" placeholder="Last Name" type="text"/>
+                            </label>
+                            <div class="mb-3 error-message" id="studentLastNameError"></div>
+                        </div>
                     </div>
 
-                    <div class="mb-3 input-with-icon">
-                        <i class="fas fa-user"></i>
-                        <input name="lastName" placeholder="Last Name" type="text"/>
-                        <div class="error-message" id="studentLastNameError"></div>
-                    </div>
-
-                    <div class="mb-3 input-with-icon">
-                        <i class="fas fa-university"></i>
-                        <input name="university" placeholder="University" type="text"/>
-                        <div class="error-message" id="studentUniversityError"></div>
-                    </div>
-
-                    <div class="mb-3 input-with-icon">
-                        <i class="fas fa-book"></i>
-                        <input name="major" placeholder="Major" type="text"/>
-                        <div class="error-message" id="studentMajorError"></div>
-                    </div>
-
-                    <div class="mb-3 input-with-icon">
+                    <div class="mb-3 input-with-icon form-group">
                         <i class="fas fa-envelope"></i>
-                        <input name="email" placeholder="Email" type="email"/>
-                        <div class="error-message" id="studentEmailError"></div>
+                        <label>
+                            <input class="form-control" name="email" placeholder="Email" type="email"/>
+                        </label>
+                        <div class="mb-3 error-message" id="studentEmailError"></div>
                     </div>
 
-                    <div class="mb-3 input-with-icon">
-                        <i class="fas fa-lock"></i>
-                        <input name="password" placeholder="Password" type="password"/>
-                        <div class="error-message" id="studentPasswordError"></div>
+                    <div class="mb-3 input-with-icon form-group">
+                        <i class="fas fa-university"></i>
+                        <label>
+                            <input class="form-control" name="university" placeholder="University" type="text"/>
+                        </label>
+                        <div class="mb-3 error-message" id="studentUniversityError"></div>
                     </div>
-                    <button class="button-home">Sign Up</button>
+
+                    <div class="mb-3 input-with-icon form-group">
+                        <i class="fas fa-book"></i>
+                        <label>
+                            <input class="form-control" name="major" placeholder="Major" type="text"/>
+                        </label>
+                        <div class="mb-3 error-message" id="studentMajorError"></div>
+                    </div>
+
+                    <div class="mb-3 input-with-icon form-group">
+                        <i class="fas fa-lock"></i>
+                        <label>
+                            <input class="form-control" name="password" placeholder="Password" type="password"/>
+                        </label>
+                        <div class="mb-3 error-message" id="studentPasswordError"></div>
+                    </div>
+                    <!--                    <button class="btn btn-primary" type="button">Sign Up</button>-->
+
+                    <button class="button-home" style="margin-top: -1rem">Sign Up</button>
                     <p style="margin-bottom: 5rem;">Already have an account? <a class="login" href="/login">Login</a>
                     </p>
                 </form>

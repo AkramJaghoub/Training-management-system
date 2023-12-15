@@ -61,7 +61,7 @@ input {
 
 .box1 {
     height: 50%;
-    margin-top: 6.5rem;
+    margin-top: 3.5rem;
 }
 
 .boxs1 {
@@ -69,8 +69,7 @@ input {
 }
 
 .box2 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 4rem;
     height: 50%;
 }
 
@@ -102,11 +101,12 @@ input {
 }
 
 .sign-in-container h1, .sign-up-container h1 {
-    color: var(--t-color);
+    color: #000;
+    margin-bottom: 1.5rem;
 }
 
 .sign-in-container p, .sign-up-container p {
-    color: var(--t-color);
+    color: #000;
 }
 
 .container.right-panel-active .sign-in-container {
@@ -129,45 +129,67 @@ input {
 
 .input-with-icon {
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
 
 .input-with-icon input {
-    padding-left: 50px;
+    padding-left: 3.125rem;
+    padding-bottom: 1rem; /* or whatever value gives you the look you want */
+    line-height: 2.5rem; /* Adjust line-height for vertical centering */
     border: none;
     border-bottom: 2px solid #aaaaaa;
-    width: 18rem;
-    height: 45px;
+    width: 25rem;
+    height: 1.5rem;
     background-color: transparent;
     outline: none;
-    font-size: 16px;
+    font-size: 1rem;
     transition: border-color 0.3s ease;
     color: #000;
+    margin-bottom: -0.5rem;
 }
 
 .input-with-icon input:focus {
-    border-bottom-color: green;
+    border-bottom-color: black;
     box-shadow: none;
     background-color: transparent;
 }
 
 .input-with-icon i {
     position: absolute;
-    left: 10px;
-    top: 65%;
+    left: 0.625rem;
+    top: 35%;
     transform: translateY(-50%);
     font-size: 15px;
-    color: var(--t-color);
+    color: #000;
     transition: color 0.3s ease;
-    padding-bottom: 20px;
+    padding-bottom: 1.25rem;
+}
+
+.name-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.2rem; /* This provides space between the two form groups */
+}
+
+.name-container .form-group {
+    flex: 1; /* This makes each input take up equal space */
+}
+
+.name-container input{
+    width: 12.5rem;
+}
+
+.name-container .first-name,
+.name-container .last-name {
+    flex-basis: calc(50% - 5px); /* Adjust the width taking the gap into account */
 }
 
 .input-with-icon input:focus + i {
-    color: green;
+    color: black;
 }
 
 .input-with-icon input::placeholder {
-    color: var(--t-color-alt);
+    color: lightgrey;
 }
 
 @keyframes show {
@@ -196,7 +218,8 @@ input {
 
 .overlay-container p {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    font-weight: bold;
 }
 
 .container.right-panel-active .overlay-container {
@@ -267,6 +290,13 @@ input {
     color: var(--bs-link-hover-color);
 }
 
-.error-message{
+.error-message {
+    min-height: 2rem;
     color: #FF0000;
+    padding-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+label{
+    font-size: 0.8rem;
 }

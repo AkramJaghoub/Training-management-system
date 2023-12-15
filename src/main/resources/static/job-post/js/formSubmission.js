@@ -28,39 +28,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Add validations for each field
         if (jobTitle.trim() === "") {
-            document.getElementById('jobTitleError').textContent = 'Job Title is required.';
+            document.getElementById('jobTitleError').textContent = 'Job Title is required';
             isValid = false;
         }
         if (internsRequired.trim() === "") {
-            document.getElementById('internsRequiredError').textContent = 'Number of Interns Required is required.';
+            document.getElementById('internsRequiredError').textContent = 'Number of Interns Required is required';
             isValid = false;
         }
         if (jobDuration.trim() === "") {
-            document.getElementById('jobDurationError').textContent = 'Job Duration is required.';
+            document.getElementById('jobDurationError').textContent = 'Job Duration is required';
             isValid = false;
         }
         if (countrySelect.trim() === "") {
-            document.getElementById('countrySelectError').textContent = 'Country selection is required.';
+            document.getElementById('countrySelectError').textContent = 'Country selection is required';
             isValid = false;
         }
         if (countrySelect.trim() !== "" && citySelect.disabled === false && citySelect.value.trim() === "") {
-            document.getElementById('citySelectError').textContent = 'City selection is required.';
+            document.getElementById('citySelectError').textContent = 'City selection is required';
             isValid = false;
         }
         if (!jobType) {
-            document.getElementById('jobTypeError').textContent = 'Selecting a Job Type is required.';
+            document.getElementById('jobTypeError').textContent = 'Selecting a Job Type is required';
             isValid = false;
         }
         if (workMode.trim() === "") {
-            document.getElementById('workModeError').textContent = 'Work Mode selection is required.';
+            document.getElementById('workModeError').textContent = 'Work Mode selection is required';
             isValid = false;
         }
         if (jobImage === 0) {
-            document.getElementById('jobImageError').textContent = 'Uploading a Job Image is required.';
+            document.getElementById('jobImageError').textContent = 'Uploading a Job Image is required';
             isValid = false;
         }
         if (description.trim() === "") {
-            document.getElementById('descriptionError').textContent = 'Job Description is required.';
+            document.getElementById('descriptionError').textContent = 'Job Description is required';
             isValid = false;
         }
 
