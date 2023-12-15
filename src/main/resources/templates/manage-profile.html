@@ -40,10 +40,6 @@
             </li>
 
             <li class="nav__item">
-                <a class="nav__link" href="#about">About</a>
-            </li>
-
-            <li class="nav__item">
                 <a class="nav__link" href="/company/job/post">Post Job</a>
             </li>
 
@@ -124,99 +120,92 @@
                         <div class="row justify-content-center">
                             <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
                                 <div class="card card-profile shadow">
-                                    <div class="row justify-content-center">
 
-                                    </div>
-                                    <div class="card-body pt-0 pt-md-4">
-                                        <div class="profile-pic card-profile-image">
-                                            <div class="avatar-upload">
-                                                <div class="avatar-edit">
-                                                    <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
-                                                    <label for="imageUpload"></label>
-                                                </div>
-                                                <div class="avatar-preview">
-                                                    <div id="imagePreview" style="background-image: url('http://i.pravatar.cc/500?img=7');">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="text-center">
-                                            <h3 id="companyNameDisplay2"></h3>
-                                            <div class="h5 font-weight-300">
-                                                <i class="ni location_pin mr-2"></i>Amman, Jordan
-                                            </div>
-                                            <div class="h5 mt-4">
-                                                <i class="ni business_briefcase-24 mr-2"></i>Online publishing platform
-                                                service provider.
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xl-8 order-xl-1">
-                                <div class="card bg-secondary shadow">
-                                    <div class="card-header bg-white border-0">
-                                        <div class="row align-items-center">
-                                            <div class="col-8">
-                                                <h3 class="mb-0">My account</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <form action="/company/manage-profile" method="post">
-                                            <h6 class="heading-small text-muted mb-4">Company information</h6>
-                                            <div class="pl-lg-4">
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group focused">
-                                                            <label class="form-control-label" for="input-username">Company
-                                                                name</label>
-                                                            <input class="form-control form-control-alternative" id="input-username" name="name"
-                                                                   placeholder="Username"
-                                                                   type="text" value="Atypon">
+                            <div class="container-xl px-4 mt-4">
+                                <!-- Account page navigation-->
+                                <hr class="mt-0 mb-4">
+                                <div class="row">
+                                    <div class="col-xl-4">
+                                        <!-- Profile picture card-->
+                                        <div class="card mb-4 mb-xl-0">
+                                            <div class="card-header">Profile Picture</div>
+                                            <div class="card-body text-center">
+                                                <!-- Profile picture image-->
+                                                <div class="profile-pic card-profile-image">
+                                                    <div class="avatar-upload">
+                                                        <div class="avatar-edit">
+                                                            <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                                                            <label for="imageUpload"></label>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label class="form-control-label">Email</label>
-                                                            <p class="form-text" id="email-text">Atypon@gmail.com</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group focused">
-                                                            <label class="form-control-label" for="input-first-name">Industry</label>
-                                                            <input class="form-control form-control-alternative" id="input-first-name" name="industry"
-                                                                   placeholder="industry"
-                                                                   type="text" value="IT">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group focused">
-                                                            <label class="form-control-label" for="input-password">Password</label>
-                                                            <div class="input-group">
-                                                                <input class="form-control form-control-alternative" id="input-password"
-                                                                       name="password"
-                                                                       placeholder="Password"
-                                                                       type="password" value="12345">
-                                                                <div class="input-group-append">
-                                                                <span class="input-group-text" onclick="togglePasswordVisibility()"
-                                                                      style="cursor: pointer;">
-                                                                    <i class="fas fa-eye" id="password-icon"></i>
-                                                                </span>
-                                                                </div>
+                                                        <div class="avatar-preview">
+                                                            <div id="imagePreview" style="background-image: url('http://i.pravatar.cc/500?img=7');">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-4 text-right">
-                                                        <button class="btn btn-sm btn-primary" type="submit">Edit
-                                                            Profile
-                                                        </button>
-                                                    </div>
                                                 </div>
+                                                <h5 id="companyNameid2" style="margin-top:-2rem">Atypon</h5>
                                             </div>
-                                        </form>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-8">
+                                        <!-- Account details card-->
+                                        <div class="card mb-4">
+                                            <div class="card-header">Account Details</div>
+                                            <div class="card-body">
+                                                <form>
+                                                    <!-- Form Group (username)-->
+                                                    <div class="mb-3">
+                                                        <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                                                        <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value="name@example.com">
+                                                    </div>
+                                                    <!-- Form Row-->
+                                                    <div class="row gx-3 mb-3">
+                                                        <!-- Form Group (Company name)-->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="CompanyName">Company name<span style="color: red">*</span></label>
+                                                            <input class="form-control" id="CompanyName" type="text" placeholder="Enter your Company name">
+                                                        </div>
+                                                        <!-- Form Group (Industry)-->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="IndustryName">Industry<span style="color: red">*</span></label>
+                                                            <input class="form-control" id="IndustryName" type="text" placeholder="Enter your Industry" value="Information Tech">
+                                                        </div>
+                                                    </div>
+                                                    <!-- Form Row        -->
+                                                    <div class="row gx-3 mb-3">
+
+                                                        <!-- Form Group (location)-->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="inputLocation">Location</label>
+                                                            <input class="form-control" id="inputLocation" type="text" placeholder="Enter your location" value="San Francisco, CA">
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="inputPhone">Phone number</label>
+                                                            <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="555-123-4567">
+                                                        </div>
+                                                    </div>
+                                                    <!-- Form Group (email address)-->
+
+                                                    <!-- Form Row-->
+                                                    <div class="row gx-3 mb-3">
+                                                        <!-- Form Group (phone number)-->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="inputEmpNumber">Number of Employees</label>
+                                                            <input class="form-control" id="inputEmpNumber" type="number" placeholder="Number of Employees" min="0" >
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="inputEYear">Establishment Year</label>
+                                                            <input class="form-control" id="inputEYear" type="number" name="year" placeholder="YYYY" min="1900" max="2100">
+                                                        </div>
+                                                    </div>
+                                                    <!-- Save changes button-->
+                                                    <button class="btn btn-primary" type="button" style="margin-left: 14rem">Save changes</button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
