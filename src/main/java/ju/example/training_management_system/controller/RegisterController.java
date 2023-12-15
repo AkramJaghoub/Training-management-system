@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static ju.example.training_management_system.util.Utils.getRequiredDashboard;
@@ -30,9 +31,11 @@ public class RegisterController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Map<String, Object> userData) {
         ApiResponse response = registerService.registerUser(userData);
-        if(response.getStatus() == HttpStatus.OK){
+        if (response.getStatus() == HttpStatus.OK) {
             Role role = Role.toRole((String) userData.get("role"));
-            return new ResponseEntity<>(getRequiredDashboard(role), response.getStatus());
+            Map<String, String> body = new HashMap<>();
+            body.put("redirectUrl", getRequiredDashboard(role));
+            return new ResponseEntity<>(body, response.getStatus());
         }
         return new ResponseEntity<>(response, response.getStatus());
     }

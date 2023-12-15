@@ -145,16 +145,20 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error(`Server responded with status: ${response.statusText}`);
                 }
                 return response.json();
             })
             .then(data => {
-                if (data.status === 400) {
+                if (data.redirectUrl) {
+                    // Use the redirect URL from the server response
+                    window.location.href = data.redirectUrl;
                 } else {
-                    window.location.href = data.message; // Redirect on successful registration
+                    // Handle other cases or log an error
+                    console.error('No redirect URL in response:', data);
                 }
             })
+
             .catch(error => {
                 console.error('Error:', error);
             });
