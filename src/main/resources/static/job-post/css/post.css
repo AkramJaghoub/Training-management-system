@@ -137,24 +137,21 @@ nav ul li.profile a:after {
 }
 
 .centered-form {
-    margin: 0 auto;
-    width: 100%;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 55px;
+    margin-top: 4rem;
 }
 
-#description {
-    overflow-y: auto;
-    max-height: 170px;
+.form-group {
+    margin-bottom: 20px;
 }
 
-.error-message{
-    color: #FF0000;
+label {
+    font-weight: bold;
+}
+
+.error-message {
+    color: #dc3545;
 }

@@ -155,3 +155,31 @@ nav ul li.profile a:after {
     overflow-y: auto;
     max-height: 170px;
 }
+
+.dialog-form {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin: 50px auto; /* Center the form */
+    width: 65%; /* Set maximum width */
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.error-message {
+    color: #dc3545;
+}
+
+#cancelUpdate, #saveChangesButton {
+    width: 100%;
+    margin-top: 15px; /* Add some spacing between buttons */
+}
