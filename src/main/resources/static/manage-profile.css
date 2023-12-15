@@ -1,18 +1,18 @@
-:root{
+:root {
     --t-color: #5A8349F9;
     --t-color-alt: rgba(90, 131, 73, 0.37);
     --bs-link-hover-color: #012e6c;
 }
 
-.hero{
+.hero {
     width: 100%;
     min-height: 100vh;
-    background-color : transparent;
+    background-color: transparent;
     color: #525252;
     margin-top: -4rem;
 }
 
-.user-pic{
+.user-pic {
     width: 35px;
 
     border-radius: 50%;
@@ -25,7 +25,7 @@
 }
 
 
-nav ul li .profile{
+nav ul li .profile {
     position: relative;
 }
 
@@ -34,13 +34,13 @@ nav ul li.profile a {
     top: 25px;
 }
 
-nav ul li.profile a:after{
+nav ul li.profile a:after {
     content: "\25BC";
     display: inline-block;
     margin-left: 5px;
 }
 
-.sub-menu-wrap{
+.sub-menu-wrap {
     position: absolute;
     top: 75%;
     left: 72.7%;
@@ -60,15 +60,15 @@ nav ul li.profile a:after{
     transform: rotate(180deg);
 }
 
-.sub-menu-wrap.open-menu{
+.sub-menu-wrap.open-menu {
     max-height: 400px;
 }
 
-.sub-menu-wrap.open-menu{
+.sub-menu-wrap.open-menu {
     max-height: 400px;
 }
 
-.sub-menu{
+.sub-menu {
     height: 16.1rem;
     background: #FAF9F6;
     padding: 0 20px;
@@ -77,19 +77,19 @@ nav ul li.profile a:after{
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-.user-info{
+.user-info {
     display: flex;
     align-items: center;
 }
 
-.user-info h3{
+.user-info h3 {
     font-weight: 500;
     color: rgb(128, 128, 128);
     margin-left: 1rem;
     margin-top: .4rem;
 }
 
-.user-info img{
+.user-info img {
     width: 60px;
     border-radius: 50%;
     margin-right: 15px;
@@ -97,7 +97,7 @@ nav ul li.profile a:after{
     padding: 2px;
 }
 
-.sub-menu hr{
+.sub-menu hr {
     border: 0;
     height: 1px;
     width: 100%;
@@ -105,7 +105,7 @@ nav ul li.profile a:after{
     margin: 15px 0 10px;
 }
 
-.sub-menu-link{
+.sub-menu-link {
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -113,17 +113,17 @@ nav ul li.profile a:after{
     margin: 12px 0;
 }
 
-.sub-menu-link svg{
+.sub-menu-link svg {
     margin-right: 1rem;
     margin-bottom: .7rem;
 }
 
 
-.sub-menu-link p{
+.sub-menu-link p {
     width: 100%;
 }
 
-.sub-menu-link img{
+.sub-menu-link img {
     width: 40px;
     background: #e5e5e5;
     border-radius: 50%;
@@ -131,12 +131,12 @@ nav ul li.profile a:after{
     margin-right: 15px;
 }
 
-.sub-menu-link:hover p{
+.sub-menu-link:hover p {
     font-weight: 600;
     color: var(--bs-link-hover-color);
 }
 
-.sub-menu-link:hover svg{
+.sub-menu-link:hover svg {
     color: gray;
 }
 
@@ -263,7 +263,7 @@ code {
     color: #f3a4b5;
 }
 
-a>code {
+a > code {
     color: inherit;
 }
 
@@ -568,7 +568,7 @@ a>code {
     background-clip: border-box;
 }
 
-.card>hr {
+.card > hr {
     margin-right: 0;
     margin-left: 0;
 }

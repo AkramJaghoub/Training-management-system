@@ -1,294 +1,313 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <!--=============== FAVICON ===============-->
-  <link rel="icon" href="/main/img/tero.png" type="image/x-icon">
+    <!--=============== FAVICON ===============-->
+    <link href="/main/img/tero.png" rel="icon" type="image/x-icon">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!--=============== BOXICONS ===============-->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-  <link rel="stylesheet" href="/main/css/styles.css">
-  <link rel="stylesheet" href="/job-post/css/post.css">
-  <title>job post</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!--=============== BOXICONS ===============-->
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
+    <link href="/main/css/styles.css" rel="stylesheet">
+    <link href="/job-post/css/post.css" rel="stylesheet">
+    <title>job post</title>
 </head>
 <body>
 
-  <header class="header" id="header">
-      <a href="/tms/home" class="nav__logo">
-        <img src="/main/img/tero.png" alt="" class="nav__logo-img">
-      </a>
+<header class="header" id="header">
+    <a class="nav__logo" href="/tms/home">
+        <img alt="" class="nav__logo-img" src="/main/img/tero.png">
+    </a>
 
-      <div class="nav__menu" id="nav-menu">
+    <div class="nav__menu" id="nav-menu">
         <ul class="nav__list">
-          <li class="nav__item">
-            <a href='/company/dashboard' class="nav__link active-link">Home</a>
-          </li>
+            <li class="nav__item">
+                <a class="nav__link active-link" href='/company/dashboard'>Home</a>
+            </li>
 
-          <li class="nav__item">
-            <a href="#about" class="nav__link">About</a>
-          </li>
+            <li class="nav__item">
+                <a class="nav__link" href="#about">About</a>
+            </li>
 
-          <li class="nav__item">
-            <a href="/company/job/post" class="nav__link">Post Job</a>
-          </li>
-
-
-          <li>
-<!--            style="position:relative; left: 68rem" styling for the profile-->
-            <a href="#" id="profileLink" onclick="toggleMenu()">
-              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="black" class="bi bi-person-circle" viewBox="0 0 16 16">
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-              </svg>
-            </a>
-          </li>
-
-          <div class="sub-menu-wrap" id="subMenu">
-            <div class="sub-menu">
-              <span class="profile-arrow">&#9660;</span>
-              <div class="user-info">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="gray" class="bi bi-person-circle" viewBox="0 0 16 16">
-                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                </svg>
-                <h3 th:text="${companyName}"></h3>
-              </div>
-              <hr>
-              <a href="/company/manage-profile" class="sub-menu-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                  <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                </svg>
-                <p>Manage Profile</p>
-              </a>
+            <li class="nav__item">
+                <a class="nav__link" href="/company/job/post">Post Job</a>
+            </li>
 
 
-              <a href="#" class="sub-menu-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
-                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                  <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
-                </svg>
-                <p>Help</p>
-              </a>
+            <li>
+                <!--            style="position:relative; left: 68rem" styling for the profile-->
+                <a href="#" id="profileLink" onclick="toggleMenu()">
+                    <svg class="bi bi-person-circle" fill="black" height="28" viewBox="0 0 16 16"
+                         width="28" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                        <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+                              fill-rule="evenodd"/>
+                    </svg>
+                </a>
+            </li>
 
-              <a href="#" class="sub-menu-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
-                  <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-                </svg>
-                <p>Logout</p>
-              </a>
+            <div class="sub-menu-wrap" id="subMenu">
+                <div class="sub-menu">
+                    <span class="profile-arrow">&#9660;</span>
+                    <div class="user-info">
+                        <svg class="bi bi-person-circle" fill="gray" height="28" viewBox="0 0 16 16"
+                             width="28" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                            <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+                                  fill-rule="evenodd"/>
+                        </svg>
+                        <h3 th:text="${companyName}"></h3>
+                    </div>
+                    <hr>
+                    <a class="sub-menu-link" href="/company/manage-profile">
+                        <svg class="bi bi-pencil" fill="currentColor" height="28" viewBox="0 0 16 16"
+                             width="28" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                        </svg>
+                        <p>Manage Profile</p>
+                    </a>
+
+
+                    <a class="sub-menu-link" href="#">
+                        <svg class="bi bi-info-circle" fill="currentColor" height="28" viewBox="0 0 16 16"
+                             width="28" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                        </svg>
+                        <p>Help</p>
+                    </a>
+
+                    <a class="sub-menu-link" href="#">
+                        <svg class="bi bi-box-arrow-right" fill="currentColor" height="28" viewBox="0 0 16 16"
+                             width="28" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"
+                                  fill-rule="evenodd"/>
+                            <path d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
+                                  fill-rule="evenodd"/>
+                        </svg>
+                        <p>Logout</p>
+                    </a>
+                </div>
             </div>
-          </div>
         </ul>
 
         <div class="nav__close" id="nav-close">
-          <i class='bx bx-x'></i>
+            <i class='bx bx-x'></i>
         </div>
 
-      </div>
+    </div>
 
-      <div class="nav__toggle" id="nav-toggle">
+    <div class="nav__toggle" id="nav-toggle">
         <i class='bx bx-grid-alt'></i>
-      </div>
+    </div>
 
-  </header>
+</header>
 
-  <main class="main">
+<main class="main">
     <section class="home container" id="home">
-      <div class="home__content" >
-        <div class="home__group">
-          <div class="hero">
-            <div class="centered-form">
-              <h4 class="modal-title text-center">Post a Job</h4>
-              <hr>
-              <form id="postAdForm" method="post" th:action="@{/company/job/post/{email}(email=${email})}" enctype="multipart/form-data">                <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
-                  <label for="jobTitle">Job Title:</label>
-                  <input type="text" class="form-control" id="jobTitle" name="jobTitle" required>
-                </div>
+        <div class="home__content">
+            <div class="home__group">
+                <div class="hero">
+                    <div class="centered-form">
+                        <h4 class="modal-title text-center">Post a Job</h4>
+                        <hr>
+                        <form id="postAdForm">
+                            <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
+                                <label for="jobTitle">Job Title:</label>
+                                <input class="form-control" id="jobTitle" name="jobTitle" required type="text">
+                                <!-- Display the error message if it exists -->
+                                <div class="mb-3 error-message" id="jobTitleError"></div>
+                            </div>
 
-                <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
-                  <label for="internsRequired">Number of Interns Required:</label>
-                  <input type="number" class="form-control" id="internsRequired" name="internsRequired" required>
-                </div>
+                            <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
+                                <label for="internsRequired">Number of Interns Required:</label>
+                                <input class="form-control" id="internsRequired" name="internsRequired" required
+                                       type="number">
+                            </div>
 
-                <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
-                  <label for="jobDuration">Job Duration:</label>
-                  <input type="number" class="form-control" id="jobDuration" name="jobDuration" required>
-                </div>
+                            <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
+                                <label for="jobDuration">Job Duration:</label>
+                                <input class="form-control" id="jobDuration" name="jobDuration" required type="number">
+                            </div>
 
-                <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
-                  <label for="countrySelect">Country:</label>
-                  <select id="countrySelect" class="form-control" name="dumb" required>
-                    <option value="">Select a Country</option>
-                  </select>
-                </div>
+                            <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
+                                <label for="countrySelect">Country:</label>
+                                <select class="form-control" id="countrySelect" name="dumb" required>
+                                    <option value="">Select a Country</option>
+                                </select>
+                            </div>
 
-                <input type="hidden" id="selectedCountryName" name="country">
+                            <input id="selectedCountryName" name="country" type="hidden">
 
-                <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
-                  <label for="citySelect">City:</label>
-                  <select id="citySelect" class="form-control" name="city" disabled required>
-                    <option value="">Select a City</option>
-                  </select>
-                </div>
+                            <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
+                                <label for="citySelect">City:</label>
+                                <select class="form-control" disabled id="citySelect" name="city" required>
+                                    <option value="">Select a City</option>
+                                </select>
+                            </div>
 
-                <div class="form-group mb-3">
-                  <label>Job Type:</label>
-                  <div class="d-flex">
-                    <div class="form-check me-3">
-                      <input class="form-check-input" type="radio" name="jobType" id="fullTime" value="FULL_TIME" required>
-                      <label class="form-check-label" for="fullTime">Full-time</label>
+                            <div class="form-group mb-3">
+                                <label>Job Type:</label>
+                                <div class="d-flex">
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" id="fullTime" name="jobType" required
+                                               type="radio" value="FULL_TIME">
+                                        <label class="form-check-label" for="fullTime">Full-time</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" id="partTime" name="jobType" required
+                                               type="radio" value="PART_TIME">
+                                        <label class="form-check-label" for="partTime">Part-time</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="workMode">Work Mode:</label>
+                                <select class="form-control" id="workMode" name="workMode" required>
+                                    <option value="REMOTE">Remote</option>
+                                    <option value="ON_SITE">On-site</option>
+                                    <option value="HYBRID">Hybrid</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label" for="jobImage">Job Image:</label>
+                                <input accept="image/*" class="form-control" id="jobImage" name="jobImage" type="file">
+                                <!--                  <span id="imageError" class="form-text text-danger" style="display: none;">Please upload a 400x300 image.</span>-->
+                            </div>
+
+
+                            <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
+                                <label for="description">Job Description:</label>
+                                <textarea class="form-control" id="description" name="description" required></textarea>
+                            </div>
+                            <button class="btn btn-primary" type="button" id="submitButton">Post</button>
+                        </form>
                     </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="jobType" id="partTime" value="PART_TIME" required>
-                      <label class="form-check-label" for="partTime">Part-time</label>
-                    </div>
-                  </div>
                 </div>
-
-                <div class="form-group mb-3">
-                  <label for="workMode">Work Mode:</label>
-                  <select class="form-control" id="workMode" name="workMode" required>
-                    <option value="REMOTE">Remote</option>
-                    <option value="ON_SITE">On-site</option>
-                    <option value="HYBRID">Hybrid</option>
-                  </select>
-                </div>
-
-                <div class="form-group mb-3">
-                  <label for="jobImage" class="form-label">Job Image:</label>
-                  <input class="form-control" type="file" id="jobImage" name="jobImage" accept="image/*">
-                  <span id="imageError" class="form-text text-danger" style="display: none;">Please upload a 400x300 image.</span>
-                </div>
-
-
-                <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
-                  <label for="description">Job Description:</label>
-                  <textarea class="form-control" id="description" name="description" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Post</button>
-              </form>
             </div>
-          </div>
         </div>
-      </div>
     </section>
-  </main>
+</main>
 
 <!--==================== FOOTER ====================-->
 <footer class="footer section" style="margin-top: -5rem">
-  <div class="footer__container container grid">
-    <div class="footer__content">
-      <a href="/tms/home" class="footer__logo">
-        <img src="/main/img/tero.png" alt="" class="footer__logo-img">
-      </a>
+    <div class="footer__container container grid">
+        <div class="footer__content">
+            <a class="footer__logo" href="/tms/home">
+                <img alt="" class="footer__logo-img" src="/main/img/tero.png">
+            </a>
 
-      <p class="footer__description">Enjoy the Best internships <br> of your career.</p>
+            <p class="footer__description">Enjoy the Best internships <br> of your career.</p>
+        </div>
+
+        <div class="footer__content">
+            <h3 class="footer__title" id="about">About</h3>
+
+            <ul class="footer__links">
+                <li>
+                    <a class="footer__link" href="#about">About Us</a>
+                </li>
+                <li>
+                    <a class="footer__link" href="#">Features</a>
+                </li>
+                <li>
+                    <a class="footer__link" href="#">News</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="footer__content">
+            <h3 class="footer__title">Our Services</h3>
+
+            <ul class="footer__links">
+                <li>
+                    <a class="footer__link" href="#">Pricing</a>
+                </li>
+                <li>
+                    <a class="footer__link" href="#">Discounts</a>
+                </li>
+                <li>
+                    <a class="footer__link" href="#">Shipping mode</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="footer__content">
+            <h3 class="footer__title">Our Company</h3>
+
+            <ul class="footer__links">
+                <li>
+                    <a class="footer__link" href="#">Blog</a>
+                </li>
+                <li>
+                    <a class="footer__link" href="#">About us</a>
+                </li>
+                <li>
+                    <a class="footer__link" href="#">Our mission</a>
+                </li>
+            </ul>
+        </div>
     </div>
 
-    <div class="footer__content">
-      <h3 class="footer__title" id="about">About</h3>
-
-      <ul class="footer__links">
-        <li>
-          <a href="#about" class="footer__link">About Us</a>
-        </li>
-        <li>
-          <a href="#" class="footer__link">Features</a>
-        </li>
-        <li>
-          <a href="#" class="footer__link">News</a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="footer__content">
-      <h3 class="footer__title">Our Services</h3>
-
-      <ul class="footer__links">
-        <li>
-          <a href="#" class="footer__link">Pricing</a>
-        </li>
-        <li>
-          <a href="#" class="footer__link">Discounts</a>
-        </li>
-        <li>
-          <a href="#" class="footer__link">Shipping mode</a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="footer__content">
-      <h3 class="footer__title">Our Company</h3>
-
-      <ul class="footer__links">
-        <li>
-          <a href="#" class="footer__link">Blog</a>
-        </li>
-        <li>
-          <a href="#" class="footer__link">About us</a>
-        </li>
-        <li>
-          <a href="#" class="footer__link">Our mission</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <span class="footer__copy">&#169; Tero. All rights reserved</span>
+    <span class="footer__copy">&#169; Tero. All rights reserved</span>
 </footer>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const descriptionTextarea = document.getElementById('description');
-    const maxHeight = 170;
+    document.addEventListener('DOMContentLoaded', function () {
+        const descriptionTextarea = document.getElementById('description');
+        const maxHeight = 170;
 
-    function resizeTextarea() {
-      if (descriptionTextarea.scrollHeight < maxHeight) {
-        descriptionTextarea.style.height = 'auto';
-        descriptionTextarea.style.height = descriptionTextarea.scrollHeight + 'px';
-      } else {
-        descriptionTextarea.style.overflowY = 'scroll';
-        descriptionTextarea.style.height = maxHeight + 'px';
-      }
+        function resizeTextarea() {
+            if (descriptionTextarea.scrollHeight < maxHeight) {
+                descriptionTextarea.style.height = 'auto';
+                descriptionTextarea.style.height = descriptionTextarea.scrollHeight + 'px';
+            } else {
+                descriptionTextarea.style.overflowY = 'scroll';
+                descriptionTextarea.style.height = maxHeight + 'px';
+            }
+        }
+
+        descriptionTextarea.addEventListener('input', resizeTextarea, false);
+    });
+
+    let subMenu = document.getElementById("subMenu");
+
+    function toggleMenu() {
+        subMenu.classList.toggle("open-menu");
     }
-    descriptionTextarea.addEventListener('input', resizeTextarea, false);
-  });
 
-  let subMenu = document.getElementById("subMenu");
-
-  function toggleMenu(){
-    subMenu.classList.toggle("open-menu");
-  }
-
-  // document.getElementById('jobImage').addEventListener('change', function(e) {
-  //   const file = e.target.files[0];
-  //   const img = new Image();
-  //   img.src = URL.createObjectURL(file);
-  //
-  //   img.onload = function() {
-  //     const width = img.naturalWidth;
-  //     const height = img.naturalHeight;
-  //
-  //     URL.revokeObjectURL(img.src);
-  //
-  //     const imageError = document.getElementById('imageError');
-  //     if (width !== 400 || height !== 300) {
-  //       imageError.style.display = 'block'; // Show error message
-  //       e.target.value = ''; // Clear the file input
-  //     } else {
-  //       imageError.style.display = 'none'; // Hide error message
-  //     }
-  //   };
-  // });
+    // document.getElementById('jobImage').addEventListener('change', function(e) {
+    //   const file = e.target.files[0];
+    //   const img = new Image();
+    //   img.src = URL.createObjectURL(file);
+    //
+    //   img.onload = function() {
+    //     const width = img.naturalWidth;
+    //     const height = img.naturalHeight;
+    //
+    //     URL.revokeObjectURL(img.src);
+    //
+    //     const imageError = document.getElementById('imageError');
+    //     if (width !== 400 || height !== 300) {
+    //       imageError.style.display = 'block'; // Show error message
+    //       e.target.value = ''; // Clear the file input
+    //     } else {
+    //       imageError.style.display = 'none'; // Hide error message
+    //     }
+    //   };
+    // });
 </script>
 
 <script src="/main/js/main.js"></script>
+
 <script src="/job-post/js/country-api.js"></script>
+<script src="/job-post/js/formSubmission.js"></script>
+
 </body>
 </html>

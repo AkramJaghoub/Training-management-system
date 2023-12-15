@@ -2,24 +2,22 @@ package ju.example.training_management_system.service.company.post;
 
 import jakarta.transaction.Transactional;
 import ju.example.training_management_system.dto.AdvertisementDto;
-import ju.example.training_management_system.exception.PostAlreadyExistsException;
-import ju.example.training_management_system.exception.StorageException;
+import ju.example.training_management_system.exception.AdAlreadyExistsException;
+import ju.example.training_management_system.exception.AdDoesNotExistException;
+import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.company.advertisement.Advertisement;
 import ju.example.training_management_system.model.users.Company;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.AdvertisementRepository;
 import ju.example.training_management_system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
+
+import static ju.example.training_management_system.util.Utils.isNotEqual;
+import static ju.example.training_management_system.util.Utils.saveImage;
 
 
 @Service
@@ -29,64 +27,82 @@ public class AdsPostService {
     private final AdvertisementRepository advertisementRepository;
     private final UserRepository userRepository;
 
-    @Transactional
-    public void postAd(AdvertisementDto adDto, String email) {
+        @Transactional
+        public ApiResponse postAd(AdvertisementDto adDto, String email) {
 
-        try {
-            Advertisement ad = new Advertisement().toEntity(adDto);
+            try {
+                Advertisement ad = new Advertisement().toEntity(adDto);
 
-            System.out.println(adDto + " dtoooooooo");
+                String imageUrl = saveImage(adDto.getJobImage());
+                ad.setImageUrl(imageUrl);
 
+                if (advertisementRepository.existsByJobTitle(ad.getJobTitle())) {
+                    throw new AdAlreadyExistsException("A post with the same title already exists!");
+                }
 
-            String imageUrl = saveImage(adDto.getJobImage());
-            ad.setImageUrl(imageUrl);
-            System.out.println(ad.getImageUrl() + " sssssssssssss");
+                User user = userRepository.findByEmail(email);
 
-            if (advertisementRepository.existsByJobTitle(ad.getJobTitle())) {
-                throw new PostAlreadyExistsException("A post with the same title already exists!");
+                if (user instanceof Company company) {
+                    ad.setCompany(company);
+                }
+
+                advertisementRepository.save(ad);
+                return new ApiResponse("advertisement was saved successfully", HttpStatus.CREATED);
+
+            } catch (AdAlreadyExistsException ex) {
+                return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
             }
-
-            User user = userRepository.findByEmail(email);
-
-            if (user instanceof Company company) {
-                ad.setCompany(company);
-            }
-
-            advertisementRepository.save(ad);
-        } catch (PostAlreadyExistsException ex) {
-            ex.printStackTrace();
         }
-    }
-
-    private String saveImage(MultipartFile file) {
-        Path rootLocation = Paths.get("src/main/resources/static/job-post/images-uploaded");
-
-        if (file.isEmpty()) {
-            return null;
-        }
-        try {
-            String filename = System.currentTimeMillis() + "-" + file.getOriginalFilename();
-            Path destinationFile = rootLocation.resolve(Paths.get(filename)).normalize().toAbsolutePath();
-
-            if (!destinationFile.getParent().equals(rootLocation.toAbsolutePath())) {
-                throw new StorageException("Cannot store file outside current directory.");
-            }
-
-            try (InputStream inputStream = file.getInputStream()) {
-                Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
-            }
-
-            return "/job-post/images-uploaded/" + filename;
-        } catch (IOException e) {
-            throw new StorageException("Failed to store file.", e);
-        }
-    }
 
     public List<Advertisement> getAllAdvertisementsForCompany(String companyName) {
         return advertisementRepository.findByCompanyName(companyName);
     }
 
     public void deleteAd(String companyName, String position) {
-        advertisementRepository.deleteByJobTitleAndCompanyName(companyName, position);
+        List<Advertisement> advertisements = advertisementRepository.findByCompanyName(companyName);
+        long adId = 0;
+        for (Advertisement ad : advertisements) {
+            if (ad.getJobTitle().equals(position)) {
+                adId = ad.getId();
+                break;
+            }
+        }
+        advertisementRepository.deleteById(adId);
+    }
+
+    @Transactional
+    public ApiResponse updateAd(AdvertisementDto adDto, String email) {
+        try {
+            Advertisement existingAd = advertisementRepository.findById(adDto.getId())
+                    .orElseThrow(() -> new AdDoesNotExistException("Advertisement not found"));
+
+            if (isNotEqual(adDto.getJobTitle(), existingAd.getJobTitle()) &&
+                    advertisementRepository.existsByJobTitle(adDto.getJobTitle())) {
+                throw new AdAlreadyExistsException("An advertisement with the same title already exists");
+            }
+
+            String imageUrl = saveImage(adDto.getJobImage());
+
+            existingAd.setImageUrl(imageUrl);
+            existingAd.setJobTitle(adDto.getJobTitle());
+            existingAd.setInternsRequired(adDto.getInternsRequired());
+            existingAd.setJobDuration(adDto.getJobDuration());
+            existingAd.setDescription(adDto.getDescription());
+            existingAd.setJobType(adDto.getJobType());
+            existingAd.setCountry(adDto.getCountry());
+            existingAd.setCity(adDto.getCity());
+            existingAd.setWorkMode(adDto.getWorkMode());
+
+            User user = userRepository.findByEmail(email);
+
+            if (user instanceof Company company) {
+                existingAd.setCompany(company);
+            }
+
+            advertisementRepository.save(existingAd); // updated advertisement
+            return new ApiResponse("advertisement was updated successfully", HttpStatus.CREATED);
+        } catch (AdAlreadyExistsException | AdDoesNotExistException ex) {
+            return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

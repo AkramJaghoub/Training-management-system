@@ -10,7 +10,7 @@ async function fetchCountries() {
         countrySelect.appendChild(option);
     });
 
-    countrySelect.addEventListener('change', function() {
+    countrySelect.addEventListener('change', function () {
         if (this.value) {
             const selectedCountryName = this.options[this.selectedIndex].text;
             fetchCities(this.value);
@@ -30,7 +30,7 @@ async function fetchCities(countryCode) {
     try {
         const response = await fetch(url);
 
-        const { geonames } = await response.json();
+        const {geonames} = await response.json();
 
         console.log(geonames)
         geonames.forEach(city => {

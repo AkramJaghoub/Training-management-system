@@ -26,11 +26,11 @@ public class LoginService {
                     role.toString().toLowerCase() + "/dashboard", HttpStatus.OK); // return early for admin
         }
 
-        Role role = userService.getUserRole(email);
-
         if (!authenticationService.isValidUser(email, password)) {
             return new ApiResponse("Wrong email or password", HttpStatus.BAD_REQUEST);
         }
+
+        Role role = userService.getUserRole(email);
 
         session.setAttribute("email", email);
         return new ApiResponse(role.toString().toLowerCase() + "/dashboard", HttpStatus.OK);

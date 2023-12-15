@@ -42,6 +42,7 @@ article h2 {
 
 
 .article-body {
+    position: relative; /* This ensures that the menu container positions itself relative to the article */
     padding: 20px;
 }
 
@@ -55,19 +56,6 @@ article h2 {
     transition: background-color 0.3s ease;
 }
 
-.delete-button .update-button{
-    z-index: 100; /* Higher value to ensure it's on top of other elements */
-    position: relative; /* z-index only works on positioned elements */
-}
-
-.delete-button {
-    /* existing styles */
-    font-size: 100px;
-    padding: 0; /* Removes padding if not needed */+++-
-    border: none; /* Ensures there's no border */
-    background-color: transparent;
-}
-
 .menu-container {
     position: absolute;
     top: 10px; /* Adjust as needed */
@@ -75,10 +63,10 @@ article h2 {
     background: white;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    z-index: 200; /* Higher than other elements */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     padding: 5px 0; /* Top and bottom padding */
     min-width: 100px; /* Minimum width, adjust as needed */
+    z-index: 200; /* Set a high value to ensure it's on top */
 }
 
 .menu-container a {
@@ -116,12 +104,27 @@ article h2 {
     text-align: left; /* Align text to the left */
 }
 
+/*.menu-container a.update-link iconify-icon {*/
+/*    color: green; !* Green color for update icon *!*/
+/*}*/
+
+/*.menu-container a.delete-link iconify-icon {*/
+/*    color: red; !* Red color for delete icon *!*/
+/*}*/
+
 .menu-icon {
     cursor: pointer;
     position: absolute;
-    top: 10px; /* Adjust as needed */
-    right: 10px; /* Adjust as needed */
-    z-index: 100;
+    top: 10px;
+    right: 10px;
+    padding: 5px;
+    display: inline-block; /* Ensure it behaves like an inline element */
+    border-radius: 50%; /* Circular shape */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.menu-icon:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent background on hover */
 }
 
 /* Targeting the iconify-icon specifically */
@@ -153,10 +156,6 @@ article a .icon {
     transition: all 0.3s;
 }
 
-.menu-icon{
-
-}
-
 .articles {
     display: grid;
     max-width: 1280px; /* Adjust as needed */
@@ -181,7 +180,7 @@ article a .icon {
     }
 
     .article-body p {
-            display: none;
+        display: none;
     }
 }
 
@@ -233,15 +232,15 @@ article a .icon {
 }
 
 .view-description:hover {
-        text-decoration: none;
-        color: inherit; /* Keeps the color the same on hover */
+    text-decoration: none;
+    color: inherit; /* Keeps the color the same on hover */
 }
 
-    /* General targeting, affects all links within '.article-body' */
-    .article-body a:hover {
-        text-decoration: none;
-        color: inherit; /* Keeps the color the same on hover */
-    }
+/* General targeting, affects all links within '.article-body' */
+.article-body a:hover {
+    text-decoration: none;
+    color: inherit; /* Keeps the color the same on hover */
+}
 
 .modal-content {
     background-color: #fefefe;
@@ -276,16 +275,18 @@ article a .icon {
 
 
 .dialog-container {
-    display: none; /* Hidden by default */
+    display: none;
     position: fixed;
-    top: -100%; /* Start off-screen */
+    top: 0;
     left: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    z-index: 1000; /* Make sure it's on top */
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
     align-items: center;
     justify-content: center;
-    transition: top 0.5s ease; /* Slide down effect */
+    transition: opacity 0.5s ease;
+    height: 100vh;
+    opacity: 0; /* Start as transparent */
 }
 
 .dialog {
@@ -293,9 +294,51 @@ article a .icon {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 500px; /* Adjust the width as needed */
+    text-align: center;
+    margin-bottom: 10rem;
+    /* Add any additional styling needed for the dialog */
+}
+
+
+.dialog-container-form {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; /* Added to extend the full height */
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    transition: opacity 0.5s ease;
+    opacity: 1; /* Changed to make it opaque */
+}
+
+.dialog-form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 40%;
+    margin: auto; /* Added to center the form in the dialog */
 }
 
 .dialog button {
     margin: 10px;
-    /* Add more button styling here */
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: white;
+}
+
+.dialog button:hover {
+    background-color: #43a047;
+}
+
+.error-message {
+    color: red;
 }

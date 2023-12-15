@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const registrationForms = document.querySelectorAll("form[action='/register']");
 
     registrationForms.forEach(form => {
-        form.addEventListener("submit", function(event) {
+        form.addEventListener("submit", function (event) {
             event.preventDefault();
 
             const formData = new FormData(this);

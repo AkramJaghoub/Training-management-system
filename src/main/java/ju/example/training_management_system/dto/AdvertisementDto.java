@@ -8,6 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class AdvertisementDto {
 
+    private long id;
+
     private String jobTitle;
 
     private int internsRequired;

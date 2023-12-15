@@ -38,9 +38,7 @@ public class AuthenticationService {
                 throw new PasswordNotMatchException();
             }
 
-            log.info(
-                    "validation for user with the email {} was successful entering user's interface...",
-                    email);
+            log.info("validation for user with the email {} was successful entering user's interface...", email);
             return true; // user's email was found and their password is correct
 
         } catch (UserNotFoundException | PasswordNotMatchException ex) {

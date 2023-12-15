@@ -2,63 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <!--=============== FAVICON ===============-->
-    <link rel="icon" href="/main/img/tero.png" type="image/x-icon">
+    <link href="/main/img/tero.png" rel="icon" type="image/x-icon">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
     <!--=============== BOXICONS ===============-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 
     <!--=============== SWIPER CSS ===============-->
-    <link rel="stylesheet" href="/main/css/swiper-bundle.min.css">
+    <link href="/main/css/swiper-bundle.min.css" rel="stylesheet">
 
     <!--=============== CSS ===============-->
-    <link rel="stylesheet" href="/main/css/styles.css">
-    <link rel="stylesheet" href="/register/css/register.css">
+    <link href="/main/css/styles.css" rel="stylesheet">
+    <link href="/register/css/register.css" rel="stylesheet">
 
     <title>Tero internships finder</title>
 </head>
 <body>
 <!--==================== HEADER ====================-->
 <header class="header" id="header">
-        <a href="/tms/home" class="nav__logo">
-            <img src="/main/img/tero.png" alt="" class="nav__logo-img">
-        </a>
+    <a class="nav__logo" href="/tms/home">
+        <img alt="" class="nav__logo-img" src="/main/img/tero.png">
+    </a>
 
-        <div class="nav__menu" id="nav-menu">
-            <ul class="nav__list">
-                <li class="nav__item">
-                    <a href='/tms/home' class="nav__link active-link">Home</a>
-                </li>
+    <div class="nav__menu" id="nav-menu">
+        <ul class="nav__list">
+            <li class="nav__item">
+                <a class="nav__link active-link" href='/tms/home'>Home</a>
+            </li>
 
-                <li class="nav__item">
-                    <a href="#about" class="nav__link">About</a>
-                </li>
+            <li class="nav__item">
+                <a class="nav__link" href="#about">About</a>
+            </li>
 
-                <li class="nav__item">
-                    <a href="#trick" class="nav__link">Knowledge box</a>
-                </li>
+            <li class="nav__item">
+                <a class="nav__link" href="#trick">Knowledge box</a>
+            </li>
 
-                <li>
-                    <a href="/login" class="button button--ghost">Login</a>
-                </li>
+            <li>
+                <a class="button button--ghost" href="/login">Login</a>
+            </li>
 
-            </ul>
+        </ul>
 
-            <div class="nav__close" id="nav-close">
-                <i class='bx bx-x'></i>
-            </div>
-
+        <div class="nav__close" id="nav-close">
+            <i class='bx bx-x'></i>
         </div>
 
-        <div class="nav__toggle" id="nav-toggle">
-            <i class='bx bx-grid-alt'></i>
-        </div>
+    </div>
+
+    <div class="nav__toggle" id="nav-toggle">
+        <i class='bx bx-grid-alt'></i>
+    </div>
 
 </header>
 
@@ -66,78 +66,79 @@
     <div class="hero">
         <div class="fcontainer container" id="fcontainer">
             <div class="form-container sign-in-container ">
-                <form action="/register" style="margin-top: 7rem;" method="POST">
-                    <input type="hidden" name="role" value="COMPANY" />
+                <form action="/register" method="POST" style="margin-top: 7rem;">
+                    <input name="role" type="hidden" value="COMPANY"/>
                     <h1>Create Account</h1>
                     <div class="mb-3 input-with-icon">
                         <i class="fas fa-building"></i>
                         <label>
-                            <input type="text" name="name" placeholder="Company Name" />
+                            <input name="name" placeholder="Company Name" type="text"/>
                         </label>
                     </div>
 
                     <div class="mb-3 input-with-icon">
                         <i class="fas fa-envelope"></i>
                         <label>
-                            <input type="email" name="email" placeholder="Email" />
+                            <input name="email" placeholder="Email" type="email"/>
                         </label>
                     </div>
 
                     <div class="mb-3 input-with-icon">
                         <i class="fas fa-industry"></i>
                         <label>
-                            <input type="text" name="industry" placeholder="Industry" />
+                            <input name="industry" placeholder="Industry" type="text"/>
                         </label>
                     </div>
 
                     <div class="mb-3 input-with-icon">
                         <i class="fas fa-lock"></i>
                         <label>
-                            <input type="password" name="password" placeholder="Password" />
+                            <input name="password" placeholder="Password" type="password"/>
                         </label>
                     </div>
 
                     <button class="button-home">Sign Up</button>
-                    <p>Already have an account? <a href="/login" class="login">Login</a></p>
+                    <p>Already have an account? <a class="login" href="/login">Login</a></p>
                 </form>
             </div>
 
             <div class=" form-container sign-up-container ">
                 <form action="/register" method="POST">
-                    <input type="hidden" name="role" value="STUDENT" />
+                    <input name="role" type="hidden" value="STUDENT"/>
                     <h1><span style="color:#5A8349F9">Create</span>Account</h1>
                     <div class="mb-3 input-with-icon">
                         <i class="fas fa-user"></i>
-                        <input id="firstName" name="firstName" type="text" placeholder="First Name" />
+                        <input id="firstName" name="firstName" placeholder="First Name" type="text"/>
                     </div>
 
                     <div class="mb-3 input-with-icon">
                         <i class="fas fa-user"></i>
-                        <input type="text" name="lastName" placeholder="Last Name" />
+                        <input name="lastName" placeholder="Last Name" type="text"/>
                     </div>
 
                     <div class="mb-3 input-with-icon">
                         <i class="fas fa-university"></i>
-                        <input type="text" name="university" placeholder="University" />
+                        <input name="university" placeholder="University" type="text"/>
                     </div>
 
                     <div class="mb-3 input-with-icon">
                         <i class="fas fa-book"></i>
-                        <input type="text" name="major" placeholder="Major" />
+                        <input name="major" placeholder="Major" type="text"/>
                     </div>
 
                     <div class="mb-3 input-with-icon">
                         <i class="fas fa-envelope"></i>
-                        <input type="email" name="email" placeholder="Email" />
+                        <input name="email" placeholder="Email" type="email"/>
                     </div>
 
                     <div class="mb-3 input-with-icon">
                         <i class="fas fa-lock"></i>
-                        <input type="password" name="password" placeholder="Password" />
+                        <input name="password" placeholder="Password" type="password"/>
                     </div>
 
                     <button class="button-home">Sign Up</button>
-                    <p style="margin-bottom: 5rem;">Already have an account? <a href="/login" class="login">Login</a></p>
+                    <p style="margin-bottom: 5rem;">Already have an account? <a class="login" href="/login">Login</a>
+                    </p>
                 </form>
             </div>
 
@@ -146,12 +147,15 @@
                     <container class="overlay-panel overlay-left tcontainer">
                         <div class="box1 boxs1">
                             <h1>Hey Student!</h1>
-                            <p>Make the most of your <professio></professio>nal life</p>
+                            <p>Make the most of your
+                                <professio></professio>
+                                nal life
+                            </p>
                             <p style="font-weight: bold">OR</p>
                             <button class="button button--ghost" id="companySignUp">Sign Up As A Company</button>
                         </div>
                         <div class="box2">
-                            <img src="/register/img/student.jpeg" alt="Student">
+                            <img alt="Student" src="/register/img/student.jpeg">
                         </div>
                     </container>
                     <container class="overlay-panel overlay-right tcontainer">
@@ -162,7 +166,7 @@
                             <button class="button button--ghost" id="studentSignUp">Sign Up As A Student</button>
                         </div>
                         <div class="box2">
-                            <img src="/register/img/company.jpeg" alt="Company" style="height: 300px">
+                            <img alt="Company" src="/register/img/company.jpeg" style="height: 300px">
                         </div>
                     </container>
                 </div>
@@ -174,8 +178,8 @@
 <footer class="footer section" style="margin-top: -15rem">
     <div class="footer__container container grid">
         <div class="footer__content">
-            <a href="/tms/home" class="footer__logo">
-                <img src="/main/img/tero.png" alt="" class="footer__logo-img">
+            <a class="footer__logo" href="/tms/home">
+                <img alt="" class="footer__logo-img" src="/main/img/tero.png">
             </a>
 
             <p class="footer__description">Enjoy the Best internships <br> of your career.</p>
@@ -186,13 +190,13 @@
 
             <ul class="footer__links">
                 <li>
-                    <a href="#about" class="footer__link">About Us</a>
+                    <a class="footer__link" href="#about">About Us</a>
                 </li>
                 <li>
-                    <a href="#" class="footer__link">Features</a>
+                    <a class="footer__link" href="#">Features</a>
                 </li>
                 <li>
-                    <a href="#" class="footer__link">News</a>
+                    <a class="footer__link" href="#">News</a>
                 </li>
             </ul>
         </div>
@@ -202,13 +206,13 @@
 
             <ul class="footer__links">
                 <li>
-                    <a href="#" class="footer__link">Pricing</a>
+                    <a class="footer__link" href="#">Pricing</a>
                 </li>
                 <li>
-                    <a href="#" class="footer__link">Discounts</a>
+                    <a class="footer__link" href="#">Discounts</a>
                 </li>
                 <li>
-                    <a href="#" class="footer__link">Shipping mode</a>
+                    <a class="footer__link" href="#">Shipping mode</a>
                 </li>
             </ul>
         </div>
@@ -218,13 +222,13 @@
 
             <ul class="footer__links">
                 <li>
-                    <a href="#" class="footer__link">Blog</a>
+                    <a class="footer__link" href="#">Blog</a>
                 </li>
                 <li>
-                    <a href="#" class="footer__link">About us</a>
+                    <a class="footer__link" href="#">About us</a>
                 </li>
                 <li>
-                    <a href="#" class="footer__link">Our mission</a>
+                    <a class="footer__link" href="#">Our mission</a>
                 </li>
             </ul>
         </div>
@@ -234,7 +238,7 @@
 </footer>
 
 <!--=============== SCROLL UP ===============-->
-<a href="#" class="scrollup" id="scroll-up">
+<a class="scrollup" href="#" id="scroll-up">
     <i class='bx bx-up-arrow-alt scrollup__icon'></i>
 </a>
 

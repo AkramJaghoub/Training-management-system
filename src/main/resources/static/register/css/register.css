@@ -1,15 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
-:root{
+
+:root {
     --t-color: #5A8349F9;
     --t-color-alt: rgba(90, 131, 73, 0.37);
     --bs-link-hover-color: #012e6c;
 }
 
-p{
+p {
     margin-top: 1.5rem;
 }
 
-.main{
+.main {
     margin-top: 4rem;
     margin-bottom: 4rem;
 }
@@ -20,7 +21,7 @@ p{
     border-radius: 30rem;
 }
 
-.hero{
+.hero {
     width: 100%;
     min-height: 100vh;
     background-color: transparent;
@@ -58,15 +59,16 @@ input {
     flex-direction: column;
 }
 
-.box1{
+.box1 {
     height: 50%;
     margin-top: 6.5rem;
 }
-.boxs1{
+
+.boxs1 {
     margin-top: 3.5rem;
 }
 
-.box2{
+.box2 {
     margin-top: 2rem;
     margin-bottom: 1rem;
     height: 50%;
@@ -99,12 +101,14 @@ input {
     z-index: 2;
 }
 
-.sign-in-container h1, .sign-up-container h1{
+.sign-in-container h1, .sign-up-container h1 {
     color: var(--t-color);
 }
-.sign-in-container p, .sign-up-container p{
+
+.sign-in-container p, .sign-up-container p {
     color: var(--t-color);
 }
+
 .container.right-panel-active .sign-in-container {
     transform: translateX(100%);
 }
@@ -161,6 +165,7 @@ input-with-icon {
 .input-with-icon input:focus + i {
     color: green;
 }
+
 .input-with-icon input::placeholder {
     color: var(--t-color-alt);
 }
@@ -194,7 +199,7 @@ input-with-icon {
     font-size: 1rem;
 }
 
-.container.right-panel-active .overlay-container{
+.container.right-panel-active .overlay-container {
     transform: translateX(-100%);
 }
 
@@ -257,6 +262,7 @@ input-with-icon {
 .container.right-panel-active .overlay-right {
     transform: translateX(20%);
 }
-.login:hover{
+
+.login:hover {
     color: var(--bs-link-hover-color);
 }
