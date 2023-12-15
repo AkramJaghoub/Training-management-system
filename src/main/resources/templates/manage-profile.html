@@ -125,25 +125,20 @@
                             <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
                                 <div class="card card-profile shadow">
                                     <div class="row justify-content-center">
-                                        <div class="col-lg-3 order-lg-2">
-                                            <!--                                            <div class="card-profile-image">-->
-                                            <!--                                                <a href="#" onclick="openCameraModal()">-->
-                                            <!--                                                    <img src="/images/default_profile.png" class="rounded-circle" id="profilePic">-->
-                                            <!--                                                    <div class="profile-image-overlay">-->
-                                            <!--                                                        <i class="fa fa-camera"></i>-->
-                                            <!--                                                    </div>-->
-                                            <!--                                                </a>-->
-                                            <!--                                            </div>-->
-                                        </div>
+
                                     </div>
                                     <div class="card-body pt-0 pt-md-4">
                                         <div class="profile-pic card-profile-image">
-                                            <svg class="bi bi-person-circle" fill="black"
-                                                 viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                                                <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
-                                                      fill-rule="evenodd"/>
-                                            </svg>
+                                            <div class="avatar-upload">
+                                                <div class="avatar-edit">
+                                                    <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                                                    <label for="imageUpload"></label>
+                                                </div>
+                                                <div class="avatar-preview">
+                                                    <div id="imagePreview" style="background-image: url('http://i.pravatar.cc/500?img=7');">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="text-center">
                                             <h3 id="companyNameDisplay2"></h3>
@@ -357,6 +352,21 @@
             document.getElementById('companyNameDisplay1').textContent = companyName;
             document.getElementById('companyNameDisplay2').textContent = companyName;
         }
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#imagePreview').css('background-image', 'url('+e.target.result +')');
+                $('#imagePreview').hide();
+                $('#imagePreview').fadeIn(650);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#imageUpload").change(function() {
+        readURL(this);
     });
 </script>
 </body>
