@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/tms")
+@RequestMapping("/tero")
 public class HomePageController {
 
     @GetMapping("/home")
