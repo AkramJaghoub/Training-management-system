@@ -72,12 +72,12 @@
                         <div class="login-form">
                             <h1>Welcome Back!</h1>
                             <form action="/login" id="loginForm" method="post">
-                                <div class="error-message" id="errorMessage"></div>
+                                <div class="error-message-main" id="errorMessage"></div>
                                 <div class="mb-3 input-with-icon">
                                     <i class="fas fa-envelope"></i>
                                     <label for="email"></label><input class="form-control" id="email" name="email"
                                                                       placeholder="Email" type="text">
-                                    <div class="form-text text-danger" id="emailError"></div>
+                                    <div class="error-message" id="emailError"></div>
                                 </div>
                                 <div class="mb-3 password-container input-with-icon">
                                     <i class="fas fa-lock"></i>
@@ -86,7 +86,7 @@
                                                                          type="password">
                                     <a class="forgot-password" href="/forget-password"
                                        id="forgotPassword" onclick="return handleForgotPasswordLink();">Forgot Password?</a>
-                                    <div class="form-text text-danger" id="passwordError"></div>
+                                    <div class="error-message" id="passwordError"></div>
                                 </div>
                                 <button type="submit">Login</button>
                                 <center><p> Don't have an account? <a class="register" href="/register">Register</a></p>

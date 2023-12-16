@@ -92,17 +92,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const form = document.getElementById('companyRegisterForm');
 
-            userData.email = form.elements['email'].value;
-            userData.password = form.elements['password'].value;
-            userData.role = formType;
-
-            userData.companyName = form.elements['name'].value;
-            userData.industry = form.elements['industry'].value;
-
             const email = form.elements['email'].value;
             const password = form.elements['password'].value;
             const industry = form.elements['industry'].value;
             const companyName = form.elements['name'].value;
+            userData.email = form.elements['email'].value;
+            userData.password = form.elements['password'].value;
+            userData.role = formType;
+            userData.companyName = form.elements['name'].value;
+            userData.industry = form.elements['industry'].value;
 
             if (email.trim() === "") {
                 document.getElementById('companyEmailError').textContent = 'Email is required';
@@ -124,12 +122,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 isValid = false;
             }
 
+            console.log(email)
+            console.log(!emailRegex.test(email));
             if (email && !emailRegex.test(email)) {
+                console.log("hhhhhhhhhhhhhHH");
                 document.getElementById('companyEmailError').textContent = 'Please enter a valid email address';
                 isValid = false;
             }
             if (password && !passwordRegex.test(password)) {
-                document.getElementById('companyPasswordError').textContent = 'Password must contain at least 8 characters, one uppercase, one number, and one special character.';
+                document.getElementById('companyPasswordError').textContent = 'Password requires: [8+ chars, 1+ uppercase, 1+ number, 1+ special char]';
                 isValid = false;
             }
         }

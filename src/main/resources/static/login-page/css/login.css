@@ -32,6 +32,14 @@
     font-size: 0.9rem;
 }
 
+.error-message-main{
+    min-height: 2rem;
+    color: #FF0000;
+    padding-top: 0.5rem;
+    font-size: 1rem;
+    margin-left: 5.6rem;
+}
+
 .login-form {
     flex: 1;
     padding: 80px 60px;
@@ -109,24 +117,25 @@
     color: #000000;
 }
 
+.input-with-icon input::placeholder {
+    color: lightgrey;
+}
+
 .input-with-icon input:focus {
     border-bottom-color: black;
     box-shadow: none;
     background-color: transparent;
 }
 
-.input-with-icon input::placeholder {
-    color: lightgrey;
-}
-
 .input-with-icon i {
     position: absolute;
-    left: 10px;
-    top: 65%;
+    left: 0.625rem;
+    top: 55%;
     transform: translateY(-50%);
     font-size: 15px;
     color: #000;
     transition: color 0.3s ease;
+    padding-bottom: 1.25rem;
 }
 
 .input-with-icon input:focus + i {
