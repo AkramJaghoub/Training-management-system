@@ -183,3 +183,12 @@ label {
     width: 100%;
     margin-top: 15px; /* Add some spacing between buttons */
 }
+
+.menu-container{
+    top:42px;
+    right: 12px;
+}
+
+.article-container{
+    margin-left:-3.4rem;
+}
