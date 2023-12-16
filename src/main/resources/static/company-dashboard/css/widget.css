@@ -16,7 +16,7 @@ article {
 .article-container {
     border: 2px solid #333; /* Border styling */
     padding: 20px; /* Padding inside the border */
-    margin: 3.125rem auto; /* Top margin and auto horizontal margin for centering */
+    margin: 3.125rem -5rem; /* Top margin and auto horizontal margin for centering */
     border-radius: 10px; /* Rounded corners for the border */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow for depth */
     background-color: #FAF9F6;
