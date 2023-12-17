@@ -5,15 +5,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ju.example.training_management_system.dto.AdvertisementDto;
+
 import ju.example.training_management_system.dto.CompanyInfoDto;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.company.advertisement.Advertisement;
 import ju.example.training_management_system.service.company.CompanyService;
 import ju.example.training_management_system.service.company.post.AdsPostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
