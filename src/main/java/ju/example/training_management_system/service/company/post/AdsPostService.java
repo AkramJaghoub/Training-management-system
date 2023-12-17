@@ -33,8 +33,8 @@ public class AdsPostService {
             try {
                 Advertisement ad = new Advertisement().toEntity(adDto);
 
-                String imageUrl = saveImage(adDto.getJobImage());
-                ad.setImageUrl(imageUrl);
+//                String imageUrl = saveImage(adDto.getJobImage());
+//                ad.setImageUrl(imageUrl);
 
                 if (advertisementRepository.existsByJobTitle(ad.getJobTitle())) {
                     throw new AdAlreadyExistsException("A post with the same title already exists!");
@@ -55,11 +55,11 @@ public class AdsPostService {
         }
 
     public List<Advertisement> getAllAdvertisementsForCompany(String companyName) {
-        return advertisementRepository.findByCompanyName(companyName);
+        return advertisementRepository.findByCompany_CompanyName(companyName);
     }
 
     public void deleteAd(String companyName, String position) {
-        List<Advertisement> advertisements = advertisementRepository.findByCompanyName(companyName);
+        List<Advertisement> advertisements = advertisementRepository.findByCompany_CompanyName(companyName);
         long adId = 0;
         for (Advertisement ad : advertisements) {
             if (ad.getJobTitle().equals(position)) {
@@ -81,9 +81,9 @@ public class AdsPostService {
                 throw new AdAlreadyExistsException("An advertisement with the same title already exists");
             }
 
-            String imageUrl = saveImage(adDto.getJobImage());
+//            String imageUrl = saveImage(adDto.getJobImage());
 
-            existingAd.setImageUrl(imageUrl);
+//            existingAd.setImageUrl(imageUrl);
             existingAd.setJobTitle(adDto.getJobTitle());
             existingAd.setInternsRequired(adDto.getInternsRequired());
             existingAd.setJobDuration(adDto.getJobDuration());

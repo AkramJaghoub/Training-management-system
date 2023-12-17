@@ -1,15 +1,21 @@
 package ju.example.training_management_system.service.company;
 
 import jakarta.transaction.Transactional;
+import ju.example.training_management_system.dto.CompanyInfoDto;
+import ju.example.training_management_system.exception.UnauthorizedCompanyAccessException;
+import ju.example.training_management_system.exception.UserNotFoundException;
+import ju.example.training_management_system.model.ApiResponse;
+import ju.example.training_management_system.model.manage.company.CompanyInfo;
 import ju.example.training_management_system.model.users.Company;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.UserRepository;
-import ju.example.training_management_system.util.PasswordHashingUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.Map;
+import static ju.example.training_management_system.util.Utils.*;
 
 @Service
 @RequiredArgsConstructor
@@ -20,42 +26,88 @@ public class CompanyService {
     public String getCompanyName(String email) {
         User user = userRepository.findByEmail(email);
         if (user instanceof Company company) {
-            System.out.println(company.getName());
-            return company.getName();
+            return company.getCompanyName();
         }
         return null;
     }
 
     @Transactional
-    public String updateCompanyDetails(@RequestBody Map<String, Object> userData) {
+    public ApiResponse updateCompanyDetails(@RequestBody CompanyInfoDto infoDto,
+                                            String email) {
+        try {
 
-        User existingUser = userRepository.findByEmail((String) userData.get("email"));
+            CompanyInfo companyInfo = new CompanyInfo().toEntity(infoDto);
+
+            User existingUser = userRepository.findByEmail(email);
+            if (existingUser == null) {
+                throw new UserNotFoundException("User with email " + email + " wasn't found");
+            }
+
+            if (!(existingUser instanceof Company company)) {
+                throw new UnauthorizedCompanyAccessException("User with email " + email + " wasn't recognized as a company");
+            }
+
+//        if (userData.containsKey("password") && userData.get("password") != null) {
+//            String hashedPassword = PasswordHashingUtil.hashPassword((String) userData.get("password"));
+//            company.setPassword(hashedPassword);
+//        }
+
+            if (companyInfo.getCompanyName() != null) {
+                company.setCompanyName(companyInfo.getCompanyName());
+            }
+
+            if (infoDto.getCompanyImage() != null) {
+                byte[] imageBytes = saveImage(infoDto.getCompanyImage());
+                company.setImage(imageBytes);
+            }
+
+            if (companyInfo.getLocation() != null) {
+                company.setLocation(companyInfo.getLocation());
+            }
+
+            if (companyInfo.getEstablishmentYear() != null) {
+                company.setEstablishmentYear(companyInfo.getEstablishmentYear());
+            }
+
+            if (companyInfo.getPhoneNumber() != null) {
+                company.setPhoneNumber(companyInfo.getPhoneNumber());
+            }
+
+            if (companyInfo.getNumOfEmployees() != null) {
+                company.setNumOfEmployees(companyInfo.getNumOfEmployees());
+            }
+
+            userRepository.save(company);
+            return new ApiResponse("Company details updated successfully", HttpStatus.OK);
+        } catch (UserNotFoundException | UnauthorizedCompanyAccessException ex) {
+            return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public void setManageProfile(Model model, String email) {
+
+        User existingUser = userRepository.findByEmail(email);
         if (existingUser == null) {
-            return "user not found";
+            throw new UserNotFoundException("User with email " + email + " wasn't found");
         }
 
         if (!(existingUser instanceof Company company)) {
-            return "user is not a company";
+            throw new UnauthorizedCompanyAccessException("User with email " + email + " wasn't recognized as a company");
         }
 
-        if (userData.containsKey("password") && userData.get("password") != null) {
-            String hashedPassword = PasswordHashingUtil.hashPassword((String) userData.get("password"));
-            company.setPassword(hashedPassword);
+        String base64Image = null;
+        if (company.getImage() != null) {
+            byte[] decompressedImage = decompressImage(company.getImage());
+            base64Image = convertToBase64(decompressedImage);
         }
 
-        if (userData.containsKey("name")) {
-            company.setName((String) userData.get("name"));
-        }
-
-        if (userData.containsKey("industry")) {
-            company.setIndustry((String) userData.get("industry"));
-        }
-
-        try {
-            userRepository.save(company);
-            return "Company details updated successfully";
-        } catch (Exception ex) {
-            return "Error updating company details: " + ex.getMessage();
-        }
+        model.addAttribute("email", company.getEmail());
+        model.addAttribute("companyName", company.getCompanyName());
+        model.addAttribute("industry", company.getIndustry());
+        model.addAttribute("location", company.getLocation());
+        model.addAttribute("phoneNumber", company.getPhoneNumber());
+        model.addAttribute("numOfEmployees", company.getNumOfEmployees());
+        model.addAttribute("establishmentYear", company.getEstablishmentYear());
+        model.addAttribute("companyImage", base64Image);
     }
 }

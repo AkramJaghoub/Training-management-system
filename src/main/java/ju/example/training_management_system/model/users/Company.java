@@ -1,9 +1,12 @@
 package ju.example.training_management_system.model.users;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Lob;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.Length;
 
 import java.util.Map;
 
@@ -13,8 +16,20 @@ import java.util.Map;
 @NoArgsConstructor
 public class Company extends User {
 
-    private String name;
+    private String companyName;
+
     private String industry;
+
+    private String phoneNumber;
+
+    private String location;
+
+    private Integer numOfEmployees;
+
+    @Lob
+    private byte[] image;
+
+    private Integer establishmentYear;
 
     public Company(String email, String password) {
         super(email, password);
@@ -22,9 +37,9 @@ public class Company extends User {
 
     public Company build(Map<String, Object> properties) {
         Company company = new Company();
-        company.setName((String) properties.get("name"));
+        company.setCompanyName((String) properties.get("companyName"));
         company.setEmail((String) properties.get("email"));
-        company.setIndustry((String) properties.get("industry"));
+        company.setPhoneNumber((String) properties.get("phoneNumber"));
         company.setPassword((String) properties.get("password"));
         return company;
     }

@@ -111,121 +111,95 @@
 
 
 <main class="main">
-    <!--==================== HOME ====================-->
     <section class="home container" id="home">
         <div class="home__content">
             <div class="home__group">
                 <div class="hero">
                     <div class="hcontainer">
                         <div class="row justify-content-center">
-
-                            <div class="container-xl px-4 mt-4">
-                                <!-- Account page navigation-->
-                                <hr class="mt-0 mb-4">
-                                <div class="row">
-                                    <div class="col-xl-4">
-                                        <!-- Profile picture card-->
-                                        <div class="card mb-4 mb-xl-0">
-                                            <div class="card-header">Profile Picture</div>
-                                            <div class="card-body text-center">
-                                                <!-- Profile picture image-->
-                                                <div class="profile-pic card-profile-image">
+                            <!-- Begin the form tag here -->
+                            <form id="profileForm" enctype="multipart/form-data">
+                                <div class="container-xl px-4 mt-4">
+                                    <!-- Profile picture card -->
+                                    <div class="row">
+                                        <div class="col-xl-4">
+                                            <div class="card mb-4 mb-xl-0">
+                                                <div class="card-header">Profile Picture</div>
+                                                <div class="card-body text-center">
+                                                    <!-- Profile picture upload input -->
                                                     <div class="avatar-upload">
                                                         <div class="avatar-edit">
-                                                            <input type='file' id="imageUpload"
-                                                                   accept=".png, .jpg, .jpeg"/>
-                                                            <label for="imageUpload"></label>
+                                                            <input type='file' id="companyImage" name="companyImage" accept="\*"/>
+                                                            <label for="companyImage"></label>
                                                         </div>
+                                                        <input type="hidden" id="hiddenCompanyImageUrl" th:value="${companyImage}" />
                                                         <div class="avatar-preview">
-                                                            <div id="imagePreview"
-                                                                 style="background-image: url('/home-page/img/progressoft-logo.png');">
-                                                            </div>
+                                                            <div id="imagePreview"></div>
+                                                        </div>
+                                                    </div>
+                                                    <h5 id="companyNameDisplay2" style="margin-top:-2rem"></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-8">
+                                            <!-- Account details card -->
+                                            <div class="card mb-4">
+                                                <div class="card-header">Account Details</div>
+                                                <div class="card-body">
+                                                    <!-- Account details fields -->
+                                                    <div class="mb-3">
+                                                        <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                                                        <input class="form-control" id="inputEmailAddress" type="email" th:value="${email}" placeholder="Enter your email address" disabled>
+                                                    </div>
+                                                    <div class="row gx-3 mb-3">
+                                                        <!-- Form Group (Company name) -->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="CompanyName">Company name<span style="color: red">*</span></label>
+                                                            <input class="form-control" id="CompanyName" type="text" th:value="${companyName}" placeholder="Enter your Company name">
+                                                        </div>
+                                                        <!-- Form Group (Industry) -->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="IndustryName">Industry<span style="color: red">*</span></label>
+                                                            <input class="form-control" id="IndustryName" type="text" th:value="${industry}" placeholder="Enter your Industry">
+                                                        </div>
+                                                    </div>
+                                                    <!-- Form Row -->
+                                                    <div class="row gx-3 mb-3">
+                                                        <!-- Form Group (location) -->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="inputLocation">Location</label>
+                                                            <input class="form-control" id="inputLocation" type="text" th:value="${location}" placeholder="Enter your location">
+                                                        </div>
+                                                        <!-- Form Group (phone number) -->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="inputPhone">Phone number</label>
+                                                            <input class="form-control" id="inputPhone" type="tel" th:value="${phoneNumber}" placeholder="Enter your phone number">
+                                                        </div>
+                                                    </div>
+                                                    <!-- Form Row -->
+                                                    <div class="row gx-3 mb-3">
+                                                        <!-- Form Group (number of employees) -->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="inputEmpNumber">Number of Employees</label>
+                                                            <input class="form-control" id="inputEmpNumber" type="number" th:value="${numOfEmployees}" placeholder="Number of Employees" min="0">
+                                                        </div>
+                                                        <!-- Form Group (establishment year) -->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="inputEYear">Establishment Year</label>
+                                                            <input class="form-control" id="inputEYear" type="number" th:value="${establishmentYear}" placeholder="YYYY" min="1900" max="2100">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <h5 id="companyNameDisplay2" style="margin-top:-2rem"></h5>
+                                                <div class="text-center">
+                                                    <button style="margin-right: 25rem; margin-bottom: 1rem" class="btn btn-primary" type="submit">Save changes</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-8">
-                                        <!-- Account details card-->
-                                        <div class="card mb-4">
-                                            <div class="card-header">Account Details</div>
-                                            <div class="card-body">
-                                                <form>
-                                                    <!-- Form Group (username)-->
-                                                    <div class="mb-3">
-                                                        <label class="small mb-1" for="inputEmailAddress">Email
-                                                            address</label>
-                                                        <input class="form-control" id="inputEmailAddress" type="email"
-                                                               placeholder="Enter your email address"
-                                                               value="name@example.com">
-                                                    </div>
-                                                    <!-- Form Row-->
-                                                    <div class="row gx-3 mb-3">
-                                                        <!-- Form Group (Company name)-->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="CompanyName">Company
-                                                                name<span style="color: red">*</span></label>
-                                                            <input class="form-control" id="CompanyName" type="text"
-                                                                   placeholder="Enter your Company name">
-                                                        </div>
-                                                        <!-- Form Group (Industry)-->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="IndustryName">Industry<span
-                                                                    style="color: red">*</span></label>
-                                                            <input class="form-control" id="IndustryName" type="text"
-                                                                   placeholder="Enter your Industry"
-                                                                   value="Information Tech">
-                                                        </div>
-                                                    </div>
-                                                    <!-- Form Row        -->
-                                                    <div class="row gx-3 mb-3">
-
-                                                        <!-- Form Group (location)-->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1"
-                                                                   for="inputLocation">Location</label>
-                                                            <input class="form-control" id="inputLocation" type="text"
-                                                                   placeholder="Enter your location"
-                                                                   value="San Francisco, CA">
-                                                        </div>
-
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="inputPhone">Phone
-                                                                number</label>
-                                                            <input class="form-control" id="inputPhone" type="tel"
-                                                                   placeholder="Enter your phone number"
-                                                                   value="555-123-4567">
-                                                        </div>
-                                                    </div>
-                                                    <!-- Form Group (email address)-->
-
-                                                    <!-- Form Row-->
-                                                    <div class="row gx-3 mb-3">
-                                                        <!-- Form Group (phone number)-->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="inputEmpNumber">Number of
-                                                                Employees</label>
-                                                            <input class="form-control" id="inputEmpNumber"
-                                                                   type="number" placeholder="Number of Employees"
-                                                                   min="0">
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="inputEYear">Establishment
-                                                                Year</label>
-                                                            <input class="form-control" id="inputEYear" type="number"
-                                                                   name="year" placeholder="YYYY" min="1900" max="2100">
-                                                        </div>
-                                                    </div>
-                                                    <!-- Save changes button-->
-                                                    <button class="btn btn-primary" type="button">Save changes</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <!-- Save changes button -->
                                 </div>
-                            </div>
+                            </form>
+                            <!-- End of the form tag -->
                         </div>
                     </div>
                 </div>
@@ -298,55 +272,88 @@
 
 <script>
     let subMenu = document.getElementById("subMenu");
+    let imagePreview = document.getElementById('imagePreview');
+    const defaultImageSvg = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='black' height='100%' viewBox='0 0 16 16' width='100%'%3E%3Cpath d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0'/%3E%3Cpath d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1' fill-rule='evenodd'/%3E%3C/svg%3E")`;
 
     function toggleMenu() {
         subMenu.classList.toggle("open-menu");
     }
 
-    function togglePasswordVisibility() {
-        const passwordInput = document.getElementById('input-password');
-        const passwordIcon = document.getElementById('password-icon');
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            passwordIcon.classList.remove('fas', 'fa-eye');
-            passwordIcon.classList.add('fas', 'fa-eye-slash');
-        } else {
-            passwordInput.type = "password";
-            passwordIcon.classList.remove('fas', 'fa-eye-slash');
-            passwordIcon.classList.add('fas', 'fa-eye');
+    // function togglePasswordVisibility() {
+    //     const passwordInput = document.getElementById('input-password');
+    //     const passwordIcon = document.getElementById('password-icon');
+    //     if (passwordInput.type === "password") {
+    //         passwordInput.type = "text";
+    //         passwordIcon.classList.remove('fas', 'fa-eye');
+    //         passwordIcon.classList.add('fas', 'fa-eye-slash');
+    //     } else {
+    //         passwordInput.type = "password";
+    //         passwordIcon.classList.remove('fas', 'fa-eye-slash');
+    //         passwordIcon.classList.add('fas', 'fa-eye');
+    //     }
+    // }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const imagePreview = document.getElementById('imagePreview');
+        const defaultImageSvg = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='black' height='100%' viewBox='0 0 16 16' width='100%'%3E%3Cpath d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0'/%3E%3Cpath d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1' fill-rule='evenodd'/%3E%3C/svg%3E")`;
+        const companyImageUrl = document.getElementById('hiddenCompanyImageUrl').value;
+
+        // Function to update profile images in the header
+        function updateProfileImages(imageUrl) {
+            const profileImages = document.querySelectorAll('.bi-person-circle');
+            if (imageUrl) {
+                profileImages.forEach(img => {
+                    img.style.backgroundImage = `url('data:image/jpeg;base64,${imageUrl}')`;
+                    img.style.backgroundSize = 'cover'; // Ensure the image covers the area
+                    // Hide the SVG paths since we are using a background image now
+                    img.querySelectorAll('path').forEach(path => path.style.display = 'none');
+                });
+            }
         }
-    }
 
-    document.addEventListener("DOMContentLoaded", () => {
-        const editProfileForm = document.querySelectorAll("form[action='/company/manage-profile']");
+        if (companyImageUrl) {
+            imagePreview.style.backgroundImage = `url('data:image/jpeg;base64,${companyImageUrl}')`;
+            updateProfileImages(companyImageUrl);
+        } else {
+            imagePreview.style.backgroundImage = defaultImageSvg;
+        }
 
-        editProfileForm.forEach(form => {
-            form.addEventListener("submit", function (event) {
-                event.preventDefault();
 
+        const form = document.getElementById('profileForm');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const form = document.getElementById('profileForm');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
                 const formData = new FormData(this);
-                const userData = Object.fromEntries(formData);
-                const userDataJson = JSON.stringify(userData);
 
-                fetch(this.action, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: userDataJson,
+                fetch('/company/manage-profile', {
+                    method: 'PUT',
+                    body: formData
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        window.location.href = data.redirectUrl;
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
                     })
-                    .catch((error) => {
+                    .then(data => {
+                        console.log(data);
+                        // Handle the response data
+                    })
+                    .catch(error => {
                         console.error('Error:', error);
                     });
             });
+
+            // Additional
+            // ...
         });
     });
 
-    function getCompanyNameFromCookie() {
+    // Form submission listener
+        function getCompanyNameFromCookie() {
         const cookies = document.cookie.split('; ');
         const companyNameCookie = cookies.find(row => row.startsWith('companyName='));
         return companyNameCookie ? decodeURIComponent(companyNameCookie.split('=')[1]) : null;
@@ -361,18 +368,19 @@
     });
 
     function readURL(input) {
+        const imagePreview = document.getElementById('imagePreview');
         if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
-                $('#imagePreview').hide();
-                $('#imagePreview').fadeIn(650);
-            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.style.backgroundImage = 'url(' + e.target.result + ')';
+            };
             reader.readAsDataURL(input.files[0]);
+        } else {
+            imagePreview.style.backgroundImage = defaultImageSvg;
         }
     }
 
-    $("#imageUpload").change(function () {
+    document.getElementById('companyImage').addEventListener('change', function() {
         readURL(this);
     });
 </script>

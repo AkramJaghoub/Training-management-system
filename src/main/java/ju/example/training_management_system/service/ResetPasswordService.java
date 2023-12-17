@@ -47,11 +47,11 @@ public class ResetPasswordService {
             User existingUser = userRepository.findByEmail(email);
 
             if (existingUser == null) {
-                throw new UserNotFoundException();
+                throw new UserNotFoundException("User with email " + email + " wasn't found");
             }
 
             if ((existingUser instanceof Company company)) {
-                name = company.getName();
+                name = company.getCompanyName();
             }
 
             if ((existingUser instanceof Student student)) {

@@ -137,22 +137,26 @@ nav ul li.profile a:after {
 }
 
 .sub-menu-link:hover svg {
-    color: gray;
+    color: rgb(128, 128, 128);
 }
 
 
 .img-account-profile {
     height: 10rem;
 }
+
 .rounded-circle {
     border-radius: 50% !important;
 }
+
 .card {
     box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
 }
+
 .card .card-header {
     font-weight: 500;
 }
+
 .card-header:first-child {
     border-radius: 0.35rem 0.35rem 0 0;
 }
@@ -184,6 +188,7 @@ nav ul li.profile a:after {
     color: #0061f2;
     border-bottom-color: #0061f2;
 }
+
 .nav-borders .nav-link {
     color: #69707a;
     border-bottom-width: 0.125rem;
@@ -365,6 +370,15 @@ p {
     text-align: center;
     margin: auto;
 }
+
+#imagePreview {
+    width: 100%; /* Adjust as needed */
+    height: 100%; /* Adjust as needed */
+    background-size: contain; /* Or 'cover' depending on your need */
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
 .avatar-upload .avatar-preview {
     width: 192px;
     height: 192px;

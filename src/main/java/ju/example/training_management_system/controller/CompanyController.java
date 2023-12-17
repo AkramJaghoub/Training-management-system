@@ -5,23 +5,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ju.example.training_management_system.dto.AdvertisementDto;
+import ju.example.training_management_system.dto.CompanyInfoDto;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.company.advertisement.Advertisement;
-import ju.example.training_management_system.model.users.Role;
 import ju.example.training_management_system.service.company.CompanyService;
 import ju.example.training_management_system.service.company.post.AdsPostService;
-import ju.example.training_management_system.util.Utils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
-import static ju.example.training_management_system.util.Utils.getRequiredDashboard;
 
 @Controller
 @RequestMapping("/company")
@@ -53,15 +50,20 @@ public class CompanyController {
     }
 
     @GetMapping("/manage-profile")
-    public String getManageProfilePage() {
+    public String getManageProfilePage(Model model) {
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("email");
+        companyService.setManageProfile(model, email);
         return "manage-profile";
     }
 
     @PutMapping("/manage-profile")
-    public String manageProfile(@RequestBody Map<String, Object> userData) {
-        System.out.println(userData.entrySet());
-        companyService.updateCompanyDetails(userData);
-        return null;
+    public ResponseEntity<?> manageProfile(@ModelAttribute CompanyInfoDto infoDto) {
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("email");
+
+        ApiResponse apiResponse = companyService.updateCompanyDetails(infoDto, email);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse.getMessage());
     }
 
     @GetMapping("/job/post")

@@ -18,7 +18,7 @@ public class UserFactory {
                     return new Company().build(properties);
                 }
 
-                default -> throw new UserNotFoundException();
+                default -> throw new UserNotFoundException("User wasn't found");
             }
         } catch (UserNotFoundException ex) {
             return new User();

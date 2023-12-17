@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        const phoneNumberRegex = /^\+?\d{10,15}$/;
 
         let userData = {};
 
@@ -87,20 +88,20 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             document.getElementById('companyEmailError').textContent = '';
             document.getElementById('companyNameError').textContent = '';
-            document.getElementById('companyIndustryError').textContent = '';
-            document.getElementById('companyPasswordError').textContent = '';
+            document.getElementById('companyPhoneNumberError').textContent = '';
+           document.getElementById('companyPasswordError').textContent = '';
 
             const form = document.getElementById('companyRegisterForm');
 
             const email = form.elements['email'].value;
             const password = form.elements['password'].value;
-            const industry = form.elements['industry'].value;
+            const phoneNumber = form.elements['phoneNumber'].value; // Updated for phone number
             const companyName = form.elements['name'].value;
             userData.email = form.elements['email'].value;
             userData.password = form.elements['password'].value;
             userData.role = formType;
             userData.companyName = form.elements['name'].value;
-            userData.industry = form.elements['industry'].value;
+            userData.phoneNumber = form.elements['phoneNumber'].value; // Updated for phone number
 
             if (email.trim() === "") {
                 document.getElementById('companyEmailError').textContent = 'Email is required';
@@ -112,8 +113,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 isValid = false;
             }
 
-            if (industry.trim() === "") {
-                document.getElementById('companyIndustryError').textContent = 'Industry is required';
+            if (phoneNumber.trim() === "") { // Validation for phone number
+                document.getElementById('companyPhoneNumberError').textContent = 'Phone number is required';
                 isValid = false;
             }
 
@@ -122,15 +123,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 isValid = false;
             }
 
-            console.log(email)
-            console.log(!emailRegex.test(email));
             if (email && !emailRegex.test(email)) {
-                console.log("hhhhhhhhhhhhhHH");
                 document.getElementById('companyEmailError').textContent = 'Please enter a valid email address';
                 isValid = false;
             }
+
             if (password && !passwordRegex.test(password)) {
-                document.getElementById('companyPasswordError').textContent = 'Password requires: [8+ chars, 1+ uppercase, 1+ number, 1+ special char]';
+                document.getElementById('companyPasswordError').textContent = 'Password requires: [8+ chars, 1+ uppercase,<br> 1+ number, 1+ special char]';
+                isValid = false;
+            }
+
+            if (phoneNumber && !phoneNumberRegex.test(phoneNumber)) {
+                document.getElementById('companyPhoneNumberError').textContent = 'Please enter a valid phone number';
                 isValid = false;
             }
         }
@@ -152,10 +156,8 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(data => {
                 if (data.redirectUrl) {
-                    // Use the redirect URL from the server response
                     window.location.href = data.redirectUrl;
                 } else {
-                    // Handle other cases or log an error
                     console.error('No redirect URL in response:', data);
                 }
             })

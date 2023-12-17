@@ -28,7 +28,6 @@ p {
     color: #525252
 }
 
-
 form {
     background-color: #FFFFFF;
     display: flex;
@@ -44,7 +43,6 @@ form {
     position: relative;
     margin-bottom: .5rem;
 }
-
 
 input {
     background-color: #eee;
@@ -134,8 +132,8 @@ input {
 
 .input-with-icon input {
     padding-left: 3.125rem;
-    padding-bottom: 1rem; /* or whatever value gives you the look you want */
-    line-height: 2.5rem; /* Adjust line-height for vertical centering */
+    padding-bottom: 1rem;
+    line-height: 2.5rem;
     border: none;
     border-bottom: 2px solid #aaaaaa;
     width: 20rem;
@@ -157,7 +155,7 @@ input {
 .input-with-icon i {
     position: absolute;
     left: 0.625rem;
-    top: 35%;
+    top: 33%;
     transform: translateY(-50%);
     font-size: 15px;
     color: #000;
@@ -168,11 +166,11 @@ input {
 .name-container {
     display: flex;
     justify-content: space-between;
-    gap: 0.2rem; /* This provides space between the two form groups */
+    gap: 0.2rem;
 }
 
 .name-container .form-group {
-    flex: 1; /* This makes each input take up equal space */
+    flex: 1;
 }
 
 .name-container input{
@@ -185,7 +183,7 @@ input {
 
 .name-container .first-name,
 .name-container .last-name {
-    flex-basis: calc(50% - 5px); /* Adjust the width taking the gap into account */
+    flex-basis: calc(50% - 5px);
 }
 
 .input-with-icon input:focus + i {

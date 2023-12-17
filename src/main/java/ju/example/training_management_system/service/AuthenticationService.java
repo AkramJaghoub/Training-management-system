@@ -27,7 +27,7 @@ public class AuthenticationService {
 
             if (storedUser == null) {
                 log.info("user with the email {} wasn't found", email);
-                throw new UserNotFoundException();
+                throw new UserNotFoundException("User with email " + email + " wasn't found");
             }
 
             log.info("user with the email {} was found now validating their password", email);

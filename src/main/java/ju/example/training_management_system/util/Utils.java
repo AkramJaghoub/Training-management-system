@@ -4,12 +4,13 @@ import ju.example.training_management_system.exception.StorageException;
 import ju.example.training_management_system.model.users.Role;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.zip.DeflaterOutputStream;
+import java.util.zip.InflaterInputStream;
 
 public final class Utils {
 
@@ -25,34 +26,42 @@ public final class Utils {
     }
 
     public static boolean isNotEqual(String str1, String str2) {
-        System.out.println(str1);
-        System.out.println(str2);
-        System.out.println("result: " + !str1.equals(str2));
         return !str1.equals(str2);
     }
 
-    public static String saveImage(MultipartFile file) {
-        Path rootLocation = Paths.get("src/main/resources/static/job-post/images-uploaded");
-
-        if (file.isEmpty()) {
-            return null;
-        }
+    public static byte[] saveImage(MultipartFile file) {
         try {
-            String filename = System.currentTimeMillis() + "-" + file.getOriginalFilename();
-            Path destinationFile = rootLocation.resolve(Paths.get(filename))
-                    .normalize().toAbsolutePath();
-
-            if (!destinationFile.getParent().equals(rootLocation.toAbsolutePath())) {
-                throw new StorageException("Cannot store file outside current directory.");
+            // Compress the byte array
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            try (DeflaterOutputStream deflaterOutputStream = new DeflaterOutputStream(byteArrayOutputStream)) {
+                deflaterOutputStream.write(file.getBytes());
             }
 
-            try (InputStream inputStream = file.getInputStream()) {
-                Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
-            }
+            // Return the compressed byte arrays
+            System.out.println("sssssssssssssssssssssssssssss");
+            System.out.println(Arrays.toString(byteArrayOutputStream.toByteArray()));
+            return byteArrayOutputStream.toByteArray();
 
-            return "/job-post/images-uploaded/" + filename;
         } catch (IOException e) {
-            throw new StorageException("Failed to store file.", e);
+            throw new StorageException("Failed to store and compress file.", e);
         }
+    }
+
+    public static byte[] decompressImage(byte[] compressedImage) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try (InflaterInputStream inflaterInputStream = new InflaterInputStream(new ByteArrayInputStream(compressedImage))) {
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = inflaterInputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, len);
+            }
+        } catch (IOException e) {
+            throw new StorageException("Failed to decompress image", e);
+        }
+        return outputStream.toByteArray();
+    }
+
+    public static String convertToBase64(byte[] imageBytes) {
+        return Base64.getEncoder().encodeToString(imageBytes);
     }
 }
