@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/tero")
 public class HomePageController {
 
-    @GetMapping("/home")
+    @GetMapping()
     public String getHomePage() {
         return "home-page";
     }

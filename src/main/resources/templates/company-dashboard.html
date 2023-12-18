@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -57,11 +57,12 @@
                     </svg>
                 </div>
             </a></li>
+
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
                     <span class="profile-arrow">&#9660;</span>
                     <div class="user-info">
-                        <div class="circle-icon">
+                        <div class="circle-icon" style="box-shadow: 0 0 0 rgba(0, 0, 0, 0); width: 60px; height: 60px;">
                             <svg class="bi bi-person-circle" fill="gray" height="28" viewBox="0 0 16 16"
                                  width="28" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -103,7 +104,6 @@
                 </div>
             </div>
         </ul>
-
         <div class="nav__close" id="nav-close">
             <i class='bx bx-x'></i>
         </div>
@@ -121,6 +121,7 @@
         <div class="home__content">
             <div class="home__group">
                 <div class="hero">
+                    <input type="hidden" id="hiddenCompanyImageUrl" th:value="${companyImage}" />
                     <div class="article-container">
                         <div class="articles">
                         </div>
@@ -221,7 +222,7 @@
 <footer class="footer section" style="margin-top: -15rem">
     <div class="footer__container container grid">
         <div class="footer__content">
-            <a class="footer__logo" href="/tero/home">
+            <a class="footer__logo" href="/tero">
                 <img alt="" class="footer__logo-img" src="/main/img/tero.png">
             </a>
             <p class="footer__description">Enjoy the Best internships <br> of your career.</p>
@@ -298,6 +299,8 @@
 <script src="/company-dashboard/js/fetchAds.js"></script>
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 <script src="/job-post/js/country-api.js"></script>
+<script src="/company-dashboard/js/profile-pic.js"></script>
+
 </body>
 
 </html>

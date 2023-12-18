@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head>h
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -26,14 +26,14 @@
 <body>
 <!--==================== HEADER ====================-->
 <header class="header" id="header">
-    <a class="nav__logo" href="/tero/home">
+    <a class="nav__logo" href="/tero">
         <img alt="" class="nav__logo-img" src="/main/img/tero.png">
     </a>
 
     <div class="nav__menu" id="nav-menu">
         <ul class="nav__list">
             <li class="nav__item">
-                <a class="nav__link active-link" href='/tero/home'>Home</a>
+                <a class="nav__link active-link" href='/tero'>Home</a>
             </li>
 
             <li class="nav__item">
@@ -65,46 +65,6 @@
 <main class="main">
     <div class="hero">
         <div class="fcontainer container" id="fcontainer">
-            <div class="form-container sign-in-container">
-                <form id="companyRegisterForm">
-                    <input name="role" type="hidden" value="COMPANY"/>
-                    <h1>Create a Company Account</h1>
-                    <div class="mb-3 input-with-icon form-group">
-                        <i class="fas fa-building"></i>
-                        <label>
-                            <input class="form-control" name="name" placeholder="Company Name" type="text"/>
-                            <div class="mb-3 error-message" id="companyNameError"></div>
-                        </label>
-                    </div>
-
-                    <div class="mb-3 input-with-icon form-group">
-                        <i class="fas fa-envelope"></i>
-                        <label>
-                            <input class="form-control" name="email" placeholder="Email" type="email"/>
-                            <div class="mb-3 error-message" id="companyEmailError"></div>
-                        </label>
-                    </div>
-
-                    <div class="mb-3 input-with-icon form-group">
-                        <i class="fas fa-phone"></i>
-                        <label>
-                            <input class="form-control" name="phoneNumber" placeholder="Phone Number" type="text"/>
-                            <div class="mb-3 error-message" id="companyPhoneNumberError"></div>
-                        </label>
-                    </div>
-
-                    <div class="mb-3 input-with-icon form-group">
-                        <i class="fas fa-lock"></i>
-                        <label>
-                            <input class="form-control" name="password" placeholder="password" type="password"/>
-                            <div class="mb-3 error-message" id="companyPasswordError"></div>
-                        </label>
-                    </div>
-                    <button class="button-home">Sign Up</button>
-                    <!--                    <button class="btn btn-primary" type="button">Sign Up</button>-->
-                    <p>Already have an account? <a class="login" href="/login">Login</a></p>
-                </form>
-            </div>
 
             <div class=" form-container sign-up-container ">
                 <form id="studentRegisterForm">
@@ -169,6 +129,47 @@
                 </form>
             </div>
 
+            <div class="form-container sign-in-container">
+                <form id="companyRegisterForm">
+                    <input name="role" type="hidden" value="COMPANY"/>
+                    <h1>Create a Company Account</h1>
+                    <div class="mb-3 input-with-icon form-group">
+                        <i class="fas fa-building"></i>
+                        <label>
+                            <input class="form-control" name="name" placeholder="Company Name" type="text"/>
+                            <div class="mb-3 error-message" id="companyNameError"></div>
+                        </label>
+                    </div>
+
+                    <div class="mb-3 input-with-icon form-group">
+                        <i class="fas fa-envelope"></i>
+                        <label>
+                            <input class="form-control" name="email" placeholder="Email" type="email"/>
+                            <div class="mb-3 error-message" id="companyEmailError"></div>
+                        </label>
+                    </div>
+
+                    <div class="mb-3 input-with-icon form-group">
+                        <i class="fas fa-phone"></i>
+                        <label>
+                            <input class="form-control" name="phoneNumber" placeholder="Phone Number" type="text"/>
+                            <div class="mb-3 error-message" id="companyPhoneNumberError"></div>
+                        </label>
+                    </div>
+
+                    <div class="mb-3 input-with-icon form-group">
+                        <i class="fas fa-lock"></i>
+                        <label>
+                            <input class="form-control" name="password" placeholder="password" type="password"/>
+                            <div class="mb-3 error-message" id="companyPasswordError"></div>
+                        </label>
+                    </div>
+                    <button class="button-home">Sign Up</button>
+                    <!--                    <button class="btn btn-primary" type="button">Sign Up</button>-->
+                    <p>Already have an account? <a class="login" href="/login">Login</a></p>
+                </form>
+            </div>
+
             <div class="overlay-container">
                 <div class="overlay">
                     <container class="overlay-panel overlay-left tcontainer">
@@ -203,8 +204,8 @@
 <footer class="footer section" style="margin-top: -15rem">
     <div class="footer__container container grid">
         <div class="footer__content">
-            <a class="footer__logo" href="/tero/home">
-                <img alt="" class="footer__logo-img" src="/main/img/tero.png">
+            <a class="footer__logo" href="/tero">
+                <img alt="tero logo" class="footer__logo-img" src="/main/img/tero.png">
             </a>
 
             <p class="footer__description">Enjoy the Best internships <br> of your career.</p>

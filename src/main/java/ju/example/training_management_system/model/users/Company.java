@@ -6,7 +6,6 @@ import jakarta.persistence.Lob;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.Length;
 
 import java.util.Map;
 
@@ -26,7 +25,7 @@ public class Company extends User {
 
     private Integer numOfEmployees;
 
-    @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] image;
 
     private Integer establishmentYear;

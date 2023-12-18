@@ -371,14 +371,6 @@ p {
     margin: auto;
 }
 
-#imagePreview {
-    width: 100%; /* Adjust as needed */
-    height: 100%; /* Adjust as needed */
-    background-size: contain; /* Or 'cover' depending on your need */
-    background-position: center center;
-    background-repeat: no-repeat;
-}
-
 .avatar-upload .avatar-preview {
     width: 192px;
     height: 192px;

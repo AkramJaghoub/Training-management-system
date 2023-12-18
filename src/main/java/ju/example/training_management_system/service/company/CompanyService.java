@@ -1,5 +1,7 @@
 package ju.example.training_management_system.service.company;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import ju.example.training_management_system.dto.CompanyInfoDto;
 import ju.example.training_management_system.exception.UnauthorizedCompanyAccessException;
@@ -14,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.Arrays;
 
 import static ju.example.training_management_system.util.Utils.*;
 
@@ -38,6 +42,9 @@ public class CompanyService {
 
             CompanyInfo companyInfo = new CompanyInfo().toEntity(infoDto);
 
+            System.out.println(infoDto);
+
+            System.out.println(companyInfo + " company info");
             User existingUser = userRepository.findByEmail(email);
             if (existingUser == null) {
                 throw new UserNotFoundException("User with email " + email + " wasn't found");
@@ -85,7 +92,6 @@ public class CompanyService {
     }
 
     public void setManageProfile(Model model, String email) {
-
         User existingUser = userRepository.findByEmail(email);
         if (existingUser == null) {
             throw new UserNotFoundException("User with email " + email + " wasn't found");
@@ -109,5 +115,29 @@ public class CompanyService {
         model.addAttribute("numOfEmployees", company.getNumOfEmployees());
         model.addAttribute("establishmentYear", company.getEstablishmentYear());
         model.addAttribute("companyImage", base64Image);
+    }
+
+    public void setUpCompanyDashboard(Model model, String email, HttpServletResponse response) {
+        User existingUser = userRepository.findByEmail(email);
+        if (existingUser == null) {
+            throw new UserNotFoundException("User with email " + email + " wasn't found");
+        }
+
+        if (!(existingUser instanceof Company company)) {
+            throw new UnauthorizedCompanyAccessException("User with email " + email + " wasn't recognized as a company");
+        }
+
+        String base64Image = null;
+        if (company.getImage() != null) {
+            byte[] decompressedImage = decompressImage(company.getImage());
+            base64Image = convertToBase64(decompressedImage);
+        }
+
+        model.addAttribute("companyImage", base64Image);
+
+        Cookie companyNameCookie = new Cookie("companyName", company.getCompanyName());
+        companyNameCookie.setPath("/");
+        companyNameCookie.setMaxAge(24 * 60 * 60 * 30);
+        response.addCookie(companyNameCookie);
     }
 }

@@ -1,7 +1,3 @@
-let subMenu = document.getElementById("subMenu");
-let imagePreview = document.getElementById('imagePreview');
-const defaultImageSvg = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='black' height='100%' viewBox='0 0 16 16' width='100%'%3E%3Cpath d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0'/%3E%3Cpath d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1' fill-rule='evenodd'/%3E%3C/svg%3E")`;
-
 function toggleMenu() {
     subMenu.classList.toggle("open-menu");
 }
@@ -45,12 +41,6 @@ document.addEventListener("DOMContentLoaded", function() {
         imagePreview.style.backgroundImage = defaultImageSvg;
     }
 
-    const companyName = getCompanyNameFromCookie();
-    if (companyName) {
-        document.getElementById('companyNameDisplay1').textContent = companyName;
-        document.getElementById('companyNameDisplay2').textContent = companyName;
-    }
-
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         const formData = new FormData(this);
@@ -75,10 +65,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-// Rest of the code...
 
-
-// Form submission listener
 function getCompanyNameFromCookie() {
     const cookies = document.cookie.split('; ');
     const companyNameCookie = cookies.find(row => row.startsWith('companyName='));

@@ -37,9 +37,6 @@ public final class Utils {
                 deflaterOutputStream.write(file.getBytes());
             }
 
-            // Return the compressed byte arrays
-            System.out.println("sssssssssssssssssssssssssssss");
-            System.out.println(Arrays.toString(byteArrayOutputStream.toByteArray()));
             return byteArrayOutputStream.toByteArray();
 
         } catch (IOException e) {
