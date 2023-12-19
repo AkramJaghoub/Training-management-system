@@ -80,12 +80,15 @@ public class CompanyController {
         if (email != null) {
             model.addAttribute("email", email);
             String companyName = companyService.getCompanyName(email);
+            companyService.setUpCompanyProfilePic(model,email,response);
+            session.setAttribute("email", email);
             model.addAttribute("companyName", companyName);
             return "job-post";
         }
 
         return "redirect:/login";
     }
+
 
     @PostMapping("/job/post")
     public ResponseEntity<?> postAds(@ModelAttribute AdvertisementDto postDto) {

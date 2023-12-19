@@ -41,13 +41,16 @@ nav ul li.profile a:after {
 
 .sub-menu-wrap {
     position: absolute;
-    top: 75%;
-    left: 72.7%;
+    top: 100%;
+    left: -650%;
     width: 320px;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s;
-    margin-left: 3rem;
+}
+
+.nav__item {
+    position: relative;
 }
 
 .profile-arrow {

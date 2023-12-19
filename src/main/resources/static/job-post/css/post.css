@@ -43,13 +43,16 @@ nav ul li.profile a:after {
 
 .sub-menu-wrap {
     position: absolute;
-    top: 75%;
-    left: 72.7%;
+    top: 100%;
+    left: -650%;
     width: 320px;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s;
-    margin-left: 3rem;
+}
+
+.nav__item {
+    position: relative;
 }
 
 .profile-arrow {
@@ -154,4 +157,24 @@ label {
 
 .error-message {
     color: #dc3545;
+}
+
+.circle-icon {
+    width: 42px; /* Adjust the size of the circle */
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff; /* Set the background color if needed */
+    border-radius: 50%;
+    overflow: hidden; /* Ensure the icon stays within the circular boundary */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#imagePreview {
+    width: 100%; /* Adjust as needed */
+    height: 100%; /* Adjust as needed */
+    background-size: contain; /* Or 'cover' depending on your need */
+    background-position: center center;
+    background-repeat: no-repeat;
 }
