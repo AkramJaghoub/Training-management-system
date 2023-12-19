@@ -36,7 +36,7 @@ public class CompanyController {
 
         String email = (String) session.getAttribute("email");
         if (email != null) {
-            companyService.setUpCompanyDashboard(model, email, response);
+            companyService.setUpCompanyImage(model, email, response);
             session.setAttribute("email", email);
             return "company-dashboard";
         }
@@ -80,7 +80,7 @@ public class CompanyController {
         if (email != null) {
             model.addAttribute("email", email);
             String companyName = companyService.getCompanyName(email);
-            companyService.setUpCompanyProfilePic(model,email,response);
+            companyService.setUpCompanyImage(model,email,response);
             session.setAttribute("email", email);
             model.addAttribute("companyName", companyName);
             return "job-post";

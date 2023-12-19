@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function to update profile images in  the header
     function updateProfileImages(imageUrl) {
         const profileImages = document.querySelectorAll('.bi-person-circle');
-        console.log(profileImages + " sssss")
         // Check if an uploaded image exists
         const uploadedImageExists = imageUrl && imageUrl.trim() !== '';
         if (uploadedImageExists) {

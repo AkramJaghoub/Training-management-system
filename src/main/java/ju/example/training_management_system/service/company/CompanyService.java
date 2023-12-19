@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.Arrays;
-
 import static ju.example.training_management_system.util.Utils.*;
 
 @Service
@@ -117,31 +115,7 @@ public class CompanyService {
         model.addAttribute("companyImage", base64Image);
     }
 
-    public void setUpCompanyDashboard(Model model, String email, HttpServletResponse response) {
-        User existingUser = userRepository.findByEmail(email);
-        if (existingUser == null) {
-            throw new UserNotFoundException("User with email " + email + " wasn't found");
-        }
-
-        if (!(existingUser instanceof Company company)) {
-            throw new UnauthorizedCompanyAccessException("User with email " + email + " wasn't recognized as a company");
-        }
-
-        String base64Image = null;
-        if (company.getImage() != null) {
-            byte[] decompressedImage = decompressImage(company.getImage());
-            base64Image = convertToBase64(decompressedImage);
-        }
-
-        model.addAttribute("companyImage", base64Image);
-
-        Cookie companyNameCookie = new Cookie("companyName", company.getCompanyName());
-        companyNameCookie.setPath("/");
-        companyNameCookie.setMaxAge(24 * 60 * 60 * 30);
-        response.addCookie(companyNameCookie);
-    }
-
-    public void setUpCompanyProfilePic(Model model, String email, HttpServletResponse response) {
+    public void setUpCompanyImage(Model model, String email, HttpServletResponse response){
         User existingUser = userRepository.findByEmail(email);
         if (existingUser == null) {
             throw new UserNotFoundException("User with email " + email + " wasn't found");
