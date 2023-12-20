@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Handle Student Registration Form
     document.getElementById('studentRegisterForm').addEventListener('submit', function (event) {
-        console.log("akram elghabi;)");
         handleRegistrationForm(event, this, 'STUDENT');
     });
 

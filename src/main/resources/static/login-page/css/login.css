@@ -1,6 +1,6 @@
 :root {
-    --t-color: #5A8349F9;
-    --t-color-alt: rgba(90, 131, 73, 0.37);
+    --t-color: #1a4a61;
+    --t-color-alt: rgba(20, 55, 72, 0.3);
     --bs-link-hover-color: #012e6c;
 }
 
@@ -53,7 +53,7 @@
 .login-form h1 {
     margin-bottom: 40px;
     text-align: center;
-    color: #000;
+    color: var(--t-color);
     font-size: 40px;
 }
 
@@ -110,7 +110,7 @@
     outline: none;
     font-size: 16px;
     transition: border-color 0.3s ease;
-    color: #000000;
+    color: var(--t-color-alt);
 }
 
 .input-with-icon input:after {
@@ -118,7 +118,7 @@
 }
 
 .input-with-icon input::placeholder {
-    color: lightgrey;
+    color: var(--t-color-alt);
 }
 
 .input-with-icon input:focus {
@@ -133,7 +133,7 @@
     top: 55%;
     transform: translateY(-50%);
     font-size: 15px;
-    color: #000;
+    color: var(--t-color);
     transition: color 0.3s ease;
     padding-bottom: 1.25rem;
 }
