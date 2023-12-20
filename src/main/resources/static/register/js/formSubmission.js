@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('companyEmailError').textContent = '';
             document.getElementById('companyNameError').textContent = '';
             document.getElementById('companyPhoneNumberError').textContent = '';
-           document.getElementById('companyPasswordError').textContent = '';
+            document.getElementById('companyPasswordError').textContent = '';
 
             const form = document.getElementById('companyRegisterForm');
 

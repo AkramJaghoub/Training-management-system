@@ -42,7 +42,7 @@
 
 .login-form {
     flex: 1;
-    padding: 80px 60px;
+    padding: 5rem 3.75rem;
     background-color: white;
     display: flex;
     flex-direction: column;

@@ -67,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!isValid) {
             return;
         }
-
         const formData = new FormData(form);
 
         fetch('/company/job/post', {

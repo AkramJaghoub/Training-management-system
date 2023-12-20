@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 img.style.backgroundSize = 'cover';
             });
         }
+
     }
 
     const companyImageUrl = document.getElementById('hiddenCompanyImageUrl').value;
