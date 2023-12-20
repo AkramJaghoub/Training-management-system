@@ -1,5 +1,6 @@
 package ju.example.training_management_system.model.users;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,9 @@ public class Student extends User {
     private String lastName;
     private String university;
     private String major;
+
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] image;
 
     public Student(String email, String password) {
         super(email, password);

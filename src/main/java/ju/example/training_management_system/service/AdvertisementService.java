@@ -1,4 +1,4 @@
-package ju.example.training_management_system.service.company.post;
+package ju.example.training_management_system.service;
 
 import jakarta.transaction.Transactional;
 import ju.example.training_management_system.dto.AdvertisementDto;
@@ -17,57 +17,44 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static ju.example.training_management_system.util.Utils.isNotEqual;
-import static ju.example.training_management_system.util.Utils.saveImage;
 
 
 @Service
 @RequiredArgsConstructor
-public class AdsPostService {
+public class AdvertisementService {
 
     private final AdvertisementRepository advertisementRepository;
     private final UserRepository userRepository;
 
-        @Transactional
-        public ApiResponse postAd(AdvertisementDto adDto, String email) {
+    @Transactional
+    public ApiResponse postAd(AdvertisementDto adDto, String email) {
 
-            try {
-                Advertisement ad = new Advertisement().toEntity(adDto);
+        try {
+            Advertisement ad = new Advertisement().toEntity(adDto);
 
 //                String imageUrl = saveImage(adDto.getJobImage());
 //                ad.setImageUrl(imageUrl);
 
-                if (advertisementRepository.existsByJobTitle(ad.getJobTitle())) {
-                    throw new AdAlreadyExistsException("A post with the same title already exists!");
-                }
-
-                User user = userRepository.findByEmail(email);
-
-                if (user instanceof Company company) {
-                    ad.setCompany(company);
-                }
-
-                advertisementRepository.save(ad);
-                return new ApiResponse("advertisement was saved successfully", HttpStatus.CREATED);
-
-            } catch (AdAlreadyExistsException ex) {
-                return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+            if (advertisementRepository.existsByJobTitle(ad.getJobTitle())) {
+                throw new AdAlreadyExistsException("A post with the same title already exists!");
             }
+
+            User user = userRepository.findByEmail(email);
+
+            if (user instanceof Company company) {
+                ad.setCompany(company);
+            }
+
+            advertisementRepository.save(ad);
+            return new ApiResponse("advertisement was saved successfully", HttpStatus.CREATED);
+
+        } catch (AdAlreadyExistsException ex) {
+            return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
 
     public List<Advertisement> getAllAdvertisementsForCompany(String companyName) {
         return advertisementRepository.findByCompany_CompanyName(companyName);
-    }
-
-    public void deleteAd(String companyName, String position) {
-        List<Advertisement> advertisements = advertisementRepository.findByCompany_CompanyName(companyName);
-        long adId = 0;
-        for (Advertisement ad : advertisements) {
-            if (ad.getJobTitle().equals(position)) {
-                adId = ad.getId();
-                break;
-            }
-        }
-        advertisementRepository.deleteById(adId);
     }
 
     @Transactional
@@ -105,4 +92,17 @@ public class AdsPostService {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    public void deleteAd(String companyName, String position) {
+        List<Advertisement> advertisements = advertisementRepository.findByCompany_CompanyName(companyName);
+        long adId = 0;
+        for (Advertisement ad : advertisements) {
+            if (ad.getJobTitle().equals(position)) {
+                adId = ad.getId();
+                break;
+            }
+        }
+        advertisementRepository.deleteById(adId);
+    }
+
 }

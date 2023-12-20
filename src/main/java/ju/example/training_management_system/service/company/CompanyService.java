@@ -115,7 +115,7 @@ public class CompanyService {
         model.addAttribute("companyImage", base64Image);
     }
 
-    public void setUpCompanyImage(Model model, String email, HttpServletResponse response){
+    public void setUpCompanyDashboard(Model model, String email, HttpServletResponse response){
         User existingUser = userRepository.findByEmail(email);
         if (existingUser == null) {
             throw new UserNotFoundException("User with email " + email + " wasn't found");

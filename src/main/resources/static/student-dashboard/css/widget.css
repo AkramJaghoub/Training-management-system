@@ -1,0 +1,344 @@
+article {
+    --img-scale: 1.001;
+    --title-color: #333;
+    --link-icon-translate: -20px;
+    --link-icon-opacity: 0;
+    position: relative;
+    border-radius: 16px;
+    background: #ffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+    transform-origin: center;
+    transition: all 0.4s ease-in-out;
+    overflow: hidden;
+}
+
+.article-container {
+    border: 2px solid #333; /* Border styling */
+    padding: 20px; /* Padding inside the border */
+    margin: 3.125rem -5rem; /* Top margin and auto horizontal margin for centering */
+    border-radius: 10px; /* Rounded corners for the border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+    background-color: #FAF9F6;
+}
+
+article a::after {
+    position: absolute;
+    inset-block: 0;
+    inset-inline: 0;
+    cursor: pointer;
+    content: "";
+    z-index: -1; /* Make sure it's below interactive elements */
+}
+
+article h2 {
+    margin: 0 0 18px 0;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.06em;
+    color: var(--title-color);
+    transition: color 0.3s ease-out;
+}
+
+
+.article-body {
+    position: relative; /* This ensures that the menu container positions itself relative to the article */
+    padding: 20px;
+}
+
+.article-button {
+    margin: 5px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.menu-container {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 5px 0; /* Top and bottom padding */
+    min-width: 100px; /* Minimum width, adjust as needed */
+    z-index: 200; /* Set a high value to ensure it's on top */
+}
+
+.menu-container a {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Vertically align items */
+    padding: 8px 10px;
+    color: #333;
+    font-weight: 400;
+    font-size: 1rem;
+    text-decoration: none;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu-container a:hover {
+    background-color: #f5f5f5;
+    color: #000;
+}
+
+.menu-container a:last-child {
+    border-bottom: none;
+}
+
+/* Styling for the icon */
+.menu-container a iconify-icon {
+    margin-right: 10px; /* Space between icon and text */
+    font-size: 20px; /* Adjust size as needed */
+    min-width: 24px; /* Ensure consistent width for all icons */
+}
+
+/* Ensure text alignment */
+.menu-container a span {
+    flex-grow: 1; /* Allows text to take up remaining space */
+    text-align: left; /* Align text to the left */
+}
+
+/*.menu-container a.update-link iconify-icon {*/
+/*    color: green; !* Green color for update icon *!*/
+/*}*/
+
+/*.menu-container a.delete-link iconify-icon {*/
+/*    color: red; !* Red color for delete icon *!*/
+/*}*/
+
+.menu-icon {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px;
+    display: inline-block; /* Ensure it behaves like an inline element */
+    border-radius: 50%; /* Circular shape */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.menu-icon:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent background on hover */
+}
+
+/* Targeting the iconify-icon specifically */
+
+.update-button {
+    background-color: #4caf50;
+    color: white;
+}
+
+.update-button:hover {
+    background-color: #43a047;
+}
+
+article a {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: #28666e;
+    font-weight: bold;
+}
+
+article a .icon {
+    min-width: 24px;
+    width: 24px;
+    height: 24px;
+    margin-left: 5px;
+    transform: translateX(var(--link-icon-translate));
+    opacity: var(--link-icon-opacity);
+    transition: all 0.3s;
+}
+
+.articles {
+    display: grid;
+    max-width: 1280px; /* Adjust as needed */
+    margin: auto; /* Centering the grid */
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+}
+
+.article-wrapper {
+    overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+    .article-container {
+        width: 95%; /* Increase width on smaller screens */
+        margin: 10px auto; /* Reduce margin on smaller screens */
+    }
+}
+
+@media screen and (max-width: 960px) {
+    article {
+    }
+
+    .article-body p {
+        display: none;
+    }
+}
+
+@container card (min-width: 380px) {
+    .article-wrapper {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: 16px;
+    }
+
+    .article-body {
+        padding-left: 0;
+    }
+
+    figure {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    figure img {
+        height: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+    }
+}
+
+.sr-only:not(:focus):not(:active) {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 15;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.view-description:hover {
+    text-decoration: none;
+    color: inherit; /* Keeps the color the same on hover */
+}
+
+/* General targeting, affects all links within '.article-body' */
+.article-body a:hover {
+    text-decoration: none;
+    color: inherit; /* Keeps the color the same on hover */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    color: #000;
+    width: 80%;
+    margin: 10% auto;
+    overflow-y: auto;
+    max-height: 80vh;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.modal-body {
+    font-family: 'Open Sans', sans-serif;
+    color: #333;
+    line-height: 1.6;
+    max-height: calc(80vh - 40px);
+    overflow-y: auto;
+}
+
+
+.dialog-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease;
+    height: 100vh;
+    opacity: 0; /* Start as transparent */
+}
+
+.dialog {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 500px; /* Adjust the width as needed */
+    text-align: center;
+    margin-bottom: 10rem;
+    /* Add any additional styling needed for the dialog */
+}
+
+
+.dialog-container-form {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; /* Added to extend the full height */
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    transition: opacity 0.5s ease;
+    opacity: 1; /* Changed to make it opaque */
+}
+
+.dialog-form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 40%;
+    margin: auto; /* Added to center the form in the dialog */
+}
+
+.dialog button {
+    margin: 10px;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: white;
+}
+
+.dialog button:hover {
+    background-color: #43a047;
+}
+
+.error-message {
+    color: red;
+}

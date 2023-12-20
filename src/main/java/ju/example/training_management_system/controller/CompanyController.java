@@ -8,7 +8,7 @@ import ju.example.training_management_system.dto.CompanyInfoDto;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.company.advertisement.Advertisement;
 import ju.example.training_management_system.service.company.CompanyService;
-import ju.example.training_management_system.service.company.post.AdsPostService;
+import ju.example.training_management_system.service.AdvertisementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ import java.util.List;
 public class CompanyController {
 
     private final CompanyService companyService;
-    private final AdsPostService adsPostService;
+    private final AdvertisementService adsPostService;
     private final HttpServletResponse response;
     private final HttpServletRequest request;
 
@@ -36,7 +36,7 @@ public class CompanyController {
 
         String email = (String) session.getAttribute("email");
         if (email != null) {
-            companyService.setUpCompanyImage(model, email, response);
+            companyService.setUpCompanyDashboard(model, email, response);
             session.setAttribute("email", email);
             return "company-dashboard";
         }
@@ -80,7 +80,7 @@ public class CompanyController {
         if (email != null) {
             model.addAttribute("email", email);
             String companyName = companyService.getCompanyName(email);
-            companyService.setUpCompanyImage(model,email,response);
+            companyService.setUpCompanyDashboard(model,email,response);
             session.setAttribute("email", email);
             model.addAttribute("companyName", companyName);
             return "job-post";

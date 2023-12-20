@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <!--=============== FAVICON ===============-->
+    <link href="/main/img/tero.png" rel="icon" type="image/x-icon">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!--=============== BOXICONS ===============-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!--=============== BOXICONS ===============-->
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
+
+    <!--=============== SWIPER CSS ===============-->
+
+    <!--=============== CSS ===============-->
+    <link href="/main/css/styles.css" rel="stylesheet">
+    <link href="/company-dashboard/css/widget.css" rel="stylesheet">
+    <link href="/company-dashboard/css/company_dashboard.css" rel="stylesheet">
+
+    <title>Tero internships finder</title>
+    <link href="../static/company-dashboard/css/widget.css" rel="stylesheet">
+</head>
+<body>
+
+<!--==================== HEADER ====================-->
+<header class="header" id="header">
+    <a class="nav__logo" href="/student/dashboard">
+        <img alt="" class="nav__logo-img" src="/main/img/tero.png">
+    </a>
+
+    <div class="nav__menu" id="nav-menu">
+        <ul class="nav__list">
+            <li class="nav__item">
+                <a class="nav__link active-link" href='/student/dashboard'>Home</a>
+            </li>
+
+
+            <li class="nav__item">
+                <a href="#" id="profileLink" onclick="toggleMenu()">
+                <div class="circle-icon">
+                    <svg class="bi bi-person-circle" fill="black" height="28" viewBox="0 0 16 16" width="28"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                        <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+                              fill-rule="evenodd"/>
+                    </svg>
+                </div>
+                </a>
+                <div class="sub-menu-wrap" id="subMenu">
+                    <div class="sub-menu">
+                        <span class="profile-arrow">&#9660;</span>
+                        <div class="user-info">
+                            <div class="circle-icon" style="box-shadow: 0 0 0 rgba(0, 0, 0, 0); width: 60px; height: 60px;">
+                                <svg class="bi bi-person-circle" fill="gray" height="28" viewBox="0 0 16 16"
+                                     width="28" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                    <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+                                          fill-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <h3 id="studentNameDisplay"></h3>
+                        </div>
+                        <hr>
+
+                        <a class="sub-menu-link" href="/student/manage-profile">
+                            <svg class="bi bi-pencil" fill="currentColor" height="28" viewBox="0 0 16 16"
+                                 width="28" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                            </svg>
+                            <p>Manage Profile</p>
+                        </a>
+
+                        <a class="sub-menu-link" href="#">
+                            <svg class="bi bi-info-circle" fill="currentColor" height="28" viewBox="0 0 16 16"
+                                 width="28" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                            </svg>
+                            <p>Help</p>
+                        </a>
+
+                        <a class="sub-menu-link" href="/logout">
+                            <svg class="bi bi-box-arrow-right" fill="currentColor" height="28" viewBox="0 0 16 16"
+                                 width="28" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"
+                                      fill-rule="evenodd"/>
+                                <path d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
+                                      fill-rule="evenodd"/>
+                            </svg>
+                            <p>Logout</p>
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="nav__close" id="nav-close">
+            <i class='bx bx-x'></i>
+        </div>
+
+    </div>
+
+    <div class="nav__toggle" id="nav-toggle">
+        <i class='bx bx-grid-alt'></i>
+    </div>
+</header>
+
+
+<main class="main">
+    <section class="home container" id="home">
+        <div class="home__content">
+            <div class="home__group">
+                <div class="hero">
+                    <input type="hidden" id="hiddenStudentImageUrl" th:value="${studentImage}" />
+                    <div class="article-container">
+                        <div class="articles">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!--==================== FOOTER ====================-->
+<footer class="footer section" style="margin-top: -15rem">
+    <div class="footer__container container grid">
+        <div class="footer__content">
+            <a class="footer__logo" href="/tero">
+                <img alt="" class="footer__logo-img" src="/main/img/tero.png">
+            </a>
+            <p class="footer__description">Enjoy the Best internships <br> of your career.</p>
+        </div>
+
+        <div class="footer__content">
+            <h3 class="footer__title" id="about">About</h3>
+
+            <ul class="footer__links">
+                <li>
+                    <a class="footer__link" href="#about">About Us</a>
+                </li>
+                <li>
+                    <a class="footer__link" href="#">Features</a>
+                </li>
+                <li>
+                    <a class="footer__link" href="#">News</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="footer__content">
+            <h3 class="footer__title">Our Services</h3>
+
+            <ul class="footer__links">
+                <li>
+                    <a class="footer__link" href="#">Pricing</a>
+                </li>
+                <li>
+                    <a class="footer__link" href="#">Discounts</a>
+                </li>
+                <li>
+                    <a class="footer__link" href="#">Shipping mode</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="footer__content">
+            <h3 class="footer__title">Our Company</h3>
+
+            <ul class="footer__links">
+                <li>
+                    <a class="footer__link" href="#">Blog</a>
+                </li>
+                <li>
+                    <a class="footer__link" href="#">About us</a>
+                </li>
+                <li>
+                    <a class="footer__link" href="#">Our mission</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <span class="footer__copy">&#169; Tero. All rights reserved</span>
+</footer>
+
+<script>
+    let subMenu = document.getElementById("subMenu");
+
+    function toggleMenu() {
+        const subMenuWrap = document.getElementById("subMenu");
+        subMenu.classList.toggle("open-menu");
+    }
+</script>
+
+<a class="scrollup" href="#" id="scroll-up">
+    <i class='bx bx-up-arrow-alt scrollup__icon'></i>
+</a>
+
+<!--=============== MAIN JS ===============-->
+<script src="/main/js/main.js"></script>
+
+<script src="/student-dashboard/js/studentName.js"></script>
+<script src="/student-dashboard/js/fetchAds.js"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<script src="/job-post/js/country-api.js"></script>
+<script src="/student-dashboard/js/profile-pic.js"></script>
+
+</body>
+
+</html>
