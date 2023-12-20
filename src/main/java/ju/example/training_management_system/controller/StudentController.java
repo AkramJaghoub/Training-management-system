@@ -3,7 +3,6 @@ package ju.example.training_management_system.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ju.example.training_management_system.service.AdvertisementService;
 import ju.example.training_management_system.service.student.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class StudentController {
     private final StudentService studentService;
-    private final AdvertisementService advertisementService;
+//    private final AdvertisementService advertisementService;
     private final HttpServletResponse response;
     private final HttpServletRequest request;
 

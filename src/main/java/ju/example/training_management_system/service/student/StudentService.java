@@ -11,6 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 import static ju.example.training_management_system.util.Utils.convertToBase64;
 import static ju.example.training_management_system.util.Utils.decompressImage;
 
@@ -38,7 +42,9 @@ public class StudentService {
         model.addAttribute("studentImage", base64Image);
 
         String studentName = student.getFirstName() + " " + student.getLastName();
-        Cookie studentNameCookie = new Cookie("studentName", studentName);
+
+        String encodedName = URLEncoder.encode(studentName, StandardCharsets.UTF_8);
+        Cookie studentNameCookie = new Cookie("studentName", encodedName);
         studentNameCookie.setPath("/");
         studentNameCookie.setMaxAge(24 * 60 * 60 * 30);
         response.addCookie(studentNameCookie);

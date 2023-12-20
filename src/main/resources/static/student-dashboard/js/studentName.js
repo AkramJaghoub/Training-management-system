@@ -1,13 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
     const studentName = getStudentNameFromCookie();
-    console.log(studentName);
     if (studentName) {
-        document.getElementById('studentNameDisplay').textContent = studentName;
+        document.getElementById('studentNameDisplay').textContent = decodeStudentName(studentName);
     }
 });
 
 function getStudentNameFromCookie() {
     const cookies = document.cookie.split('; ');
     const studentNameCookie = cookies.find(row => row.startsWith('studentName='));
-    return studentNameCookie ? decodeURIComponent(studentNameCookie.split('=')[1]) : null;
+    return studentNameCookie ? studentNameCookie.split('=')[1] : null;
+}
+
+function decodeStudentName(encodedName) {
+    // Replace '+' with space before decoding
+    return decodeURIComponent(encodedName.replace(/\+/g, ' '));
 }

@@ -145,9 +145,9 @@ function showDescription(ad) {
     location.innerHTML = '<strong>Location: </strong>' + ad.city + ', ' + ad.country + '<br>';
     location.classList.add('modal-location');
 
-    const companyNameText = getCompanyNameFromCookie() || 'Unknown Company';
-    const companyNameDiv = document.createElement('div');
-    companyNameDiv.innerHTML = '<strong>Company: </strong>' + companyNameText;
+    // const companyNameText = getCompanyNameFromCookie() || 'Unknown Company';
+    // const companyNameDiv = document.createElement('div');
+    // companyNameDiv.innerHTML = '<strong>Company: </strong>' + companyNameText;
 
 
     const modal = document.createElement('div');
