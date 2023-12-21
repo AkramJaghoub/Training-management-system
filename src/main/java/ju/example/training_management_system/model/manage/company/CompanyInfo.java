@@ -1,6 +1,9 @@
 package ju.example.training_management_system.model.manage.company;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import ju.example.training_management_system.dto.CompanyInfoDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -3,7 +3,6 @@ package ju.example.training_management_system.controller;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.users.Role;
 import ju.example.training_management_system.service.RegisterService;
-import ju.example.training_management_system.util.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

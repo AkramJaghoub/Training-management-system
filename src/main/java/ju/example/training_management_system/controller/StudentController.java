@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class StudentController {
     private final StudentService studentService;
-//    private final AdvertisementService advertisementService;
     private final HttpServletResponse response;
     private final HttpServletRequest request;
 

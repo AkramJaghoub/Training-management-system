@@ -32,7 +32,7 @@
     font-size: 0.9rem;
 }
 
-.error-message-main{
+.error-message-main {
     min-height: 2rem;
     color: #FF0000;
     padding-top: 0.5rem;
@@ -208,7 +208,7 @@
 }
 
 /* Mobile devices (screens less than 480px) */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .hero {
         /* Adjustments for mobile layout */
     }

@@ -187,13 +187,13 @@ label {
     margin-top: 15px; /* Add some spacing between buttons */
 }
 
-.menu-container{
-    top:42px;
+.menu-container {
+    top: 42px;
     right: 12px;
 }
 
-.article-container{
-    margin-left:-3.4rem;
+.article-container {
+    margin-left: -3.4rem;
 }
 
 #imagePreview {
@@ -203,7 +203,6 @@ label {
     background-position: center center;
     background-repeat: no-repeat;
 }
-
 
 
 .circle-icon {

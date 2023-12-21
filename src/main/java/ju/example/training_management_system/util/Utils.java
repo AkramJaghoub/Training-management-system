@@ -7,7 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;

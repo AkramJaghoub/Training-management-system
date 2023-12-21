@@ -1,6 +1,7 @@
 package ju.example.training_management_system.service;
 
 import jakarta.mail.internet.MimeMessage;
+import jakarta.transaction.Transactional;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.PasswordResetToken;
 import ju.example.training_management_system.model.users.Company;
@@ -85,24 +86,27 @@ public class ResetPasswordService {
 
     public boolean isTokenExpired(String token) {
         PasswordResetToken resetToken = tokenRepository.findByToken(token);
-        return resetToken != null && this.hasExpired(resetToken.getExpiryDateTime());
+        if (this.hasExpired(resetToken.getExpiryDateTime()) && token != null) {
+            tokenRepository.delete(resetToken);
+            return true;
+        }
+        return false;
     }
 
     private boolean hasExpired(LocalDateTime expiryDateTime) {
         LocalDateTime currentDateTime = LocalDateTime.now();
-        // if the expiry is before the current then it is expired (ex: 11:10 - 11:15) then it is expired
         return expiryDateTime.isAfter(currentDateTime);
     }
 
-    public void resetPassword(String email, String newPassword, String token) {
+    @Transactional
+    public void resetPassword(String email, String newPassword) {
         User user = userRepository.findByEmail(email);
         if (user != null) {
             String hashedPassword = PasswordHashingUtil.hashPassword(newPassword);
             user.setPassword(hashedPassword);
             userRepository.save(user);
         }
-        PasswordResetToken resetToken = tokenRepository.findByToken(token);
-        tokenRepository.delete(resetToken);
+        tokenRepository.deleteAllByUserId(user.getId());
     }
 
     public String getEmailFromToken(String token) {

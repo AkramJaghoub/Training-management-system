@@ -18,7 +18,6 @@ public class LoginService {
     private final UserService userService;
 
     public ApiResponse loginUser(LoginDto loginDto, HttpSession session) {
-
         String email = loginDto.getEmail();
         String password = loginDto.getPassword();
 
@@ -28,8 +27,13 @@ public class LoginService {
         }
 
         if (!authenticationService.isValidUser(email, password)) {
-            return new ApiResponse("Wrong email or password", HttpStatus.BAD_REQUEST);
+            return new ApiResponse("Wrong email or password", HttpStatus.UNAUTHORIZED);
         }
+
+//        boolean isAuthenticated = factorAuthenticationService.isTokenPersisted(loginDto.getEmail());
+//        if (!isAuthenticated) {
+//            return new ApiResponse("Redirect to 2FA", HttpStatus.TEMPORARY_REDIRECT);
+//        }
 
         Role role = userService.getUserRole(email);
 

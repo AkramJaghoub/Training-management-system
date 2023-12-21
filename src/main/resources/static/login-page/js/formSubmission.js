@@ -34,7 +34,6 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
         return; // Exit early, no need to proceed further
     }
 
-    // If all checks pass, send the request to the backend
     fetch('/login', {
         method: 'POST',
         headers: {
@@ -42,9 +41,21 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
         },
         body: JSON.stringify({email: emailValue, password: passwordValue}),
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.redirected) {
+                let redirectUrl = response.url;
+                redirectUrl += '?authFailed=true'; // Append query parameter
+                window.location.href = redirectUrl; // Redirect to the URL provided by the server
+                return; // Prevent further execution of the then-chain
+            }
+            return response.json(); // Continue with JSON processing for non-redirect responses
+        })
         .then(data => {
-            if (data.status === "BAD_REQUEST") {
+            if (!data) return; // Skip further processing if we've handled a redirect
+
+            console.log('Response Data:', data); // Print the entire JSON response
+
+            if (data.status === "UNAUTHORIZED") {
                 loginError.textContent = data.message; // Displaying error message
                 loginError.style.display = 'block'; // Ensure the error message is visible
             } else {
@@ -56,6 +67,17 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
             loginError.textContent = 'An error occurred. Please try again';
         });
 });
+
+// function handleForgotPasswordLink() {
+//     const email = document.getElementById("email").value;
+//     const forgotPasswordLink = document.getElementById("forgotPassword");
+//     if (email && email.trim() !== "") {
+//         forgotPasswordLink.href = "/forget-password?email=" + email;
+//     } else {
+//         forgotPasswordLink.href = "/forget-password";
+//     }
+//     return true;
+// }
 
 function handleForgotPasswordLink() {
     const email = document.getElementById("email").value;

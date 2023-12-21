@@ -173,11 +173,11 @@ input {
     flex: 1;
 }
 
-.name-container input{
+.name-container input {
     width: 9.8rem;
 }
 
-.name-container .error-message{
+.name-container .error-message {
     font-size: 0.8rem;
 }
 
@@ -299,6 +299,6 @@ input {
     font-size: 0.9rem;
 }
 
-label{
+label {
     font-size: 0.8rem;
 }

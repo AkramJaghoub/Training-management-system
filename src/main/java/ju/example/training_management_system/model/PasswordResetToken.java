@@ -8,7 +8,6 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "PasswordResetToken")
 @Getter
 @Setter
 public class PasswordResetToken {

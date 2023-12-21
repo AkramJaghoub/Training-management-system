@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Handle Student Registration Form
     document.getElementById('studentRegisterForm').addEventListener('submit', function (event) {
-        console.log("akram elghabi;)");
         handleRegistrationForm(event, this, 'STUDENT');
     });
 
@@ -82,7 +81,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 isValid = false;
             }
             if (password && !passwordRegex.test(password)) {
-                document.getElementById('studentPasswordError').textContent = 'Password must contain at least 8 characters, one uppercase, one number, and one special character.';
+                document.getElementById('studentPasswordError').innerHTML =
+                    'Password requires: [8+ chars, 1+ uppercase,<br> 1+ number, 1+ special char]';
                 isValid = false;
             }
 
@@ -130,7 +130,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             if (password && !passwordRegex.test(password)) {
-                document.getElementById('companyPasswordError').textContent = 'Password requires: [8+ chars, 1+ uppercase,<br> 1+ number, 1+ special char]';
+                document.getElementById('companyPasswordError').innerHTML =
+                    'Password requires: [8+ chars, 1+ uppercase,<br> 1+ number, 1+ special char]';
                 isValid = false;
             }
 

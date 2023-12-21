@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         const formData = new FormData(form);
 
-        fetch('/company/job/post', {
+        fetch('/advertisement/post', {
             method: 'POST', body: formData
         })
             .then(response => {

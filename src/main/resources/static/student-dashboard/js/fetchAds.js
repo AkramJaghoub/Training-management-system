@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function fetchAdvertisements() {
-    fetch('/company/get/ads')
+    fetch('/advertisement/get')
         .then(response => response.json())
         .then(data => {
             updateAdvertisements(data);
@@ -253,7 +253,7 @@ document.getElementById('cancelUpdate').addEventListener('click', function () {
 
 document.getElementById('confirmDelete').addEventListener('click', function () {
     if (currentAdPosition) {
-        fetch(`/company/delete/ad/${currentAdPosition}`, {
+        fetch(`/advertisement/delete/${currentAdPosition}`, {
             method: 'DELETE',
             // Add any necessary headers and body
         })
@@ -306,6 +306,7 @@ function showUpdateForm(ad) {
                 descriptionTextarea.style.height = maxHeight + 'px';
             }
         }
+
         descriptionTextarea.addEventListener('input', resizeTextarea, false);
     });
 
@@ -441,7 +442,7 @@ function submitUpdateForm(ad) {
     // Include the advertisement ID in the formData
     formData.append('id', ad.id);
 
-    fetch('/company/update/ad', {
+    fetch('/advertisement/update', {
         method: 'PUT',
         body: formData
     })
