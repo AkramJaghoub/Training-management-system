@@ -7,6 +7,7 @@ studentSignUpButton.addEventListener('click', () => {
 });
 
 companySignUpButton.addEventListener('click', () => {
+    document.getElementById("studentForm").style.display = 'none';
     container.classList.remove("right-panel-active");
 });
 
