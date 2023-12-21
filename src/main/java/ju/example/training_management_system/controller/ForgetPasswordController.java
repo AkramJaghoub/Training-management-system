@@ -2,13 +2,13 @@ package ju.example.training_management_system.controller;
 
 import ju.example.training_management_system.service.ResetPasswordService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Service
+@Controller
 @RequiredArgsConstructor
 public class ForgetPasswordController {
 
