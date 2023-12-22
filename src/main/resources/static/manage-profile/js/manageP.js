@@ -74,10 +74,12 @@ function getCompanyNameFromCookie() {
 
 document.addEventListener('DOMContentLoaded', function () {
     const companyName = getCompanyNameFromCookie();
+
     if (companyName) {
         document.getElementById('companyNameDisplay1').textContent = companyName;
         document.getElementById('companyNameDisplay2').textContent = companyName;
     }
+
 });
 
 function readURL(input) {

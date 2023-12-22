@@ -2,8 +2,10 @@ package ju.example.training_management_system.service.student;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import ju.example.training_management_system.exception.UnauthorizedCompanyAccessException;
 import ju.example.training_management_system.exception.UnauthorizedStudentAccessException;
 import ju.example.training_management_system.exception.UserNotFoundException;
+import ju.example.training_management_system.model.users.Company;
 import ju.example.training_management_system.model.users.Student;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.UserRepository;
@@ -48,4 +50,32 @@ public class StudentService {
         studentNameCookie.setMaxAge(24 * 60 * 60 * 30);
         response.addCookie(studentNameCookie);
     }
+
+    public void setManageProfile(Model model, String email) {
+        User existingUser = userRepository.findByEmail(email);
+        if (existingUser == null) {
+            throw new UserNotFoundException("User with email " + email + " wasn't found");
+        }
+
+        if (!(existingUser instanceof Student student)) {
+            throw new UnauthorizedCompanyAccessException("User with email " + email + " wasn't recognized as a company");
+        }
+
+        String base64Image = null;
+        if (student.getImage() != null) {
+            byte[] decompressedImage = decompressImage(student.getImage());
+            base64Image = convertToBase64(decompressedImage);
+        }
+
+        model.addAttribute("email", student.getEmail());
+        model.addAttribute("firstName", student.getFirstName());
+        model.addAttribute("lastName", student.getLastName());
+        model.addAttribute("phoneNumber",student.getPhoneNumber());
+        model.addAttribute("university", student.getUniversity());
+        model.addAttribute("major", student.getMajor());
+        model.addAttribute("address",student.getAddress());
+        model.addAttribute("graduationYear",student.getGraduationYear());
+        model.addAttribute("studentImage", base64Image);
+    }
+
 }
