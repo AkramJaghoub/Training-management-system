@@ -410,3 +410,25 @@ p {
     overflow: hidden; /* Ensure the icon stays within the circular boundary */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+.btn-cool {
+    margin-bottom: 1rem;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    transition: background-color 0.3s,transform 0.2s;
+
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.card-mb-4 {
+    box-shadow: 0 0 20px rgba(239, 205, 205, 0.3); /* Increased intensity */
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Optional: Add a border for more definition */
+}
+
+.btn-cool:hover {
+    background-color: #2980b9; /* Change background color on hover */
+    transform: scale(1.05);
+}

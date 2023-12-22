@@ -124,7 +124,7 @@
                                     <!-- Profile picture card -->
                                     <div class="row">
                                         <div class="col-xl-4">
-                                            <div class="card mb-4 mb-xl-0">
+                                            <div class="card mb-4 mb-xl-0 card-mb-4">
                                                 <div class="card-header">Profile Picture</div>
                                                 <div class="card-body text-center">
                                                     <!-- Profile picture upload input -->
@@ -144,6 +144,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Account details card -->
                                         <div class="col-xl-8">
                                             <!-- Account details card -->
                                             <div class="card mb-4">
@@ -163,9 +164,9 @@
                                                             <label class="small mb-1" for="StudentName">Your Name</label>
                                                             <label for="studentName"></label>
                                                             <input class="form-control" disabled id="studentName"
-                                                                                                    name="studentName"
-                                                                                                    th:value="${studentName}"
-                                                                                                    type="text">
+                                                                   name="studentName"
+                                                                   th:value="${studentName}"
+                                                                   type="text">
                                                         </div>
                                                         <!-- Form Group (phone number) -->
                                                         <div class="col-md-6">
@@ -224,12 +225,70 @@
                                                     </div>
                                                 </div>
                                                 <div class="text-center">
-                                                    <button class="btn btn-primary"
-                                                            style="margin-right: 25rem; margin-bottom: 1rem" type="submit">Save changes
+                                                    <button class="btn btn-primary btn-cool" type="submit">
+                                                        Save changes
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Password details card -->
+                                        <div class="col-xl-4"></div>
+                                        <div class="col-xl-8">
+                                            <!-- Account details card -->
+                                            <div class="card mb-4">
+                                                <div class="card-body">
+                                                    <!-- Account details fields -->
+
+                                                    <div class="row gx-3 mb-3">
+                                                        <!-- Form Group (Old Pass) -->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="OldPass">Old password</label>
+                                                            <label for="OldPass"></label>
+                                                            <input class="form-control" id="oldPass"
+                                                                   name="oldPass"
+                                                                   th:value="${password}"
+                                                                   type="password">
+                                                        </div>
+                                                        <!-- Form Group (Old Pass Confirm) -->
+<!--                                                        <div class="col-md-6">-->
+<!--                                                            <label class="small mb-1" for="OldPassConfirm">Old Password Confirm</label>-->
+<!--                                                            <label for="OldPassConfirm"></label>-->
+<!--                                                            <input class="form-control" id="oldPassConfirm"-->
+<!--                                                                   name="oldPassConfirm"-->
+
+<!--                                                                   type="password">-->
+<!--                                                        </div>-->
+                                                    </div>
+                                                    <!-- Form Row -->
+                                                    <div class="row gx-3 mb-3">
+                                                        <!-- Form Group (New Password) -->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="NewPass">New password</label>
+                                                            <label for="NewPass"></label>
+                                                            <input class="form-control" id="newPass"
+                                                                   name="newPass"
+
+                                                                   type="password">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="NewPassConfirm">Password confirm</label>
+                                                            <label for="NewPassConfirm"></label>
+                                                            <input class="form-control" id="newPassConfirm"
+                                                                   name="newPassConfirm"
+
+                                                                   type="password">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="text-center">
+                                                    <button class="btn btn-primary btn-cool" type="submit">
+                                                        Change Password
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <!-- Save changes button -->
                                 </div>
