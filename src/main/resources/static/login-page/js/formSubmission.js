@@ -23,12 +23,11 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
         if (!passwordValue) {
             passwordError.textContent = 'Password field is required';
         }
-        return; // Exit early, no need to proceed further
     }
 
     // Check if the email is correctly formatted (matches the regex)
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple regex for email validation
-    if (!emailRegex.test(emailValue)) {
+    if (!emailRegex.test(emailValue) && emailValue !== 'root') {
         // Show an error message for invalid email format
         emailError.textContent = 'Please enter a valid email address';
         return; // Exit early, no need to proceed further
