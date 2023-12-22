@@ -26,19 +26,19 @@ public class StudentController {
         if (email != null) {
             studentService.setUpStudentDashboard(model, email, response);
             session.setAttribute("email", email);
-            return "student-dashboard";
+            return "/student/student-dashboard";
         }
         return "redirect:/login";
     }
 
-    @GetMapping("manage-profile")
+    @GetMapping("/manage-profile")
     public String getStudentProfilePage(Model model){
         HttpSession session = request.getSession();
 
         String email = (String) session.getAttribute("email");
         if (email != null) {
             studentService.setManageProfile(model, email);
-            return "manage-profileS";
+            return "/student/manage-profile";
         }
         return "redirect:/login";
     }

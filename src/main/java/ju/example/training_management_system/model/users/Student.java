@@ -20,35 +20,11 @@ public class Student extends User {
     private String major;
     private String phoneNumber;
     private String address;
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Integer getGraduationYear() {
-        return graduationYear;
-    }
-
-    public void setGraduationYear(Integer graduationYear) {
-        this.graduationYear = graduationYear;
-    }
+    private Integer graduationYear;
 
     @Column(columnDefinition = "LONGBLOB")
     private byte[] image;
 
-    private Integer graduationYear;
     public Student(String email, String password) {
         super(email, password);
     }

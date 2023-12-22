@@ -58,7 +58,7 @@ public class StudentService {
         }
 
         if (!(existingUser instanceof Student student)) {
-            throw new UnauthorizedCompanyAccessException("User with email " + email + " wasn't recognized as a company");
+            throw new UnauthorizedStudentAccessException("User with email " + email + " wasn't recognized as a student");
         }
 
         String base64Image = null;
@@ -77,5 +77,4 @@ public class StudentService {
         model.addAttribute("graduationYear",student.getGraduationYear());
         model.addAttribute("studentImage", base64Image);
     }
-
 }

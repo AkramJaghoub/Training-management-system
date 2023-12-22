@@ -34,7 +34,7 @@ public class CompanyController {
         if (email != null) {
             companyService.setUpCompanyDashboard(model, email, response);
             session.setAttribute("email", email);
-            return "company-dashboard";
+            return "/company/company-dashboard";
         }
 
         return "redirect:/login";
@@ -47,7 +47,7 @@ public class CompanyController {
         String email = (String) session.getAttribute("email");
         if (email != null) {
             companyService.setManageProfile(model, email);
-            return "manage-profile";
+            return "/company/manage-profile";
         }
 
         return "redirect:/login";
