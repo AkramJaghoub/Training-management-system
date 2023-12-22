@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.util.Map;
 
+import static ju.example.training_management_system.util.Utils.capitalizeFirstLetter;
+
 @Entity
 @Setter
 @Getter
@@ -31,8 +33,8 @@ public class Student extends User {
 
     public Student build(Map<String, Object> properties) {
         Student student = new Student();
-        student.setFirstName((String) properties.get("firstName"));
-        student.setLastName((String) properties.get("lastName"));
+        student.setFirstName(capitalizeFirstLetter((String) properties.get("firstName")));
+        student.setLastName(capitalizeFirstLetter((String) properties.get("lastName")));
         student.setEmail((String) properties.get("email"));
         student.setUniversity((String) properties.get("university"));
         student.setMajor((String) properties.get("major"));

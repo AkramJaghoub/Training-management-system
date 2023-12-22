@@ -75,7 +75,6 @@ public final class Utils {
                 capitalizedString.append(word.substring(1)).append(" ");
             }
         }
-
         return capitalizedString.toString().trim();
     }
 }

@@ -50,7 +50,6 @@ public class StudentService {
         model.addAttribute("studentImage", base64Image);
 
         String studentName = student.getFirstName() + " " + student.getLastName();
-        studentName = capitalizeFirstLetter(studentName);
 
         String encodedName = URLEncoder.encode(studentName, StandardCharsets.UTF_8);
         Cookie studentNameCookie = new Cookie("studentName", encodedName);
@@ -76,7 +75,6 @@ public class StudentService {
         }
 
         String studentName = student.getFirstName() + " " + student.getLastName();
-        studentName = capitalizeFirstLetter(studentName);
 
         model.addAttribute("email", student.getEmail());
         model.addAttribute("studentName", studentName);

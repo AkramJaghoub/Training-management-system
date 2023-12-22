@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.util.Map;
 
+import static ju.example.training_management_system.util.Utils.capitalizeFirstLetter;
+
 @Entity
 @Getter
 @Setter
@@ -35,7 +37,7 @@ public class Company extends User {
 
     public Company build(Map<String, Object> properties) {
         Company company = new Company();
-        company.setCompanyName((String) properties.get("companyName"));
+        company.setCompanyName(capitalizeFirstLetter((String) properties.get("companyName")));
         company.setEmail((String) properties.get("email"));
         company.setPhoneNumber((String) properties.get("phoneNumber"));
         company.setPassword((String) properties.get("password"));
