@@ -51,10 +51,10 @@
 }
 
 .login-form h1 {
-    margin-bottom: 40px;
+    margin-bottom: 2.5rem;
     text-align: center;
     color: var(--t-color);
-    font-size: 40px;
+    font-size: 2.5rem;
 }
 
 .login-form button {
@@ -80,7 +80,7 @@
 }
 
 .login-form p {
-    color: black;
+    color: var(--t-color);
     margin-top: 1.5rem;
 }
 
@@ -101,20 +101,20 @@
 }
 
 .input-with-icon input {
-    padding-left: 50px;
+    padding-left: 3.125rem;
     border: none;
     border-bottom: 2px solid #aaaaaa;
     width: 24rem;
-    height: 2.813rem;
+    height: 2rem;
     background-color: transparent;
     outline: none;
-    font-size: 16px;
+    font-size: 1rem;
     transition: border-color 0.3s ease;
-    color: var(--t-color-alt);
+    color: #000;
 }
 
 .input-with-icon input:after {
-    color: #000000;
+    color: var(--t-color);
 }
 
 .input-with-icon input::placeholder {
@@ -122,7 +122,7 @@
 }
 
 .input-with-icon input:focus {
-    border-bottom-color: black;
+    border-bottom-color: var(--t-color);
     box-shadow: none;
     background-color: transparent;
 }
@@ -139,7 +139,7 @@
 }
 
 .input-with-icon input:focus + i {
-    color: #000;
+    color: var(--t-color);
 }
 
 .password-container {
