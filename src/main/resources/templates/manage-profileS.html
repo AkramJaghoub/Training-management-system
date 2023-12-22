@@ -27,21 +27,18 @@
 </head>
 <body>
 
-
+<!--==================== HEADER ====================-->
 <header class="header" id="header">
-    <a class="nav__logo" href="/company/dashboard">
+    <a class="nav__logo" href="/student/dashboard">
         <img alt="" class="nav__logo-img" src="/main/img/tero.png">
     </a>
 
     <div class="nav__menu" id="nav-menu">
         <ul class="nav__list">
             <li class="nav__item">
-                <a class="nav__link active-link" href='/company/dashboard'>Home</a>
+                <a class="nav__link active-link" href='/student/dashboard'>Home</a>
             </li>
 
-            <li class="nav__item">
-                <a class="nav__link" href="/advertisement/post">Post Job</a>
-            </li>
 
             <li class="nav__item">
                 <a href="#" id="profileLink" onclick="toggleMenu()">
@@ -58,7 +55,8 @@
                     <div class="sub-menu">
                         <span class="profile-arrow">&#9660;</span>
                         <div class="user-info">
-                            <div class="circle-icon">
+                            <div class="circle-icon"
+                                 style="box-shadow: 0 0 0 rgba(0, 0, 0, 0); width: 60px; height: 60px;">
                                 <svg class="bi bi-person-circle" fill="gray" height="28" viewBox="0 0 16 16"
                                      width="28" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -66,11 +64,11 @@
                                           fill-rule="evenodd"/>
                                 </svg>
                             </div>
-                            <h3 id="companyNameDisplay" th:text="${companyName}"></h3>
+                            <h3 id="studentNameDisplay1"></h3>
                         </div>
                         <hr>
 
-                        <a class="sub-menu-link" href="/company/manage-profile">
+                        <a class="sub-menu-link" href="/student/manage-profile">
                             <svg class="bi bi-pencil" fill="currentColor" height="28" viewBox="0 0 16 16"
                                  width="28" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
@@ -100,9 +98,7 @@
                     </div>
                 </div>
             </li>
-
         </ul>
-
         <div class="nav__close" id="nav-close">
             <i class='bx bx-x'></i>
         </div>
@@ -134,17 +130,17 @@
                                                     <!-- Profile picture upload input -->
                                                     <div class="avatar-upload">
                                                         <div class="avatar-edit">
-                                                            <input accept="\*" id="companyImage" name="companyImage"
+                                                            <input accept="\*" id="studentImage" name="studentImage"
                                                                    type='file'/>
-                                                            <label for="companyImage"></label>
+                                                            <label for="studentImage"></label>
                                                         </div>
-                                                        <input id="hiddenCompanyImageUrl" th:value="${companyImage}"
+                                                        <input id="hiddenStudentImageUrl" th:value="${studentImage}"
                                                                type="hidden"/>
                                                         <div class="avatar-preview">
                                                             <div id="imagePreview"></div>
                                                         </div>
                                                     </div>
-                                                    <h5 id="companyNameDisplay2" style="margin-top:-2.4rem" th:text="${companyName}"></h5>
+                                                    <h5 id="studentNameDisplay2" style="margin-top:-2.4rem"></h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -162,38 +158,20 @@
                                                                th:value="${email}" type="email">
                                                     </div>
                                                     <div class="row gx-3 mb-3">
-                                                        <!-- Form Group (Company name) -->
+                                                        <!-- Form Group (Name) -->
                                                         <div class="col-md-6">
-                                                            <label class="small mb-1" for="CompanyName">Company
-                                                                name<span style="color: red">*</span></label>
-                                                            <input class="form-control" id="CompanyName"
-                                                                   name="companyName" placeholder="Enter your Company name"
-                                                                   th:value="${companyName}"
-                                                                   type="text">
-                                                        </div>
-                                                        <!-- Form Group (Industry) -->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="IndustryName">Industry<span
-                                                                    style="color: red">*</span></label>
-                                                            <input class="form-control" id="IndustryName"
-                                                                   name="industry" placeholder="Enter your Industry" th:value="${industry}"
-                                                                   type="text">
-                                                        </div>
-                                                    </div>
-                                                    <!-- Form Row -->
-                                                    <div class="row gx-3 mb-3">
-                                                        <!-- Form Group (location) -->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1"
-                                                                   for="inputLocation">Location</label>
-                                                            <input class="form-control" id="inputLocation"
-                                                                   name="location" placeholder="Enter your location" th:value="${location}"
+                                                            <label class="small mb-1" for="StudentName">Your Name</label>
+                                                            <input class="form-control" disabled id="studentName"
+                                                                   name="studentName"
+                                                                   th:value="${firstName}+' '+${lastName}"
                                                                    type="text">
                                                         </div>
                                                         <!-- Form Group (phone number) -->
                                                         <div class="col-md-6">
                                                             <label class="small mb-1" for="inputPhone">Phone
-                                                                number</label>
+                                                                number
+                                                                <span style="color: red">*</span>
+                                                            </label>
                                                             <input class="form-control" id="inputPhone"
                                                                    name="phoneNumber" oninput="handlePhoneInput(this)"
                                                                    placeholder="Enter your phone number"
@@ -203,23 +181,44 @@
                                                     </div>
                                                     <!-- Form Row -->
                                                     <div class="row gx-3 mb-3">
-                                                        <!-- Form Group (number of employees) -->
+                                                        <!-- Form Group (University) -->
                                                         <div class="col-md-6">
-                                                            <label class="small mb-1" for="inputEmpNumber">Number of
-                                                                Employees</label>
-                                                            <input class="form-control" id="inputEmpNumber"
-                                                                   min="0" name="numOfEmployees"
-                                                                   placeholder="Number of Employees"
-                                                                   th:value="${numOfEmployees}" type="number">
+                                                            <label class="small mb-1"
+                                                                   for="inputLocation">University
+                                                                <span style="color: red">*</span>
+                                                            </label>
+                                                            <input class="form-control" id="inputLocation"
+                                                                   name="university" placeholder="Enter your University" th:value="${university}"
+                                                                   type="text">
                                                         </div>
-                                                        <!-- Form Group (establishment year) -->
+                                                        <!-- Form Group (major) -->
                                                         <div class="col-md-6">
-                                                            <label class="small mb-1" for="inputEYear">Establishment
+                                                            <label class="small mb-1" for="majorName">
+                                                                Major
+                                                            </label>
+                                                            <input class="form-control" id="majorName"
+                                                                   name="major" placeholder="Enter your major" th:value="${major}"
+                                                                   type="text">
+                                                        </div>
+                                                    </div>
+                                                    <!-- Form Row -->
+                                                    <div class="row gx-3 mb-3">
+                                                        <!-- Form Group (Address) -->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="inputLocation">Address</label>
+                                                            <input class="form-control" id="address"
+                                                                   name="address"
+                                                                   placeholder="city,country"
+                                                                   th:value="${address}" type="text">
+                                                        </div>
+                                                        <!-- Form Group (Graduation Year) -->
+                                                        <div class="col-md-6">
+                                                            <label class="small mb-1" for="inputGYear">Graduation
                                                                 Year</label>
-                                                            <input class="form-control" id="inputEYear"
-                                                                   max="2100" min="1900"
-                                                                   name="establishmentYear" placeholder="YYYY"
-                                                                   th:value="${establishmentYear}" type="number">
+                                                            <input class="form-control" id="inputGYear"
+                                                                   max="2100" min="2005"
+                                                                   name="GraduationYear" placeholder="YYYY"
+                                                                   th:value="${graduationYear}" type="number">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -311,5 +310,6 @@
     }
 </script>
 <script src="/manage-profile/js/manageP.js"></script>
+<script src="/student-dashboard/js/studentName.js"></script>
 </body>
 </html>

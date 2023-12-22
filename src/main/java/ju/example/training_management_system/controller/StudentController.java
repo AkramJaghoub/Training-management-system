@@ -30,4 +30,16 @@ public class StudentController {
         }
         return "redirect:/login";
     }
+
+    @GetMapping("manage-profile")
+    public String getStudentProfilePage(Model model){
+        HttpSession session = request.getSession();
+
+        String email = (String) session.getAttribute("email");
+        if (email != null) {
+            studentService.setManageProfile(model, email);
+            return "manage-profileS";
+        }
+        return "redirect:/login";
+    }
 }
