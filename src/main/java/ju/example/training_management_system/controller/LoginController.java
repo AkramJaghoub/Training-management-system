@@ -5,11 +5,15 @@ import ju.example.training_management_system.dto.LoginDto;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.service.LoginService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import static org.springframework.http.HttpStatus.TEMPORARY_REDIRECT;
 
 // TODO: Implement Spring security, JWT, two-factor authentication
 

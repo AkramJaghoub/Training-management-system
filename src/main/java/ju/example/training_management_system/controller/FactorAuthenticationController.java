@@ -26,7 +26,7 @@ public class FactorAuthenticationController {
         return "2FA-email-confirmation";
     }
 
-    @PostMapping("/auth/2fa/confirm-email")
+    @PostMapping("/confirm-email")
     public String sendConfirmationEmailFor2FA(@RequestParam("email") String email) {
         factorAuthenticationService.sendEmail(email);
         return "redirect:/auth/2fa/code-entry?email=" + email;

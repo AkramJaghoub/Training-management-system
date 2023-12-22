@@ -15,9 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     let timerDuration;
-    if (urlParams.has('resetTimer') && !sessionStorage.getItem('timerResetDone')) {
-        timerDuration = 180;
-        sessionStorage.setItem('timerResetDone', 'true');
+    console.log("authFailed in session storage:", sessionStorage.getItem('authFailed'));
+    if (sessionStorage.getItem('authFailed') === 'true') {
+        timerDuration = 180; // Resetting timer to 3 minutes
+        sessionStorage.removeItem('authFailed'); // Clear the flag
     } else {
         timerDuration = parseInt(localStorage.getItem('timerDuration'), 10) || 180;
     }

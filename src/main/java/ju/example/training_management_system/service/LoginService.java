@@ -14,6 +14,7 @@ import static ju.example.training_management_system.util.Utils.getRequiredDashbo
 @RequiredArgsConstructor
 public class LoginService {
 
+    private final FactorAuthenticationService factorAuthenticationService;
     private final AuthenticationService authenticationService;
     private final UserService userService;
 
