@@ -64,7 +64,7 @@
                                           fill-rule="evenodd"/>
                                 </svg>
                             </div>
-                            <h3 id="studentNameDisplay1"></h3>
+                            <h3 style="font-size: 1.4rem;" id="studentNameDisplay1"></h3>
                         </div>
                         <hr>
 
@@ -140,7 +140,7 @@
                                                             <div id="imagePreview"></div>
                                                         </div>
                                                     </div>
-                                                    <h5 id="studentNameDisplay2" style="margin-top:-2.4rem"></h5>
+                                                    <h5 id="studentNameDisplay2" style="margin-top:-2.4rem; font-size: 1.4rem;"></h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -161,10 +161,11 @@
                                                         <!-- Form Group (Name) -->
                                                         <div class="col-md-6">
                                                             <label class="small mb-1" for="StudentName">Your Name</label>
+                                                            <label for="studentName"></label>
                                                             <input class="form-control" disabled id="studentName"
-                                                                   name="studentName"
-                                                                   th:value="${firstName}+' '+${lastName}"
-                                                                   type="text">
+                                                                                                    name="studentName"
+                                                                                                    th:value="${studentName}"
+                                                                                                    type="text">
                                                         </div>
                                                         <!-- Form Group (phone number) -->
                                                         <div class="col-md-6">
@@ -208,7 +209,7 @@
                                                             <label class="small mb-1" for="inputLocation">Address</label>
                                                             <input class="form-control" id="address"
                                                                    name="address"
-                                                                   placeholder="city,country"
+                                                                   placeholder="city, country"
                                                                    th:value="${address}" type="text">
                                                         </div>
                                                         <!-- Form Group (Graduation Year) -->
@@ -217,7 +218,7 @@
                                                                 Year</label>
                                                             <input class="form-control" id="inputGYear"
                                                                    max="2100" min="2005"
-                                                                   name="GraduationYear" placeholder="YYYY"
+                                                                   name="graduationYear" placeholder="YYYY"
                                                                    th:value="${graduationYear}" type="number">
                                                         </div>
                                                     </div>

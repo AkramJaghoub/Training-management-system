@@ -60,4 +60,22 @@ public final class Utils {
     public static String convertToBase64(byte[] imageBytes) {
         return Base64.getEncoder().encodeToString(imageBytes);
     }
+
+    public static String capitalizeFirstLetter(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+
+        StringBuilder capitalizedString = new StringBuilder();
+        String[] words = input.split("\\s+");
+
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                capitalizedString.append(Character.toUpperCase(word.charAt(0)));
+                capitalizedString.append(word.substring(1)).append(" ");
+            }
+        }
+
+        return capitalizedString.toString().trim();
+    }
 }

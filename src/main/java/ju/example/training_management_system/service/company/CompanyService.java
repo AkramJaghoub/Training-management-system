@@ -40,9 +40,6 @@ public class CompanyService {
 
             CompanyInfo companyInfo = new CompanyInfo().toEntity(infoDto);
 
-            System.out.println(infoDto);
-
-            System.out.println(companyInfo + " company info");
             User existingUser = userRepository.findByEmail(email);
             if (existingUser == null) {
                 throw new UserNotFoundException("User with email " + email + " wasn't found");
