@@ -216,3 +216,44 @@ label {
     overflow: hidden; /* Ensure the icon stays within the circular boundary */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+.top {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filters {
+    display: flex;
+}
+
+.filters label, .filters select {
+    margin-left: 10px;
+}
+
+.article-container {
+    border: 2px solid #333;
+    padding: 20px;
+    margin: 3.125rem auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    background-color: #FAF9F6;
+}
+
+.filter-banner {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.no-articles {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    color: #555;
+}

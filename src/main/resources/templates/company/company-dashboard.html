@@ -123,8 +123,33 @@
             <div class="home__group">
                 <div class="hero">
                     <input id="hiddenCompanyImageUrl" th:value="${companyImage}" type="hidden"/>
+
                     <div class="article-container">
+
+                        <div class="filter-banner">
+                            <!-- Filter banner content goes here -->
+                                <div>Advertisements</div>
+                                <div class="filters">
+                                    <label for="duration">Duration:</label>
+                                    <select id="duration" name="duration">
+                                        <option value="short">Short</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="long">Long</option>
+                                    </select>
+
+                                    <label for="type">Type:</label>
+                                    <select id="type" name="type">
+                                        <option value="fullTime">Full-time</option>
+                                        <option value="partTime">Part-time</option>
+                                    </select>
+                                </div>
+
+                            <!-- Add more filter options as needed -->
+                        </div>
                         <div class="articles">
+                            <div class="no-articles" id="noArticlesMessage" style="display: none;">
+                                No articles available.
+                            </div>
                         </div>
                     </div>
                     <div class="dialog-container-form" id="formDialog">
