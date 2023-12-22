@@ -28,7 +28,7 @@ public class AdvertisementController {
     private final HttpServletResponse response;
     private final HttpServletRequest request;
 
-    @GetMapping("/post")
+    @GetMapping("/get/ads-form")
     public String getPostAdsForm(Model model) {
         HttpSession session = request.getSession();
 
@@ -39,7 +39,7 @@ public class AdvertisementController {
             companyService.setUpCompanyDashboard(model, email, response);
             session.setAttribute("email", email);
             model.addAttribute("companyName", companyName);
-            return "job-post";
+            return "/company/job-post";
         }
 
         return "redirect:/login";
@@ -84,7 +84,7 @@ public class AdvertisementController {
         if (email != null) {
             String companyName = companyService.getCompanyName(email);
             adsPostService.deleteAd(companyName, position);
-            return "company-dashboard";
+            return "/company/company-dashboard";
         }
 
         return "redirect:/login";
