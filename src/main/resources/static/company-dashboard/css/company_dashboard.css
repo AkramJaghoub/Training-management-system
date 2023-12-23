@@ -174,9 +174,9 @@ nav ul li.profile a:after {
     margin-bottom: 20px;
 }
 
-label {
-    font-weight: bold;
-}
+/*label {*/
+/*    font-weight: bold;*/
+/*}*/
 
 .error-message {
     color: #dc3545;
@@ -228,11 +228,24 @@ label {
 
 .filters {
     display: flex;
+    justify-content: space-between;
+    width: 370px;
+    font-size: 0.9rem;
+    margin-right: 30px;
+    color: #555;
 }
 
-.filters label, .filters select {
-    margin-left: 10px;
+.no-border {
+    border: none !important;
+    box-shadow: none !important;
+    background-color: transparent;
+    margin-bottom: 0.5rem;
+    width: auto; /* or a specific width if needed */
 }
+
+/*.filters label, .filters select {*/
+/*    margin-left: 10px;*/
+/*}*/
 
 .article-container {
     border: 2px solid #333;

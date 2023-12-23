@@ -125,26 +125,30 @@
                     <input id="hiddenCompanyImageUrl" th:value="${companyImage}" type="hidden"/>
 
                     <div class="article-container">
-
                         <div class="filter-banner">
                             <!-- Filter banner content goes here -->
                                 <h3 class="ad-h3">Advertisements</h3>
-                                <div class="filters">
-                                    <label for="duration">Duration:</label>
-                                    <select id="duration" name="duration">
-                                        <option value="short">Short</option>
-                                        <option value="medium">Medium</option>
-                                        <option value="long">Long</option>
-                                    </select>
-
-                                    <label for="type">Type:</label>
-                                    <select id="type" name="type">
-                                        <option value="fullTime">Full-time</option>
-                                        <option value="partTime">Part-time</option>
+                            <div class="filters d-flex align-items-center">
+                                <div class="d-flex align-items-center me-3">
+                                    <label for="mode" class="form-label me-2">Mode:</label>
+                                    <select class="form-select no-border" id="mode" name="mode" style="padding-right: 1.7rem">
+                                        <option value="all" selected>All</option>
+                                        <option value="REMOTE">Remote</option>
+                                        <option value="ON_SITE">On-site</option>
+                                        <option value="HYBRID">Hybrid</option>
                                     </select>
                                 </div>
 
-                            <!-- Add more filter options as needed -->
+                                <div class="d-flex align-items-center">
+                                    <label for="type" class="form-label me-2">Type:</label>
+                                    <select class="form-select no-border" id="type" name="type">
+                                        <option value="all" selected>All</option>
+                                        <option value="FULL_TIME">Full-time</option>
+                                        <option value="PART_TIME">Part-time</option>
+                                    </select>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="articles">
                             <div class="no-articles" id="noArticlesMessage" style="display: none;">
@@ -330,5 +334,4 @@
 <script src="/company-dashboard/js/profile-pic.js"></script>
 
 </body>
-
 </html>

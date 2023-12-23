@@ -1,8 +1,25 @@
 let globalCountries = []; // Global variable to store countries
 
+let selectedMode = 'all';
+let selectedType = 'all';
+
 document.addEventListener('DOMContentLoaded', function () {
     fetchAdvertisements();
     fetchAllCountries();
+
+    // Set the initial values for mode and type to 'all'
+    document.getElementById('mode').value = 'all';
+    document.getElementById('type').value = 'all';
+
+    document.getElementById('mode').addEventListener('change', function() {
+        selectedMode = this.value;
+        fetchAdvertisements();
+    });
+
+    document.getElementById('type').addEventListener('change', function() {
+        selectedType = this.value;
+        fetchAdvertisements();
+    });
 });
 
 function fetchAdvertisements() {
@@ -26,7 +43,23 @@ function updateAdvertisements(advertisements) {
         return;
     }
 
-    advertisements.forEach((ad, index) => {
+    let filteredAds = advertisements;
+    if (selectedMode !== 'all' || selectedType !== 'all') {
+        filteredAds = filteredAds.filter(ad =>
+            (selectedMode === 'all' || ad.workMode === selectedMode) &&
+            (selectedType === 'all' || ad.jobType === selectedType)
+        );
+    }
+
+    if (filteredAds.length === 0) {
+        const noAdvertisementsMessage = document.createElement('div');
+        noAdvertisementsMessage.classList.add('no-advertisements');
+        noAdvertisementsMessage.textContent = 'No advertisements match your filters.';
+        articlesContainer.appendChild(noAdvertisementsMessage);
+        return;
+    }
+
+    filteredAds.forEach((ad, index) => {
         const article = document.createElement('article'); // Define 'article' here
         article.classList.add('article'); // Add this line if you have CSS styles for 'article
         const articleBody = document.createElement('div');
