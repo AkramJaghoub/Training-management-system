@@ -257,3 +257,9 @@ label {
     font-style: italic;
     color: #555;
 }
+
+.ad-h3{
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 5px;
+}
