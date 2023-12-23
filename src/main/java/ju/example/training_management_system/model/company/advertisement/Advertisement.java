@@ -39,7 +39,8 @@ public class Advertisement {
     @Enumerated(EnumType.STRING)
     private WorkMode workMode;
 
-    private byte[] image;  // URL to the image
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] image;
 
     @Lob
     @Column(columnDefinition = "LONGTEXT")
