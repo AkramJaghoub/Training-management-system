@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static ju.example.training_management_system.util.Utils.isNotEqual;
+import static ju.example.training_management_system.util.Utils.saveImage;
 
 
 @Service
@@ -33,8 +34,8 @@ public class AdvertisementService {
         try {
             Advertisement ad = new Advertisement().toEntity(adDto);
 
-//                String imageUrl = saveImage(adDto.getJobImage());
-//                ad.setImageUrl(imageUrl);
+            byte[] imageBytes = saveImage(adDto.getJobImage());
+            ad.setImage(imageBytes);
 
             if (advertisementRepository.existsByJobTitle(ad.getJobTitle())) {
                 throw new AdAlreadyExistsException("A post with the same title already exists!");
@@ -71,9 +72,9 @@ public class AdvertisementService {
                 throw new AdAlreadyExistsException("An advertisement with the same title already exists");
             }
 
-//            String imageUrl = saveImage(adDto.getJobImage());
+            byte[] imageBytes = saveImage(adDto.getJobImage());
 
-//            existingAd.setImageUrl(imageUrl);
+            existingAd.setImage(imageBytes);
             existingAd.setJobTitle(adDto.getJobTitle());
             existingAd.setInternsRequired(adDto.getInternsRequired());
             existingAd.setJobDuration(adDto.getJobDuration());

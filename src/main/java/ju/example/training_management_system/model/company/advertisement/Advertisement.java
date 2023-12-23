@@ -39,7 +39,7 @@ public class Advertisement {
     @Enumerated(EnumType.STRING)
     private WorkMode workMode;
 
-    private String imageUrl;  // URL to the image
+    private byte[] image;  // URL to the image
 
     @Lob
     @Column(columnDefinition = "LONGTEXT")
