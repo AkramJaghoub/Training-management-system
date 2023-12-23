@@ -28,7 +28,7 @@ public class AdvertisementController {
     private final HttpServletResponse response;
     private final HttpServletRequest request;
 
-    @GetMapping("/get/ads-form")
+    @GetMapping("/ads-form")
     public String getPostAdsForm(Model model) {
         HttpSession session = request.getSession();
 
