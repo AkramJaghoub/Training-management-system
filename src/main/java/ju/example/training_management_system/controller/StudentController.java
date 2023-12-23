@@ -32,7 +32,7 @@ public class StudentController {
 
         String email = (String) session.getAttribute("email");
         if (email != null) {
-            studentService.setUpStudentDashboard(model, email, response);
+            studentService.setUpStudentDashboard(model,email,response);
             session.setAttribute("email", email);
             return "/student/student-dashboard";
         }

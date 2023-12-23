@@ -192,10 +192,6 @@ nav ul li.profile a:after {
     right: 12px;
 }
 
-.article-container {
-    margin-left: -3.4rem;
-}
-
 #imagePreview {
     width: 100%; /* Adjust as needed */
     height: 100%; /* Adjust as needed */
@@ -250,7 +246,6 @@ nav ul li.profile a:after {
 .article-container {
     border: 2px solid #333;
     padding: 20px;
-    margin: 3.125rem auto;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     background-color: #FAF9F6;

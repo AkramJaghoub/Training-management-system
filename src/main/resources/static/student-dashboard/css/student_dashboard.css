@@ -72,7 +72,7 @@ nav ul li.profile a:after {
 
 .sub-menu {
     position: relative;
-    height: 16.1rem;
+    height: 17.1rem;
     background: #FAF9F6;
     padding: 0 20px;
     margin: 10px;
@@ -215,4 +215,63 @@ label {
     border-radius: 50%;
     overflow: hidden; /* Ensure the icon stays within the circular boundary */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.top {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filters {
+    display: flex;
+    justify-content: space-between;
+    width: 370px;
+    font-size: 0.9rem;
+    margin-right: 30px;
+    color: #555;
+}
+
+.no-border {
+    border: none !important;
+    box-shadow: none !important;
+    background-color: transparent;
+    margin-bottom: 0.5rem;
+    width: auto; /* or a specific width if needed */
+}
+
+/*.filters label, .filters select {*/
+/*    margin-left: 10px;*/
+/*}*/
+
+.article-container {
+    border: 2px solid #333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    background-color: #FAF9F6;
+}
+
+.filter-banner {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.no-articles {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    color: #555;
+}
+
+.ad-h3{
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 5px;
 }

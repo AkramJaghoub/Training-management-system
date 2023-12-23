@@ -7,11 +7,22 @@ document.addEventListener("DOMContentLoaded", function () {
         if (uploadedImageExists) {
             profileImages.forEach(img => {
                 img.querySelectorAll('path').forEach(path => path.style.display = 'none');
-                img.style.backgroundImage = `url('data:image/jpeg;base64,${imageUrl}')`;
-                img.style.backgroundSize = 'cover';
+                // Create an img element
+                const imgElement = new Image();
+                imgElement.src = `data:image/jpeg;base64,${imageUrl}`;
+                imgElement.alt = 'Profile Image';
+                imgElement.style.width = '10%';
+                imgElement.style.height = '100%';
+
+                imgElement.style.borderRadius = '50%';
+                // Clear any existing content and append the img element
+                img.innerHTML = '';
+                img.appendChild(imgElement);
             });
         }
     }
+
+
 
     const companyImageUrl = document.getElementById('hiddenCompanyImageUrl').value;
 
