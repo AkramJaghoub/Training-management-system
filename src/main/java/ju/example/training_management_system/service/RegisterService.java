@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Service
@@ -32,6 +33,7 @@ public class RegisterService {
                 throw new UserAlreadyExistException("user email already exists");
             }
             user.setRole(role);
+            user.setJoinDate(LocalDateTime.now());
             userRepository.save(user);
             return new ApiResponse("user has been saved successfully", HttpStatus.OK);
         } catch (UserAlreadyExistException ex) {

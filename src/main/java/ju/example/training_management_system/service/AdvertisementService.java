@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static ju.example.training_management_system.util.Utils.isNotEqual;
@@ -44,6 +45,8 @@ public class AdvertisementService {
             if (user instanceof Company company) {
                 ad.setCompany(company);
             }
+
+            ad.setPostDate(LocalDateTime.now());
 
             advertisementRepository.save(ad);
             return new ApiResponse("advertisement was saved successfully", HttpStatus.CREATED);
