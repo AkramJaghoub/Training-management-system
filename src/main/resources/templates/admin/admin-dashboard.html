@@ -208,16 +208,14 @@
                                     <div class="progress-widget">
                                         <div id="circle-progress-01"
                                              class="text-center circle-progress-01 circle-progress circle-progress-primary"
-                                             data-min-value="0" data-max-value="100" data-value="90"
+                                             data-min-value="0" data-max-value="100" th:data-value="${usersCount}"
                                              data-type="percent">
-                                            <svg class="card-slie-arrow icon-24" width="24" viewBox="0 0 24 24">
-                                                <path fill="currentColor"
-                                                      d="M5,17.59L15.59,7H9V5H19V15H17V8.41L6.41,19L5,17.59Z"/>
-                                            </svg>
+                                            <img class="card-slie-arrow icon-24"
+                                                 src="/admin-dashboard/assets/images/users.png" alt="Users" width="24">
                                         </div>
                                         <div class="progress-detail">
                                             <p class="mb-2">Total Users</p>
-                                            <h4 class="counter">50</h4>
+                                            <h4 class="counter" th:text="${usersCount}"></h4>
                                         </div>
                                     </div>
                                 </div>
@@ -227,16 +225,15 @@
                                     <div class="progress-widget">
                                         <div id="circle-progress-02"
                                              class="text-center circle-progress-01 circle-progress circle-progress-info"
-                                             data-min-value="0" data-max-value="100" data-value="80"
+                                             data-min-value="0" data-max-value="100" th:data-value="${studentsCount}"
                                              data-type="percent">
-                                            <svg class="card-slie-arrow icon-24" width="24" viewBox="0 0 24 24">
-                                                <path fill="currentColor"
-                                                      d="M19,6.41L17.59,5L7,15.59V9H5V19H15V17H8.41L19,6.41Z"/>
-                                            </svg>
+                                            <img class="card-slie-arrow icon-24"
+                                                 src="/admin-dashboard/assets/images/student.png" alt="Students"
+                                                 width="24">
                                         </div>
                                         <div class="progress-detail">
                                             <p class="mb-2">Students</p>
-                                            <h4 class="counter">30</h4>
+                                            <h4 class="counter" th:text="${studentsCount}"></h4>
                                         </div>
                                     </div>
                                 </div>
@@ -246,16 +243,15 @@
                                     <div class="progress-widget">
                                         <div id="circle-progress-03"
                                              class="text-center circle-progress-01 circle-progress circle-progress-primary"
-                                             data-min-value="0" data-max-value="100" data-value="70"
+                                             data-min-value="0" data-max-value="100" th:data-value="${companiesCount}"
                                              data-type="percent">
-                                            <svg class="card-slie-arrow icon-24" width="24" viewBox="0 0 24 24">
-                                                <path fill="currentColor"
-                                                      d="M19,6.41L17.59,5L7,15.59V9H5V19H15V17H8.41L19,6.41Z"/>
-                                            </svg>
+                                            <img class="card-slie-arrow icon-24"
+                                                 src="/admin-dashboard/assets/images/office.png" alt="Students"
+                                                 width="24">
                                         </div>
                                         <div class="progress-detail">
                                             <p class="mb-2">Companies</p>
-                                            <h4 class="counter">20</h4>
+                                            <h4 class="counter" th:text="${companiesCount}"></h4>
                                         </div>
                                     </div>
                                 </div>
@@ -265,16 +261,15 @@
                                     <div class="progress-widget">
                                         <div id="circle-progress-04"
                                              class="text-center circle-progress-01 circle-progress circle-progress-info"
-                                             data-min-value="0" data-max-value="100" data-value="60"
+                                             data-min-value="0" data-max-value="100" th:data-value="${advertisementsCount}"
                                              data-type="percent">
-                                            <svg class="card-slie-arrow icon-24" width="24px" viewBox="0 0 24 24">
-                                                <path fill="currentColor"
-                                                      d="M5,17.59L15.59,7H9V5H19V15H17V8.41L6.41,19L5,17.59Z"/>
-                                            </svg>
+                                            <img class="card-slie-arrow icon-24"
+                                                 src="/admin-dashboard/assets/images/ads.png" alt="Students"
+                                                 width="24">
                                         </div>
                                         <div class="progress-detail">
                                             <p class="mb-2">Total Advertisements</p>
-                                            <h4 class="counter">100</h4>
+                                            <h4 class="counter" th:text="${advertisementsCount}"></h4>
                                         </div>
                                     </div>
                                 </div>
@@ -363,7 +358,8 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <img class="rounded bg-soft-primary img-fluid avatar-40 me-3"
-                                                         src="/admin-dashboard/assets/images/shapes/04.png" alt="profile">
+                                                         src="/admin-dashboard/assets/images/shapes/04.png"
+                                                         alt="profile">
                                                     <h6>Community First</h6>
                                                 </div>
                                             </td>
@@ -401,7 +397,7 @@
                         <div class="card" data-aos="fade-up" data-aos-delay="500">
                             <div class="text-center card-body d-flex justify-content-around">
                                 <div>
-                                    <h2 class="mb-2">10</h2>
+                                    <h2 class="mb-2" th:text="${newUsersCount}"></h2>
                                     <p class="mb-0 text-gray">Users Today</p>
                                 </div>
                             </div>
