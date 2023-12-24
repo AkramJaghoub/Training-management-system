@@ -51,6 +51,14 @@ function updateAdvertisements(advertisements) {
         );
     }
 
+    if (filteredAds.length === 0) {
+        const noAdvertisementsMessage = document.createElement('div');
+        noAdvertisementsMessage.classList.add('no-advertisements');
+        noAdvertisementsMessage.textContent = 'No advertisements match your filters.';
+        articlesContainer.appendChild(noAdvertisementsMessage);
+        return;
+    }
+
     filteredAds.forEach((ad, index) => {
         const article = document.createElement('article'); // Define 'article' here
         article.classList.add('article'); // Add this line if you have CSS styles for 'article

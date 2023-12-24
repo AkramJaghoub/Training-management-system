@@ -229,6 +229,7 @@ nav ul li.profile a:after {
     font-size: 0.9rem;
     margin-right: 30px;
     color: #555;
+    margin-top: -0.2rem;
 }
 
 .no-border {
@@ -236,12 +237,8 @@ nav ul li.profile a:after {
     box-shadow: none !important;
     background-color: transparent;
     margin-bottom: 0.5rem;
-    width: auto; /* or a specific width if needed */
+    width: auto;
 }
-
-/*.filters label, .filters select {*/
-/*    margin-left: 10px;*/
-/*}*/
 
 .article-container {
     border: 2px solid #333;

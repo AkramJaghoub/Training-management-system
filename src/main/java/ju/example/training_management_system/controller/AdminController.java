@@ -2,9 +2,7 @@ package ju.example.training_management_system.controller;
 
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.service.AdminService.AdminService;
-import ju.example.training_management_system.service.company.CompanyService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,5 +33,11 @@ public class AdminController {
     @GetMapping("/advertisements")
     public String setUpAdminAdvertisementList(){
         return "/admin/advertisement-data";
+    }
+
+    @DeleteMapping("/delete/user/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable("id") long userId){
+        ApiResponse response = adminService.deleteUser(userId);
+        return ResponseEntity.status(response.getStatus()).body(response.getMessage());
     }
 }

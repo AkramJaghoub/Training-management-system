@@ -1,5 +1,7 @@
 package ju.example.training_management_system.service.AdminService;
 
+import jakarta.transaction.Transactional;
+import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.company.advertisement.Advertisement;
 import ju.example.training_management_system.model.users.Company;
@@ -7,17 +9,17 @@ import ju.example.training_management_system.model.users.Role;
 import ju.example.training_management_system.model.users.Student;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.AdvertisementRepository;
-import ju.example.training_management_system.repository.UserRepository;
+import ju.example.training_management_system.repository.users.CompanyRepository;
+import ju.example.training_management_system.repository.users.StudentRepository;
+import ju.example.training_management_system.repository.users.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static ju.example.training_management_system.util.Utils.decompressImage;
@@ -28,6 +30,8 @@ public class AdminService {
 
     private final UserRepository userRepository;
     private final AdvertisementRepository advertisementRepository;
+    private final StudentRepository studentRepository;
+    private final CompanyRepository companyRepository;
 
     public void setUpAdminDashboardPage(Model model) {
         setUpFields(model);
@@ -81,5 +85,31 @@ public class AdminService {
         model.addAttribute("userImages", userImages);
         model.addAttribute("newUsersCount", newUsers.size());
         model.addAttribute("newAdvertisementsCount", newAdsCount);
+    }
+
+    @Transactional
+    public ApiResponse deleteUser(long userId) {
+        try {
+            Optional<User> usersOpt = userRepository.findById(userId);
+            if (usersOpt.isEmpty()) {
+                throw new UserNotFoundException("User with id [" + userId + "] was not found");
+            }
+
+            User user = usersOpt.get();
+
+            if (user.getRole() == Role.STUDENT) {
+                studentRepository.deleteById(userId);
+            } else if (user.getRole() == Role.COMPANY) {
+                advertisementRepository.deleteByCompanyId(userId);
+                companyRepository.deleteById(userId);
+            }
+
+            userRepository.deleteById(userId);
+
+            return new ApiResponse("User with id [" + userId + "] was deleted successfully", HttpStatus.OK);
+
+        } catch (UserNotFoundException ex) {
+            return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

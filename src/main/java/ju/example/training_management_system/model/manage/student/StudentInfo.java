@@ -1,12 +1,9 @@
 package ju.example.training_management_system.model.manage.student;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import ju.example.training_management_system.dto.CompanyInfoDto;
 import ju.example.training_management_system.dto.StudentInfoDto;
-import ju.example.training_management_system.model.manage.company.CompanyInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
 public class StudentInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

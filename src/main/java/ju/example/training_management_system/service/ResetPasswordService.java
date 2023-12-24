@@ -8,7 +8,7 @@ import ju.example.training_management_system.model.users.Company;
 import ju.example.training_management_system.model.users.Student;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.TokenRepository;
-import ju.example.training_management_system.repository.UserRepository;
+import ju.example.training_management_system.repository.users.UserRepository;
 import ju.example.training_management_system.util.PasswordHashingUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;

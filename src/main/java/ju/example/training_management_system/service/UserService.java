@@ -2,7 +2,7 @@ package ju.example.training_management_system.service;
 
 import ju.example.training_management_system.model.users.Role;
 import ju.example.training_management_system.model.users.User;
-import ju.example.training_management_system.repository.UserRepository;
+import ju.example.training_management_system.repository.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -4,7 +4,7 @@ import ju.example.training_management_system.database.DatabaseProperties;
 import ju.example.training_management_system.exception.PasswordNotMatchException;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.users.User;
-import ju.example.training_management_system.repository.UserRepository;
+import ju.example.training_management_system.repository.users.UserRepository;
 import ju.example.training_management_system.util.PasswordHashingUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

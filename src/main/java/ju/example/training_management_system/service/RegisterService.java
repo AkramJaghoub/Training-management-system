@@ -6,7 +6,7 @@ import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.users.Role;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.model.users.UserFactory;
-import ju.example.training_management_system.repository.UserRepository;
+import ju.example.training_management_system.repository.users.UserRepository;
 import ju.example.training_management_system.util.PasswordHashingUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,7 +35,7 @@ public class RegisterService {
             user.setRole(role);
             user.setJoinDate(LocalDateTime.now());
             userRepository.save(user);
-            return new ApiResponse("user has been saved successfully", HttpStatus.OK);
+            return new ApiResponse("user with [" + user.getId() + "] has been saved successfully", HttpStatus.OK);
         } catch (UserAlreadyExistException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
