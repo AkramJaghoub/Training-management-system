@@ -72,7 +72,7 @@ nav ul li.profile a:after {
 
 .sub-menu {
     position: relative;
-    height: 17.1rem;
+    height: 16.1rem;
     background: #FAF9F6;
     padding: 0 20px;
     margin: 10px;
@@ -89,7 +89,6 @@ nav ul li.profile a:after {
     font-weight: 500;
     color: rgb(128, 128, 128);
     margin-top: .4rem;
-    font-size: 1.4rem;
 }
 
 .user-info img {
@@ -174,10 +173,6 @@ nav ul li.profile a:after {
     margin-bottom: 20px;
 }
 
-label {
-    font-weight: bold;
-}
-
 .error-message {
     color: #dc3545;
 }
@@ -242,10 +237,6 @@ label {
     margin-bottom: 0.5rem;
     width: auto; /* or a specific width if needed */
 }
-
-/*.filters label, .filters select {*/
-/*    margin-left: 10px;*/
-/*}*/
 
 .article-container {
     border: 2px solid #333;
