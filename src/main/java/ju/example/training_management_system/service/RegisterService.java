@@ -1,5 +1,7 @@
 package ju.example.training_management_system.service;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import ju.example.training_management_system.exception.UserAlreadyExistException;
 import ju.example.training_management_system.model.ApiResponse;
@@ -20,6 +22,7 @@ import java.util.Map;
 public class RegisterService {
 
     private final UserRepository userRepository;
+    private final HttpServletRequest request;
 
     @Transactional
     public ApiResponse registerUser(Map<String, Object> userData) {
@@ -35,6 +38,10 @@ public class RegisterService {
             user.setRole(role);
             user.setJoinDate(LocalDateTime.now());
             userRepository.save(user);
+
+            HttpSession session = request.getSession();
+            session.setAttribute("email", user.getEmail());
+
             return new ApiResponse("user with [" + user.getId() + "] has been saved successfully", HttpStatus.OK);
         } catch (UserAlreadyExistException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);

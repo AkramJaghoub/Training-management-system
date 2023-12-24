@@ -150,22 +150,47 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(userData),
         })
-            .then(response => {
+            .then(response => response.json().then(data => {
+                console.log(data)
                 if (!response.ok) {
-                    throw new Error(`Server responded with status: ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.redirectUrl) {
-                    window.location.href = data.redirectUrl;
+                    if (response.status === 400) {
+                        const emailErrorField = formType === 'STUDENT' ? 'studentEmailError' : 'companyEmailError';
+                        document.getElementById(emailErrorField).textContent = 'An account with this email already exists.';
+                    } else {
+                        throw new Error(data.message || `Server responded with status: ${response.statusText}`);
+                    }
                 } else {
-                    console.error('No redirect URL in response:', data);
+                    if (data.message) {
+                        displaySuccessMessage(data.message);
+                        if (data.redirectUrl) {
+                            setTimeout(() => {
+                                window.location.href = data.redirectUrl;
+                            }, 5000);
+                        }
+                    }
                 }
-            })
-
+            }))
             .catch(error => {
                 console.error('Error:', error);
             });
+    }
+
+    function displaySuccessMessage(message) {
+        const successAlert = document.createElement('div');
+        successAlert.className = 'alert alert-success';
+        successAlert.role = 'alert';
+        successAlert.textContent = message + ", now redirecting to your dashboard....";
+
+        // Get the placeholder element and append the success message to it
+        const alertPlaceholder = document.getElementById('alertPlaceholder');
+        alertPlaceholder.appendChild(successAlert);
+
+        // Scroll to the top of the page to ensure the user sees the message
+        window.scrollTo(0, 0);
+
+        // Optionally, remove the success message after some time
+        setTimeout(() => {
+            successAlert.remove();
+        }, 5000); // Remove after 5 seconds
     }
 });
