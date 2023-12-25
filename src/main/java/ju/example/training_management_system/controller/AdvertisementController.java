@@ -33,7 +33,7 @@ public class AdvertisementController {
         HttpSession session = request.getSession();
 
         String email = (String) session.getAttribute("email");
-        if (email != null) {
+        if (email != null && !email.equals("root")) {
             model.addAttribute("email", email);
             String companyName = companyService.getCompanyName(email);
             companyService.setUpCompanyDashboard(model, email, response);
@@ -51,7 +51,7 @@ public class AdvertisementController {
         HttpSession session = request.getSession();
 
         String email = (String) session.getAttribute("email");
-        if (email != null) {
+        if (email != null && !email.equals("root")) {
             ApiResponse apiResponse = adsPostService.postAd(postDto, email);
             return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse.getMessage());
         }
@@ -66,7 +66,7 @@ public class AdvertisementController {
         HttpSession session = request.getSession();
 
         String email = (String) session.getAttribute("email");
-        if (email != null) {
+        if (email != null && !email.equals("root")) {
             String companyName = companyService.getCompanyName(email);
             List<Advertisement> advertisements = adsPostService.getAllAdvertisementsForCompany(companyName);
             session.setAttribute("email", email);
@@ -81,7 +81,7 @@ public class AdvertisementController {
     @DeleteMapping("/delete/{position}")
     public String deleteAd(@PathVariable("position") String position, HttpSession session) {
         String email = (String) session.getAttribute("email");
-        if (email != null) {
+        if (email != null && !email.equals("root")) {
             String companyName = companyService.getCompanyName(email);
             adsPostService.deleteAd(companyName, position);
             return "/company/company-dashboard";
@@ -95,7 +95,7 @@ public class AdvertisementController {
         HttpSession session = request.getSession();
 
         String email = (String) session.getAttribute("email");
-        if (email != null) {
+        if (email != null && !email.equals("root")) {
             ApiResponse apiResponse = adsPostService.updateAd(adDto, email);
             return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse.getMessage());
         }

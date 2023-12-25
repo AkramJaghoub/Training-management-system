@@ -31,7 +31,7 @@ public class CompanyController {
         HttpSession session = request.getSession();
 
         String email = (String) session.getAttribute("email");
-        if (email != null) {
+        if (email != null && !email.equals("root")) {
             companyService.setUpCompanyDashboard(model, email, response);
             session.setAttribute("email", email);
             return "/company/company-dashboard";
@@ -44,7 +44,7 @@ public class CompanyController {
         HttpSession session = request.getSession();
 
         String email = (String) session.getAttribute("email");
-        if (email != null) {
+        if (email != null && !email.equals("root")) {
             companyService.setManageProfile(model, email);
             return "/company/manage-profile";
         }
@@ -56,7 +56,7 @@ public class CompanyController {
         HttpSession session = request.getSession();
 
         String email = (String) session.getAttribute("email");
-        if (email != null) {
+        if (email != null && !email.equals("root")) {
             ApiResponse apiResponse = companyService.updateCompanyDetails(infoDto, email);
             return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse.getMessage());
         }
