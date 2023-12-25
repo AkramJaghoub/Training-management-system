@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,6 +12,8 @@
 
     <!-- Hope Ui Design System Css -->
     <link rel="stylesheet" href="/admin-dashboard/assets/css/hope-ui.min.css?v=4.0.0">
+
+    <link rel="stylesheet" href="/admin-dashboard/assets/css/admin-dashboard.css">
 
 </head>
 <body>
@@ -173,6 +175,7 @@
     </div>
     <div class="sidebar-footer"></div>
 </aside>
+
 <main class="main-content">
     <div class="position-relative iq-banner">
         <div class="iq-navbar-header" style="height: 215px;">
@@ -182,7 +185,8 @@
                         <div class="flex-wrap d-flex justify-content-between align-items-center">
                             <div>
                                 <h1>Hello Admin</h1>
-                                <p>Welcome to your dashboard, where you can efficiently manage user accounts, track activities, and ensure smooth operation of our services.</p>
+                                <p>Welcome to your dashboard, where you can efficiently manage user accounts, track
+                                    activities, and ensure smooth operation of our services.</p>
                             </div>
                         </div>
                     </div>
@@ -193,51 +197,98 @@
                      class="theme-color-default-img img-fluid w-100 h-100 animated-scaleX">
             </div>
         </div>
-        <!--Nav End-->
     </div>
-    <div class="conatiner-fluid content-inner mt-n5 py-0">
+
+    <div class="container-fluid content-inner mt-n5 py-0">
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between">
-                        <div class="header-title">
-                            <h4 class="card-title">Advertisements</h4>
+                    <div class="card-header">
+                            <h4 class="card-title ad-h3">Advertisements</h4>
+                            <div class="search-bar">
+                                <label for="searchInput">
+                                </label><input type="text" id="searchInput" class="form-control"
+                                               placeholder="Search...">
+                            </div>
+                        <div class="filters d-flex align-items-center">
+                            <div class="d-flex align-items-center me-3">
+                                <label for="modeFilter" class="form-label me-2">Mode:</label>
+                                <select class="form-select no-border" id="modeFilter" name="mode" onchange="filterAds()">
+                                    <option value="all" selected>All</option>
+                                    <option value="REMOTE">Remote</option>
+                                    <option value="ON_SITE">On-site</option>
+                                    <option value="HYBRID">Hybrid</option>
+                                </select>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <label for="typeFilter" class="form-label me-2">Type:</label>
+                                <select class="form-select no-border" id="typeFilter" name="type" onchange="filterAds()">
+                                    <option value="all" selected>All</option>
+                                    <option value="FULL_TIME">Full-time</option>
+                                    <option value="PART_TIME">Part-time</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="datatable" class="table table-striped" data-toggle="data-table">
-                                <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                    <td>$320,800</td>
-                                </tr>
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                                </tfoot>
-                            </table>
+                        <div class="articles">
+                            <div th:if="${#lists.isEmpty(advertisements)}" class="no-ads">No advertisements available.</div>
+                            <div th:each="advertisement : ${advertisements}" class="advertisement-widget" th:data-work-mode="${advertisement.workMode}" th:data-job-type="${advertisement.jobType}">
+                                <div th:id="'menu-icon-' + ${advertisement.id}" class="menu-icon"
+                                     th:data-ad-id="${advertisement.id}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                                    </svg>
+                                </div>
+                                <div th:id="'menu-dropdown-' + ${advertisement.id}" class="menu-container"
+                                     style="display: none;">
+                                    <a class="dropdown-item" href="#"
+                                       th:onclick="'approve(' + ${advertisement.id} + ');'">Approve</a>
+                                    <a class="dropdown-item" href="#"
+                                       th:onclick="'decline(' + ${advertisement.id} + ');'">Decline</a>
+                                </div>
+                                <h4 style="margin-bottom: 1.5rem;" th:text="${advertisement.jobTitle}">Job Title</h4>
+                                <p><strong>Company:</strong> <span th:text="${advertisement.company.companyName}"
+                                                                   th:data-company-name="${advertisement.company.companyName}"></span>
+                                </p>
+                                <p><strong>Interns Required:</strong> <span
+                                        th:text="${advertisement.internsRequired}"></span></p>
+                                <p><strong>Duration:</strong> <span
+                                        th:text="${advertisement.jobDuration} + ' months'"></span></p>
+                                <p><strong>Job Type:</strong> <span th:text="${advertisement.jobType}"></span></p>
+                                <p><strong>Work Mode:</strong> <span th:text="${advertisement.workMode}"></span></p>
+                                <div th:id="'description-container-' + ${advertisement.id}" style="display: none;"
+                                     th:data-description="${advertisement.description}"
+                                     th:data-company-name="${advertisement.company.companyName}"
+                                     th:data-city="${advertisement.city}"
+                                     th:data-country="${advertisement.country}">
+                                </div>
+
+                                <button type="button" class="btn btn-primary article-button view-description-button"
+                                        th:onclick="'showDescription(' + ${advertisement.id} + ');'">View Description
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Description Modal -->
+                        <div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog"
+                             aria-labelledby="descriptionModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="descriptionModalLabel">Advertisement
+                                            Description</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -245,7 +296,7 @@
         </div>
     </div>
 
-    <!-- Footer Section Start -->
+    <!-- Footer Section -->
     <footer class="footer">
         <div class="footer-body">
             <div class="right-panel">
@@ -253,12 +304,11 @@
                 <script>document.write(new Date().getFullYear())</script>
                 Tero, Made with
                 <span>
-                      <svg class="icon-15" width="15" viewBox="0 0 24 24" fill="none"
-                           xmlns="http://www.w3.org/2000/svg">
-                          <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M15.85 2.50065C16.481 2.50065 17.111 2.58965 17.71 2.79065C21.401 3.99065 22.731 8.04065 21.62 11.5806C20.99 13.3896 19.96 15.0406 18.611 16.3896C16.68 18.2596 14.561 19.9196 12.28 21.3496L12.03 21.5006L11.77 21.3396C9.48102 19.9196 7.35002 18.2596 5.40102 16.3796C4.06102 15.0306 3.03002 13.3896 2.39002 11.5806C1.26002 8.04065 2.59002 3.99065 6.32102 2.76965C6.61102 2.66965 6.91002 2.59965 7.21002 2.56065H7.33002C7.61102 2.51965 7.89002 2.50065 8.17002 2.50065H8.28002C8.91002 2.51965 9.52002 2.62965 10.111 2.83065H10.17C10.21 2.84965 10.24 2.87065 10.26 2.88965C10.481 2.96065 10.69 3.04065 10.89 3.15065L11.27 3.32065C11.3618 3.36962 11.4649 3.44445 11.554 3.50912C11.6104 3.55009 11.6612 3.58699 11.7 3.61065C11.7163 3.62028 11.7329 3.62996 11.7496 3.63972C11.8354 3.68977 11.9247 3.74191 12 3.79965C13.111 2.95065 14.46 2.49065 15.85 2.50065ZM18.51 9.70065C18.92 9.68965 19.27 9.36065 19.3 8.93965V8.82065C19.33 7.41965 18.481 6.15065 17.19 5.66065C16.78 5.51965 16.33 5.74065 16.18 6.16065C16.04 6.58065 16.26 7.04065 16.68 7.18965C17.321 7.42965 17.75 8.06065 17.75 8.75965V8.79065C17.731 9.01965 17.8 9.24065 17.94 9.41065C18.08 9.58065 18.29 9.67965 18.51 9.70065Z"
-                                fill="currentColor"></path>
-                      </svg>
+                    <svg class="icon-15" width="15" viewBox="0 0 24 24" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                    </svg>
                 </span>
             </div>
         </div>
@@ -288,6 +338,7 @@
 <script src="/admin-dashboard/assets/js/plugins/form-wizard.js"></script>
 
 <script src="/admin-dashboard/assets/js/hope-ui.js" defer></script>
+<script src="/admin-dashboard/assets/js/widget.js"></script>
 
 </body>
 </html>

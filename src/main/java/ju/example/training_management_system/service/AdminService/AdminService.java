@@ -62,7 +62,7 @@ public class AdminService {
                     }
                     userImages.put(user.getId(), base64Image);
                 })
-                .collect(Collectors.toList());
+                .toList();
 
         long numOfCompanies = users.stream().
                 filter(user -> user.getRole() == Role.COMPANY).
@@ -81,10 +81,16 @@ public class AdminService {
         model.addAttribute("companiesCount", numOfCompanies);
         model.addAttribute("studentsCount", numOfStudents);
         model.addAttribute("advertisementsCount", advertisements.size());
-        model.addAttribute("newUsers", newUsers);
+        model.addAttribute("users", users);
         model.addAttribute("userImages", userImages);
         model.addAttribute("newUsersCount", newUsers.size());
         model.addAttribute("newAdvertisementsCount", newAdsCount);
+    }
+
+    public void setUpAdsListPage(Model model) {
+        List<Advertisement> advertisements = advertisementRepository.findAll();
+
+        model.addAttribute("advertisements", advertisements);
     }
 
     @Transactional
@@ -111,8 +117,5 @@ public class AdminService {
         } catch (UserNotFoundException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
-    }
-
-    public void setUpAdsListPage(Model model) {
     }
 }
