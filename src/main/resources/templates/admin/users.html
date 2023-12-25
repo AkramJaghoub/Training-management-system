@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -243,7 +243,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="user : ${newUsers}" th:data-user-id="${user.id}" th:data-user-email="${user.email}">                                            <td>
+                                    <tr th:each="user : ${users}" th:data-user-id="${user.id}" th:data-user-email="${user.email}">                                            <td>
                                                 <div th:if="${userImages[user.id]}" class="d-flex align-items-center">
                                                     <img class="rounded img-fluid avatar-40 me-3"
                                                          th:src="|data:image/png;base64,${userImages[user.id]}|"
