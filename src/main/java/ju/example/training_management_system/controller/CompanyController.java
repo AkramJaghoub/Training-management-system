@@ -36,7 +36,6 @@ public class CompanyController {
             session.setAttribute("email", email);
             return "/company/company-dashboard";
         }
-
         return "redirect:/login";
     }
 
@@ -49,7 +48,6 @@ public class CompanyController {
             companyService.setManageProfile(model, email);
             return "/company/manage-profile";
         }
-
         return "redirect:/login";
     }
 
@@ -62,7 +60,6 @@ public class CompanyController {
             ApiResponse apiResponse = companyService.updateCompanyDetails(infoDto, email);
             return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse.getMessage());
         }
-
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/login");
         return new ResponseEntity<>(headers, HttpStatus.FOUND);

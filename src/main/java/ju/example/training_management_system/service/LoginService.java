@@ -24,6 +24,7 @@ public class LoginService {
 
         if (authenticationService.isAdmin(email, password)) {
             Role role = Role.ADMIN;
+            session.setAttribute("email", email);
             return new ApiResponse(getRequiredDashboard(role), HttpStatus.OK); // return early for admin
         }
 

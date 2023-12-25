@@ -112,4 +112,7 @@ public class AdminService {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    public void setUpAdsListPage(Model model) {
+    }
 }
