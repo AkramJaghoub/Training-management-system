@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initialize filtering once to apply any default values
     filterAds();
+
+    // Initialize Pagination and Display only the first page of widgets
+    initializePagination();
+    displayPage(1);
 });
 
 // Attach click event listeners to kebab menu icons
@@ -148,4 +152,61 @@ function filterAds() {
         let typeMatch = typeFilter === 'all' || type === typeFilter;
         ad.style.display = (modeMatch && typeMatch && textMatch) ? '' : 'none';
     });
+    initializePagination();
+}
+
+const widgetsPerPage = 9;
+let pageCount;
+const paginationContainer = document.getElementById('ads-pagination');
+
+function displayPage(page) {
+    const widgets = document.querySelectorAll('.advertisement-widget');
+    widgets.forEach((widget, index) => {
+        const startIndex = (page - 1) * widgetsPerPage;
+        const endIndex = startIndex + widgetsPerPage;
+        widget.style.display = (index >= startIndex && index < endIndex) ? '' : 'none';
+    });
+}
+
+function initializePagination() {
+    const visibleWidgets = document.querySelectorAll('.advertisement-widget:not([style*="display: none"])');
+    const widgetsCount = visibleWidgets.length;
+    pageCount = Math.ceil(widgetsCount / widgetsPerPage);
+
+    updatePagination(1); // Initialize the pagination
+}
+
+function createPaginationItem(pageNumber, isActive, isDisabled, text) {
+    const li = document.createElement('li');
+    li.className = 'page-item';
+    if (isActive) li.classList.add('active');
+    if (isDisabled) li.classList.add('disabled');
+
+    const a = document.createElement('a');
+    a.className = 'page-link';
+    a.href = '#';
+    a.textContent = text || pageNumber;
+
+    a.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!isDisabled) {
+            updatePagination(pageNumber);
+            displayPage(pageNumber);
+        }
+    });
+    li.appendChild(a);
+    return li;
+}
+
+function updatePagination(currentPage) {
+    paginationContainer.innerHTML = '';
+    if (currentPage === 0) return;
+
+    paginationContainer.appendChild(createPaginationItem(currentPage - 1, false, currentPage === 1, 'Previous'));
+
+    for (let i = 1; i <= pageCount; i++) {
+        paginationContainer.appendChild(createPaginationItem(i, i === currentPage));
+    }
+
+    paginationContainer.appendChild(createPaginationItem(currentPage + 1, false, currentPage === pageCount, 'Next'));
 }

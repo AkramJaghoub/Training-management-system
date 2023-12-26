@@ -13,7 +13,8 @@
 
     <!-- Hope Ui Design System Css -->
     <link rel="stylesheet" href="/admin-dashboard/assets/css/hope-ui.min.css?v=4.0.0">
-    <link rel="stylesheet" href="/admin-dashboard/assets/css/admin-dashboard.css">
+
+    <link rel="stylesheet" href="/admin-dashboard/assets/css/users-list.css">
 
 </head>
 <body>
@@ -225,7 +226,7 @@
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
                                 <h4 class="card-title">User List</h4>
-                                <span id="alertPlaceholder" class="user-alert">wwwwwwww</span> <!-- Alert placeholder -->
+                                <span id="alertPlaceholder" class="user-alert"></span>
                             </div>
                         </div>
                         <div class="card-body px-0">
@@ -243,38 +244,41 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="user : ${users}" th:data-user-id="${user.id}" th:data-user-email="${user.email}">                                            <td>
-                                                <div th:if="${userImages[user.id]}" class="d-flex align-items-center">
-                                                    <img class="rounded img-fluid avatar-40 me-3"
-                                                         th:src="|data:image/png;base64,${userImages[user.id]}|"
-                                                         alt="Profile"/>
-                                                </div>
-                                                <div th:unless="${userImages[user.id]}"
-                                                     class="d-flex align-items-center">
-                                                    <svg class="bi bi-person-circle" fill="black" height="28"
-                                                         viewBox="0 0 16 16" width="28"
-                                                         xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                                                        <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
-                                                              fill-rule="evenodd"/>
-                                                    </svg>
-                                                </div>
-                                            </td>
-                                            <td th:text="${user.email}">Email</td>
-                                            <td>
-                                                <div th:switch="${user.role.name()}">
-                                                    <span th:case="'STUDENT'" th:text="${user.firstName + ' ' + user.lastName}"></span>
-                                                    <span th:case="'COMPANY'" th:text="${user.companyName}"></span>
-                                                </div>
-                                            </td>
-                                            <td th:text="${user.role}">Role</td>
-                                            <td th:text="${#temporals.format(user.joinDate, 'yyyy-MM-dd HH:mm')}">Join
-                                            <td>
-                                                <div class="flex align-items-center list-user-action">
-                                                    <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="tooltip"
-                                                       data-bs-placement="top" title="Delete" href="#">
+                                    <tr th:each="user : ${users}" th:data-user-id="${user.id}"
+                                        th:data-user-email="${user.email}">
+                                        <td>
+                                            <div th:if="${userImages[user.id]}" class="d-flex align-items-center">
+                                                <img class="rounded img-fluid avatar-40 me-3"
+                                                     th:src="|data:image/png;base64,${userImages[user.id]}|"
+                                                     alt="Profile"/>
+                                            </div>
+                                            <div th:unless="${userImages[user.id]}"
+                                                 class="d-flex align-items-center">
+                                                <svg class="bi bi-person-circle" fill="black" height="28"
+                                                     viewBox="0 0 16 16" width="28"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                                    <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+                                                          fill-rule="evenodd"/>
+                                                </svg>
+                                            </div>
+                                        </td>
+                                        <td th:text="${user.email}">Email</td>
+                                        <td>
+                                            <div th:switch="${user.role.name()}">
+                                                <span th:case="'STUDENT'"
+                                                      th:text="${user.firstName + ' ' + user.lastName}"></span>
+                                                <span th:case="'COMPANY'" th:text="${user.companyName}"></span>
+                                            </div>
+                                        </td>
+                                        <td th:text="${user.role}">Role</td>
+                                        <td th:text="${#temporals.format(user.joinDate, 'yyyy-MM-dd HH:mm')}">Join
+                                        <td>
+                                            <div class="flex align-items-center list-user-action">
+                                                <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="tooltip"
+                                                   data-bs-placement="top" title="Delete" href="#">
                                 <span class="btn-inner">
-                                   <svg class="icon-20 delete-icon"  width="20" viewBox="0 0 24 24" fill="none"
+                                   <svg class="icon-20 delete-icon" width="20" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
                                       <path d="M19.3248 9.46826C19.3248 9.46826 18.7818 16.2033 18.4668 19.0403C18.3168 20.3953 17.4798 21.1893 16.1088 21.2143C13.4998 21.2613 10.8878 21.2643 8.27979 21.2093C6.96079 21.1823 6.13779 20.3783 5.99079 19.0473C5.67379 16.1853 5.13379 9.46826 5.13379 9.46826"
                                             stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
@@ -293,6 +297,10 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-end" id="pagination">
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
@@ -344,10 +352,12 @@
 
 <script src="/admin-dashboard/assets/js/delete.js"></script>
 
-<!-- AOS Animation Plugin-->
+<script src="/admin-dashboard/assets/js/user-pagination.js"></script>
 
 <!-- App Script -->
 <script src="/admin-dashboard/assets/js/hope-ui.js" defer></script>
 
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
 </html>
