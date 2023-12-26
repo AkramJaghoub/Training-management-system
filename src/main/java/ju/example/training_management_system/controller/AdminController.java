@@ -57,6 +57,11 @@ public class AdminController {
         return "redirect:/login";
     }
 
+    @GetMapping("/logout")
+    public String logoutBack(Model model){
+        return "redirect:/login";
+    }
+
     @DeleteMapping("/delete/user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable("id") long userId){
         ApiResponse response = adminService.deleteUser(userId);
