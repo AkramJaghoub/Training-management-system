@@ -36,12 +36,10 @@ public class RegisterService {
                 throw new UserAlreadyExistException("user email already exists");
             }
             user.setRole(role);
-            user.setJoinDate(LocalDateTime.now());
             userRepository.save(user);
 
             HttpSession session = request.getSession();
             session.setAttribute("email", user.getEmail());
-
             return new ApiResponse("user with [" + user.getId() + "] has been saved successfully", HttpStatus.OK);
         } catch (UserAlreadyExistException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);

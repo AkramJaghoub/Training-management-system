@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static ju.example.training_management_system.model.company.advertisement.JobStatus.PENDING;
 import static ju.example.training_management_system.util.Utils.isNotEqual;
 import static ju.example.training_management_system.util.Utils.saveImage;
 
@@ -85,6 +86,7 @@ public class AdvertisementService {
             existingAd.setCountry(adDto.getCountry());
             existingAd.setCity(adDto.getCity());
             existingAd.setWorkMode(adDto.getWorkMode());
+            existingAd.setJobStatus(PENDING);
 
             advertisementRepository.save(existingAd); // updated advertisement
             return new ApiResponse("Advertisement was updated successfully", HttpStatus.CREATED);
