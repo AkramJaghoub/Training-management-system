@@ -59,6 +59,7 @@ public class Advertisement {
                 .jobType(postDto.getJobType())
                 .workMode(postDto.getWorkMode())
                 .description(postDto.getDescription())
+                .postDate(LocalDateTime.now())
                 .build();
     }
 }

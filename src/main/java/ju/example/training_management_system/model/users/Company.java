@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import static ju.example.training_management_system.util.Utils.capitalizeFirstLetter;
@@ -41,6 +42,7 @@ public class Company extends User {
         company.setEmail((String) properties.get("email"));
         company.setPhoneNumber((String) properties.get("phoneNumber"));
         company.setPassword((String) properties.get("password"));
+        company.setJoinDate(LocalDateTime.now());
         return company;
     }
 }
