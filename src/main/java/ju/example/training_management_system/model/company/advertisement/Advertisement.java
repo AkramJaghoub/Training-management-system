@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-import static ju.example.training_management_system.model.company.advertisement.JobStatus.PENDING;
+import static ju.example.training_management_system.model.company.advertisement.AdStatus.PENDING;
 
 @Data
 @NoArgsConstructor
@@ -36,7 +36,7 @@ public class Advertisement {
     private LocalDateTime postDate;
 
     @Enumerated(EnumType.STRING)
-    private JobStatus jobStatus;
+    private AdStatus adStatus;
 
     @Enumerated(EnumType.STRING)
     private JobType jobType;
@@ -65,7 +65,7 @@ public class Advertisement {
                 .workMode(postDto.getWorkMode())
                 .description(postDto.getDescription())
                 .postDate(LocalDateTime.now())
-                .jobStatus(PENDING)
+                .adStatus(PENDING)
                 .build();
     }
 }

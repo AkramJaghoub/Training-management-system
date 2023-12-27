@@ -1,6 +1,5 @@
 package ju.example.training_management_system.controller;
 
-import jakarta.servlet.http.HttpSession;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.users.Role;
 import ju.example.training_management_system.service.RegisterService;
