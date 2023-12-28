@@ -1,16 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Reset filters and search input on page load
     resetFiltersAndSearch();
-
-    // Attach event listeners
     attachEventListeners();
-
-    // Initialize filtering once to apply any default values
     filterAds();
-
-    // Initialize Pagination and Display only the first page of widgets
-    initializePagination();
-    displayPage(1);
 });
 
 // Attach click event listeners to kebab menu icons
@@ -135,12 +126,13 @@ function decline(adId) {
     closeAllKebabMenus();
 }
 
-
 function filterAds() {
     let searchInput = document.getElementById('searchInput').value.toLowerCase();
     let modeFilter = document.getElementById('modeFilter').value.toLowerCase();
     let typeFilter = document.getElementById('typeFilter').value.toLowerCase();
     let adsList = document.querySelectorAll('.advertisement-widget');
+
+    let activeWidgets = 0;
 
     adsList.forEach(function (ad) {
         let mode = ad.dataset.workMode ? ad.dataset.workMode.toLowerCase() : '';
@@ -151,8 +143,11 @@ function filterAds() {
         let modeMatch = modeFilter === 'all' || mode === modeFilter;
         let typeMatch = typeFilter === 'all' || type === typeFilter;
         ad.style.display = (modeMatch && typeMatch && textMatch) ? '' : 'none';
+        if (modeMatch && typeMatch && textMatch)
+            activeWidgets++;
     });
-    initializePagination();
+    console.log(activeWidgets);
+    initializePagination(activeWidgets);
 }
 
 const widgetsPerPage = 9;
@@ -168,12 +163,25 @@ function displayPage(page) {
     });
 }
 
-function initializePagination() {
-    const visibleWidgets = document.querySelectorAll('.advertisement-widget:not([style*="display: none"])');
-    const widgetsCount = visibleWidgets.length;
-    pageCount = Math.ceil(widgetsCount / widgetsPerPage);
+function displayPageForFilters(page) {
+    const widgets = document.querySelectorAll('.advertisement-widget');
+    const visibleWidgets = Array.from(widgets).filter(widget => {
+        return window.getComputedStyle(widget).display !== 'none';
+    });
+    console.log(visibleWidgets);
 
-    updatePagination(1); // Initialize the pagination
+    visibleWidgets.forEach((widget, index) => {
+        const startIndex = (page - 1) * widgetsPerPage;
+        const endIndex = startIndex + widgetsPerPage;
+        widget.style.display = (index >= startIndex && index < endIndex) ? '' : 'none';
+    });
+}
+
+
+function initializePagination(activeWidgets) {
+    pageCount = Math.ceil(activeWidgets / widgetsPerPage);
+    updatePagination(1);
+    displayPageForFilters(1);
 }
 
 function createPaginationItem(pageNumber, isActive, isDisabled, text) {
@@ -200,7 +208,7 @@ function createPaginationItem(pageNumber, isActive, isDisabled, text) {
 
 function updatePagination(currentPage) {
     paginationContainer.innerHTML = '';
-    if (currentPage === 0) return;
+    if (pageCount === 0 || pageCount === 1) return;
 
     paginationContainer.appendChild(createPaginationItem(currentPage - 1, false, currentPage === 1, 'Previous'));
 
