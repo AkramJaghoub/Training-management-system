@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     resetFiltersAndSearch();
     attachEventListeners();
     filterAds();
+    updateAdStatusClasses(); // Call the function here
 });
 
 // Attach click event listeners to kebab menu icons
@@ -38,9 +39,6 @@ function attachEventListeners() {
         }
     });
 
-    // Filter change events
-    document.getElementById('modeFilter').addEventListener('change', filterAds);
-    document.getElementById('typeFilter').addEventListener('change', filterAds);
     document.getElementById('searchInput').addEventListener('input', filterAds);
 }
 
@@ -60,8 +58,6 @@ function hideModal(modalId) {
 }
 
 function resetFiltersAndSearch() {
-    document.getElementById('modeFilter').value = 'all';
-    document.getElementById('typeFilter').value = 'all';
     document.getElementById('searchInput').value = '';
 }
 
@@ -128,25 +124,22 @@ function decline(adId) {
 
 function filterAds() {
     let searchInput = document.getElementById('searchInput').value.toLowerCase();
-    let modeFilter = document.getElementById('modeFilter').value.toLowerCase();
-    let typeFilter = document.getElementById('typeFilter').value.toLowerCase();
+    let statusFilter = document.getElementById('statusFilter').value.toLowerCase();
+
     let adsList = document.querySelectorAll('.advertisement-widget');
 
     let activeWidgets = 0;
 
     adsList.forEach(function (ad) {
-        let mode = ad.dataset.workMode ? ad.dataset.workMode.toLowerCase() : '';
-        let type = ad.dataset.jobType ? ad.dataset.jobType.toLowerCase() : '';
+        let status = ad.dataset.adStatus ? ad.dataset.adStatus.toLowerCase() : '';
         let jobTitle = ad.querySelector('h4').textContent.toLowerCase();
         let companyName = ad.querySelector('[data-company-name]').getAttribute('data-company-name').toLowerCase();
         let textMatch = !searchInput || jobTitle.includes(searchInput) || companyName.includes(searchInput);
-        let modeMatch = modeFilter === 'all' || mode === modeFilter;
-        let typeMatch = typeFilter === 'all' || type === typeFilter;
-        ad.style.display = (modeMatch && typeMatch && textMatch) ? '' : 'none';
-        if (modeMatch && typeMatch && textMatch)
+        let statusMatch = statusFilter === 'all' || status === statusFilter;
+        ad.style.display = (textMatch && statusMatch) ? '' : 'none';
+        if (textMatch && statusMatch)
             activeWidgets++;
     });
-    console.log(activeWidgets);
     initializePagination(activeWidgets);
 }
 
@@ -168,7 +161,6 @@ function displayPageForFilters(page) {
     const visibleWidgets = Array.from(widgets).filter(widget => {
         return window.getComputedStyle(widget).display !== 'none';
     });
-    console.log(visibleWidgets);
 
     visibleWidgets.forEach((widget, index) => {
         const startIndex = (page - 1) * widgetsPerPage;
@@ -217,4 +209,22 @@ function updatePagination(currentPage) {
     }
 
     paginationContainer.appendChild(createPaginationItem(currentPage + 1, false, currentPage === pageCount, 'Next'));
+}
+
+function updateAdStatusClasses() {
+    document.querySelectorAll('.advertisement-widget').forEach(widget => {
+        // Remove existing status classes
+        widget.classList.remove('approved', 'rejected');
+
+        // Add new status class based on adStatus
+        const adStatus = widget.dataset.adStatus.toLowerCase();
+        console.log(`Ad ID: ${widget.dataset.id}, Status: ${adStatus}`); // Corrected debugging line
+
+        if (adStatus === 'approved') {
+            widget.classList.add('approved');
+        } else if (adStatus === 'rejected') {
+            widget.classList.add('rejected');
+        }
+        // No need for 'pending' as it's the default state
+    });
 }

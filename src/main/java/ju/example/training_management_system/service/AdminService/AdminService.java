@@ -88,8 +88,10 @@ public class AdminService {
     }
 
     public void setUpAdsListPage(Model model) {
-        List<Advertisement> advertisements = advertisementRepository.findAll();
-
+        List<Advertisement> advertisements = advertisementRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparing(Advertisement::getPostDate).reversed())
+                .toList();
         model.addAttribute("advertisements", advertisements);
     }
 
