@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const userTable = document.getElementById('user-list-table');
+
     userTable.addEventListener('click', function (event) {
         let target = event.target;
 
@@ -28,6 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (target && target.classList.contains('btn-icon')) {
+            event.preventDefault();
+
             const email = target.closest('tr').getAttribute('data-user-email');
             const userId = target.closest('tr').getAttribute('data-user-id');
 
@@ -61,15 +64,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     userRow.remove();
                 }
 
-                // Show success alert
                 const alertPlaceholder = document.getElementById('alertPlaceholder');
-                alertPlaceholder.innerHTML = `<div class="alert alert-success" role="alert">${message}</div>`;
+                alertPlaceholder.innerHTML = `
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-check-circle-fill me-2" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </svg>
+        ${message}
+    </div>`;
                 alertPlaceholder.style.display = 'block';
 
                 setTimeout(() => {
                     alertPlaceholder.style.display = 'none';
                     alertPlaceholder.innerHTML = '';
-                }, 3000); // Hide the alert after 3 seconds
+                }, 3000);
             })
             .catch(error => {
                 console.error('Error deleting user:', error);

@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+    //TODO: fix pagination on deletion of a user
+
     const rowsPerPage = 10;
     const rows = document.querySelectorAll('#user-list-table tbody tr');
     const rowsCount = rows.length;
