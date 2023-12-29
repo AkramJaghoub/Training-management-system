@@ -135,7 +135,8 @@ public class AdminService {
                 ad.setAdStatus(AdStatus.valueOf(newStatus));
             }
             advertisementRepository.save(ad);
-            return new ApiResponse("Advertisement status updated successfully", HttpStatus.OK);
+            return new ApiResponse("Advertisement with [" + adId + "] and name [" + ad.getJobTitle() + "] successfully got " +
+                    (newStatus.equals("APPROVED") ? "approved" : "rejected"), HttpStatus.OK);
         } catch (AdDoesNotExistException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }

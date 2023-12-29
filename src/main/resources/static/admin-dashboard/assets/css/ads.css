@@ -74,8 +74,8 @@
     max-width: 1280px;
     margin: auto;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    column-gap: 50px; /* Adjust this value as needed */
-    row-gap: 40px; /* If you want to keep the original vertical gap */
+    column-gap: 50px;
+    row-gap: 40px;
 }
 
 article a::after {
@@ -365,15 +365,33 @@ hr {
 }
 
 .advertisement-widget.approved {
-    box-shadow: 0 8px 4px rgba(0, 128, 0, 0.5) /* Decreased blur radius from 15px to 8px */
+    box-shadow: 0 8px 4px rgba(0, 128, 0, 0.5)
 }
 
 .advertisement-widget.rejected {
-    box-shadow: 0 8px 4px rgba(255, 0, 0, 0.5) /* Decreased blur radius from 15px to 8px */
+    box-shadow: 0 8px 4px rgba(255, 0, 0, 0.5)
 }
 
-.no-ads{
+.no-ads {
     position: absolute;
     left: 41%;
     bottom: 20%;
+    font-size: 1.1rem;
+    font-style: italic;
+}
+
+.modal-content{
+    margin-left: 6rem;
+}
+
+.display-message {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 55%;
+    transform: translateX(-50%);
+    z-index: 1050;
+    padding: 5px 10px;
+    align-items: center;
+    gap: 5px;
 }

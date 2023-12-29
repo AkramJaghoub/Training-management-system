@@ -215,9 +215,49 @@ function updateAdStatusClasses() {
     });
 }
 
+function askForConfirmation(adId, newStatus, event) {
+    if (event) {
+        event.preventDefault();
+    }
+
+    // Get references to modal elements
+    const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+    const modalTitle = document.getElementById('confirmationModalLabel');
+    const actionTypeElement = document.getElementById('actionType');
+    const companyNameElement = document.getElementById('companyNameModal');
+    const confirmBtn = document.getElementById('confirmBtn');
+
+    // Get the ad's information
+    const adWidget = document.querySelector(`[data-id="${adId}"]`);
+    const jobTitle = adWidget.querySelector('h4').textContent;
+    const companyName = adWidget.querySelector('[data-company-name]').dataset.companyName;
+
+    const currentStatus = adWidget.dataset.adStatus.toUpperCase();
+    console.log("Current status:", currentStatus, "New status:", newStatus);
+
+    const actionText = newStatus === 'APPROVED' ? 'approve' : 'reject';
+
+    // Ensure case-insensitive comparison
+    if (newStatus.toUpperCase() === currentStatus) {
+        showWarningAlert(`This advertisement is already ${currentStatus.toLowerCase()}`);
+        return;
+    }
+
+    // Update the modal elements
+    modalTitle.textContent = `Confirm ${actionText}`;
+    actionTypeElement.textContent = actionText;
+    companyNameElement.textContent = `[${jobTitle}] for [${companyName}]`;
+
+    confirmBtn.onclick = function() {
+        updateAdStatus(adId, newStatus);
+        confirmationModal.hide();
+    };
+    // Show the modal
+    confirmationModal.show();
+}
+
 function updateAdStatus(adId, newStatus) {
     const url = `/admin/update/ad-status/${adId}`;
-
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('newStatus', newStatus);
@@ -239,9 +279,66 @@ function updateAdStatus(adId, newStatus) {
         })
         .then(data => {
             console.log('Success:', data.message);
-            document.querySelector(`[data-id="${adId}"] .ad-status`).textContent = newStatus;
+            const adWidget = document.querySelector(`[data-id="${adId}"]`);
+            const statusElement = adWidget.querySelector('.ad-status');
+
+            // Update the visual status
+            statusElement.textContent = newStatus;
+            adWidget.classList.remove('approved', 'rejected');
+            adWidget.classList.add(newStatus.toLowerCase());
+
+            // Update the data-ad-status attribute
+            adWidget.dataset.adStatus = newStatus;
+
+            // Show success message
+            showSuccessAlert(data.message);
         })
         .catch((error) => {
             console.error('Error:', error);
         });
+}
+
+function showSuccessAlert(message) {
+    const alertBox = document.getElementById('successAlert');
+    const messageParagraph = document.getElementById('successMessage');
+
+    messageParagraph.textContent = message;
+    alertBox.style.display = 'flex'; // Change display to flex to make it visible
+    alertBox.style.opacity = 1;
+
+    // Wait 4 seconds before starting to fade out
+    setTimeout(() => {
+        let opacity = 1;
+        const fadeInterval = setInterval(() => {
+            if (opacity <= 0) {
+                clearInterval(fadeInterval);
+                alertBox.style.display = 'none'; // Hide it again after fade out
+            } else {
+                opacity -= 0.05; // Decrease the opacity
+                alertBox.style.opacity = opacity;
+            }
+        }, 50); // Adjust the interval to control the speed of the fade-out
+    }, 4000);
+}
+
+function showWarningAlert(message) {
+    const alertBox = document.getElementById('errorAlert');
+    const messageParagraph = document.getElementById('errorMessage');
+
+    messageParagraph.textContent = message;
+    alertBox.style.display = 'block';
+    alertBox.style.opacity = 1; // Set initial opacity to 1
+
+    setTimeout(() => {
+        let opacity = 1;
+        const fadeInterval = setInterval(() => {
+            if (opacity <= 0) {
+                clearInterval(fadeInterval);
+                alertBox.style.display = 'none';
+            } else {
+                opacity -= 0.05; // Decrease the opacity
+                alertBox.style.opacity = opacity;
+            }
+        }, 50);
+    }, 4000);
 }
