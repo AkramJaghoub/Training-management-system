@@ -238,7 +238,7 @@
                     </div>
                     <div class="card-body">
                         <div class="articles">
-                            <div th:if="${#lists.isEmpty(advertisements)}" class="no-ads">No advertisements available.</div>
+                            <div th:if="${#lists.isEmpty(advertisements)}" class="no-articles">No advertisements available.</div>
                             <div th:each="advertisement : ${advertisements}" class="advertisement-widget"
                                  th:data-ad-status="${advertisement.adStatus}"
                                  th:data-id="${advertisement.id}">
@@ -252,10 +252,13 @@
                                 </div>
                                 <div th:id="'menu-dropdown-' + ${advertisement.id}" class="menu-container"
                                      style="display: none;">
-                                    <a class="dropdown-item" href="#"
-                                       th:onclick="'approve(' + ${advertisement.id} + ');'">Approve</a>
-                                    <a class="dropdown-item" href="#"
-                                       th:onclick="'decline(' + ${advertisement.id} + ');'">Decline</a>
+                                    <a class="dropdown-item" href="#" th:data-ad-id="${advertisement.id}"
+                                       th:data-new-status="'APPROVED'"
+                                       onclick="updateAdStatus(this.dataset.adId, this.dataset.newStatus);">Approve</a>
+                                    <a class="dropdown-item" href="#" th:data-ad-id="${advertisement.id}"
+                                       th:data-new-status="'REJECTED'"
+                                       onclick="updateAdStatus(this.dataset.adId, this.dataset.newStatus);">Reject</a>
+
                                 </div>
                                 <h4 style="margin-bottom: 1.5rem;" th:text="${advertisement.jobTitle}">Job Title</h4>
                                 <p><strong>Company:</strong> <span th:text="${advertisement.company.companyName}"

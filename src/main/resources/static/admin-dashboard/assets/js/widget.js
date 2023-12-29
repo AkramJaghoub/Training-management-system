@@ -108,20 +108,6 @@ function showDescription(adId) {
     new bootstrap.Modal(document.getElementById('descriptionModal')).show();
 }
 
-// Approves an advertisement
-function approve(adId) {
-    console.log('Approving ad with ID:', adId);
-    // Your logic for approving the advertisement
-    closeAllKebabMenus();
-}
-
-// Declines an advertisement
-function decline(adId) {
-    console.log('Declining ad with ID:', adId);
-    // Your logic for declining the advertisement
-    closeAllKebabMenus();
-}
-
 function filterAds() {
     let searchInput = document.getElementById('searchInput').value.toLowerCase();
     let statusFilter = document.getElementById('statusFilter').value.toLowerCase();
@@ -227,4 +213,35 @@ function updateAdStatusClasses() {
         }
         // No need for 'pending' as it's the default state
     });
+}
+
+function updateAdStatus(adId, newStatus) {
+    const url = `/admin/update/ad-status/${adId}`;
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('newStatus', newStatus);
+
+    fetch(url, {
+        method: 'PUT',
+        headers: headers
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
+            }
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                return response.json();
+            } else {
+                throw new Error('Received non-JSON response from server');
+            }
+        })
+        .then(data => {
+            console.log('Success:', data.message);
+            document.querySelector(`[data-id="${adId}"] .ad-status`).textContent = newStatus;
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 }

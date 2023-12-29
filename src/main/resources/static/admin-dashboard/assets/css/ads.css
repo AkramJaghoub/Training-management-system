@@ -200,14 +200,6 @@ article a .icon {
     color: inherit;
 }
 
-
-.no-articles {
-    text-align: center;
-    padding: 20px;
-    font-style: italic;
-    color: #555;
-}
-
 .menu-container {
     position: absolute;
     top: 2.3rem;
@@ -378,4 +370,10 @@ hr {
 
 .advertisement-widget.rejected {
     box-shadow: 0 8px 4px rgba(255, 0, 0, 0.5) /* Decreased blur radius from 15px to 8px */
+}
+
+.no-ads{
+    position: absolute;
+    left: 41%;
+    bottom: 20%;
 }

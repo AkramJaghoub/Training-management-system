@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,11 +19,11 @@ public class AdminController {
     private final HttpServletRequest request;
 
     @GetMapping("/dashboard")
-    public String setUpAdminDashboard(Model model){
+    public String setUpAdminDashboard(Model model) {
         HttpSession session = request.getSession();
 
         String email = (String) session.getAttribute("email");
-        if(email != null){
+        if (email != null) {
             adminService.setUpAdminDashboardPage(model);
             return "/admin/admin-dashboard";
         }
@@ -34,11 +31,11 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    public String setUpAdminUserList(Model model){
+    public String setUpAdminUserList(Model model) {
         HttpSession session = request.getSession();
 
         String email = (String) session.getAttribute("email");
-        if(email != null){
+        if (email != null) {
             adminService.setUpUserListPage(model);
             return "/admin/users";
         }
@@ -46,11 +43,11 @@ public class AdminController {
     }
 
     @GetMapping("/advertisements")
-    public String setUpAdminAdvertisementList(Model model){
+    public String setUpAdminAdvertisementList(Model model) {
         HttpSession session = request.getSession();
 
         String email = (String) session.getAttribute("email");
-        if(email != null){
+        if (email != null) {
             adminService.setUpAdsListPage(model);
             return "/admin/advertisement-data";
         }
@@ -58,8 +55,15 @@ public class AdminController {
     }
 
     @DeleteMapping("/delete/user/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable("id") long userId){
+    public ResponseEntity<?> deleteUser(@PathVariable("id") long userId) {
         ApiResponse response = adminService.deleteUser(userId);
         return ResponseEntity.status(response.getStatus()).body(response.getMessage());
+    }
+
+    @PutMapping("/update/ad-status/{id}")
+    public ResponseEntity<?> updateAdStatus(@PathVariable("id") long adId,
+                                            @RequestHeader("newStatus") String newStatus) {
+        ApiResponse response = adminService.updateAdStatus(adId, newStatus);
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 }
