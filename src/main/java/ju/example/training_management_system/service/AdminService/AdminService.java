@@ -84,6 +84,7 @@ public class AdminService {
         model.addAttribute("companiesCount", numOfCompanies);
         model.addAttribute("studentsCount", numOfStudents);
         model.addAttribute("advertisementsCount", advertisements.size());
+        model.addAttribute("newUsers", newUsers);
         model.addAttribute("users", users);
         model.addAttribute("userImages", userImages);
         model.addAttribute("newUsersCount", newUsers.size());
