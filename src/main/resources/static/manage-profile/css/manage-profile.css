@@ -49,7 +49,6 @@ nav ul li.profile a:after {
     overflow: hidden;
     transition: max-height 0.5s;
 }
-
 .nav__item {
     position: relative;
 }
@@ -279,7 +278,7 @@ nav ul li.profile a:after {
     font-size: .875rem;
 }
 
-.form-control:focus:-ms-input-placeholder {
+.بform-control:focus:-ms-input-placeholder {
     color: #adb5bd;
 }
 

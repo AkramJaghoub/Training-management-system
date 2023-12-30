@@ -229,67 +229,62 @@
                                                     </button>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!-- Password details card -->
-                                        <div class="col-xl-4"></div>
-                                        <div class="col-xl-8">
-                                            <!-- Account details card -->
-                                            <div class="card mb-4">
-                                                <div class="card-body">
-                                                    <!-- Account details fields -->
+                                            <div id="changePasswordForm" style="display: none;">
+                                                <div class="card mb-4">
+                                                    <div class="card-header">Change Password</div>
+                                                    <div class="card-body">
+                                                        <div class="col-xl-4"></div>
+                                                        <!-- Password details card -->
+                                                        <div class="col-xl-4"></div>
+                                                        <!-- Account details card -->
+                                                        <div class="card mb-4">
+                                                            <div class="card-body">
+                                                                <!-- Account details fields -->
+                                                                <div class="row gx-3 mb-3">
+                                                                    <!-- Form Group (Old Pass) -->
+                                                                    <div class="col-md-6">
+                                                                        <label class="small mb-1" for="OldPass">Old password</label>
+                                                                        <label for="OldPass"></label>
+                                                                        <input class="form-control" id="oldPass"
+                                                                               name="oldPass"
+                                                                               th:value="${password}"
+                                                                               type="password">
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Form Row -->
+                                                                <div class="row gx-3 mb-3">
+                                                                    <!-- Form Group (New Password) -->
+                                                                    <div class="col-md-6">
+                                                                        <label class="small mb-1" for="NewPass">New password</label>
+                                                                        <label for="NewPass"></label>
+                                                                        <input class="form-control" id="newPass"
+                                                                               name="newPass"
 
-                                                    <div class="row gx-3 mb-3">
-                                                        <!-- Form Group (Old Pass) -->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="OldPass">Old password</label>
-                                                            <label for="OldPass"></label>
-                                                            <input class="form-control" id="oldPass"
-                                                                   name="oldPass"
-                                                                   th:value="${password}"
-                                                                   type="password">
+                                                                               type="password">
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <label class="small mb-1" for="NewPassConfirm">Password confirm</label>
+                                                                        <label for="NewPassConfirm"></label>
+                                                                        <input class="form-control" id="newPassConfirm"
+                                                                               name="newPassConfirm"
+
+                                                                               type="password">
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="text-center">
+                                                                <button class="btn btn-primary btn-cool" type="submit">
+                                                                    Change Password
+                                                                </button>
+                                                            </div>
                                                         </div>
-                                                        <!-- Form Group (Old Pass Confirm) -->
-<!--                                                        <div class="col-md-6">-->
-<!--                                                            <label class="small mb-1" for="OldPassConfirm">Old Password Confirm</label>-->
-<!--                                                            <label for="OldPassConfirm"></label>-->
-<!--                                                            <input class="form-control" id="oldPassConfirm"-->
-<!--                                                                   name="oldPassConfirm"-->
-
-<!--                                                                   type="password">-->
-<!--                                                        </div>-->
                                                     </div>
-                                                    <!-- Form Row -->
-                                                    <div class="row gx-3 mb-3">
-                                                        <!-- Form Group (New Password) -->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="NewPass">New password</label>
-                                                            <label for="NewPass"></label>
-                                                            <input class="form-control" id="newPass"
-                                                                   name="newPass"
-
-                                                                   type="password">
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="NewPassConfirm">Password confirm</label>
-                                                            <label for="NewPassConfirm"></label>
-                                                            <input class="form-control" id="newPassConfirm"
-                                                                   name="newPassConfirm"
-
-                                                                   type="password">
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="text-center">
-                                                    <button class="btn btn-primary btn-cool" type="submit">
-                                                        Change Password
-                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-
+                                        </div>
                                     </div>
-                                    <!-- Save changes button -->
                                 </div>
                             </form>
                             <!-- End of the form tag -->
@@ -301,72 +296,22 @@
     </section>
 </main>
 
-<footer class="footer section">
-    <div class="footer__container container grid">
-        <div class="footer__content">
-            <a class="footer__logo" href="/tero">
-                <img alt="" class="footer__logo-img" src="/main/img/tero.png">
-            </a>
-
-            <p class="footer__description">Enjoy the Best internships <br> of your career.</p>
-        </div>
-
-        <div class="footer__content">
-            <h3 class="footer__title" id="about">About</h3>
-
-            <ul class="footer__links">
-                <li>
-                    <a class="footer__link" href="#about">About Us</a>
-                </li>
-                <li>
-                    <a class="footer__link" href="#">Features</a>
-                </li>
-                <li>
-                    <a class="footer__link" href="#">News</a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="footer__content">
-            <h3 class="footer__title">Our Services</h3>
-
-            <ul class="footer__links">
-                <li>
-                    <a class="footer__link" href="#">Pricing</a>
-                </li>
-                <li>
-                    <a class="footer__link" href="#">Discounts</a>
-                </li>
-                <li>
-                    <a class="footer__link" href="#">Shipping mode</a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="footer__content">
-            <h3 class="footer__title">Our Company</h3>
-
-            <ul class="footer__links">
-                <li>
-                    <a class="footer__link" href="#">Blog</a>
-                </li>
-                <li>
-                    <a class="footer__link" href="#">About us</a>
-                </li>
-                <li>
-                    <a class="footer__link" href="#">Our mission</a>
-                </li>
-            </ul>
-        </div>
+<footer>
+    <div class="footer">
+        <a class="footer__logo" href="/tero">
+            <center><img alt="" class="footer__logo-img" src="/main/img/tero.png"></center>
+        </a>
+        &copy;<span id="year"> </span><span> Tero. All rights reserved.</span>
     </div>
-
-    <span class="footer__copy">&#169; Tero. All rights reserved</span>
 </footer>
 <script>
     function toggleMenu() {
         const subMenuWrap = document.getElementById("subMenu");
         subMenu.classList.toggle("open-menu");
     }
+</script>
+<script>
+    document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 <script src="/manage-profile/js/manageP.js"></script>
 <script src="/student-dashboard/js/studentName.js"></script>
