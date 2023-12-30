@@ -70,11 +70,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const formData = new FormData(form);
 
         fetch('/advertisement/post', {
-            method: 'POST', body: formData
+            method: 'POST',
+            body: formData
         })
             .then(response => {
                 if (response.status === 201) {
-                    console.log("Advertisement added successfully");
+                    response.json().then(apiResponse => {
+                        showSuccessAlert(apiResponse.message);
+                        form.reset();
+                    });
                 } else if (response.status === 400) {
                     response.text().then(errorMessage => {
                         const jobTitleError = document.getElementById('jobTitleError');
@@ -86,4 +90,27 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => console.error('Error:', error));
     });
+
+    function showSuccessAlert(message) {
+        const alertBox = document.getElementById('successAlert');
+        const messageParagraph = document.getElementById('successMessage');
+
+        messageParagraph.textContent = message;
+        alertBox.style.display = 'flex'; // Change display to flex to make it visible
+        alertBox.style.opacity = 1;
+
+        // Wait 4 seconds before starting to fade out
+        setTimeout(() => {
+            let opacity = 1;
+            const fadeInterval = setInterval(() => {
+                if (opacity <= 0) {
+                    clearInterval(fadeInterval);
+                    alertBox.style.display = 'none'; // Hide it again after fade out
+                } else {
+                    opacity -= 0.05; // Decrease the opacity
+                    alertBox.style.opacity = opacity;
+                }
+            }, 50); // Adjust the interval to control the speed of the fade-out
+        }, 4000);
+    }
 });

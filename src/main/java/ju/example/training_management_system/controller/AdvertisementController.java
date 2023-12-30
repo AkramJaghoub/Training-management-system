@@ -35,10 +35,8 @@ public class AdvertisementController {
         String email = (String) session.getAttribute("email");
         if (email != null && !email.equals("root")) {
             model.addAttribute("email", email);
-            String companyName = companyService.getCompanyName(email);
             companyService.setUpCompanyDashboard(model, email, response);
             session.setAttribute("email", email);
-            model.addAttribute("companyName", companyName);
             return "/company/job-post";
         }
 
@@ -53,7 +51,7 @@ public class AdvertisementController {
         String email = (String) session.getAttribute("email");
         if (email != null && !email.equals("root")) {
             ApiResponse apiResponse = adsPostService.postAd(postDto, email);
-            return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse.getMessage());
+            return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
         }
 
         HttpHeaders headers = new HttpHeaders();

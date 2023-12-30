@@ -48,7 +48,7 @@ public class AdvertisementService {
             }
 
             advertisementRepository.save(ad);
-            return new ApiResponse("Advertisement was saved successfully", HttpStatus.CREATED);
+            return new ApiResponse("Advertisement with job title [" + ad.getJobTitle() + "] was saved successfully", HttpStatus.CREATED);
         } catch (AdAlreadyExistsException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
