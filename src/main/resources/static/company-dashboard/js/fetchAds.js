@@ -121,6 +121,7 @@ function filterAds() {
     let adsList = document.querySelectorAll('.advertisement-widget');
 
     let activeWidgets = 0;
+    let totalAds = adsList.length; // Get the total number of ads before filtering
 
     adsList.forEach(function (ad) {
         let mode = ad.dataset.workMode ? ad.dataset.workMode.toLowerCase() : '';
@@ -136,9 +137,11 @@ function filterAds() {
         }
     });
 
-    // Check if there are no active widgets and display the message
+    // Get the "no ads" message element
     const noAdsMessageElement = document.getElementById('noAdsMessage');
-    if (activeWidgets === 0) {
+
+    // Check if there are no active widgets, filters are applied, and there are ads available to filter
+    if (activeWidgets === 0 && totalAds > 0 && (modeFilter !== 'all' || typeFilter !== 'all')) {
         noAdsMessageElement.style.display = 'block'; // Show the message
     } else {
         noAdsMessageElement.style.display = 'none'; // Hide the message
@@ -146,6 +149,8 @@ function filterAds() {
 
     initializePagination(activeWidgets);
 }
+
+
 
 
 const widgetsPerPage = 9;

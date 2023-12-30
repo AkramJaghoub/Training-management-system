@@ -115,6 +115,8 @@ function filterAds() {
     let adsList = document.querySelectorAll('.advertisement-widget');
 
     let activeWidgets = 0;
+    let totalAds = adsList.length; // Get the total number of ads before filtering
+    let filtersApplied = searchInput !== '' || statusFilter !== 'all'; // Check if any filters are applied
 
     adsList.forEach(function (ad) {
         let status = ad.dataset.adStatus ? ad.dataset.adStatus.toLowerCase() : '';
@@ -122,19 +124,28 @@ function filterAds() {
         let companyName = ad.querySelector('[data-company-name]').getAttribute('data-company-name').toLowerCase();
         let textMatch = !searchInput || jobTitle.includes(searchInput) || companyName.includes(searchInput);
         let statusMatch = statusFilter === 'all' || status === statusFilter;
-        ad.style.display = (textMatch && statusMatch) ? '' : 'none';
-        if (textMatch && statusMatch)
+
+        if (textMatch && statusMatch) {
+            ad.style.display = '';
             activeWidgets++;
+        } else {
+            ad.style.display = 'none';
+        }
     });
 
+    // Get the "no ads" message element
     const noAdsMessageElement = document.getElementById('noAdsMessage');
-    if (activeWidgets === 0) {
+
+    // Check if there are no active widgets, filters are applied, and there are ads available to filter
+    if (activeWidgets === 0 && filtersApplied && totalAds > 0) {
         noAdsMessageElement.style.display = 'block'; // Show the message
     } else {
         noAdsMessageElement.style.display = 'none'; // Hide the message
     }
+
     initializePagination(activeWidgets);
 }
+
 
 const widgetsPerPage = 9;
 let pageCount;
