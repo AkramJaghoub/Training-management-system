@@ -126,6 +126,13 @@ function filterAds() {
         if (textMatch && statusMatch)
             activeWidgets++;
     });
+
+    const noAdsMessageElement = document.getElementById('noAdsMessage');
+    if (activeWidgets === 0) {
+        noAdsMessageElement.style.display = 'block'; // Show the message
+    } else {
+        noAdsMessageElement.style.display = 'none'; // Hide the message
+    }
     initializePagination(activeWidgets);
 }
 
