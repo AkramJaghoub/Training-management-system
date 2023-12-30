@@ -27,7 +27,6 @@
 </head>
 <body>
 
-
 <header class="header" id="header">
     <a class="nav__logo" href="/company/dashboard">
         <img alt="" class="nav__logo-img" src="/main/img/tero.png">
@@ -120,120 +119,177 @@
         <div class="home__content">
             <div class="home__group">
                 <div class="hero">
-                    <div class="hcontainer">
-                        <div class="row justify-content-center">
-                            <!-- Begin the form tag here -->
-                            <form enctype="multipart/form-data" id="profileForm">
-                                <div class="container-xl px-4 mt-4">
-                                    <!-- Profile picture card -->
-                                    <div class="row">
-                                        <div class="col-xl-4">
-                                            <div class="card mb-4 mb-xl-0">
-                                                <div class="card-header">Profile Picture</div>
-                                                <div class="card-body text-center">
-                                                    <!-- Profile picture upload input -->
-                                                    <div class="avatar-upload">
-                                                        <div class="avatar-edit">
-                                                            <input accept="\*" id="companyImage" name="companyImage"
-                                                                   type='file'/>
-                                                            <label for="companyImage"></label>
+                    <div class="container my-5">
+                        <div class="card border-primary">
+                            <div class="card-header bg-primary text-white">
+                                Manage Profile
+                            </div>
+                            <div class="card-body">
+                                <ul class="nav nav-tabs" id="profileTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="edit-profile-tab" data-bs-toggle="tab" data-bs-target="#editProfile" type="button" role="tab" aria-controls="editProfile" aria-selected="true">Edit Profile</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="change-password-tab" data-bs-toggle="tab" data-bs-target="#changePassword" type="button" role="tab" aria-controls="changePassword" aria-selected="false">Change Password</button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="profileTabContent">
+                                    <div class="tab-pane fade show active" id="editProfile" role="tabpanel" aria-labelledby="edit-profile-tab">
+                                        <!-- Profile Edit Form Here -->
+                                        <form enctype="multipart/form-data" id="profileForm">
+                                                <div class="container-xl px-4 mt-4">
+                                                    <div class="row">
+                                                        <div class="col-xl-4">
+                                                            <div class="card mb-4 mb-xl-0">
+                                                                <div class="card-header">Profile Picture</div>
+                                                                <div class="card-body text-center">
+                                                                    <!-- Profile picture upload input -->
+                                                                    <div class="avatar-upload">
+                                                                        <div class="avatar-edit">
+                                                                            <input accept="\*" id="companyImage"
+                                                                                   name="companyImage"
+                                                                                   type='file'/>
+                                                                            <label for="companyImage"></label>
+                                                                        </div>
+                                                                        <input id="hiddenCompanyImageUrl"
+                                                                               th:value="${companyImage}"
+                                                                               type="hidden"/>
+                                                                        <div class="avatar-preview">
+                                                                            <div id="imagePreview"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <h5 id="companyNameDisplay2"
+                                                                        style="margin-top:-2.4rem"
+                                                                        disabled th:text="${companyName}"></h5>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <input id="hiddenCompanyImageUrl" th:value="${companyImage}"
-                                                               type="hidden"/>
-                                                        <div class="avatar-preview">
-                                                            <div id="imagePreview"></div>
+                                                        <div class="col-xl-8">
+                                                            <!-- Account details card -->
+                                                            <div class="card mb-4">
+                                                                <div class="card-header">Account Details</div>
+                                                                <div class="card-body">
+                                                                    <!-- Account details fields -->
+                                                                    <div class="mb-3">
+                                                                        <label class="small mb-1"
+                                                                               for="inputEmailAddress">Email
+                                                                            address</label>
+                                                                        <input class="form-control" disabled
+                                                                               id="inputEmailAddress"
+                                                                               name="email"
+                                                                               placeholder="Enter your email address"
+                                                                               th:value="${email}" type="email">
+                                                                    </div>
+                                                                    <div class="row gx-3 mb-3">
+                                                                        <!-- Form Group (Company name) -->
+                                                                        <div class="col-md-6">
+                                                                            <label class="small mb-1" for="CompanyName">Company
+                                                                                name<span
+                                                                                        style="color: red">*</span></label>
+                                                                            <input class="form-control" id="CompanyName"
+                                                                                   name="companyName"
+                                                                                   placeholder="Enter your Company name"
+                                                                                   th:value="${companyName}"
+                                                                                   type="text">
+                                                                        </div>
+                                                                        <!-- Form Group (Industry) -->
+                                                                        <div class="col-md-6">
+                                                                            <label class="small mb-1"
+                                                                                   for="IndustryName">Industry<span
+                                                                                    style="color: red">*</span></label>
+                                                                            <input class="form-control"
+                                                                                   id="IndustryName"
+                                                                                   name="industry"
+                                                                                   placeholder="Enter your Industry"
+                                                                                   th:value="${industry}"
+                                                                                   type="text">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Form Row -->
+                                                                    <div class="row gx-3 mb-3">
+                                                                        <!-- Form Group (location) -->
+                                                                        <div class="col-md-6">
+                                                                            <label class="small mb-1"
+                                                                                   for="inputLocation">Location</label>
+                                                                            <input class="form-control"
+                                                                                   id="inputLocation"
+                                                                                   name="location"
+                                                                                   placeholder="Enter your location"
+                                                                                   th:value="${location}"
+                                                                                   type="text">
+                                                                        </div>
+                                                                        <!-- Form Group (phone number) -->
+                                                                        <div class="col-md-6">
+                                                                            <label class="small mb-1" for="inputPhone">Phone
+                                                                                number</label>
+                                                                            <input class="form-control" id="inputPhone"
+                                                                                   name="phoneNumber"
+                                                                                   oninput="handlePhoneInput(this)"
+                                                                                   placeholder="Enter your phone number"
+                                                                                   th:value="${phoneNumber}"
+                                                                                   type="tel">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Form Row -->
+                                                                    <div class="row gx-3 mb-3">
+                                                                        <!-- Form Group (number of employees) -->
+                                                                        <div class="col-md-6">
+                                                                            <label class="small mb-1"
+                                                                                   for="inputEmpNumber">Number
+                                                                                of
+                                                                                Employees</label>
+                                                                            <input class="form-control"
+                                                                                   id="inputEmpNumber"
+                                                                                   min="0" name="numOfEmployees"
+                                                                                   placeholder="Number of Employees"
+                                                                                   th:value="${numOfEmployees}"
+                                                                                   type="number">
+                                                                        </div>
+                                                                        <!-- Form Group (establishment year) -->
+                                                                        <div class="col-md-6">
+                                                                            <label class="small mb-1" for="inputEYear">Establishment
+                                                                                Year</label>
+                                                                            <input class="form-control" id="inputEYear"
+                                                                                   max="2100" min="1900"
+                                                                                   name="establishmentYear"
+                                                                                   placeholder="YYYY"
+                                                                                   th:value="${establishmentYear}"
+                                                                                   type="number">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="text-center">
+                                                                    <button class="btn btn-primary btn-cool" type="submit">
+                                                                        Save changes
+                                                                    </button>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <h5 id="companyNameDisplay2" style="margin-top:-2.4rem" disabled th:text="${companyName}"></h5>
                                                 </div>
+                                        </form>
+                                    </div>
+                                    <div class="tab-pane fade" id="changePassword" role="tabpanel"
+                                         aria-labelledby="change-password-tab">
+                                        <!-- Change Password Form Here -->
+                                        <form id="changePasswordForm">
+                                            <div class="mb-3" style="padding-top: 1rem;">
+                                                <label for="oldPassword" class="form-label">Old Password</label>
+                                                <input type="password" class="form-control" id="oldPassword">
                                             </div>
-                                        </div>
-                                        <div class="col-xl-8">
-                                            <!-- Account details card -->
-                                            <div class="card mb-4">
-                                                <div class="card-header">Account Details</div>
-                                                <div class="card-body">
-                                                    <!-- Account details fields -->
-                                                    <div class="mb-3">
-                                                        <label class="small mb-1" for="inputEmailAddress">Email
-                                                            address</label>
-                                                        <input class="form-control" disabled id="inputEmailAddress"
-                                                               name="email" placeholder="Enter your email address"
-                                                               th:value="${email}" type="email">
-                                                    </div>
-                                                    <div class="row gx-3 mb-3">
-                                                        <!-- Form Group (Company name) -->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="CompanyName">Company
-                                                                name<span style="color: red">*</span></label>
-                                                            <input class="form-control" id="CompanyName"
-                                                                   name="companyName" placeholder="Enter your Company name"
-                                                                   th:value="${companyName}"
-                                                                   type="text">
-                                                        </div>
-                                                        <!-- Form Group (Industry) -->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="IndustryName">Industry<span
-                                                                    style="color: red">*</span></label>
-                                                            <input class="form-control" id="IndustryName"
-                                                                   name="industry" placeholder="Enter your Industry" th:value="${industry}"
-                                                                   type="text">
-                                                        </div>
-                                                    </div>
-                                                    <!-- Form Row -->
-                                                    <div class="row gx-3 mb-3">
-                                                        <!-- Form Group (location) -->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1"
-                                                                   for="inputLocation">Location</label>
-                                                            <input class="form-control" id="inputLocation"
-                                                                   name="location" placeholder="Enter your location" th:value="${location}"
-                                                                   type="text">
-                                                        </div>
-                                                        <!-- Form Group (phone number) -->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="inputPhone">Phone
-                                                                number</label>
-                                                            <input class="form-control" id="inputPhone"
-                                                                   name="phoneNumber" oninput="handlePhoneInput(this)"
-                                                                   placeholder="Enter your phone number"
-                                                                   th:value="${phoneNumber}"
-                                                                   type="tel">
-                                                        </div>
-                                                    </div>
-                                                    <!-- Form Row -->
-                                                    <div class="row gx-3 mb-3">
-                                                        <!-- Form Group (number of employees) -->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="inputEmpNumber">Number of
-                                                                Employees</label>
-                                                            <input class="form-control" id="inputEmpNumber"
-                                                                   min="0" name="numOfEmployees"
-                                                                   placeholder="Number of Employees"
-                                                                   th:value="${numOfEmployees}" type="number">
-                                                        </div>
-                                                        <!-- Form Group (establishment year) -->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="inputEYear">Establishment
-                                                                Year</label>
-                                                            <input class="form-control" id="inputEYear"
-                                                                   max="2100" min="1900"
-                                                                   name="establishmentYear" placeholder="YYYY"
-                                                                   th:value="${establishmentYear}" type="number">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="text-center">
-                                                    <button class="btn btn-primary btn-cool" type="submit">
-                                                        Save changes
-                                                    </button>
-                                                </div>
+                                            <div class="mb-3">
+                                                <label for="newPassword" class="form-label">New Password</label>
+                                                <input type="password" class="form-control" id="newPassword">
                                             </div>
-                                        </div>
+                                            <div class="mb-3">
+                                                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                                <input type="password" class="form-control" id="confirmPassword">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary btn-cool">Change Password</button>
+                                        </form>
                                     </div>
                                 </div>
-                            </form>
-                            <!-- End of the form tag -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -261,5 +317,9 @@
     document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 <script src="/manage-profile/js/manageP.js"></script>
+<script src="/main/js/loader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
 </body>
 </html>

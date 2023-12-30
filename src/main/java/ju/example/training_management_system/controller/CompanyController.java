@@ -58,7 +58,7 @@ public class CompanyController {
         String email = (String) session.getAttribute("email");
         if (email != null && !email.equals("root")) {
             ApiResponse apiResponse = companyService.updateCompanyDetails(infoDto, email);
-            return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse.getMessage());
+            return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
         }
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/login");

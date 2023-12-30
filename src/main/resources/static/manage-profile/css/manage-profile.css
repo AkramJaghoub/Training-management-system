@@ -12,6 +12,7 @@
     margin-top: -4rem;
 }
 
+
 .user-pic {
     width: 35px;
 
@@ -153,6 +154,10 @@ nav ul li.profile a:after {
 
 .card {
     box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+    /* Increase the width and max-width as needed */
+    width: auto; /* Or a specific value like 80% */
+    max-width: 1200px; /* Or a specific value like 1200px */
+    margin: auto; /* Center the card */
 }
 
 .card .card-header {
@@ -168,6 +173,11 @@ nav ul li.profile a:after {
     margin-bottom: 0;
     background-color: rgba(33, 40, 50, 0.03);
     border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+}
+
+.form-class-name, .form-container-class-name {
+    width: 100%; /* Adjust as needed for the form width */
+    max-width: 100%; /* Adjust as needed for the form max-width */
 }
 
 .form-control, .dataTable-input {
@@ -255,6 +265,10 @@ nav ul li.profile a:after {
     height: 2em;
 }
 
+.card-body {
+    padding: 2rem; /* Increase padding inside the card */
+}
+
 .card-profile-image svg {
     position: absolute;
     left: 50%;
@@ -276,6 +290,7 @@ nav ul li.profile a:after {
 
 .form-control {
     font-size: .875rem;
+    padding: 1rem 1.125rem; /* Adjust as necessary */
 }
 
 .بform-control:focus:-ms-input-placeholder {
@@ -398,6 +413,11 @@ p {
     background-repeat: no-repeat;
     background-position: center;
 }
+
+.container-xl {
+    max-width: 1140px; /* Adjust this to a larger value if needed */
+}
+
 
 .circle-icon {
     width: 42px; /* Adjust the size of the circle */
