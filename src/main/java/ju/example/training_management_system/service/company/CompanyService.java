@@ -7,15 +7,19 @@ import ju.example.training_management_system.dto.CompanyInfoDto;
 import ju.example.training_management_system.exception.UnauthorizedCompanyAccessException;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
+import ju.example.training_management_system.model.company.advertisement.Advertisement;
 import ju.example.training_management_system.model.manage.company.CompanyInfo;
 import ju.example.training_management_system.model.users.Company;
 import ju.example.training_management_system.model.users.User;
+import ju.example.training_management_system.repository.AdvertisementRepository;
 import ju.example.training_management_system.repository.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 import static ju.example.training_management_system.util.Utils.*;
 
@@ -24,6 +28,7 @@ import static ju.example.training_management_system.util.Utils.*;
 public class CompanyService {
 
     private final UserRepository userRepository;
+    private final AdvertisementRepository advertisementRepository;
 
     public String getCompanyName(String email) {
         User user = userRepository.findByEmail(email);
@@ -128,7 +133,10 @@ public class CompanyService {
             base64Image = convertToBase64(decompressedImage);
         }
 
+        List<Advertisement> advertisements = advertisementRepository.findByCompany_CompanyName(company.getCompanyName());
         model.addAttribute("companyImage", base64Image);
+        model.addAttribute("advertisements", advertisements);
+        model.addAttribute("companyName", company.getCompanyName());
 
         Cookie companyNameCookie = new Cookie("companyName", company.getCompanyName());
         companyNameCookie.setPath("/");

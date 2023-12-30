@@ -78,16 +78,18 @@ public class AdvertisementController {
         return new ResponseEntity<>(headers, HttpStatus.FOUND);
     }
 
-    @DeleteMapping("/delete/{position}")
-    public String deleteAd(@PathVariable("position") String position, HttpSession session) {
+    @DeleteMapping("/delete/{adId}")
+    public ResponseEntity<?> deleteAd(@PathVariable("adId") long adId,
+                           HttpSession session) {
         String email = (String) session.getAttribute("email");
         if (email != null && !email.equals("root")) {
-            String companyName = companyService.getCompanyName(email);
-            adsPostService.deleteAd(companyName, position);
-            return "/company/company-dashboard";
+            ApiResponse apiResponse = adsPostService.deleteAd(adId, email);
+            return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
         }
 
-        return "redirect:/login";
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/login");
+        return new ResponseEntity<>(headers, HttpStatus.FOUND);
     }
 
     @PutMapping("/update")
@@ -97,7 +99,7 @@ public class AdvertisementController {
         String email = (String) session.getAttribute("email");
         if (email != null && !email.equals("root")) {
             ApiResponse apiResponse = adsPostService.updateAd(adDto, email);
-            return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse.getMessage());
+            return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
         }
 
         HttpHeaders headers = new HttpHeaders();

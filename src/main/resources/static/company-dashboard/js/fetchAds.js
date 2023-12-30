@@ -1,234 +1,14 @@
-let globalCountries = []; // Global variable to store countries
-
-let selectedMode = 'all';
-let selectedType = 'all';
-
 document.addEventListener('DOMContentLoaded', function () {
-    fetchAdvertisements();
+    const companyName = getCompanyNameFromCookie();
+    if (companyName) {
+        document.getElementById('companyNameDisplay').textContent = companyName;
+    }
+    resetFiltersAndSearch();
+    attachEventListeners();
+    filterAds();
     fetchAllCountries();
-
-    // Set the initial values for mode and type to 'all'
-    document.getElementById('mode').value = 'all';
-    document.getElementById('type').value = 'all';
-
-    document.getElementById('mode').addEventListener('change', function() {
-        selectedMode = this.value;
-        fetchAdvertisements();
-    });
-
-    document.getElementById('type').addEventListener('change', function() {
-        selectedType = this.value;
-        fetchAdvertisements();
-    });
-});
-
-function fetchAdvertisements() {
-    fetch('/advertisement/get')
-        .then(response => response.json())
-        .then(data => {
-            updateAdvertisements(data);
-        })
-        .catch(error => console.error('Error fetching advertisements:', error));
-}
-
-function updateAdvertisements(advertisements) {
-    const articlesContainer = document.querySelector('.articles');
-    articlesContainer.innerHTML = '';
-
-    if (advertisements.length === 0) {
-        const noAdvertisementsMessage = document.createElement('div');
-        noAdvertisementsMessage.classList.add('no-advertisements');
-        noAdvertisementsMessage.textContent = 'No advertisements available right now.';
-        articlesContainer.appendChild(noAdvertisementsMessage);
-        return;
-    }
-
-    let filteredAds = advertisements;
-    if (selectedMode !== 'all' || selectedType !== 'all') {
-        filteredAds = filteredAds.filter(ad =>
-            (selectedMode === 'all' || ad.workMode === selectedMode) &&
-            (selectedType === 'all' || ad.jobType === selectedType)
-        );
-    }
-
-    if (filteredAds.length === 0) {
-        const noAdvertisementsMessage = document.createElement('div');
-        noAdvertisementsMessage.classList.add('no-advertisements');
-        noAdvertisementsMessage.textContent = 'No advertisements match your filters.';
-        articlesContainer.appendChild(noAdvertisementsMessage);
-        return;
-    }
-
-    filteredAds.forEach((ad, index) => {
-        const article = document.createElement('article'); // Define 'article' here
-        article.classList.add('article'); // Add this line if you have CSS styles for 'article
-        const articleBody = document.createElement('div');
-        articleBody.classList.add('article-body');
-        const title = document.createElement('h2');
-        title.textContent = ad.jobTitle;
-
-        article.dataset.adId = ad.id; // Store the advertisement ID
-
-        const internsRequired = document.createElement('p');
-        internsRequired.textContent = 'Interns Required: ' + ad.internsRequired;
-
-        const duration = document.createElement('p');
-        duration.textContent = 'Duration: ' + ad.jobDuration + ' months';
-
-        const jobType = document.createElement('p');
-        jobType.textContent = 'Type: ' + ad.jobType;
-
-        const workMode = document.createElement('p');
-        workMode.textContent = 'Mode: ' + ad.workMode;
-
-        const readMoreLink = document.createElement('a');
-        readMoreLink.href = '#';
-        readMoreLink.textContent = 'View Description';
-        readMoreLink.onclick = function (event) {
-            event.preventDefault();
-            event.stopPropagation(); // Prevents the event from bubbling up to parent elements
-            showDescription(ad);
-        };
-
-        const kebabMenuId = 'kebabMenu' + index;
-        const menuContainerId = 'menuContainer' + index;
-
-        const kebabMenuSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        kebabMenuSVG.setAttributeNS(null, "width", "30");
-        kebabMenuSVG.setAttributeNS(null, "height", "30");
-        kebabMenuSVG.setAttributeNS(null, "fill", "currentColor");
-        kebabMenuSVG.setAttributeNS(null, "viewBox", "0 0 16 16");
-        kebabMenuSVG.classList.add('menu-icon');
-        kebabMenuSVG.style.cursor = 'pointer'; // Ensure it looks clickable
-
-// Create the SVG path
-        const svgPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        svgPath.setAttributeNS(null, "d", "M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0");
-        kebabMenuSVG.appendChild(svgPath);
-
-// Create the kebab menu div and append the SVG to it
-        const kebabMenu = document.createElement('div');
-        kebabMenu.id = kebabMenuId;
-        kebabMenu.appendChild(kebabMenuSVG);
-
-// Add click event listener to the SVG element
-        kebabMenuSVG.addEventListener('click', function (event) {
-            const currentMenu = document.getElementById(menuContainerId);
-            currentMenu.style.display = currentMenu.style.display === 'none' ? 'block' : 'none';
-            event.stopPropagation(); // Add this line to stop event propagation
-        });
-
-        const menuContainer = document.createElement('div');
-        menuContainer.classList.add('menu-container');
-        menuContainer.id = menuContainerId;
-        menuContainer.style.display = 'none';
-
-        const updateLink = document.createElement('a');
-        updateLink.href = '#';
-        updateLink.classList.add('update-link');
-        updateLink.dataset.position = ad.jobTitle; // Assuming jobTitle is the unique identifier
-        updateLink.onclick = function (event) {
-            event.preventDefault();
-            document.getElementById(menuContainerId).style.display = 'none';
-            currentAd = advertisements.find(ad => ad.jobTitle === this.dataset.position); // Store the ad data
-            showUpdateForm(currentAd); // Pass the ad to the update form
-        };
-
-        const updateIcon = document.createElement('iconify-icon');
-        updateIcon.setAttribute('icon', 'bxs:edit');
-        updateLink.appendChild(updateIcon);
-
-        const updateText = document.createElement('span');
-        updateText.textContent = 'Update';
-        updateLink.appendChild(updateText);
-
-        const deleteLink = document.createElement('a');
-        deleteLink.textContent = 'Delete';
-        deleteLink.href = '#';
-        deleteLink.classList.add('delete-link');
-        deleteLink.dataset.position = ad.jobTitle; // Assuming jobTitle is the unique identifier
-        deleteLink.onclick = function (event) {
-            event.preventDefault();
-            document.getElementById(menuContainerId).style.display = 'none';
-            currentAdPosition = this.dataset.position; // Store the position for later use
-            showDeleteDialog();
-        };
-
-        const deleteIcon = document.createElement('iconify-icon');
-        deleteIcon.setAttribute('icon', 'mdi:trash-outline');
-
-        // Append the icon to the delete link
-        deleteLink.prepend(deleteIcon); // This places the icon before the text
-
-
-        menuContainer.appendChild(updateLink);
-        menuContainer.appendChild(deleteLink);
-
-        articleBody.appendChild(kebabMenu);
-        articleBody.appendChild(menuContainer);
-
-        articleBody.appendChild(title);
-        articleBody.appendChild(internsRequired);
-        articleBody.appendChild(duration);
-        articleBody.appendChild(jobType);
-        articleBody.appendChild(workMode);
-        articleBody.appendChild(readMoreLink);
-
-
-        // Append articleBody to article
-        article.appendChild(articleBody);
-        articlesContainer.appendChild(article);
-    });
-}
-
-function showDescription(ad) {
-    const location = document.createElement('div');
-    location.innerHTML = '<strong>Location: </strong>' + ad.city + ', ' + ad.country + '<br>';
-    location.classList.add('modal-location');
-
-    const companyNameText = getCompanyNameFromCookie() || 'Unknown Company';
-    const companyNameDiv = document.createElement('div');
-    companyNameDiv.innerHTML = '<strong>Company: </strong>' + companyNameText;
-
-
-    const modal = document.createElement('div');
-    modal.classList.add('modal');
-
-    const modalContent = document.createElement('div');
-    modalContent.classList.add('modal-content');
-
-    const closeSpan = document.createElement('span');
-    closeSpan.classList.add('close');
-    closeSpan.innerHTML = '&times;';
-    closeSpan.onclick = function () {
-        modal.style.display = "none";
-        modal.remove();
-    };
-
-    const descriptionParagraph = document.createElement('p');
-    descriptionParagraph.textContent = ad.description;
-
-    modalContent.appendChild(closeSpan);
-    modalContent.appendChild(location);
-    modalContent.appendChild(companyNameDiv);
-    modalContent.appendChild(descriptionParagraph);
-    modal.appendChild(modalContent);
-
-    document.body.appendChild(modal);
-
-    modal.style.display = "block";
-}
-
-window.onclick = function (event) {
-    const modals = document.getElementsByClassName('modal');
-
-    for (let i = 0; i < modals.length; i++) {
-        if (event.target === modals[i]) {
-            modals[i].style.display = "none";
-            modals[i].remove();
-        }
-    }
-}
+    updateAdStatusClasses();
+})
 
 function getCompanyNameFromCookie() {
     const cookies = document.cookie.split('; ');
@@ -236,90 +16,506 @@ function getCompanyNameFromCookie() {
     return companyNameCookie ? decodeURIComponent(companyNameCookie.split('=')[1]) : null;
 }
 
-window.addEventListener('click', function (event) {
-    const openMenus = document.querySelectorAll('.menu-container');
-    openMenus.forEach(menu => {
-        // Check if the click is outside the menu
-        if (!menu.contains(event.target)) {
+function attachEventListeners() {
+    // Kebab menu icon event listeners
+    document.querySelectorAll('.menu-icon').forEach(function (menuIcon) {
+        menuIcon.addEventListener('click', function (event) {
+            event.stopPropagation();
+            const adId = this.dataset.adId;
+
+            // Toggle the kebab menu for the clicked icon
+            toggleKebabMenu(adId);
+        });
+    });
+
+    // Window click to close kebab menus
+    window.addEventListener('click', function () {
+        closeAllKebabMenus();
+    });
+
+    // Modal close buttons
+    const closeButtons = document.querySelectorAll('#descriptionModal .btn-secondary');
+    closeButtons.forEach(function (closeButton) {
+        closeButton.addEventListener('click', function () {
+            hideModal('descriptionModal');
+        });
+    });
+
+    // Modal outside click
+    const modalElement = document.getElementById('descriptionModal');
+    modalElement.addEventListener('click', function (event) {
+        if (event.target === modalElement) {
+            hideModal('descriptionModal');
+        }
+    });
+}
+
+function hideModal(modalId) {
+    const modalElement = document.getElementById(modalId);
+    if (modalElement) {
+        modalElement.classList.remove('show');
+        modalElement.style.display = 'none';
+        document.body.classList.remove('modal-open');
+
+        const backdrops = document.getElementsByClassName('modal-backdrop');
+        while (backdrops[0]) {
+            backdrops[0].parentNode.removeChild(backdrops[0]);
+        }
+    }
+}
+
+function resetFiltersAndSearch() {
+    document.getElementById('modeFilter').value = 'all';
+    document.getElementById('typeFilter').value = 'all';
+}
+
+function toggleKebabMenu(adId) {
+    const currentMenu = document.getElementById('menu-dropdown-' + adId);
+    if (currentMenu) {
+        currentMenu.style.display = currentMenu.style.display === 'block' ? 'none' : 'block';
+    }
+    // Close other menus
+    document.querySelectorAll('.menu-container').forEach(function (menu) {
+        if (menu.id !== 'menu-dropdown-' + adId) {
             menu.style.display = 'none';
         }
     });
+}
+
+function closeAllKebabMenus() {
+    document.querySelectorAll('.menu-container').forEach(function (menu) {
+        menu.style.display = 'none';
+    });
+}
+
+function showDescription(adId) {
+    // Fetch the description text from the hidden container
+    const descriptionContainer = document.getElementById('description-container-' + adId);
+    const ad = {
+        city: descriptionContainer.getAttribute('data-city'),
+        country: descriptionContainer.getAttribute('data-country'),
+        // Assuming companyName is stored in a data attribute
+        companyName: descriptionContainer.getAttribute('data-company-name'),
+        description: descriptionContainer.getAttribute('data-description'),
+    };
+
+    const modalContentHtml = `
+        <strong>Company:</strong> ${ad.companyName}<br>
+        <strong>Location:</strong> ${ad.city}, ${ad.country}<br>
+        <p>${ad.description}</p>
+    `;
+
+    // Set the prepared content in the modal's body
+    const modalBody = document.querySelector('#descriptionModal .modal-body');
+    modalBody.innerHTML = modalContentHtml; // Use innerHTML as we are setting HTML content
+
+    // Show the modal using Bootstrap's JavaScript API
+    new bootstrap.Modal(document.getElementById('descriptionModal')).show();
+}
+
+
+function filterAds() {
+    let modeFilter = document.getElementById('modeFilter').value.toLowerCase();
+    let typeFilter = document.getElementById('typeFilter').value.toLowerCase();
+
+    let adsList = document.querySelectorAll('.advertisement-widget');
+
+    let activeWidgets = 0;
+
+    adsList.forEach(function (ad) {
+        let mode = ad.dataset.workMode ? ad.dataset.workMode.toLowerCase() : '';
+        let type = ad.dataset.jobType ? ad.dataset.jobType.toLowerCase() : '';
+        let modeMatch = modeFilter === 'all' || mode === modeFilter;
+        let typeMatch = typeFilter === 'all' || type === typeFilter;
+
+        if (modeMatch && typeMatch) {
+            ad.style.display = '';
+            activeWidgets++;
+        } else {
+            ad.style.display = 'none';
+        }
+    });
+
+    // Check if there are no active widgets and display the message
+    const noAdsMessageElement = document.getElementById('noAdsMessage');
+    if (activeWidgets === 0) {
+        noAdsMessageElement.style.display = 'block'; // Show the message
+    } else {
+        noAdsMessageElement.style.display = 'none'; // Hide the message
+    }
+
+    initializePagination(activeWidgets);
+}
+
+
+const widgetsPerPage = 9;
+let pageCount;
+const paginationContainer = document.getElementById('ads-pagination');
+
+function displayPage(page) {
+    const widgets = document.querySelectorAll('.advertisement-widget');
+    widgets.forEach((widget, index) => {
+        const startIndex = (page - 1) * widgetsPerPage;
+        const endIndex = startIndex + widgetsPerPage;
+        widget.style.display = (index >= startIndex && index < endIndex) ? '' : 'none';
+    });
+}
+
+function displayPageForFilters(page) {
+    const widgets = document.querySelectorAll('.advertisement-widget');
+    const visibleWidgets = Array.from(widgets).filter(widget => {
+        return window.getComputedStyle(widget).display !== 'none';
+    });
+
+    visibleWidgets.forEach((widget, index) => {
+        const startIndex = (page - 1) * widgetsPerPage;
+        const endIndex = startIndex + widgetsPerPage;
+        widget.style.display = (index >= startIndex && index < endIndex) ? '' : 'none';
+    });
+}
+
+
+function initializePagination(activeWidgets) {
+    pageCount = Math.ceil(activeWidgets / widgetsPerPage);
+    updatePagination(1);
+    displayPageForFilters(1);
+}
+
+function createPaginationItem(pageNumber, isActive, isDisabled, text) {
+    const li = document.createElement('li');
+    li.className = 'page-item';
+    if (isActive) li.classList.add('active');
+    if (isDisabled) li.classList.add('disabled');
+
+    const a = document.createElement('a');
+    a.className = 'page-link';
+    a.href = '#';
+    a.textContent = text || pageNumber;
+
+    a.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!isDisabled) {
+            updatePagination(pageNumber);
+            displayPage(pageNumber);
+        }
+    });
+    li.appendChild(a);
+    return li;
+}
+
+function updatePagination(currentPage) {
+    paginationContainer.innerHTML = '';
+    if (pageCount === 0 || pageCount === 1) return;
+
+    paginationContainer.appendChild(createPaginationItem(currentPage - 1, false, currentPage === 1, 'Previous'));
+
+    for (let i = 1; i <= pageCount; i++) {
+        paginationContainer.appendChild(createPaginationItem(i, i === currentPage));
+    }
+
+    paginationContainer.appendChild(createPaginationItem(currentPage + 1, false, currentPage === pageCount, 'Next'));
+}
+
+function updateAdStatusClasses() {
+    document.querySelectorAll('.advertisement-widget').forEach(widget => {
+        widget.classList.remove('approved', 'rejected');
+
+        const adStatus = widget.dataset.adStatus.toLowerCase();
+        console.log(`Ad ID: ${widget.dataset.id}, Status: ${adStatus}`);
+
+        if (adStatus === 'approved') {
+            widget.classList.add('approved');
+        } else if (adStatus === 'rejected') {
+            widget.classList.add('rejected');
+        }
+    });
+}
+
+function askForConfirmation(adId, action, event) {
+    if (event) {
+        event.preventDefault();
+    }
+
+    // Get references to modal elements
+    const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+    const modalTitle = document.getElementById('confirmationModalLabel');
+    const actionTypeElement = document.getElementById('actionType');
+    const companyNameElement = document.getElementById('companyNameModal');
+    const confirmBtn = document.getElementById('confirmBtn');
+
+    // Get the ad's information
+    const adWidget = document.querySelector(`[data-id="${adId}"]`);
+    const jobTitle = adWidget.querySelector('h4').textContent;
+
+    const currentStatus = adWidget.dataset.adStatus.toUpperCase();
+
+    const isDeleteAction = action === 'Delete';
+    const actionText = isDeleteAction ? 'delete' : 'update';
+
+    // Allow the modal to show for all statuses
+    modalTitle.textContent = `Confirm ${actionText}`;
+    actionTypeElement.textContent = actionText;
+    companyNameElement.textContent = `[${jobTitle}]`;
+
+    confirmBtn.onclick = function () {
+        deleteAdvertisement(adId);
+        confirmationModal.hide();
+    };
+    // Show the modal
+    confirmationModal.show();
+}
+
+document.getElementById('updateAdButton').addEventListener('click', function () {
+    document.getElementById('jobTitleError').textContent = '';
+    document.getElementById('internsRequiredError').textContent = '';
+    document.getElementById('jobDurationError').textContent = '';
+
+    // Gather the updated data from the form fields
+    const adId = document.getElementById('adId').value;
+    const updatedJobTitle = document.getElementById('jobTitle').value;
+    const updatedInternsRequired = document.getElementById('internsRequired').value;
+    const updatedJobDuration = document.getElementById('jobDuration').value;
+    const updatedCountry = document.getElementById('countrySelect').value;
+    const updatedCity = document.getElementById('citySelect').value;
+    const updatedJobType = document.querySelector('input[name="jobType"]:checked').value;
+    const updatedWorkMode = document.getElementById('workMode').value;
+    const updatedJobImage = document.getElementById('jobImage').files[0];
+    const updatedDescription = document.getElementById('description').value;
+
+    let isValid = true;
+
+    // Validate Number of Interns
+    if (isNaN(updatedInternsRequired) || updatedInternsRequired === "") {
+        document.getElementById('internsRequiredError').textContent = 'Please enter a valid number for interns required.';
+        isValid = false;
+    }
+
+    // Validate Job Duration
+    if (isNaN(updatedJobDuration) || updatedJobDuration === "") {
+        document.getElementById('jobDurationError').textContent = 'Please enter a valid number for job duration.';
+        isValid = false;
+    }
+
+    if (!isValid) {
+        return;
+    }
+
+    // Create a FormData object to include the updated data
+    const formData = new FormData();
+    formData.append('id', adId);
+    formData.append('jobTitle', updatedJobTitle);
+    formData.append('internsRequired', updatedInternsRequired);
+    formData.append('jobDuration', updatedJobDuration);
+    formData.append('country', updatedCountry);
+    formData.append('city', updatedCity);
+    formData.append('jobType', updatedJobType);
+    formData.append('workMode', updatedWorkMode);
+    formData.append('jobImage', updatedJobImage);
+    formData.append('description', updatedDescription);
+
+    // Send the updated data to the backend endpoint
+    const updateUrl = `/advertisement/update`;
+    fetch(updateUrl, {
+        method: 'PUT',
+        body: formData,
+    })
+        .then(response => {
+            if (response.ok) {
+                response.json().then(apiResponse => {
+                    showSuccessAlert(apiResponse.message);
+
+                    const updateAdModalElement = document.getElementById('updateAdModal');
+                    const updateAdModal = bootstrap.Modal.getInstance(updateAdModalElement);
+                    if (updateAdModal) {
+                        updateAdModal.hide();
+                    }
+
+                    // Update the advertisement widget on the page
+                    updateAdWidget(adId, {
+                        jobTitle: updatedJobTitle,
+                        internsRequired: updatedInternsRequired,
+                        jobDuration: updatedJobDuration,
+                        country: updatedCountry,
+                        city: updatedCity,
+                        jobType: updatedJobType,
+                        workMode: updatedWorkMode,
+                        description: updatedDescription,
+                        // Include other fields as necessary
+                    });
+                });
+            } else if (response.status === 400) {
+                // Handle 400 error - Invalid request
+                response.json().then(apiResponse => {
+                    // Display the error message
+                    const generalError = document.getElementById('generalError');
+                    generalError.textContent = apiResponse.message;
+                });
+            } else {
+                // Handle other errors
+                console.error("Failed to update advertisement");
+            }
+        })
+        .catch(error => {
+            // Handle network error
+            console.error('Error:', error);
+        });
 });
 
-window.onclick = function (event) {
-    if (!event.target.matches('.menu-icon')) {
-        const menus = document.getElementsByClassName('menu-container');
-        for (let i = 0; i < menus.length; i++) {
-            let openMenu = menus[i];
-            if (openMenu.style.display === 'block') {
-                openMenu.style.display = 'none';
+
+function showSuccessAlert(message) {
+    const alertBox = document.getElementById('successAlert');
+    const messageParagraph = document.getElementById('successMessage');
+
+    messageParagraph.textContent = message;
+    alertBox.style.display = 'flex'; // Change display to flex to make it visible
+    alertBox.style.opacity = 1;
+
+    // Wait 4 seconds before starting to fade out
+    setTimeout(() => {
+        let opacity = 1;
+        const fadeInterval = setInterval(() => {
+            if (opacity <= 0) {
+                clearInterval(fadeInterval);
+                alertBox.style.display = 'none'; // Hide it again after fade out
+            } else {
+                opacity -= 0.05; // Decrease the opacity
+                alertBox.style.opacity = opacity;
             }
+        }, 50); // Adjust the interval to control the speed of the fade-out
+    }, 4000);
+}
+
+function updateAdWidget(adId, updatedData) {
+    const adWidget = document.querySelector(`[data-id="${adId}"]`);
+    if (adWidget) {
+        adWidget.querySelector('h4').textContent = updatedData.jobTitle;
+        adWidget.querySelector('[data-interns-required]').textContent = updatedData.internsRequired;
+        adWidget.querySelector('[data-job-duration]').textContent = updatedData.jobDuration;
+        adWidget.querySelector('[data-job-type]').textContent = updatedData.jobType;
+        adWidget.querySelector('[data-work-mode]').textContent = updatedData.workMode;
+        adWidget.querySelector('[data-description]').setAttribute('data-description', updatedData.description);
+
+        const citySpan = adWidget.querySelector('[data-city]');
+        if (citySpan) {
+            citySpan.textContent = updatedData.city;
+        }
+
+        const countrySpan = adWidget.querySelector('[data-country]');
+        if (countrySpan) {
+            countrySpan.textContent = updatedData.country;
         }
     }
-};
-
-window.onclick = function (event) {
-    const updateModal = document.getElementById('myModal');
-    if (event.target === updateModal) {
-        updateModal.style.display = "none";
-    }
 }
 
+function deleteAdvertisement(adId) {
+    const url = `/advertisement/delete/${adId}`;
 
-document.addEventListener('DOMContentLoaded', function () {
-    const companyName = getCompanyNameFromCookie();
-    if (companyName) {
-        document.getElementById('companyNameDisplay').textContent = companyName;
-    }
-});
-
-function showDeleteDialog() {
-    const dialog = document.getElementById('deleteDialog');
-    dialog.style.display = 'flex';
-    setTimeout(() => {
-        dialog.style.opacity = '1'; // Fade in
-    }, 10);
-}
-
-function hideDeleteDialog() {
-    const dialog = document.getElementById('deleteDialog');
-    dialog.style.opacity = '0'; // Fade out
-    setTimeout(() => {
-        dialog.style.display = 'none';
-    }, 500); // Match the duration of the fade-out transition
-}
-
-document.getElementById('cancelDelete').addEventListener('click', function () {
-    hideDeleteDialog();
-});
-
-
-function hideUpdateForm() {
-    const dialog = document.getElementById('formDialog');
-    dialog.style.opacity = '0'; // Fade out
-    setTimeout(() => {
-        dialog.style.display = 'none';
-    }, 500); // Match the duration of the fade-out transition
-}
-
-document.getElementById('cancelUpdate').addEventListener('click', function () {
-    hideUpdateForm()
-});
-
-document.getElementById('confirmDelete').addEventListener('click', function () {
-    if (currentAdPosition) {
-        fetch(`/advertisement/delete/${currentAdPosition}`, {
-            method: 'DELETE',
-            // Add any necessary headers and body
+    // Send a DELETE request to the server
+    fetch(url, {
+        method: 'DELETE'
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to delete advertisement');
+            }
+            return response.json();
         })
-            .then(response => {
-                console.log("Advertisement deleted successfully");
-                hideDeleteDialog();
-                fetchAdvertisements(); // Refresh the list of advertisements
-            })
-            .catch(error => console.error('Error deleting advertisement:', error));
+        .then(apiResponse => {
+            showSuccessAlert(apiResponse.message);
+            const adWidget = document.querySelector(`[data-id="${adId}"]`);
+            if (adWidget) {
+                adWidget.remove();
+            }
+        })
+        .catch(error => {
+            // Handle network errors
+            console.error('Network error:', error);
+        });
+}
+
+async function showUpdateForm(advertisementId) {
+    // Retrieve the existing data from the widget with the given advertisementId
+    const adWidget = document.querySelector(`[data-id="${advertisementId}"]`);
+    if (!adWidget) {
+        console.error(`Advertisement widget with ID ${advertisementId} not found.`);
+        return;
     }
-});
+
+    document.getElementById('adId').value = advertisementId;
+
+    // Extract data from the widget
+    const jobTitle = adWidget.querySelector('h4').textContent;
+    const internsRequired = adWidget.querySelector('[data-interns-required]').textContent;
+    const jobDuration = adWidget.querySelector('[data-job-duration]').textContent;
+    const jobType = adWidget.querySelector('[data-job-type]').textContent;
+    const workMode = adWidget.querySelector('[data-work-mode]').textContent;
+    const descriptionContainer = document.getElementById('description-container-' + advertisementId);
+    const selectedCountry = descriptionContainer.getAttribute('data-country');
+    const selectedCity = descriptionContainer.getAttribute('data-city');
+    const description = descriptionContainer.getAttribute('data-description');
+    const compressedImageData = adWidget.getAttribute('data-image'); // Compressed image bytes
+
+    console.log(compressedImageData);
+
+    document.getElementById('jobTitle').value = jobTitle;
+    document.getElementById('internsRequired').value = internsRequired;
+    document.getElementById('jobDuration').value = jobDuration;
+
+    if (jobType === 'FULL_TIME') {
+        document.getElementById('fullTime').checked = true;
+    } else if (jobType === 'PART_TIME') {
+        document.getElementById('partTime').checked = true;
+    }
+
+    // For select element (workMode)
+    document.getElementById('workMode').value = workMode;
+
+    document.getElementById('description').value = description;
+
+// Assuming you have already created the new file as shown in your previous code
+    const jobImageInput = document.getElementById('jobImage');
+    if (jobImageInput) {
+        // Create a Blob with the appropriate type
+        const blob = new Blob([compressedImageData], {type: `image/jpeg`});
+
+        // Create a File from the Blob
+        const file = new File([blob], 'jobImage.jpg', {type: 'image/jpeg'});
+
+        // Create a new DataTransfer object and add the File to it
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+
+        // Set the files property of the input element to the File
+        jobImageInput.files = dataTransfer.files;
+
+        // Read the content of the file as a data URL
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            const fileContent = event.target.result;
+            console.log("File Content:", fileContent);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // Set the selected country in the country select element
+    const countrySelect = document.getElementById('countrySelect');
+    countrySelect.value = selectedCountry;
+
+    // Fetch cities for the selected country
+    if (selectedCountry) {
+        fetchCities(selectedCountry);
+
+        // Wait for a moment to ensure cities are fetched before setting the selected city
+        setTimeout(() => {
+            document.getElementById('citySelect').value = selectedCity;
+        }, 1000); // Adjust the delay as needed
+    }
+
+    // Reset the modal to ensure it's displayed correctly
+    const updateAdModal = new bootstrap.Modal(document.getElementById('updateAdModal'));
+    updateAdModal.hide(); // Hide the modal
+    updateAdModal.show(); // Show the modal again
+}
 
 function fetchAllCountries() {
     fetch('https://restcountries.com/v2/all')
@@ -330,191 +526,30 @@ function fetchAllCountries() {
         .catch(error => console.error('Error fetching countries:', error));
 }
 
-function showUpdateForm(ad) {
-    // Populate the form with the advertisement data
+// Function to fetch cities based on the selected country code
+function fetchCities(countryCode) {
+    const citySelect = document.getElementById('citySelect');
+    citySelect.innerHTML = '<option value="">Loading Cities...</option>';
 
-    const form = document.getElementById('updateAdForm');
-    const article = document.querySelector(`.article[data-ad-id="${currentAd.id}"]`);
-    form.jobTitle.value = ad.jobTitle;
-    form.internsRequired.value = ad.internsRequired;
-    form.jobDuration.value = ad.jobDuration;
-    form.description.value = ad.description;
+    // Replace 'your_username' with your actual username or API key
+    const url = `http://api.geonames.org/searchJSON?country=${countryCode}&maxRows=12&username=your_username&cities=cities1000`;
 
-    const jobImageInput = form.querySelector('[name="jobImage"]');
-    if (jobImageInput) {
-        const file = new File([ad.jobImage], 'jobImage.png', {type: 'image/png'}); // You can adjust the filename and type as needed
-        const files = new DataTransfer();
-        files.items.add(file);
-        jobImageInput.files = files.files;
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        const descriptionTextarea = document.getElementById('description');
-        const maxHeight = 170;
-
-        function resizeTextarea() {
-            if (descriptionTextarea.scrollHeight < maxHeight) {
-                descriptionTextarea.style.height = 'auto';
-                descriptionTextarea.style.height = descriptionTextarea.scrollHeight + 'px';
-            } else {
-                descriptionTextarea.style.overflowY = 'scroll';
-                descriptionTextarea.style.height = maxHeight + 'px';
-            }
-        }
-
-        descriptionTextarea.addEventListener('input', resizeTextarea, false);
-    });
-
-    // Assuming 'FULL_TIME' and 'PART_TIME' are the only two job types
-    if (ad.jobType === 'FULL_TIME') {
-        document.getElementById('fullTime').checked = true;
-    } else if (ad.jobType === 'PART_TIME') {
-        document.getElementById('partTime').checked = true;
-    }
-    form.workMode.value = ad.workMode;
-
-    const adIdInput = document.createElement('input');
-    adIdInput.type = 'hidden';
-    adIdInput.name = 'id';
-    adIdInput.value = article.dataset.adId;
-    form.appendChild(adIdInput);
-
-    // Populate country select and then cities
-    const countrySelect = document.querySelector('#countrySelect');
-    populateCountrySelect(countrySelect, globalCountries, ad.country);
-
-    // Fetch and set cities
-    getCountryCodeByName(ad.country).then(code => {
-        fetchCities(code, ad.city);
-    });
-
-    // Show the form dialog
-    const dialog = document.getElementById('formDialog');
-    dialog.style.display = 'flex';
-    setTimeout(() => {
-        dialog.style.opacity = '1'; // Fade in
-    }, 10);
-
-    document.getElementById('saveChangesButton').addEventListener('click', function () {
-        submitUpdateForm(currentAd);
-    });
-}
-
-function populateCountrySelect(selectElement, countries, selectedCountryName) {
-    selectElement.innerHTML = '';
-    countries.forEach(country => {
-        const option = document.createElement('option');
-        option.value = country.alpha2Code;
-        option.textContent = country.name;
-        selectElement.appendChild(option);
-    });
-
-    const selectedCountryCode = countries.find(country => country.name === selectedCountryName)?.alpha2Code;
-    if (selectedCountryCode) {
-        selectElement.value = selectedCountryCode;
-    }
-}
-
-// Fetch countries and set the selected country
-
-let cityCache = {}; // Global cache for cities
-
-async function fetchCities(countryCode, selectedCity) {
-    if (cityCache[countryCode]) {
-        setCityOptions(cityCache[countryCode], selectedCity);
-    } else {
-        const url = `http://api.geonames.org/searchJSON?country=${countryCode}&maxRows=12&username=your_username&cities=cities1000`;
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                cityCache[countryCode] = data.geonames; // Cache the city data
-                setCityOptions(data.geonames, selectedCity);
-            })
-            .catch(error => console.error('Error fetching cities:', error));
-    }
-}
-
-
-function setCityOptions(cities, selectedCity) {
-    const citySelect = document.querySelector('#citySelect');
-    citySelect.innerHTML = '';
-    cities.forEach(city => {
-        const option = document.createElement('option');
-        option.value = city.name;
-        option.textContent = city.name;
-        citySelect.appendChild(option);
-    });
-    citySelect.value = selectedCity;
-}
-
-
-async function getCountryCodeByName(countryName) {
-    const response = await fetch('https://restcountries.com/v2/all');
-    const countries = await response.json();
-    const countryData = countries.find(country => country.name === countryName);
-    return countryData ? countryData.alpha2Code : null;
-}
-
-
-function submitUpdateForm(ad) {
-    const form = document.getElementById('updateAdForm');
-    const formData = new FormData(form);
-
-    // Retrieve the country code from the form
-    const countryCode = formData.get('country');
-    // Find the country name based on the country code
-    const country = globalCountries.find(country => country.alpha2Code === countryCode);
-    if (country) {
-        // Replace the country code with the country name in the formData
-        formData.set('country', country.name);
-    }
-
-    document.getElementById('jobTitleError').textContent = '';
-    document.getElementById('internsRequiredError').textContent = '';
-    document.getElementById('jobDurationError').textContent = '';
-
-    const internsRequired = form.elements['internsRequired'].value;
-    const jobDuration = form.elements['jobDuration'].value;
-
-    let isValid = true;
-
-    // Validate Number of Interns
-    if (isNaN(internsRequired) || internsRequired === "") {
-        document.getElementById('internsRequiredError').textContent = 'Please enter a valid number for interns required.';
-        isValid = false;
-    }
-
-    // Validate Job Duration
-    if (isNaN(jobDuration) || jobDuration === "") {
-        document.getElementById('jobDurationError').textContent = 'Please enter a valid number for job duration.';
-        isValid = false;
-    }
-
-    if (!isValid) {
-        return;
-    }
-
-    // Include the advertisement ID in the formData
-    formData.append('id', ad.id);
-
-    fetch('/advertisement/update', {
-        method: 'PUT',
-        body: formData
-    })
-        .then(response => {
-            if (response.ok) {
-                console.log("Advertisement updated successfully");
-                fetchAdvertisements();
-                hideUpdateForm();
-            } else if (response.status === 400) {
-                response.text().then(errorMessage => {
-                    const jobTitleError = document.getElementById('jobTitleError');
-                    jobTitleError.textContent = errorMessage;
-                });
-            } else {
-                console.error("Failed to update advertisement");
-            }
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            citySelect.innerHTML = ''; // Clear the loading message
+            data.geonames.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city.name;
+                option.textContent = city.name;
+                citySelect.appendChild(option);
+            });
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => console.error('Error fetching cities:', error));
 }
 
+// Example: Fetch cities when a country is selected
+document.getElementById('countrySelect').addEventListener('change', function () {
+    const selectedCountryCode = this.value;
+    fetchCities(selectedCountryCode);
+});

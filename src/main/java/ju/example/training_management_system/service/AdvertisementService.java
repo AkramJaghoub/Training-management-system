@@ -89,21 +89,26 @@ public class AdvertisementService {
             existingAd.setAdStatus(PENDING);
 
             advertisementRepository.save(existingAd); // updated advertisement
-            return new ApiResponse("Advertisement was updated successfully", HttpStatus.CREATED);
+            return new ApiResponse("Advertisement with job title [" + existingAd.getJobTitle() + "] was updated successfully", HttpStatus.CREATED);
         } catch (AdAlreadyExistsException | AdDoesNotExistException | UnauthorizedCompanyAccessException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    public void deleteAd(String companyName, String position) {
-        List<Advertisement> advertisements = advertisementRepository.findByCompany_CompanyName(companyName);
-        long adId = 0;
-        for (Advertisement ad : advertisements) {
-            if (ad.getJobTitle().equals(position)) {
-                adId = ad.getId();
-                break;
+    public ApiResponse deleteAd(long adId, String email) {
+        try {
+           Advertisement advertisement = advertisementRepository.findById(adId)
+                    .orElseThrow(() -> new AdDoesNotExistException("Advertisement with id [" + adId + "] does not exist"));
+
+            User user = userRepository.findByEmail(email);
+            if (!(user instanceof Company)) {
+                throw new UnauthorizedCompanyAccessException("User with email " + email + " wasn't recognized as a company");
             }
+
+            advertisementRepository.deleteById(adId);
+            return new ApiResponse("Advertisement with job title [" + advertisement.getJobTitle() + "] was delete successfully", HttpStatus.OK);
+        } catch (AdDoesNotExistException ex){
+            return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        advertisementRepository.deleteById(adId);
     }
 }
