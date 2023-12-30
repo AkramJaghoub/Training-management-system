@@ -28,6 +28,10 @@ public final class Utils {
         return !str1.equals(str2);
     }
 
+    public static boolean isEmpty(String str) {
+       return str == null || str.isEmpty();
+    }
+
     public static byte[] saveImage(MultipartFile file) {
         try {
             // Compress the byte array

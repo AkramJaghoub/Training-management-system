@@ -1,8 +1,10 @@
 package ju.example.training_management_system.service.AdminService;
 
 import jakarta.transaction.Transactional;
+import ju.example.training_management_system.exception.AdDoesNotExistException;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
+import ju.example.training_management_system.model.company.advertisement.AdStatus;
 import ju.example.training_management_system.model.company.advertisement.Advertisement;
 import ju.example.training_management_system.model.users.Company;
 import ju.example.training_management_system.model.users.Role;
@@ -20,9 +22,10 @@ import org.springframework.ui.Model;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.stream.Collectors;
 
+import static ju.example.training_management_system.model.company.advertisement.AdStatus.PENDING;
 import static ju.example.training_management_system.util.Utils.decompressImage;
+import static ju.example.training_management_system.util.Utils.isEmpty;
 
 @Service
 @RequiredArgsConstructor
@@ -81,6 +84,7 @@ public class AdminService {
         model.addAttribute("companiesCount", numOfCompanies);
         model.addAttribute("studentsCount", numOfStudents);
         model.addAttribute("advertisementsCount", advertisements.size());
+        model.addAttribute("newUsers", newUsers);
         model.addAttribute("users", users);
         model.addAttribute("userImages", userImages);
         model.addAttribute("newUsersCount", newUsers.size());
@@ -88,8 +92,10 @@ public class AdminService {
     }
 
     public void setUpAdsListPage(Model model) {
-        List<Advertisement> advertisements = advertisementRepository.findAll();
-
+        List<Advertisement> advertisements = advertisementRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparing(Advertisement::getPostDate).reversed())
+                .toList();
         model.addAttribute("advertisements", advertisements);
     }
 
@@ -115,6 +121,24 @@ public class AdminService {
             return new ApiResponse("User with id [" + userId + "] was deleted successfully", HttpStatus.OK);
 
         } catch (UserNotFoundException ex) {
+            return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public ApiResponse updateAdStatus(long adId, String newStatus) {
+        try {
+            Advertisement ad = advertisementRepository.findById(adId)
+                    .orElseThrow(() -> new AdDoesNotExistException("Advertisement with [" + adId + "] was not found"));
+
+            if (isEmpty(newStatus)) {
+                ad.setAdStatus(PENDING);
+            } else {
+                ad.setAdStatus(AdStatus.valueOf(newStatus));
+            }
+            advertisementRepository.save(ad);
+            return new ApiResponse("Advertisement with [" + adId + "] and name [" + ad.getJobTitle() + "] successfully got " +
+                    (newStatus.equals("APPROVED") ? "approved" : "rejected"), HttpStatus.OK);
+        } catch (AdDoesNotExistException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

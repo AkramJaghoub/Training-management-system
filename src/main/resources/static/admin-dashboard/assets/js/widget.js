@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     resetFiltersAndSearch();
     attachEventListeners();
     filterAds();
+    updateAdStatusClasses(); // Call the function here
 });
 
 // Attach click event listeners to kebab menu icons
@@ -38,9 +39,6 @@ function attachEventListeners() {
         }
     });
 
-    // Filter change events
-    document.getElementById('modeFilter').addEventListener('change', filterAds);
-    document.getElementById('typeFilter').addEventListener('change', filterAds);
     document.getElementById('searchInput').addEventListener('input', filterAds);
 }
 
@@ -60,8 +58,6 @@ function hideModal(modalId) {
 }
 
 function resetFiltersAndSearch() {
-    document.getElementById('modeFilter').value = 'all';
-    document.getElementById('typeFilter').value = 'all';
     document.getElementById('searchInput').value = '';
 }
 
@@ -112,41 +108,24 @@ function showDescription(adId) {
     new bootstrap.Modal(document.getElementById('descriptionModal')).show();
 }
 
-// Approves an advertisement
-function approve(adId) {
-    console.log('Approving ad with ID:', adId);
-    // Your logic for approving the advertisement
-    closeAllKebabMenus();
-}
-
-// Declines an advertisement
-function decline(adId) {
-    console.log('Declining ad with ID:', adId);
-    // Your logic for declining the advertisement
-    closeAllKebabMenus();
-}
-
 function filterAds() {
     let searchInput = document.getElementById('searchInput').value.toLowerCase();
-    let modeFilter = document.getElementById('modeFilter').value.toLowerCase();
-    let typeFilter = document.getElementById('typeFilter').value.toLowerCase();
+    let statusFilter = document.getElementById('statusFilter').value.toLowerCase();
+
     let adsList = document.querySelectorAll('.advertisement-widget');
 
     let activeWidgets = 0;
 
     adsList.forEach(function (ad) {
-        let mode = ad.dataset.workMode ? ad.dataset.workMode.toLowerCase() : '';
-        let type = ad.dataset.jobType ? ad.dataset.jobType.toLowerCase() : '';
+        let status = ad.dataset.adStatus ? ad.dataset.adStatus.toLowerCase() : '';
         let jobTitle = ad.querySelector('h4').textContent.toLowerCase();
         let companyName = ad.querySelector('[data-company-name]').getAttribute('data-company-name').toLowerCase();
         let textMatch = !searchInput || jobTitle.includes(searchInput) || companyName.includes(searchInput);
-        let modeMatch = modeFilter === 'all' || mode === modeFilter;
-        let typeMatch = typeFilter === 'all' || type === typeFilter;
-        ad.style.display = (modeMatch && typeMatch && textMatch) ? '' : 'none';
-        if (modeMatch && typeMatch && textMatch)
+        let statusMatch = statusFilter === 'all' || status === statusFilter;
+        ad.style.display = (textMatch && statusMatch) ? '' : 'none';
+        if (textMatch && statusMatch)
             activeWidgets++;
     });
-    console.log(activeWidgets);
     initializePagination(activeWidgets);
 }
 
@@ -168,7 +147,6 @@ function displayPageForFilters(page) {
     const visibleWidgets = Array.from(widgets).filter(widget => {
         return window.getComputedStyle(widget).display !== 'none';
     });
-    console.log(visibleWidgets);
 
     visibleWidgets.forEach((widget, index) => {
         const startIndex = (page - 1) * widgetsPerPage;
@@ -217,4 +195,150 @@ function updatePagination(currentPage) {
     }
 
     paginationContainer.appendChild(createPaginationItem(currentPage + 1, false, currentPage === pageCount, 'Next'));
+}
+
+function updateAdStatusClasses() {
+    document.querySelectorAll('.advertisement-widget').forEach(widget => {
+        // Remove existing status classes
+        widget.classList.remove('approved', 'rejected');
+
+        // Add new status class based on adStatus
+        const adStatus = widget.dataset.adStatus.toLowerCase();
+        console.log(`Ad ID: ${widget.dataset.id}, Status: ${adStatus}`); // Corrected debugging line
+
+        if (adStatus === 'approved') {
+            widget.classList.add('approved');
+        } else if (adStatus === 'rejected') {
+            widget.classList.add('rejected');
+        }
+        // No need for 'pending' as it's the default state
+    });
+}
+
+function askForConfirmation(adId, newStatus, event) {
+    if (event) {
+        event.preventDefault();
+    }
+
+    // Get references to modal elements
+    const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+    const modalTitle = document.getElementById('confirmationModalLabel');
+    const actionTypeElement = document.getElementById('actionType');
+    const companyNameElement = document.getElementById('companyNameModal');
+    const confirmBtn = document.getElementById('confirmBtn');
+
+    // Get the ad's information
+    const adWidget = document.querySelector(`[data-id="${adId}"]`);
+    const jobTitle = adWidget.querySelector('h4').textContent;
+    const companyName = adWidget.querySelector('[data-company-name]').dataset.companyName;
+
+    const currentStatus = adWidget.dataset.adStatus.toUpperCase();
+    console.log("Current status:", currentStatus, "New status:", newStatus);
+
+    const actionText = newStatus === 'APPROVED' ? 'approve' : 'reject';
+
+    // Ensure case-insensitive comparison
+    if (newStatus.toUpperCase() === currentStatus) {
+        showWarningAlert(`This advertisement is already ${currentStatus.toLowerCase()}`);
+        return;
+    }
+
+    // Update the modal elements
+    modalTitle.textContent = `Confirm ${actionText}`;
+    actionTypeElement.textContent = actionText;
+    companyNameElement.textContent = `[${jobTitle}] for [${companyName}]`;
+
+    confirmBtn.onclick = function() {
+        updateAdStatus(adId, newStatus);
+        confirmationModal.hide();
+    };
+    // Show the modal
+    confirmationModal.show();
+}
+
+function updateAdStatus(adId, newStatus) {
+    const url = `/admin/update/ad-status/${adId}`;
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('newStatus', newStatus);
+
+    fetch(url, {
+        method: 'PUT',
+        headers: headers
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
+            }
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                return response.json();
+            } else {
+                throw new Error('Received non-JSON response from server');
+            }
+        })
+        .then(data => {
+            console.log('Success:', data.message);
+            const adWidget = document.querySelector(`[data-id="${adId}"]`);
+            const statusElement = adWidget.querySelector('.ad-status');
+
+            // Update the visual status
+            statusElement.textContent = newStatus;
+            adWidget.classList.remove('approved', 'rejected');
+            adWidget.classList.add(newStatus.toLowerCase());
+
+            // Update the data-ad-status attribute
+            adWidget.dataset.adStatus = newStatus;
+
+            // Show success message
+            showSuccessAlert(data.message);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+
+function showSuccessAlert(message) {
+    const alertBox = document.getElementById('successAlert');
+    const messageParagraph = document.getElementById('successMessage');
+
+    messageParagraph.textContent = message;
+    alertBox.style.display = 'flex'; // Change display to flex to make it visible
+    alertBox.style.opacity = 1;
+
+    // Wait 4 seconds before starting to fade out
+    setTimeout(() => {
+        let opacity = 1;
+        const fadeInterval = setInterval(() => {
+            if (opacity <= 0) {
+                clearInterval(fadeInterval);
+                alertBox.style.display = 'none'; // Hide it again after fade out
+            } else {
+                opacity -= 0.05; // Decrease the opacity
+                alertBox.style.opacity = opacity;
+            }
+        }, 50); // Adjust the interval to control the speed of the fade-out
+    }, 4000);
+}
+
+function showWarningAlert(message) {
+    const alertBox = document.getElementById('errorAlert');
+    const messageParagraph = document.getElementById('errorMessage');
+
+    messageParagraph.textContent = message;
+    alertBox.style.display = 'block';
+    alertBox.style.opacity = 1; // Set initial opacity to 1
+
+    setTimeout(() => {
+        let opacity = 1;
+        const fadeInterval = setInterval(() => {
+            if (opacity <= 0) {
+                clearInterval(fadeInterval);
+                alertBox.style.display = 'none';
+            } else {
+                opacity -= 0.05; // Decrease the opacity
+                alertBox.style.opacity = opacity;
+            }
+        }, 50);
+    }, 4000);
 }
