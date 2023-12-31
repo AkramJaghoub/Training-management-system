@@ -35,7 +35,7 @@ public class AuthenticationService {
             String hashedPassword = PasswordHashingUtil.hashPassword(password);
             if (!storedUser.getPassword().equals(hashedPassword)) {
                 log.info("user with the email {} their password is incorrect try again", email);
-                throw new PasswordNotMatchException();
+                throw new PasswordNotMatchException("Current password is invalid");
             }
 
             log.info("validation for user with the email {} was successful entering user's interface...", email);
