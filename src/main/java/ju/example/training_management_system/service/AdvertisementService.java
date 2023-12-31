@@ -21,7 +21,6 @@ import static ju.example.training_management_system.model.company.advertisement.
 import static ju.example.training_management_system.util.Utils.isNotEqual;
 import static ju.example.training_management_system.util.Utils.saveImage;
 
-
 @Service
 @RequiredArgsConstructor
 public class AdvertisementService {

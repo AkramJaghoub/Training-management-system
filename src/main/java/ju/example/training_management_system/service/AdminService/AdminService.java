@@ -6,11 +6,13 @@ import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.company.advertisement.AdStatus;
 import ju.example.training_management_system.model.company.advertisement.Advertisement;
+import ju.example.training_management_system.model.company.advertisement.Notification;
 import ju.example.training_management_system.model.users.Company;
 import ju.example.training_management_system.model.users.Role;
 import ju.example.training_management_system.model.users.Student;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.AdvertisementRepository;
+import ju.example.training_management_system.repository.NotificationRepository;
 import ju.example.training_management_system.repository.users.CompanyRepository;
 import ju.example.training_management_system.repository.users.StudentRepository;
 import ju.example.training_management_system.repository.users.UserRepository;
@@ -35,6 +37,7 @@ public class AdminService {
     private final AdvertisementRepository advertisementRepository;
     private final StudentRepository studentRepository;
     private final CompanyRepository companyRepository;
+    private final NotificationRepository notificationRepository;
 
     public void setUpAdminDashboardPage(Model model) {
         setUpFields(model);
@@ -134,7 +137,15 @@ public class AdminService {
                 ad.setAdStatus(PENDING);
             } else {
                 ad.setAdStatus(AdStatus.valueOf(newStatus));
+
+                //notify the company
+                Notification notification = new Notification();
+                notification.setMessage("Your Advertisement with job title [" + ad.getJobTitle() + "] was "
+                        + newStatus.toLowerCase());
+                notification.setCompany(ad.getCompany());
+                notificationRepository.save(notification);
             }
+
             advertisementRepository.save(ad);
             return new ApiResponse("Advertisement with [" + adId + "] and name [" + ad.getJobTitle() + "] successfully got " +
                     (newStatus.equals("APPROVED") ? "approved" : "rejected"), HttpStatus.OK);

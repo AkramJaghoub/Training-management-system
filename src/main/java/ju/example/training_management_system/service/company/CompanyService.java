@@ -8,10 +8,12 @@ import ju.example.training_management_system.exception.UnauthorizedCompanyAccess
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.company.advertisement.Advertisement;
+import ju.example.training_management_system.model.company.advertisement.Notification;
 import ju.example.training_management_system.model.manage.company.CompanyInfo;
 import ju.example.training_management_system.model.users.Company;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.AdvertisementRepository;
+import ju.example.training_management_system.repository.NotificationRepository;
 import ju.example.training_management_system.repository.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,7 @@ public class CompanyService {
 
     private final UserRepository userRepository;
     private final AdvertisementRepository advertisementRepository;
+    private final NotificationRepository notificationRepository;
 
     public String getCompanyName(String email) {
         User user = userRepository.findByEmail(email);
@@ -134,9 +137,12 @@ public class CompanyService {
         }
 
         List<Advertisement> advertisements = advertisementRepository.findByCompany_CompanyName(company.getCompanyName());
+        List<Notification> notifications = notificationRepository.findByCompany(company);
+
         model.addAttribute("companyImage", base64Image);
         model.addAttribute("advertisements", advertisements);
         model.addAttribute("companyName", company.getCompanyName());
+        model.addAttribute("notifications", notifications);
 
         Cookie companyNameCookie = new Cookie("companyName", company.getCompanyName());
         companyNameCookie.setPath("/");

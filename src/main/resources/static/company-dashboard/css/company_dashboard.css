@@ -258,3 +258,49 @@ nav ul li.profile a:after {
     font-weight: 500;
     letter-spacing: 5px;
 }
+
+.notification-badge {
+    position: absolute;
+    top: -3px; /* Adjust as necessary */
+    right: -3px; /* Adjust as necessary */
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 1rem; /* Adjust as necessary */
+    height: 1rem; /* Adjust as necessary */
+    font-size: 12px; /* Adjust as necessary */
+    line-height: 1rem; /* Adjust to match height for vertical centering */
+    text-align: center;
+    font-weight: bold;
+}
+
+.notification-wrapper {
+    position: relative;
+}
+
+.dropdown-menu {
+    width: 100%; /* Adjust this to the desired width */
+    max-width: none; /* This will remove the default max-width */
+    min-width: 300px; /* Example minimum width, adjust as necessary */
+}
+
+.dropdown-item {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bi-bell-fill{
+    margin-right: -0.8rem;
+    cursor: pointer;
+}
+
+.dropdown-item {
+    padding-bottom: 0.5rem; /* Adjust the padding as needed */
+    margin-bottom: 0.5rem; /* Adjust the margin as needed */
+}
+
+/* This targets every <li> that is not the last <li> within .dropdown-menu */
+.dropdown-menu li:not(:last-child) .dropdown-item {
+    border-bottom: 1px solid #ccc; /* Change the color as needed */
+}
