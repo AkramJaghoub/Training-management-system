@@ -176,21 +176,25 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function displaySuccessMessage(message) {
-        const successAlert = document.createElement('div');
-        successAlert.className = 'alert alert-success';
-        successAlert.role = 'alert';
-        successAlert.textContent = message + ", now redirecting to your dashboard....";
+        const alertBox = document.getElementById('successAlert');
+        const messageParagraph = document.getElementById('successMessage');
 
-        // Get the placeholder element and append the success message to it
-        const alertPlaceholder = document.getElementById('alertPlaceholder');
-        alertPlaceholder.appendChild(successAlert);
+        messageParagraph.textContent = message + ", now redirecting to your dashboard...."; ;
+        alertBox.style.display = 'flex'; // Change display to flex to make it visible
+        alertBox.style.opacity = 1;
 
-        // Scroll to the top of the page to ensure the user sees the message
-        window.scrollTo(0, 0);
-
-        // Optionally, remove the success message after some time
+        // Wait 4 seconds before starting to fade out
         setTimeout(() => {
-            successAlert.remove();
-        }, 5000); // Remove after 5 seconds
+            let opacity = 1;
+            const fadeInterval = setInterval(() => {
+                if (opacity <= 0) {
+                    clearInterval(fadeInterval);
+                    alertBox.style.display = 'none'; // Hide it again after fade out
+                } else {
+                    opacity -= 0.05; // Decrease the opacity
+                    alertBox.style.opacity = opacity;
+                }
+            }, 50); // Adjust the interval to control the speed of the fade-out
+        }, 5000);
     }
 });
