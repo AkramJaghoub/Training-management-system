@@ -43,7 +43,7 @@ public final class Utils {
             return byteArrayOutputStream.toByteArray();
 
         } catch (IOException e) {
-            throw new StorageException("Failed to store and compress file.", e);
+            throw new StorageException("Failed to store and compress file");
         }
     }
 
@@ -56,7 +56,7 @@ public final class Utils {
                 outputStream.write(buffer, 0, len);
             }
         } catch (IOException e) {
-            throw new StorageException("Failed to decompress image", e);
+            throw new StorageException("Failed to decompress image");
         }
         return outputStream.toByteArray();
     }
