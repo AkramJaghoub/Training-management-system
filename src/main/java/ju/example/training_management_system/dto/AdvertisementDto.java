@@ -26,5 +26,7 @@ public class AdvertisementDto {
 
     private MultipartFile jobImage;
 
+    private String applicationLink;
+
     private String description;
 }

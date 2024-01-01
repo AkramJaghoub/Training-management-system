@@ -92,10 +92,9 @@ function showDescription(adId) {
     };
 
     const modalContentHtml = `
-        <strong>Company:</strong> ${ad.companyName}<br>
-        <strong>Location:</strong> ${ad.city}, ${ad.country}<br>
-        <p>${ad.description}</p>
-    `;
+        <strong>Company:</strong> <span style="color: #000">${ad.companyName}</span><br>
+        <strong>Location:</strong> <span style="color: #000">${ad.city}, ${ad.country}</span><br>
+         ${ad.description}  `;
 
     // Set the prepared content in the modal's body
     const modalBody = document.querySelector('#descriptionModal .modal-body');
@@ -104,7 +103,6 @@ function showDescription(adId) {
     // Show the modal using Bootstrap's JavaScript API
     new bootstrap.Modal(document.getElementById('descriptionModal')).show();
 }
-
 
 function filterAds() {
     let searchInput = document.getElementById('searchInput').value.toLowerCase();
@@ -217,7 +215,6 @@ function updateAdStatusClasses() {
         widget.classList.remove('approved', 'rejected');
 
         const adStatus = widget.dataset.adStatus.toLowerCase();
-        console.log(`Ad ID: ${widget.dataset.id}, Status: ${adStatus}`);
 
         if (adStatus === 'approved') {
             widget.classList.add('approved');
@@ -230,6 +227,7 @@ function updateAdStatusClasses() {
 function askForConfirmation(adId, action, event) {
     if (event) {
         event.preventDefault();
+        event.stopPropagation();
     }
 
     // Get references to modal elements
@@ -242,8 +240,6 @@ function askForConfirmation(adId, action, event) {
     // Get the ad's information
     const adWidget = document.querySelector(`[data-id="${adId}"]`);
     const jobTitle = adWidget.querySelector('h4').textContent;
-
-    const currentStatus = adWidget.dataset.adStatus.toUpperCase();
 
     const isDeleteAction = action === 'Delete';
     const actionText = isDeleteAction ? 'delete' : 'update';
@@ -265,6 +261,13 @@ document.getElementById('updateAdButton').addEventListener('click', function () 
     document.getElementById('jobTitleError').textContent = '';
     document.getElementById('internsRequiredError').textContent = '';
     document.getElementById('jobDurationError').textContent = '';
+    document.getElementById('countrySelectError').textContent = '';
+    document.getElementById('citySelectError').textContent = '';
+    document.getElementById('jobTypeError').textContent = '';
+    document.getElementById('workModeError').textContent = '';
+    document.getElementById('jobImageError').textContent = '';
+    document.getElementById('descriptionError').textContent = '';
+    document.getElementById('applicationLinkError').textContent = '';
 
     // Gather the updated data from the form fields
     const adId = document.getElementById('adId').value;
@@ -276,18 +279,64 @@ document.getElementById('updateAdButton').addEventListener('click', function () 
     const updatedJobType = document.querySelector('input[name="jobType"]:checked').value;
     const updatedWorkMode = document.getElementById('workMode').value;
     const updatedJobImage = document.getElementById('jobImage').files[0];
-    const updatedDescription = document.getElementById('description').value;
+    const applicationLink = document.getElementById('applicationLink').value;
+    const description = tinymce.get('editor').getContent();
 
     let isValid = true;
 
+    if (updatedJobTitle.trim() === "") {
+        document.getElementById('jobTitleError').textContent = 'Job Title is required';
+        isValid = false;
+    }
+    if (updatedInternsRequired.trim() === "") {
+        document.getElementById('internsRequiredError').textContent = 'Number of Interns is required';
+        isValid = false;
+    }
+    if (updatedJobDuration.trim() === "") {
+        document.getElementById('jobDurationError').textContent = 'Job Duration is required';
+        isValid = false;
+    }
+    if (updatedCountry.trim() === "") {
+        document.getElementById('countrySelectError').textContent = 'Country selection is required';
+        isValid = false;
+    }
+    if (updatedCountry.trim() !== "" && updatedCity.disabled === false && updatedCity.value.trim() === "") {
+        document.getElementById('citySelectError').textContent = 'City selection is required';
+        isValid = false;
+    }
+    if (!updatedJobType) {
+        document.getElementById('jobTypeError').textContent = 'Selecting a Job Type is required';
+        isValid = false;
+    }
+    if (updatedWorkMode.trim() === "") {
+        document.getElementById('workModeError').textContent = 'Work Mode selection is required';
+        isValid = false;
+    }
+    if (updatedJobImage === 0) {
+        document.getElementById('jobImageError').textContent = 'Uploading a Job Image is required';
+        isValid = false;
+    }
+    if (description.trim() === "") {
+        document.getElementById('descriptionError').textContent = 'Job Description is required';
+        isValid = false;
+    }
+    if (applicationLink.trim() === "") {
+        document.getElementById('applicationLinkError').textContent = 'Application Link is required';
+        isValid = false;
+    }
+
+    if (!isValid) {
+        return;
+    }
+
     // Validate Number of Interns
-    if (isNaN(updatedInternsRequired) || updatedInternsRequired === "") {
+    if (isNaN(updatedInternsRequired)) {
         document.getElementById('internsRequiredError').textContent = 'Please enter a valid number for interns required.';
         isValid = false;
     }
 
     // Validate Job Duration
-    if (isNaN(updatedJobDuration) || updatedJobDuration === "") {
+    if (isNaN(updatedJobDuration)) {
         document.getElementById('jobDurationError').textContent = 'Please enter a valid number for job duration.';
         isValid = false;
     }
@@ -296,7 +345,6 @@ document.getElementById('updateAdButton').addEventListener('click', function () 
         return;
     }
 
-    // Create a FormData object to include the updated data
     const formData = new FormData();
     formData.append('id', adId);
     formData.append('jobTitle', updatedJobTitle);
@@ -307,7 +355,8 @@ document.getElementById('updateAdButton').addEventListener('click', function () 
     formData.append('jobType', updatedJobType);
     formData.append('workMode', updatedWorkMode);
     formData.append('jobImage', updatedJobImage);
-    formData.append('description', updatedDescription);
+    formData.append('description', description);
+    formData.append('applicationLink', applicationLink);
 
     // Send the updated data to the backend endpoint
     const updateUrl = `/advertisement/update`;
@@ -326,7 +375,6 @@ document.getElementById('updateAdButton').addEventListener('click', function () 
                         updateAdModal.hide();
                     }
 
-                    // Update the advertisement widget on the page
                     updateAdWidget(adId, {
                         jobTitle: updatedJobTitle,
                         internsRequired: updatedInternsRequired,
@@ -335,8 +383,8 @@ document.getElementById('updateAdButton').addEventListener('click', function () 
                         city: updatedCity,
                         jobType: updatedJobType,
                         workMode: updatedWorkMode,
-                        description: updatedDescription,
-                        // Include other fields as necessary
+                        applicationLink: applicationLink,
+                        description: description,
                     });
                 });
             } else if (response.status === 400) {
@@ -449,9 +497,8 @@ async function showUpdateForm(advertisementId) {
     const selectedCountry = descriptionContainer.getAttribute('data-country');
     const selectedCity = descriptionContainer.getAttribute('data-city');
     const description = descriptionContainer.getAttribute('data-description');
-    const compressedImageData = adWidget.getAttribute('data-image'); // Compressed image bytes
-
-    console.log(compressedImageData);
+    const compressedImageData = adWidget.getAttribute('data-image');
+    const applicationLink = descriptionContainer.getAttribute('data-application-link');
 
     document.getElementById('jobTitle').value = jobTitle;
     document.getElementById('internsRequired').value = internsRequired;
@@ -463,12 +510,23 @@ async function showUpdateForm(advertisementId) {
         document.getElementById('partTime').checked = true;
     }
 
-    // For select element (workMode)
     document.getElementById('workMode').value = workMode;
 
-    document.getElementById('description').value = description;
+    if (tinymce.get('editor')) {
+        tinymce.get('editor').setContent(description);
+    } else {
+        tinymce.init({
+            selector: 'textarea#editor',
+            setup: function(editor) {
+                editor.on('init', function() {
+                    editor.setContent(description);
+                });
+            }
+        });
+    }
 
-// Assuming you have already created the new file as shown in your previous code
+    document.getElementById('applicationLink').value = applicationLink;
+
     const jobImageInput = document.getElementById('jobImage');
     if (jobImageInput) {
         // Create a Blob with the appropriate type

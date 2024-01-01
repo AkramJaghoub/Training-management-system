@@ -413,6 +413,16 @@ hr {
     gap: 5px;
 }
 
+strong{
+    font-weight: bolder;
+    font-family: sans-serif;
+    color: #000;
+}
+
+p{
+    font-family: sans-serif;
+    color: #000;
+}
 
 /* Media Query for Widgets */@media screen and (max-width: 768px) {
     .advertisement-widget {
@@ -424,4 +434,22 @@ hr {
     .articles::after {
         flex: auto;
     }
+}
+
+li{
+    color: #000;
+}
+
+#descriptionModal .modal-body ul {
+    list-style-type: disc; /* or 'circle', 'square', etc. */
+    padding-left: 20px; /* Adjust as needed for alignment */
+}
+
+#descriptionModal .modal-body ol {
+    list-style-type: decimal; /* or 'lower-alpha', 'upper-alpha', etc. */
+    padding-left: 20px; /* Adjust as needed for alignment */
+}
+
+#descriptionModal .modal-body li {
+    margin-bottom: 5px; /* Spacing between list items */
 }

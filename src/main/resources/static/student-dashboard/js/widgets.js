@@ -91,19 +91,25 @@ function showDescription(adId) {
     };
 
     const modalContentHtml = `
-        <strong>Company:</strong> ${ad.companyName}<br>
-        <strong>Location:</strong> ${ad.city}, ${ad.country}<br>
-        <p>${ad.description}</p>
-    `;
+        <strong>Company:</strong> <span style="color: #000">${ad.companyName}</span><br>
+        <strong>Location:</strong> <span style="color: #000">${ad.city}, ${ad.country}</span><br>
+         ${ad.description}  `;
 
     // Set the prepared content in the modal's body
     const modalBody = document.querySelector('#descriptionModal .modal-body');
     modalBody.innerHTML = modalContentHtml; // Use innerHTML as we are setting HTML content
 
-    // Show the modal using Bootstrap's JavaScript API
+    const advertisementData = document.getElementById('description-container-' + adId);
+    const applicationLink = advertisementData.getAttribute('data-application-link');
+
+    // Set the application link on the Apply button
+    const applyButton = document.getElementById('applyButton');
+    applyButton.onclick = function() {
+        window.open(applicationLink, '_blank'); // Open the application link in a new tab
+    };
+
     new bootstrap.Modal(document.getElementById('descriptionModal')).show();
 }
-
 
 function filterAds() {
     let searchInput = document.getElementById('searchInput').value.toLowerCase();

@@ -1,14 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.dropdown-item').forEach(item => {
         item.addEventListener('click', function(event) {
-            console.log('Notification clicked, id:', this.dataset.notificationId);
             event.preventDefault();
-            const notificationId = Number(this.dataset.notificationId); // Convert to number
+            event.stopPropagation(); // Add this to prevent event propagation
+            console.log('Notification clicked, id:', this.dataset.notificationId);
+            const notificationId = Number(this.dataset.notificationId);
             const confirmReadButton = document.getElementById('confirmRead');
             confirmReadButton.dataset.notificationId = notificationId;
-            const myModal = new bootstrap.Modal(document.getElementById('markAsReadModal'), {
-                keyboard: false
-            });
+            const myModal = new bootstrap.Modal(document.getElementById('markAsReadModal'));
             myModal.show();
         });
     });
@@ -30,11 +29,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 myModal.hide();
                 document.querySelector(`a[data-notification-id="${notificationId}"]`).closest('li').remove();
                 const notificationCountElement = document.getElementById('notificationCount');
-                const notificationCount = parseInt(notificationCountElement.textContent, 10);
-                notificationCountElement.textContent = (notificationCount - 1).toString();
+                const notificationCount = parseInt(notificationCountElement.textContent, 10) - 1;
+                notificationCountElement.textContent = notificationCount.toString();
+
+                // Disable dropdown if no notifications are left
+                if (notificationCount === 0) {
+                    disableNotificationDropdown();
+                }
             })
             .catch(error => {
                 console.error('Error marking notification as read:', error);
             });
     });
 });
+
+function disableNotificationDropdown() {
+    const dropdownToggle = document.getElementById('navbarDropdown');
+    dropdownToggle.classList.add('disabled'); // Add the disabled class
+    dropdownToggle.removeAttribute('data-bs-toggle'); // Remove dropdown toggle functionality
+}

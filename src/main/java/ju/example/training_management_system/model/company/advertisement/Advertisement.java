@@ -44,6 +44,8 @@ public class Advertisement {
     @Enumerated(EnumType.STRING)
     private WorkMode workMode;
 
+    private String applicationLink;
+
     @Column(columnDefinition = "LONGBLOB")
     private byte[] image;
 
@@ -66,6 +68,7 @@ public class Advertisement {
                 .description(postDto.getDescription())
                 .postDate(LocalDateTime.now())
                 .adStatus(PENDING)
+                .applicationLink(applicationLink)
                 .build();
     }
 }

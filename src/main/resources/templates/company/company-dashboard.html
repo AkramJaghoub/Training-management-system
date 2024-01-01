@@ -14,8 +14,6 @@
     <!--=============== BOXICONS ===============-->
     <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
 
-    <!--=============== SWIPER CSS ===============-->
-
     <!--=============== CSS ===============-->
     <link href="/main/css/styles.css" rel="stylesheet">
     <link href="/company-dashboard/css/widget.css" rel="stylesheet">
@@ -42,19 +40,25 @@
             </li>
 
             <li class="nav-item dropdown notification-wrapper">
-                <a class="nav-link dropdown-toggle notification-icon" href="#" id="navbarDropdown" role="button"
-                   data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle notification-icon"
+                   href="#"
+                   id="navbarDropdown"
+                   role="button"
+                   data-bs-toggle="dropdown"
+                   aria-expanded="false"
+                   th:classappend="${#lists.isEmpty(notifications) ? 'disabled' : ''}"> <!-- Disable if empty -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                          class="bi bi-bell-fill" viewBox="0 0 16 16">
                         <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
                     </svg>
                     <span id="notificationCount" class="notification-badge">
-                        [[${#lists.size(notifications)}]]
+                           [[${#lists.size(notifications)}]]
                     </span>
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown" th:unless="${#lists.isEmpty(notifications)}">
                     <li th:each="notification : ${notifications}">
-                        <a class="dropdown-item text-wrap" href="#" th:data-notification-id="${notification.id}" th:text="${notification.message}">Notification message</a>
+                        <a class="dropdown-item text-wrap" href="#" th:data-notification-id="${notification.id}"
+                           th:text="${notification.message}">Notification message</a>
                     </li>
                 </ul>
             </li>
@@ -136,12 +140,14 @@
                 <input id="hiddenCompanyImageUrl" th:value="${companyImage}" type="hidden"/>
 
                 <!-- Modal -->
-                <div class="modal fade" id="markAsReadModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                <div class="modal fade" id="markAsReadModal" tabindex="-1" aria-labelledby="markAsReadModalLabel"
+                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="markAsReadModalLabel">Confirm Action</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 Are you sure you want to mark this notification as read?
@@ -241,7 +247,8 @@
                                              th:data-description="${advertisement.description}"
                                              th:data-company-name="${advertisement.company.companyName}"
                                              th:data-city="${advertisement.city}"
-                                             th:data-country="${advertisement.country}">
+                                             th:data-country="${advertisement.country}"
+                                             th:data-application-link="${advertisement.applicationLink}">
                                         </div>
 
                                         <button type="button" style="padding-left: 1.5rem;"
@@ -291,12 +298,12 @@
                                 <div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog"
                                      aria-labelledby="descriptionModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
+                                        <div class="modal-content" style="margin-left: -10rem; width: 170%;">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="descriptionModalLabel">Advertisement
                                                     Description</h5>
                                             </div>
-                                            <div class="modal-body">
+                                            <div class="modal-body" style="padding: 40px;">
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
@@ -328,7 +335,8 @@
                                                         <div class="mb-3 error-message" id="jobTitleError"></div>
                                                     </div>
                                                     <div class="form-group mb-3">
-                                                        <label for="internsRequired">Number of Interns Required:</label>
+                                                        <label for="internsRequired">Number of Interns
+                                                            Required:</label>
                                                         <input class="form-control" id="internsRequired"
                                                                name="internsRequired"
                                                                required
@@ -336,9 +344,11 @@
                                                         <div class="mb-3 error-message" id="internsRequiredError"></div>
                                                     </div>
 
-                                                    <div class="form-group mb-3"> <!-- Added mb-3 for margin-bottom -->
+                                                    <div class="form-group mb-3">
+                                                        <!-- Added mb-3 for margin-bottom -->
                                                         <label for="jobDuration">Job Duration:</label>
-                                                        <input class="form-control" id="jobDuration" name="jobDuration"
+                                                        <input class="form-control" id="jobDuration"
+                                                               name="jobDuration"
                                                                required
                                                                type="number">
                                                         <div class="mb-3 error-message" id="jobDurationError"></div>
@@ -346,18 +356,19 @@
 
                                                     <div class="form-group mb-3">
                                                         <label for="countrySelect">Country:</label>
-                                                        <select class="form-control" id="countrySelect" name="country"
+                                                        <select class="form-control" id="countrySelect"
+                                                                name="country"
                                                                 required>
-                                                            <!-- Dynamically populate countries -->
                                                         </select>
+                                                        <div class="mb-3 error-message" id="countrySelectError"></div>
                                                     </div>
 
                                                     <div class="form-group mb-3">
                                                         <label for="citySelect">City:</label>
                                                         <select class="form-control" id="citySelect" name="city"
                                                                 required>
-                                                            <!-- Dynamically populate cities based on selected country -->
                                                         </select>
+                                                        <div class="mb-3 error-message" id="citySelectError"></div>
                                                     </div>
 
                                                     <div class="form-group mb-3">
@@ -378,6 +389,7 @@
                                                                        for="partTime">Part-time</label>
                                                             </div>
                                                         </div>
+                                                        <div class="mb-3 error-message" id="jobTypeError"></div>
                                                     </div>
 
                                                     <div class="form-group mb-3">
@@ -388,6 +400,14 @@
                                                             <option value="ON_SITE">On-site</option>
                                                             <option value="HYBRID">Hybrid</option>
                                                         </select>
+                                                        <div class="mb-3 error-message" id="workModeError"></div>
+                                                    </div>
+
+                                                    <div class="form-group mb-3">
+                                                        <label for="applicationLink">Application Link:</label>
+                                                        <input class="form-control" id="applicationLink"
+                                                               name="applicationLink" required type="text">
+                                                        <div class="mb-3 error-message" id="applicationLinkError"></div>
                                                     </div>
 
                                                     <div class="form-group mb-3">
@@ -395,13 +415,14 @@
                                                         <input accept="image/*" class="form-control" id="jobImage"
                                                                name="jobImage"
                                                                type="file">
+                                                        <div class="mb-3 error-message" id="jobImageError"></div>
                                                     </div>
 
                                                     <div class="form-group mb-3">
-                                                        <label for="description">Job Description:</label>
-                                                        <textarea class="form-control" id="description"
-                                                                  name="description"
+                                                        <label for="editor">Job Description:</label>
+                                                        <textarea class="form-control" id="editor" name="description"
                                                                   required></textarea>
+                                                        <div class="mb-3 error-message" id="descriptionError"></div>
                                                     </div>
                                                 </form>
                                             </div>
@@ -451,7 +472,6 @@
     let subMenu = document.getElementById("subMenu");
 
     function toggleMenu() {
-        const subMenuWrap = document.getElementById("subMenu");
         subMenu.classList.toggle("open-menu");
     }
 </script>
@@ -464,13 +484,14 @@
 
 <!--=============== MAIN JS ===============-->
 <script src="/main/js/main.js"></script>
-
 <script src="/company-dashboard/js/fetchAds.js"></script>
 <script src="/company-dashboard/js/notification.js"></script>
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 <script src="/job-post/js/country-api.js"></script>
 <script src="/main/js/profile-pic.js" defer></script>
-<script src="/main/js/loader.js"></script>
+<script src="/main/js/editor.js"></script>
+<script src="https://cdn.tiny.cloud/1/fll71bhwrljxg6ssyfvcooesy7xpgf9l7d196w32tav4gng5/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

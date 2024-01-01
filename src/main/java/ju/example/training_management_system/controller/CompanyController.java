@@ -1,18 +1,22 @@
 package ju.example.training_management_system.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import ju.example.training_management_system.dto.CompanyInfoDto;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.service.company.CompanyService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import static java.util.Objects.isNull;
+import static ju.example.training_management_system.util.Utils.redirectToPage;
 
 @Controller
 @RequestMapping("/company")
@@ -20,45 +24,45 @@ import org.springframework.web.bind.annotation.*;
 public class CompanyController {
 
     private final CompanyService companyService;
-    private final HttpServletResponse response;
     private final HttpServletRequest request;
 
     @GetMapping("/dashboard")
-    public String setUpCompanyDashboard(Model model) {
+    public String getCompanyDashboard(Model model) {
         HttpSession session = request.getSession();
-
         String email = (String) session.getAttribute("email");
-        if (email != null && !email.equals("root")) {
-            companyService.setUpCompanyDashboard(model, email, response);
-            session.setAttribute("email", email);
-            return "/company/company-dashboard";
+
+        if (isNull(email)) {
+            return "redirect:/login";
         }
-        return "redirect:/login";
+
+        ApiResponse response = companyService.setUpCompanyDashboard(model, email);
+        System.out.println(response.getMessage() + " response " + response.getStatus());
+        return response.getStatus() == HttpStatus.OK ? "/company/company-dashboard"
+                : "redirect:/login";
     }
 
     @GetMapping("/manage-profile")
     public String getManageProfilePage(Model model) {
         HttpSession session = request.getSession();
-
         String email = (String) session.getAttribute("email");
-        if (email != null && !email.equals("root")) {
-            companyService.setManageProfile(model, email);
-            return "/company/manage-profile";
+        if (isNull(email)) {
+            return "redirect:/login";
         }
-        return "redirect:/login";
+
+        ApiResponse response = companyService.setManageProfile(model, email);
+        return response.getStatus() == HttpStatus.OK ? "/company/manage-profile"
+                : "redirect:/login";
     }
 
     @PutMapping("/manage-profile")
     public ResponseEntity<?> manageProfile(@ModelAttribute CompanyInfoDto infoDto) {
         HttpSession session = request.getSession();
-
         String email = (String) session.getAttribute("email");
-        if (email != null && !email.equals("root")) {
-            ApiResponse apiResponse = companyService.updateCompanyDetails(infoDto, email);
-            return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
+        if (isNull(email)) {
+            return redirectToPage("/login");
         }
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "/login");
-        return new ResponseEntity<>(headers, HttpStatus.FOUND);
+
+        ApiResponse response = companyService.updateCompanyDetails(infoDto, email);
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 }

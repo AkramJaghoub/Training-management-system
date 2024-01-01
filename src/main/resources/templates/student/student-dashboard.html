@@ -193,7 +193,8 @@
                                              th:data-description="${advertisement.description}"
                                              th:data-company-name="${advertisement.company.companyName}"
                                              th:data-city="${advertisement.city}"
-                                             th:data-country="${advertisement.country}">
+                                             th:data-country="${advertisement.country}"
+                                             th:data-application-link="${advertisement.applicationLink}">
                                         </div>
 
                                         <button type="button" style="padding-left: 1.5rem;"
@@ -244,132 +245,22 @@
                                 <div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog"
                                      aria-labelledby="descriptionModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
+                                        <div class="modal-content" style="margin-left: -10rem; width: 170%;">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="descriptionModalLabel">Advertisement
                                                     Description</h5>
                                             </div>
-                                            <div class="modal-body">
+                                            <div class="modal-body" style="padding: 40px;">
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">
                                                     Close
                                                 </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="modal fade" id="updateAdModal" tabindex="-1"
-                                     aria-labelledby="updateAdModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="updateAdModalLabel">Update
-                                                    Advertisement</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form id="updateAdForm">
-                                                    <input type="hidden" id="adId" name="adId">
-                                                    <div class="form-group mb-3">
-                                                        <label for="jobTitle">Job Title:</label>
-                                                        <input class="form-control" id="jobTitle" name="jobTitle"
-                                                               required type="text">
-                                                        <div class="mb-3 error-message" id="jobTitleError"></div>
-                                                    </div>
-                                                    <div class="form-group mb-3">
-                                                        <label for="internsRequired">Number of Interns
-                                                            Required:</label>
-                                                        <input class="form-control" id="internsRequired"
-                                                               name="internsRequired"
-                                                               required
-                                                               type="number">
-                                                        <div class="mb-3 error-message"
-                                                             id="internsRequiredError"></div>
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <!-- Added mb-3 for margin-bottom -->
-                                                        <label for="jobDuration">Job Duration:</label>
-                                                        <input class="form-control" id="jobDuration"
-                                                               name="jobDuration"
-                                                               required
-                                                               type="number">
-                                                        <div class="mb-3 error-message" id="jobDurationError"></div>
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="countrySelect">Country:</label>
-                                                        <select class="form-control" id="countrySelect"
-                                                                name="country"
-                                                                required>
-                                                            <!-- Dynamically populate countries -->
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="citySelect">City:</label>
-                                                        <select class="form-control" id="citySelect" name="city"
-                                                                required>
-                                                            <!-- Dynamically populate cities based on selected country -->
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label>Job Type:</label>
-                                                        <div class="d-flex">
-                                                            <div class="form-check me-3">
-                                                                <input class="form-check-input" id="fullTime"
-                                                                       name="jobType" required
-                                                                       type="radio" value="FULL_TIME">
-                                                                <label class="form-check-label"
-                                                                       for="fullTime">Full-time</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" id="partTime"
-                                                                       name="jobType" required
-                                                                       type="radio" value="PART_TIME">
-                                                                <label class="form-check-label"
-                                                                       for="partTime">Part-time</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="workMode">Work Mode:</label>
-                                                        <select class="form-control" id="workMode" name="workMode"
-                                                                required>
-                                                            <option value="REMOTE">Remote</option>
-                                                            <option value="ON_SITE">On-site</option>
-                                                            <option value="HYBRID">Hybrid</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label class="form-label" for="jobImage">Job Image:</label>
-                                                        <input accept="image/*" class="form-control" id="jobImage"
-                                                               name="jobImage"
-                                                               type="file">
-                                                    </div>
-
-                                                    <div class="form-group mb-3">
-                                                        <label for="description">Job Description:</label>
-                                                        <textarea class="form-control" id="description"
-                                                                  name="description"
-                                                                  required></textarea>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">
-                                                    Close
-                                                </button>
-                                                <button type="button" class="btn btn-primary" id="updateAdButton">
-                                                    Update
+                                                <button id="applyButton" style="background-color: #0077ff"
+                                                        type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">
+                                                    Apply
                                                 </button>
                                             </div>
                                         </div>

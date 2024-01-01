@@ -2,6 +2,9 @@ package ju.example.training_management_system.util;
 
 import ju.example.training_management_system.exception.StorageException;
 import ju.example.training_management_system.model.users.Role;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
@@ -16,12 +19,22 @@ public final class Utils {
     private Utils() {
     }
 
+    public static ResponseEntity<?> redirectToPage(String location) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", location);
+        return new ResponseEntity<>(headers, HttpStatus.FOUND);
+    }
+
     public static String getRequiredDashboard(Role role) {
         return switch (role) {
             case ADMIN -> "/admin/dashboard";
             case COMPANY -> "/company/dashboard";
             case STUDENT -> "/student/dashboard";
         };
+    }
+
+    public static boolean isNotNull(String str){
+        return str != null;
     }
 
     public static boolean isNotEqual(String str1, String str2) {

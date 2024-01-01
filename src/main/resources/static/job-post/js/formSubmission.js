@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('submitButton').addEventListener('click', function (event) {
         event.preventDefault();
 
-        // Clear previous error messages
         document.getElementById('jobTitleError').textContent = '';
         document.getElementById('internsRequiredError').textContent = '';
         document.getElementById('jobDurationError').textContent = '';
@@ -12,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('workModeError').textContent = '';
         document.getElementById('jobImageError').textContent = '';
         document.getElementById('descriptionError').textContent = '';
+        document.getElementById('applicationLinkError').textContent = '';
 
         const form = document.getElementById('postAdForm');
         const jobTitle = form.elements['jobTitle'].value;
@@ -22,17 +22,25 @@ document.addEventListener('DOMContentLoaded', function () {
         const jobType = form.querySelector('input[name="jobType"]:checked');
         const workMode = form.elements['workMode'].value;
         const jobImage = form.elements['jobImage'].files.length;
-        const description = form.elements['description'].value;
+        const description = tinymce.get('editor').getContent();
+        const applicationLink = form.elements['applicationLink'].value;
 
         let isValid = true;
 
-        // Add validations for each field
+        if (isNaN(internsRequired)) {
+            document.getElementById('internsRequiredError').textContent = 'Please enter a valid number for interns required.';
+            isValid = false;
+        }
+        if (isNaN(jobDuration)) {
+            document.getElementById('jobDurationError').textContent = 'Please enter a valid number for job duration.';
+            isValid = false;
+        }
         if (jobTitle.trim() === "") {
             document.getElementById('jobTitleError').textContent = 'Job Title is required';
             isValid = false;
         }
         if (internsRequired.trim() === "") {
-            document.getElementById('internsRequiredError').textContent = 'Number of Interns Required is required';
+            document.getElementById('internsRequiredError').textContent = 'Number of Interns is required';
             isValid = false;
         }
         if (jobDuration.trim() === "") {
@@ -61,6 +69,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         if (description.trim() === "") {
             document.getElementById('descriptionError').textContent = 'Job Description is required';
+            isValid = false;
+        }
+        if (applicationLink.trim() === "") {
+            document.getElementById('applicationLinkError').textContent = 'Application Link is required';
             isValid = false;
         }
 

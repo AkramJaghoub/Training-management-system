@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import static java.util.Objects.isNull;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin")
@@ -21,37 +23,37 @@ public class AdminController {
     @GetMapping("/dashboard")
     public String setUpAdminDashboard(Model model) {
         HttpSession session = request.getSession();
-
         String email = (String) session.getAttribute("email");
-        if (email != null) {
-            adminService.setUpAdminDashboardPage(model);
-            return "/admin/admin-dashboard";
+        if (isNull(email)) {
+            return "redirect:/login";
         }
-        return "redirect:/login";
+
+        adminService.setUpAdminDashboardPage(model);
+        return "/admin/admin-dashboard";
     }
 
     @GetMapping("/users")
     public String setUpAdminUserList(Model model) {
         HttpSession session = request.getSession();
-
         String email = (String) session.getAttribute("email");
-        if (email != null) {
-            adminService.setUpUserListPage(model);
-            return "/admin/users";
+        if (isNull(email)) {
+            return "redirect:/login";
         }
-        return "redirect:/login";
+
+        adminService.setUpUserListPage(model);
+        return "/admin/users";
     }
 
     @GetMapping("/advertisements")
     public String setUpAdminAdvertisementList(Model model) {
         HttpSession session = request.getSession();
-
         String email = (String) session.getAttribute("email");
-        if (email != null) {
-            adminService.setUpAdsListPage(model);
-            return "/admin/advertisement-data";
+        if (isNull(email)) {
+            return "redirect:/login";
         }
-        return "redirect:/login";
+
+        adminService.setUpAdsListPage(model);
+        return "/admin/advertisement-data";
     }
 
     @DeleteMapping("/delete/user/{id}")
@@ -61,8 +63,7 @@ public class AdminController {
     }
 
     @PutMapping("/update/ad-status/{id}")
-    public ResponseEntity<?> updateAdStatus(@PathVariable("id") long adId,
-                                            @RequestHeader("newStatus") String newStatus) {
+    public ResponseEntity<?> updateAdStatus(@PathVariable("id") long adId, @RequestHeader("newStatus") String newStatus) {
         ApiResponse response = adminService.updateAdStatus(adId, newStatus);
         return ResponseEntity.status(response.getStatus()).body(response);
     }

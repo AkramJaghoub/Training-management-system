@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-// TODO: Implement Spring security, JWT, two-factor authentication
-
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
@@ -28,10 +26,9 @@ public class LoginController {
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto, HttpSession session) {
         ApiResponse response = loginService.loginUser(loginDto, session);
 //        if (response.getStatus() == TEMPORARY_REDIRECT) {
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.add("Location", "/auth/2fa/confirm-email");
-//            return new ResponseEntity<>(headers, HttpStatus.FOUND);
+//            redirectToPage("/auth/2fa/confirm-email");
 //        }
+
         return new ResponseEntity<>(response, response.getStatus());
     }
 }

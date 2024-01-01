@@ -83,7 +83,6 @@ function closeAllKebabMenus() {
 }
 
 
-// Shows the description in a modal for the given ad ID
 function showDescription(adId) {
     // Fetch the description text from the hidden container
     const descriptionContainer = document.getElementById('description-container-' + adId);
@@ -96,10 +95,9 @@ function showDescription(adId) {
     };
 
     const modalContentHtml = `
-        <strong>Company:</strong> ${ad.companyName}<br>
-        <strong>Location:</strong> ${ad.city}, ${ad.country}<br>
-        <p>${ad.description}</p>
-    `;
+        <strong>Company:</strong> <span style="color: #000">${ad.companyName}</span><br>
+        <strong>Location:</strong> <span style="color: #000">${ad.city}, ${ad.country}</span><br>
+         ${ad.description}  `;
 
     // Set the prepared content in the modal's body
     const modalBody = document.querySelector('#descriptionModal .modal-body');
@@ -108,6 +106,7 @@ function showDescription(adId) {
     // Show the modal using Bootstrap's JavaScript API
     new bootstrap.Modal(document.getElementById('descriptionModal')).show();
 }
+
 
 function filterAds() {
     let searchInput = document.getElementById('searchInput').value.toLowerCase();

@@ -17,6 +17,7 @@ import ju.example.training_management_system.repository.users.CompanyRepository;
 import ju.example.training_management_system.repository.users.StudentRepository;
 import ju.example.training_management_system.repository.users.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -48,15 +49,40 @@ public class AdminService {
     }
 
     private void setUpFields(Model model) {
-        LocalDateTime now = LocalDateTime.now();
-
         List<User> users = userRepository.findAll();
         List<Advertisement> advertisements = advertisementRepository.findAll();
 
         Map<Long, String> userImages = new HashMap<>();
-        List<User> newUsers = users.stream()
+        List<User> newUsers = getNewUsers(users, userImages);
+
+        long numOfCompanies = users.stream().
+                filter(user -> user.getRole() == Role.COMPANY).
+                count();
+
+        long numOfStudents = users.stream().
+                filter(user -> user.getRole() == Role.STUDENT).
+                count();
+
+        long newAdsCount = advertisements.stream()
+                .filter(ad -> ad.getPostDate() != null &&
+                        ChronoUnit.HOURS.between(ad.getPostDate(), LocalDateTime.now()) < 24)
+                .count();
+
+        model.addAttribute("usersCount", users.size());
+        model.addAttribute("companiesCount", numOfCompanies);
+        model.addAttribute("studentsCount", numOfStudents);
+        model.addAttribute("advertisementsCount", advertisements.size());
+        model.addAttribute("newUsers", newUsers);
+        model.addAttribute("users", users);
+        model.addAttribute("userImages", userImages);
+        model.addAttribute("newUsersCount", newUsers.size());
+        model.addAttribute("newAdvertisementsCount", newAdsCount);
+    }
+
+    private List<User> getNewUsers(List<User> users, Map<Long, String> userImages) {
+        return users.stream()
                 .filter(user -> user.getJoinDate() != null &&
-                        ChronoUnit.HOURS.between(user.getJoinDate(), now) < 24)
+                        ChronoUnit.HOURS.between(user.getJoinDate(), LocalDateTime.now()) < 24)
                 .peek(user -> {
                     String base64Image = null;
                     if (user instanceof Company && ((Company) user).getImage() != null) {
@@ -69,29 +95,6 @@ public class AdminService {
                     userImages.put(user.getId(), base64Image);
                 })
                 .toList();
-
-        long numOfCompanies = users.stream().
-                filter(user -> user.getRole() == Role.COMPANY).
-                count();
-
-        long numOfStudents = users.stream().
-                filter(user -> user.getRole() == Role.STUDENT).
-                count();
-
-        long newAdsCount = advertisements.stream()
-                .filter(ad -> ad.getPostDate() != null &&
-                        ChronoUnit.HOURS.between(ad.getPostDate(), now) < 24)
-                .count();
-
-        model.addAttribute("usersCount", users.size());
-        model.addAttribute("companiesCount", numOfCompanies);
-        model.addAttribute("studentsCount", numOfStudents);
-        model.addAttribute("advertisementsCount", advertisements.size());
-        model.addAttribute("newUsers", newUsers);
-        model.addAttribute("users", users);
-        model.addAttribute("userImages", userImages);
-        model.addAttribute("newUsersCount", newUsers.size());
-        model.addAttribute("newAdvertisementsCount", newAdsCount);
     }
 
     public void setUpAdsListPage(Model model) {
@@ -120,7 +123,6 @@ public class AdminService {
             }
 
             userRepository.deleteById(userId);
-
             return new ApiResponse("User with id [" + userId + "] was deleted successfully", HttpStatus.OK);
 
         } catch (UserNotFoundException ex) {
@@ -139,10 +141,7 @@ public class AdminService {
                 ad.setAdStatus(AdStatus.valueOf(newStatus));
 
                 //notify the company
-                Notification notification = new Notification();
-                notification.setMessage("Your Advertisement with job title [" + ad.getJobTitle() + "] was "
-                        + newStatus.toLowerCase());
-                notification.setCompany(ad.getCompany());
+                Notification notification = notifyUser(newStatus, ad.getJobTitle(), ad.getCompany());
                 notificationRepository.save(notification);
             }
 
@@ -152,5 +151,13 @@ public class AdminService {
         } catch (AdDoesNotExistException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    private Notification notifyUser(String newStatus, String jobTitle, Company company) {
+        Notification notification = new Notification();
+        notification.setMessage("Your Advertisement with job title [" + jobTitle + "] was "
+                + newStatus.toLowerCase());
+        notification.setCompany(company);
+        return notification;
     }
 }

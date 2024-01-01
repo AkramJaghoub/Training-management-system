@@ -33,6 +33,30 @@
                 <a class="nav__link" href="/advertisement/ads-form">Post Job</a>
             </li>
 
+            <li class="nav-item dropdown notification-wrapper">
+                <a class="nav-link dropdown-toggle notification-icon"
+                   href="#"
+                   id="navbarDropdown"
+                   role="button"
+                   data-bs-toggle="dropdown"
+                   aria-expanded="false"
+                   th:classappend="${#lists.isEmpty(notifications) ? 'disabled' : ''}"> <!-- Disable if empty -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="black"
+                         class="bi bi-bell-fill" viewBox="0 0 16 16">
+                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                    </svg>
+                    <span id="notificationCount" class="notification-badge">
+                           [[${#lists.size(notifications)}]]
+                    </span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown" th:unless="${#lists.isEmpty(notifications)}">
+                    <li th:each="notification : ${notifications}">
+                        <a class="dropdown-item text-wrap" href="#" th:data-notification-id="${notification.id}"
+                           th:text="${notification.message}">Notification message</a>
+                    </li>
+                </ul>
+            </li>
+
             <li class="nav__item">
                 <a href="#" id="profileLink" onclick="toggleMenu()">
                     <div class="circle-icon">
@@ -57,7 +81,7 @@
                                           fill-rule="evenodd"/>
                                 </svg>
                             </div>
-                            <h3 id="companyNameDisplay" th:text="${companyName}"></h3>
+                            <h3 th:text="${companyName}"></h3>
                         </div>
                         <hr>
 
@@ -113,6 +137,25 @@
                 <div class="hero">
                     <div class="centered-form">
                         <input id="hiddenCompanyImageUrl" th:value="${companyImage}" type="hidden"/>
+
+                        <div class="modal fade" id="markAsReadModal" tabindex="-1" aria-labelledby="markAsReadModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="markAsReadModalLabel">Confirm Action</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to mark this notification as read?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-primary" id="confirmRead">Mark as Read</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <h4 class="modal-title text-center" style="color:black ">Post a Job</h4>
                         <hr>
                         <form id="postAdForm">
@@ -186,6 +229,12 @@
                                 <div class="mb-3 error-message" id="workModeError"></div>
                             </div>
 
+                            <div class="form-group mb-3">
+                                <label for="applicationLink">Application Link:</label>
+                                <input class="form-control" id="applicationLink" name="applicationLink" required type="text">
+                                <div class="mb-3 error-message" id="applicationLinkError"></div>
+                            </div>
+
                             <!-- Job Image -->
                             <div class="form-group mb-3">
                                 <label class="form-label" for="jobImage">Job Image:</label>
@@ -195,8 +244,8 @@
 
                             <!-- Job Description -->
                             <div class="form-group mb-3">
-                                <label for="description">Job Description:</label>
-                                <textarea class="form-control" id="description" name="description" required></textarea>
+                                <label for="editor">Job Description:</label>
+                                <textarea class="form-control" id="editor" name="description" required></textarea>
                                 <div class="mb-3 error-message" id="descriptionError"></div>
                             </div>
                             <button class="btn btn-primary" id="submitButton" type="button">Post</button>
@@ -245,7 +294,6 @@
     let subMenu = document.getElementById("subMenu");
 
     function toggleMenu() {
-        const subMenuWrap = document.getElementById("subMenu");
         subMenu.classList.toggle("open-menu");
     }
 
@@ -275,9 +323,11 @@
 </script>
 <script src="/main/js/main.js"></script>
 
+<script src="/company-dashboard/js/notification.js"></script>
 <script src="/job-post/js/country-api.js"></script>
 <script src="/job-post/js/formSubmission.js"></script>
 <script src="/main/js/profile-pic.js" defer></script>
-
+<script src="https://cdn.tiny.cloud/1/fll71bhwrljxg6ssyfvcooesy7xpgf9l7d196w32tav4gng5/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="/main/js/editor.js"></script>
 </body>
 </html>
