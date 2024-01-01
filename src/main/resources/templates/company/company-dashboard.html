@@ -57,7 +57,7 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown" th:unless="${#lists.isEmpty(notifications)}">
                     <li th:each="notification : ${notifications}">
-                        <a class="dropdown-item text-wrap" href="#" th:data-notification-id="${notification.id}"
+                        <a class="dropdown-item notification-drop text-wrap" href="#" th:data-notification-id="${notification.id}"
                            th:text="${notification.message}">Notification message</a>
                     </li>
                 </ul>
@@ -140,14 +140,12 @@
                 <input id="hiddenCompanyImageUrl" th:value="${companyImage}" type="hidden"/>
 
                 <!-- Modal -->
-                <div class="modal fade" id="markAsReadModal" tabindex="-1" aria-labelledby="markAsReadModalLabel"
-                     aria-hidden="true">
+                <div class="modal fade" id="markAsReadModal" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="markAsReadModalLabel">Confirm Action</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
                                 Are you sure you want to mark this notification as read?
@@ -268,15 +266,13 @@
                                     <span id="errorMessage" style="margin-left: 5px; font-size: 1rem;"></span>
                                 </div>
 
-                                <div class="modal fade" id="confirmationModal" tabindex="-1"
-                                     aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="confirmationModal" tabindex="-1">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="confirmationModalLabel">Confirm
                                                     Action</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                             </div>
                                             <div class="modal-body">
                                                 Are you sure you want to <span id="actionType"></span> advertisement

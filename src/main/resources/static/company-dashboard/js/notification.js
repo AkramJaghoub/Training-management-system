@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.dropdown-item').forEach(item => {
+    document.querySelectorAll('.dropdown-item.notification-drop').forEach(item => {
         item.addEventListener('click', function(event) {
             event.preventDefault();
-            event.stopPropagation(); // Add this to prevent event propagation
+            event.stopPropagation();
             console.log('Notification clicked, id:', this.dataset.notificationId);
             const notificationId = Number(this.dataset.notificationId);
             const confirmReadButton = document.getElementById('confirmRead');
