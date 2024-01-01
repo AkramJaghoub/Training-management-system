@@ -41,6 +41,13 @@ public class CompanyService {
         return null;
     }
 
+    public Company checkOnUserType(User user,String email){
+        if (!(user instanceof Company company)) {
+            throw new UnauthorizedCompanyAccessException("User with email " + email + " wasn't recognized as a company");
+        }
+        return company;
+    }
+
     @Transactional
     public ApiResponse updateCompanyDetails(@RequestBody CompanyInfoDto infoDto,
                                             String email) {
@@ -53,9 +60,7 @@ public class CompanyService {
                 throw new UserNotFoundException("User with email " + email + " wasn't found");
             }
 
-            if (!(existingUser instanceof Company company)) {
-                throw new UnauthorizedCompanyAccessException("User with email " + email + " wasn't recognized as a company");
-            }
+            Company company = checkOnUserType(existingUser,email);
 
 //        if (userData.containsKey("password") && userData.get("password") != null) {
 //            String hashedPassword = PasswordHashingUtil.hashPassword((String) userData.get("password"));
@@ -96,13 +101,15 @@ public class CompanyService {
 
     public void setManageProfile(Model model, String email) {
         User existingUser = userRepository.findByEmail(email);
+
         if (existingUser == null) {
             throw new UserNotFoundException("User with email " + email + " wasn't found");
         }
 
-        if (!(existingUser instanceof Company company)) {
-            throw new UnauthorizedCompanyAccessException("User with email " + email + " wasn't recognized as a company");
-        }
+        Company company = checkOnUserType(existingUser,email);
+
+        List<Notification> notifications = notificationRepository.findByCompany(company);
+
 
         String base64Image = null;
         if (company.getImage() != null) {
@@ -118,6 +125,8 @@ public class CompanyService {
         model.addAttribute("numOfEmployees", company.getNumOfEmployees());
         model.addAttribute("establishmentYear", company.getEstablishmentYear());
         model.addAttribute("companyImage", base64Image);
+        model.addAttribute("notifications", notifications);
+
     }
 
     public void setUpCompanyDashboard(Model model, String email, HttpServletResponse response) {
@@ -126,9 +135,7 @@ public class CompanyService {
             throw new UserNotFoundException("User with email " + email + " wasn't found");
         }
 
-        if (!(existingUser instanceof Company company)) {
-            throw new UnauthorizedCompanyAccessException("User with email " + email + " wasn't recognized as a company");
-        }
+        Company company = checkOnUserType(existingUser,email);
 
         String base64Image = null;
         if (company.getImage() != null) {
