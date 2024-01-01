@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
 import static ju.example.training_management_system.util.Utils.*;
 
@@ -33,15 +34,15 @@ public class CompanyService {
     private final AdvertisementRepository advertisementRepository;
     private final NotificationRepository notificationRepository;
 
-    public String getCompanyName(String email) {
+    public Optional<String> getCompanyName(String email) {
         User user = userRepository.findByEmail(email);
         if (user instanceof Company company) {
-            return company.getCompanyName();
+            return Optional.of(company.getCompanyName());
         }
-        return null;
+        return Optional.empty();
     }
 
-    public Company checkOnUserType(User user,String email){
+    public Company checkOnUserType(User user, String email) {
         if (!(user instanceof Company company)) {
             throw new UnauthorizedCompanyAccessException("User with email " + email + " wasn't recognized as a company");
         }
@@ -60,7 +61,7 @@ public class CompanyService {
                 throw new UserNotFoundException("User with email " + email + " wasn't found");
             }
 
-            Company company = checkOnUserType(existingUser,email);
+            Company company = checkOnUserType(existingUser, email);
 
 //        if (userData.containsKey("password") && userData.get("password") != null) {
 //            String hashedPassword = PasswordHashingUtil.hashPassword((String) userData.get("password"));
@@ -106,7 +107,7 @@ public class CompanyService {
             throw new UserNotFoundException("User with email " + email + " wasn't found");
         }
 
-        Company company = checkOnUserType(existingUser,email);
+        Company company = checkOnUserType(existingUser, email);
 
         List<Notification> notifications = notificationRepository.findByCompany(company);
 
@@ -135,7 +136,7 @@ public class CompanyService {
             throw new UserNotFoundException("User with email " + email + " wasn't found");
         }
 
-        Company company = checkOnUserType(existingUser,email);
+        Company company = checkOnUserType(existingUser, email);
 
         String base64Image = null;
         if (company.getImage() != null) {

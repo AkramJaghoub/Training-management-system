@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -65,12 +66,13 @@ public class AdvertisementController {
 
         String email = (String) session.getAttribute("email");
         if (email != null && !email.equals("root")) {
-            String companyName = companyService.getCompanyName(email);
-            List<Advertisement> advertisements = adsPostService.getAllAdvertisementsForCompany(companyName);
-            session.setAttribute("email", email);
-            return ResponseEntity.ok(advertisements);
+            Optional<String> opt = companyService.getCompanyName(email);
+            if(opt.isPresent()) {
+                List<Advertisement> advertisements = adsPostService.getAllAdvertisementsForCompany(opt.get());
+                session.setAttribute("email", email);
+                return ResponseEntity.ok(advertisements);
+            }
         }
-
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/login");
         return new ResponseEntity<>(headers, HttpStatus.FOUND);
