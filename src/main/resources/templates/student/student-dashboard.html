@@ -58,8 +58,7 @@
                     <div class="sub-menu">
                         <span class="profile-arrow">&#9660;</span>
                         <div class="user-info">
-                            <div class="circle-icon"
-                                 style="box-shadow: 0 0 0 rgba(0, 0, 0, 0); width: 60px; height: 60px;">
+                            <div class="circle-icon">
                                 <svg class="bi bi-person-circle" fill="gray" height="28" viewBox="0 0 16 16"
                                      width="28" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -67,7 +66,7 @@
                                           fill-rule="evenodd"/>
                                 </svg>
                             </div>
-                            <h3 style="font-size: 1.4rem;" id="studentNameDisplay"></h3>
+                            <h3 class="user-name" th:text="${studentName}"></h3>
                         </div>
                         <hr>
 
@@ -118,38 +117,278 @@
     <section class="home container" id="home">
         <div class="home__content">
             <div class="home__group">
-                <div class="hero">
-                    <input id="hiddenStudentImageUrl" th:value="${studentImage}" type="hidden"/>
-                    <div class="article-container">
-                        <div class="filter-banner">
-                            <!-- Filter banner content goes here -->
-                            <h3 class="ad-h3">Advertisements</h3>
-                            <div class="filters d-flex align-items-center">
-                                <div class="d-flex align-items-center me-3">
-                                    <label for="mode" class="form-label me-2">Mode:</label>
-                                    <select class="form-select no-border" id="mode" name="mode" style="padding-right: 1.7rem">
-                                        <option value="all" selected>All</option>
-                                        <option value="REMOTE">Remote</option>
-                                        <option value="ON_SITE">On-site</option>
-                                        <option value="HYBRID">Hybrid</option>
-                                    </select>
+                <input id="hiddenStudentImageUrl" th:value="${studentImage}" type="hidden"/>
+                <div class="row justify-content-center">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title ad-h3">Advertisements</h4>
+                                <div class="search-bar">
+                                    <label for="searchInput">
+                                    </label><input type="text" id="searchInput" class="form-control"
+                                                   placeholder="Search...">
                                 </div>
+                                <div class="filters d-flex align-items-center">
+                                    <div class="d-flex align-items-center me-3">
+                                        <label for="modeFilter" class="form-label me-2">Mode:</label>
+                                        <select class="form-select no-border" id="modeFilter" name="mode"
+                                                style="padding-right: 1.8rem" onchange="filterAds()">
+                                            <option value="all" selected>All</option>
+                                            <option value="REMOTE">Remote</option>
+                                            <option value="ON_SITE">On-site</option>
+                                            <option value="HYBRID">Hybrid</option>
+                                        </select>
 
-                                <div class="d-flex align-items-center">
-                                    <label for="type" class="form-label me-2">Type:</label>
-                                    <select class="form-select no-border" id="type" name="type">
-                                        <option value="all" selected>All</option>
-                                        <option value="FULL_TIME">Full-time</option>
-                                        <option value="PART_TIME">Part-time</option>
-                                    </select>
+                                        <div class="d-flex align-items-center">
+                                            <label for="typeFilter" class="form-label me-2" style="margin-left: -2rem;">Type:</label>
+                                            <select class="form-select no-border" id="typeFilter" name="type"
+                                                    style="padding-right: 1.6rem;"
+                                                    onchange="filterAds()">
+                                                <option value="all" selected>All</option>
+                                                <option value="FULL_TIME">Full-time</option>
+                                                <option value="PART_TIME">Part-time</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="card-body">
+                                <div class="articles">
+                                    <div th:if="${#lists.isEmpty(advertisements)}" class="no-ads">No advertisements
+                                        available.
+                                    </div>
+                                    <div id="noAdsMessage" class="no-ads">No Advertisements match your filters</div>
+                                    <div th:each="advertisement : ${advertisements}" class="advertisement-widget"
+                                         th:data-work-mode="${advertisement.workMode}"
+                                         th:data-job-type="${advertisement.jobType}"
+                                         th:data-id="${advertisement.id}"
+                                         th:data-image="${advertisement.image}">
 
-                        </div>
+                                        <h4 style="margin-bottom: 1.5rem;" th:text="${advertisement.jobTitle}"
+                                            th:data-job-title="${advertisement.jobTitle}">Job Title</h4>
+                                        <p><strong>Company:</strong> <span
+                                                th:text="${advertisement.company.companyName}"
+                                                th:data-company-name="${advertisement.company.companyName}"></span>
+                                        </p>
+                                        <p><strong>Posted:</strong> <span
+                                                th:text="${#temporals.format(advertisement.postDate, 'yyyy-MM-dd HH:mm')}">Post Date</span>
+                                        </p>
+                                        <p><strong>Interns Required:</strong> <span
+                                                th:text="${advertisement.internsRequired}"
+                                                th:data-interns-required="${advertisement.internsRequired}"></span>
+                                        </p>
+                                        <p><strong>Duration:</strong> <span
+                                                th:text="${advertisement.jobDuration}"
+                                                th:data-job-duration="${advertisement.jobDuration}"></span></p>
+                                        <p><strong>Job Type:</strong> <span
+                                                th:text="${advertisement.jobType}"
+                                                th:data-job-type="${advertisement.jobType}"></span>
+                                        </p>
+                                        <p><strong>Work Mode:</strong> <span
+                                                th:text="${advertisement.workMode}"
+                                                th:data-work-mode="${advertisement.workMode}"></span>
+                                        </p>
+                                        <div th:id="'description-container-' + ${advertisement.id}"
+                                             style="display: none;"
+                                             th:data-description="${advertisement.description}"
+                                             th:data-company-name="${advertisement.company.companyName}"
+                                             th:data-city="${advertisement.city}"
+                                             th:data-country="${advertisement.country}">
+                                        </div>
 
-                        <div class="articles">
-                            <div class="no-articles" id="noArticlesMessage" style="display: none;">
-                                No articles available.
+                                        <button type="button" style="padding-left: 1.5rem;"
+                                                class="btn btn-primary article-button view-description-button"
+                                                th:onclick="'showDescription(' + ${advertisement.id} + ');'">View
+                                            Description
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="alert alert-danger display-message" role="alert" id="errorAlert">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                         fill="currentColor" class="bi bi-exclamation-circle-fill"
+                                         viewBox="0 0 16 16">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
+                                    </svg>
+                                    `
+                                    <span id="errorMessage" style="margin-left: 5px; font-size: 1rem;"></span>
+                                </div>
+
+                                <div class="modal fade" id="confirmationModal" tabindex="-1"
+                                     aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="confirmationModalLabel">Confirm
+                                                    Action</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure you want to <span id="actionType"></span> advertisement
+                                                <br> with job title <span id="companyNameModal"></span> ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cancel
+                                                </button>
+                                                <button type="button" class="btn btn-primary" id="confirmBtn">
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Description Modal -->
+                                <div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog"
+                                     aria-labelledby="descriptionModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="descriptionModalLabel">Advertisement
+                                                    Description</h5>
+                                            </div>
+                                            <div class="modal-body">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="updateAdModal" tabindex="-1"
+                                     aria-labelledby="updateAdModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="updateAdModalLabel">Update
+                                                    Advertisement</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="updateAdForm">
+                                                    <input type="hidden" id="adId" name="adId">
+                                                    <div class="form-group mb-3">
+                                                        <label for="jobTitle">Job Title:</label>
+                                                        <input class="form-control" id="jobTitle" name="jobTitle"
+                                                               required type="text">
+                                                        <div class="mb-3 error-message" id="jobTitleError"></div>
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <label for="internsRequired">Number of Interns
+                                                            Required:</label>
+                                                        <input class="form-control" id="internsRequired"
+                                                               name="internsRequired"
+                                                               required
+                                                               type="number">
+                                                        <div class="mb-3 error-message"
+                                                             id="internsRequiredError"></div>
+                                                    </div>
+
+                                                    <div class="form-group mb-3">
+                                                        <!-- Added mb-3 for margin-bottom -->
+                                                        <label for="jobDuration">Job Duration:</label>
+                                                        <input class="form-control" id="jobDuration"
+                                                               name="jobDuration"
+                                                               required
+                                                               type="number">
+                                                        <div class="mb-3 error-message" id="jobDurationError"></div>
+                                                    </div>
+
+                                                    <div class="form-group mb-3">
+                                                        <label for="countrySelect">Country:</label>
+                                                        <select class="form-control" id="countrySelect"
+                                                                name="country"
+                                                                required>
+                                                            <!-- Dynamically populate countries -->
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group mb-3">
+                                                        <label for="citySelect">City:</label>
+                                                        <select class="form-control" id="citySelect" name="city"
+                                                                required>
+                                                            <!-- Dynamically populate cities based on selected country -->
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group mb-3">
+                                                        <label>Job Type:</label>
+                                                        <div class="d-flex">
+                                                            <div class="form-check me-3">
+                                                                <input class="form-check-input" id="fullTime"
+                                                                       name="jobType" required
+                                                                       type="radio" value="FULL_TIME">
+                                                                <label class="form-check-label"
+                                                                       for="fullTime">Full-time</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" id="partTime"
+                                                                       name="jobType" required
+                                                                       type="radio" value="PART_TIME">
+                                                                <label class="form-check-label"
+                                                                       for="partTime">Part-time</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-3">
+                                                        <label for="workMode">Work Mode:</label>
+                                                        <select class="form-control" id="workMode" name="workMode"
+                                                                required>
+                                                            <option value="REMOTE">Remote</option>
+                                                            <option value="ON_SITE">On-site</option>
+                                                            <option value="HYBRID">Hybrid</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group mb-3">
+                                                        <label class="form-label" for="jobImage">Job Image:</label>
+                                                        <input accept="image/*" class="form-control" id="jobImage"
+                                                               name="jobImage"
+                                                               type="file">
+                                                    </div>
+
+                                                    <div class="form-group mb-3">
+                                                        <label for="description">Job Description:</label>
+                                                        <textarea class="form-control" id="description"
+                                                                  name="description"
+                                                                  required></textarea>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="button" class="btn btn-primary" id="updateAdButton">
+                                                    Update
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="successAlert" class="alert alert-success display-message" role="alert">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                     class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16"
+                                     style="flex-shrink: 0;">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
+                                </svg>
+                                <p id="successMessage" style="margin-top: 1rem;"></p>
+                            </div>
+                            <div class="pagination-container">
+                                <nav aria-label="Advertisements pagination">
+                                    <ul class="pagination justify-content-end" id="ads-pagination">
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>
@@ -171,6 +410,7 @@
 
 <script>
     let suMenu = document.getElementById("subMenu");
+
     function toggleMenu() {
         subMenu.classList.toggle("open-menu");
     }
@@ -183,9 +423,11 @@
 <!--=============== MAIN JS ===============-->
 <script src="/main/js/main.js"></script>
 <script src="/student-dashboard/js/studentName.js"></script>
-<script src="/student-dashboard/js/fetchAds.js"></script>
-<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<script src="/student-dashboard/js/widgets.js"></script>
+<script src="/main/js/profile-pic.js">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 <script src="/job-post/js/country-api.js"></script>
+<
 <script src="/student-dashboard/js/profile-pic.js"></script>
 <script>
     document.getElementById("year").textContent = new Date().getFullYear();

@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     resetFiltersAndSearch();
     attachEventListeners();
     filterAds();
-    updateAdStatusClasses(); // Call the function here
+    updateAdStatusClasses();
 });
 
 // Attach click event listeners to kebab menu icons
@@ -59,6 +59,7 @@ function hideModal(modalId) {
 
 function resetFiltersAndSearch() {
     document.getElementById('searchInput').value = '';
+    document.getElementById('statusFilter').value = '';
 }
 
 // Toggles the display of the kebab menu for the given ad ID
@@ -213,65 +214,6 @@ function updatePagination(currentPage) {
     }
 
     paginationContainer.appendChild(createPaginationItem(currentPage + 1, false, currentPage === pageCount, 'Next'));
-}
-
-function updateAdStatusClasses() {
-    document.querySelectorAll('.advertisement-widget').forEach(widget => {
-        // Remove existing status classes
-        widget.classList.remove('approved', 'rejected');
-
-        // Add new status class based on adStatus
-        const adStatus = widget.dataset.adStatus.toLowerCase();
-        console.log(`Ad ID: ${widget.dataset.id}, Status: ${adStatus}`); // Corrected debugging line
-
-        if (adStatus === 'approved') {
-            widget.classList.add('approved');
-        } else if (adStatus === 'rejected') {
-            widget.classList.add('rejected');
-        }
-        // No need for 'pending' as it's the default state
-    });
-}
-
-function askForConfirmation(adId, newStatus, event) {
-    if (event) {
-        event.preventDefault();
-    }
-
-    // Get references to modal elements
-    const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-    const modalTitle = document.getElementById('confirmationModalLabel');
-    const actionTypeElement = document.getElementById('actionType');
-    const companyNameElement = document.getElementById('companyNameModal');
-    const confirmBtn = document.getElementById('confirmBtn');
-
-    // Get the ad's information
-    const adWidget = document.querySelector(`[data-id="${adId}"]`);
-    const jobTitle = adWidget.querySelector('h4').textContent;
-    const companyName = adWidget.querySelector('[data-company-name]').dataset.companyName;
-
-    const currentStatus = adWidget.dataset.adStatus.toUpperCase();
-    console.log("Current status:", currentStatus, "New status:", newStatus);
-
-    const actionText = newStatus === 'APPROVED' ? 'approve' : 'reject';
-
-    // Ensure case-insensitive comparison
-    if (newStatus.toUpperCase() === currentStatus) {
-        showWarningAlert(`This advertisement is already ${currentStatus.toLowerCase()}`);
-        return;
-    }
-
-    // Update the modal elements
-    modalTitle.textContent = `Confirm ${actionText}`;
-    actionTypeElement.textContent = actionText;
-    companyNameElement.textContent = `[${jobTitle}] for [${companyName}]`;
-
-    confirmBtn.onclick = function() {
-        updateAdStatus(adId, newStatus);
-        confirmationModal.hide();
-    };
-    // Show the modal
-    confirmationModal.show();
 }
 
 function updateAdStatus(adId, newStatus) {

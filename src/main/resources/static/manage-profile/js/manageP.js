@@ -103,23 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
-function getCompanyNameFromCookie() {
-    const cookies = document.cookie.split('; ');
-    const companyNameCookie = cookies.find(row => row.startsWith('companyName='));
-    return companyNameCookie ? decodeURIComponent(companyNameCookie.split('=')[1]) : null;
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    const companyName = getCompanyNameFromCookie();
-
-    if (companyName) {
-        document.getElementById('companyNameDisplay1').textContent = companyName;
-        document.getElementById('companyNameDisplay2').textContent = companyName;
-    }
-
-});
-
 function handlePhoneInput(input) {
     if (!input.value.startsWith("+962")) {
         input.value = "+962";

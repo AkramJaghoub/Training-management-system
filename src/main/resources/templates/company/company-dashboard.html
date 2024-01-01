@@ -82,7 +82,7 @@
                                           fill-rule="evenodd"/>
                                 </svg>
                             </div>
-                            <h3 style="margin-left: 1rem;" id="companyNameDisplay" th:text="${companyName}"></h3>
+                            <h3 style="margin-left: 1rem;" th:text="${companyName}"></h3>
                         </div>
                         <hr>
 
@@ -159,27 +159,21 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title ad-h3">Advertisements</h4>
+                                <div class="search-bar">
+                                    <label for="searchInput">
+                                    </label><input type="text" id="searchInput" class="form-control"
+                                                   placeholder="Search...">
+                                </div>
                                 <div class="filters d-flex align-items-center">
                                     <div class="d-flex align-items-center me-3">
-                                        <label for="modeFilter" class="form-label me-2">Mode:</label>
-                                        <select class="form-select no-border" id="modeFilter" name="mode"
-                                                style="padding-right: 1.8rem" onchange="filterAds()">
+                                        <label for="statusFilter" class="form-label me-2" style="margin-left: 12rem;">Status:</label>
+                                        <select class="form-select no-border" id="statusFilter" name="status"
+                                                onchange="filterAds()">
                                             <option value="all" selected>All</option>
-                                            <option value="REMOTE">Remote</option>
-                                            <option value="ON_SITE">On-site</option>
-                                            <option value="HYBRID">Hybrid</option>
+                                            <option value="PENDING">Pending</option>
+                                            <option value="APPROVED">Approved</option>
+                                            <option value="REJECTED">Rejected</option>
                                         </select>
-
-                                        <div class="d-flex align-items-center">
-                                            <label for="typeFilter" class="form-label me-2">Type:</label>
-                                            <select class="form-select no-border" id="typeFilter" name="type"
-                                                    style="padding-right: 1.6rem;"
-                                                    onchange="filterAds()">
-                                                <option value="all" selected>All</option>
-                                                <option value="FULL_TIME">Full-time</option>
-                                                <option value="PART_TIME">Part-time</option>
-                                            </select>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -264,7 +258,6 @@
                                          viewBox="0 0 16 16">
                                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
                                     </svg>
-                                    `
                                     <span id="errorMessage" style="margin-left: 5px; font-size: 1rem;"></span>
                                 </div>
 

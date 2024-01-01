@@ -30,10 +30,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    const companyImageUrl = document.getElementById('hiddenCompanyImageUrl').value;
+    const hiddenImageUrlInput = document.getElementById('hiddenStudentImageUrl') || document.getElementById('hiddenCompanyImageUrl');
+    const imageUrl = hiddenImageUrlInput ? hiddenImageUrlInput.value : null;
 
-    if (companyImageUrl) {
-        loadImageWithFallback(companyImageUrl, ['jpeg', 'svg+xml', 'png'], (imageUrl) => {
+    if (imageUrl) {
+        loadImageWithFallback(imageUrl, ['jpeg', 'svg+xml', 'png'], (imageUrl) => {
             updateProfileImages(imageUrl);
             imagePreview.style.backgroundImage = `url('${imageUrl}')`;
         });

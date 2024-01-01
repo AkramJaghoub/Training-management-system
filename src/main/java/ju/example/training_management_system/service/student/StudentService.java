@@ -7,9 +7,11 @@ import ju.example.training_management_system.dto.StudentInfoDto;
 import ju.example.training_management_system.exception.UnauthorizedStudentAccessException;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
+import ju.example.training_management_system.model.company.advertisement.Advertisement;
 import ju.example.training_management_system.model.manage.student.StudentInfo;
 import ju.example.training_management_system.model.users.Student;
 import ju.example.training_management_system.model.users.User;
+import ju.example.training_management_system.repository.AdvertisementRepository;
 import ju.example.training_management_system.repository.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,13 +21,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import static ju.example.training_management_system.util.Utils.*;
 
 @Service
 @RequiredArgsConstructor
 public class StudentService {
+
     private final UserRepository userRepository;
+    private final AdvertisementRepository advertisementRepository;
 
     public void setUpStudentDashboard(Model model, String email, HttpServletResponse response) {
         User existingUser = userRepository.findByEmail(email);
@@ -43,15 +48,12 @@ public class StudentService {
             base64Image = convertToBase64(decompressedImage);
         }
 
-        model.addAttribute("studentImage", base64Image);
-
+        List<Advertisement> advertisements = advertisementRepository.findAll();
         String studentName = student.getFirstName() + " " + student.getLastName();
 
-        String encodedName = URLEncoder.encode(studentName, StandardCharsets.UTF_8);
-        Cookie studentNameCookie = new Cookie("studentName", encodedName);
-        studentNameCookie.setPath("/");
-        studentNameCookie.setMaxAge(24 * 60 * 60 * 30);
-        response.addCookie(studentNameCookie);
+        model.addAttribute("studentImage", base64Image);
+        model.addAttribute("advertisements", advertisements);
+        model.addAttribute("studentName", studentName);
     }
 
     public void setManageProfile(Model model, String email) {

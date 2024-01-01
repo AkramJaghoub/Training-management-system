@@ -29,7 +29,7 @@
 
 <!--==================== HEADER ====================-->
 <header class="header" id="header">
-    <a class="nav__logo" href="/student/dashboard">
+    <a class="nav__logo" href="/company/dashboard">
         <img alt="" class="nav__logo-img" src="/main/img/tero.png">
     </a>
 
@@ -38,7 +38,6 @@
             <li class="nav__item">
                 <a class="nav__link active-link" href='/student/dashboard'>Home</a>
             </li>
-
 
             <li class="nav__item">
                 <a href="#" id="profileLink" onclick="toggleMenu()">
@@ -55,8 +54,7 @@
                     <div class="sub-menu">
                         <span class="profile-arrow">&#9660;</span>
                         <div class="user-info">
-                            <div class="circle-icon"
-                                 style="box-shadow: 0 0 0 rgba(0, 0, 0, 0); width: 60px; height: 60px;">
+                            <div class="circle-icon">
                                 <svg class="bi bi-person-circle" fill="gray" height="28" viewBox="0 0 16 16"
                                      width="28" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -64,11 +62,11 @@
                                           fill-rule="evenodd"/>
                                 </svg>
                             </div>
-                            <h3 style="font-size: 1.4rem;" id="studentNameDisplay1"></h3>
+                            <h3 class="user-name" th:text="${studentName}"></h3>
                         </div>
                         <hr>
 
-                        <a class="sub-menu-link" href="/student/manage-profile">
+                        <a class="sub-menu-link" href="/company/manage-profile">
                             <svg class="bi bi-pencil" fill="currentColor" height="28" viewBox="0 0 16 16"
                                  width="28" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
@@ -116,179 +114,254 @@
         <div class="home__content">
             <div class="home__group">
                 <div class="hero">
-                    <div class="hcontainer">
-                        <div class="row justify-content-center">
-                            <!-- Begin the form tag here -->
-                            <form enctype="multipart/form-data" id="profileForm">
-                                <div class="container-xl px-4 mt-4">
-                                    <!-- Profile picture card -->
-                                    <div class="row">
-                                        <div class="col-xl-4">
-                                            <div class="card mb-4 mb-xl-0 card-mb-4">
-                                                <div class="card-header">Profile Picture</div>
-                                                <div class="card-body text-center">
-                                                    <!-- Profile picture upload input -->
-                                                    <div class="avatar-upload">
-                                                        <div class="avatar-edit">
-                                                            <input accept="\*" id="studentImage" name="studentImage"
-                                                                   type='file'/>
-                                                            <label for="studentImage"></label>
-                                                        </div>
-                                                        <input id="hiddenStudentImageUrl" th:value="${studentImage}"
-                                                               type="hidden"/>
-                                                        <div class="avatar-preview">
-                                                            <div id="imagePreview"></div>
-                                                        </div>
-                                                    </div>
-                                                    <h5 id="studentNameDisplay2" style="margin-top:-2.4rem; font-size: 1.4rem;"></h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Account details card -->
-                                        <div class="col-xl-8">
-                                            <div class="card mb-4">
-                                                <div class="card-header">Account Details</div>
-                                                <div class="card-body">
-                                                    <!-- Account details fields -->
-                                                    <div class="mb-3">
-                                                        <label class="small mb-1" for="inputEmailAddress">Email
-                                                            address</label>
-                                                        <input class="form-control" disabled id="inputEmailAddress"
-                                                               name="email" placeholder="Enter your email address"
-                                                               th:value="${email}" type="email">
-                                                    </div>
-                                                    <div class="row gx-3 mb-3">
-                                                        <!-- Form Group (Name) -->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="StudentName">Your Name</label>
-                                                            <label for="studentName"></label>
-                                                            <input class="form-control" disabled id="studentName"
-                                                                   name="studentName"
-                                                                   th:value="${studentName}"
-                                                                   type="text">
-                                                        </div>
-                                                        <!-- Form Group (phone number) -->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="inputPhone">Phone
-                                                                number
-                                                                <span style="color: red">*</span>
-                                                            </label>
-                                                            <input class="form-control" id="inputPhone"
-                                                                   name="phoneNumber" oninput="handlePhoneInput(this)"
-                                                                   placeholder="Enter your phone number"
-                                                                   th:value="${phoneNumber}"
-                                                                   type="tel">
+                    <div class="container my-5">
+                        <div class="card border-primary">
+                            <div class="card-header bg-primary text-white">
+                                Manage Profile
+                            </div>
+                            <div class="card-body">
+                                <ul class="nav nav-tabs" id="profileTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="edit-profile-tab" data-bs-toggle="tab"
+                                                data-bs-target="#editProfile" type="button" role="tab"
+                                                aria-controls="editProfile" aria-selected="true">Edit Profile
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="change-password-tab" data-bs-toggle="tab"
+                                                data-bs-target="#changePassword" type="button" role="tab"
+                                                aria-controls="changePassword" aria-selected="false">Change Password
+                                        </button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="profileTabContent">
+                                    <div class="tab-pane fade show active" id="editProfile" role="tabpanel"
+                                         aria-labelledby="edit-profile-tab">
+                                        <!-- Begin the form tag here -->
+                                        <form enctype="multipart/form-data" id="profileForm">
+                                            <div class="container-xl px-4 mt-4">
+                                                <!-- Profile picture card -->
+                                                <div class="row">
+                                                    <div class="col-xl-4">
+                                                        <div class="card mb-4 mb-xl-0 card-mb-4">
+                                                            <div class="card-header">Profile Picture</div>
+                                                            <div class="card-body text-center">
+                                                                <!-- Profile picture upload input -->
+                                                                <div class="avatar-upload">
+                                                                    <div class="avatar-edit">
+                                                                        <input accept="\*" id="studentImage"
+                                                                               name="studentImage"
+                                                                               type='file'/>
+                                                                        <label for="studentImage"></label>
+                                                                    </div>
+                                                                    <input id="hiddenStudentImageUrl"
+                                                                           th:value="${studentImage}"
+                                                                           type="hidden"/>
+                                                                    <div class="avatar-preview">
+                                                                        <div id="imagePreview"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <h5 th:text="${studentName}"
+                                                                    style="font-size: 1.4rem;"></h5>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <!-- Form Row -->
-                                                    <div class="row gx-3 mb-3">
-                                                        <!-- Form Group (University) -->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1"
-                                                                   for="inputLocation">University
-                                                                <span style="color: red">*</span>
-                                                            </label>
-                                                            <input class="form-control" id="inputLocation"
-                                                                   name="university" placeholder="Enter your University" th:value="${university}"
-                                                                   type="text">
-                                                        </div>
-                                                        <!-- Form Group (major) -->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="majorName">
-                                                                Major
-                                                            </label>
-                                                            <input class="form-control" id="majorName"
-                                                                   name="major" placeholder="Enter your major" th:value="${major}"
-                                                                   type="text">
-                                                        </div>
-                                                    </div>
-                                                    <!-- Form Row -->
-                                                    <div class="row gx-3 mb-3">
-                                                        <!-- Form Group (Address) -->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="inputLocation">Address</label>
-                                                            <input class="form-control" id="address"
-                                                                   name="address"
-                                                                   placeholder="city, country"
-                                                                   th:value="${address}" type="text">
-                                                        </div>
-                                                        <!-- Form Group (Graduation Year) -->
-                                                        <div class="col-md-6">
-                                                            <label class="small mb-1" for="inputGYear">Graduation
-                                                                Year</label>
-                                                            <input class="form-control" id="inputGYear"
-                                                                   max="2100" min="2005"
-                                                                   name="graduationYear" placeholder="YYYY"
-                                                                   th:value="${graduationYear}" type="number">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="text-center">
-                                                    <button class="btn btn-primary btn-cool" type="submit">
-                                                        Save changes
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div id="changePasswordForm" style="display: none;">
-                                                <div class="card mb-4">
-                                                    <div class="card-header">Change Password</div>
-                                                    <div class="card-body">
-                                                        <div class="col-xl-4"></div>
-                                                        <!-- Password details card -->
-                                                        <div class="col-xl-4"></div>
-                                                        <!-- Account details card -->
+                                                    <!-- Account details card -->
+                                                    <div class="col-xl-8">
                                                         <div class="card mb-4">
+                                                            <div class="card-header">Account Details</div>
                                                             <div class="card-body">
                                                                 <!-- Account details fields -->
+                                                                <div class="mb-3">
+                                                                    <label class="small mb-1" for="inputEmailAddress">Email
+                                                                        address</label>
+                                                                    <input class="form-control" disabled
+                                                                           id="inputEmailAddress"
+                                                                           name="email"
+                                                                           placeholder="Enter your email address"
+                                                                           th:value="${email}" type="email">
+                                                                </div>
                                                                 <div class="row gx-3 mb-3">
-                                                                    <!-- Form Group (Old Pass) -->
+                                                                    <!-- Form Group (Name) -->
                                                                     <div class="col-md-6">
-                                                                        <label class="small mb-1" for="OldPass">Old password</label>
-                                                                        <label for="OldPass"></label>
-                                                                        <input class="form-control" id="oldPass"
-                                                                               name="oldPass"
-                                                                               th:value="${password}"
-                                                                               type="password">
+                                                                        <label class="small mb-1" for="StudentName">Your
+                                                                            Name</label>
+                                                                        <label for="studentName"></label>
+                                                                        <input class="form-control" disabled
+                                                                               id="studentName"
+                                                                               name="studentName"
+                                                                               th:value="${studentName}"
+                                                                               type="text">
+                                                                    </div>
+                                                                    <!-- Form Group (phone number) -->
+                                                                    <div class="col-md-6">
+                                                                        <label class="small mb-1" for="inputPhone">Phone
+                                                                            number
+                                                                            <span style="color: red">*</span>
+                                                                        </label>
+                                                                        <input class="form-control" id="inputPhone"
+                                                                               name="phoneNumber"
+                                                                               oninput="handlePhoneInput(this)"
+                                                                               placeholder="Enter your phone number"
+                                                                               th:value="${phoneNumber}"
+                                                                               type="tel">
                                                                     </div>
                                                                 </div>
                                                                 <!-- Form Row -->
                                                                 <div class="row gx-3 mb-3">
-                                                                    <!-- Form Group (New Password) -->
+                                                                    <!-- Form Group (University) -->
                                                                     <div class="col-md-6">
-                                                                        <label class="small mb-1" for="NewPass">New password</label>
-                                                                        <label for="NewPass"></label>
-                                                                        <input class="form-control" id="newPass"
-                                                                               name="newPass"
-
-                                                                               type="password">
+                                                                        <label class="small mb-1"
+                                                                               for="inputLocation">University
+                                                                            <span style="color: red">*</span>
+                                                                        </label>
+                                                                        <input class="form-control" id="inputLocation"
+                                                                               name="university"
+                                                                               placeholder="Enter your University"
+                                                                               th:value="${university}"
+                                                                               type="text">
                                                                     </div>
+                                                                    <!-- Form Group (major) -->
                                                                     <div class="col-md-6">
-                                                                        <label class="small mb-1" for="NewPassConfirm">Password confirm</label>
-                                                                        <label for="NewPassConfirm"></label>
-                                                                        <input class="form-control" id="newPassConfirm"
-                                                                               name="newPassConfirm"
-
-                                                                               type="password">
+                                                                        <label class="small mb-1" for="majorName">
+                                                                            Major
+                                                                        </label>
+                                                                        <input class="form-control" id="majorName"
+                                                                               name="major"
+                                                                               placeholder="Enter your major"
+                                                                               th:value="${major}"
+                                                                               type="text">
                                                                     </div>
                                                                 </div>
-
+                                                                <!-- Form Row -->
+                                                                <div class="row gx-3 mb-3">
+                                                                    <!-- Form Group (Address) -->
+                                                                    <div class="col-md-6">
+                                                                        <label class="small mb-1" for="inputLocation">Address</label>
+                                                                        <input class="form-control" id="address"
+                                                                               name="address"
+                                                                               placeholder="city, country"
+                                                                               th:value="${address}" type="text">
+                                                                    </div>
+                                                                    <!-- Form Group (Graduation Year) -->
+                                                                    <div class="col-md-6">
+                                                                        <label class="small mb-1" for="inputGYear">Graduation
+                                                                            Year</label>
+                                                                        <input class="form-control" id="inputGYear"
+                                                                               max="2100" min="2005"
+                                                                               name="graduationYear" placeholder="YYYY"
+                                                                               th:value="${graduationYear}"
+                                                                               type="number">
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                             <div class="text-center">
                                                                 <button class="btn btn-primary btn-cool" type="submit">
-                                                                    Change Password
+                                                                    Save changes
                                                                 </button>
+                                                            </div>
+                                                        </div>
+                                                        <div id="changePasswordForm" style="display: none;">
+                                                            <div class="card mb-4">
+                                                                <div class="card-header">Change Password</div>
+                                                                <div class="card-body">
+                                                                    <div class="col-xl-4"></div>
+                                                                    <!-- Password details card -->
+                                                                    <div class="col-xl-4"></div>
+                                                                    <!-- Account details card -->
+                                                                    <div class="card mb-4">
+                                                                        <div class="card-body">
+                                                                            <!-- Account details fields -->
+                                                                            <div class="row gx-3 mb-3">
+                                                                                <!-- Form Group (Old Pass) -->
+                                                                                <div class="col-md-6">
+                                                                                    <label class="small mb-1"
+                                                                                           for="OldPass">Old
+                                                                                        password</label>
+                                                                                    <label for="OldPass"></label>
+                                                                                    <input class="form-control"
+                                                                                           id="oldPass"
+                                                                                           name="oldPass"
+                                                                                           th:value="${password}"
+                                                                                           type="password">
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- Form Row -->
+                                                                            <div class="row gx-3 mb-3">
+                                                                                <!-- Form Group (New Password) -->
+                                                                                <div class="col-md-6">
+                                                                                    <label class="small mb-1"
+                                                                                           for="NewPass">New
+                                                                                        password</label>
+                                                                                    <label for="NewPass"></label>
+                                                                                    <input class="form-control"
+                                                                                           id="newPass"
+                                                                                           name="newPass"
+
+                                                                                           type="password">
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label class="small mb-1"
+                                                                                           for="NewPassConfirm">Password
+                                                                                        confirm</label>
+                                                                                    <label for="NewPassConfirm"></label>
+                                                                                    <input class="form-control"
+                                                                                           id="newPassConfirm"
+                                                                                           name="newPassConfirm"
+
+                                                                                           type="password">
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <div class="text-center">
+                                                                            <button class="btn btn-primary btn-cool"
+                                                                                    type="submit">
+                                                                                Change Password
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        </div>
+                                        </form>
+                                    </div>
+                                    <div class="tab-pane fade" id="changePassword" role="tabpanel"
+                                         aria-labelledby="change-password-tab">
+                                        <!-- Change Password Form Here -->
+                                        <form id="studentChangePasswordForm">
+                                            <div class="mb-3" style="padding-top: 1rem;">
+                                                <label for="currentPassword" class="form-label">Current Password</label>
+                                                <input type="password" class="form-control" id="currentPassword">
+                                                <span id="errorCurrentPassword" class="text-danger"></span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="newPassword" class="form-label">New Password</label>
+                                                <input type="password" class="form-control" id="newPassword">
+                                                <span id="errorNewPassword" class="text-danger"></span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                                <input type="password" class="form-control" id="confirmPassword">
+                                                <span id="errorConfirmPassword" class="text-danger"></span>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary btn-cool">Change Password</button>
+                                        </form>
+                                    </div>
+
+                                    <div id="successAlert" class="alert alert-success display-message" role="alert">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16" style="flex-shrink: 0;">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
+                                        </svg>
+                                        <p id="successMessage" style="margin-top: 1rem;"></p>
                                     </div>
                                 </div>
-                            </form>
-                            <!-- End of the form tag -->
+                            </div>
                         </div>
+                        <!-- End of the form tag -->
                     </div>
                 </div>
             </div>
@@ -306,14 +379,16 @@
 </footer>
 <script>
     function toggleMenu() {
-        const subMenuWrap = document.getElementById("subMenu");
         subMenu.classList.toggle("open-menu");
     }
 </script>
 <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 </script>
-<script src="/manage-profile/js/manageP.js"></script>
+<script src="/student-dashboard/js/changePassword.js"></script>
 <script src="/student-dashboard/js/studentName.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
 </html>

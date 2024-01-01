@@ -58,7 +58,8 @@ function hideModal(modalId) {
 
 function resetFiltersAndSearch() {
     document.getElementById('searchInput').value = '';
-    document.getElementById('statusFilter').value = 'all';
+    document.getElementById('modeFilter').value = 'all';
+    document.getElementById('typeFilter').value = 'all';
 }
 
 function toggleKebabMenu(adId) {
@@ -108,21 +109,25 @@ function showDescription(adId) {
 
 function filterAds() {
     let searchInput = document.getElementById('searchInput').value.toLowerCase();
-    let statusFilter = document.getElementById('statusFilter').value.toLowerCase();
+    let modeFilter = document.getElementById('modeFilter').value.toLowerCase();
+    let typeFilter = document.getElementById('typeFilter').value.toLowerCase();
 
     let adsList = document.querySelectorAll('.advertisement-widget');
 
     let activeWidgets = 0;
-    let totalAds = adsList.length; // Get the total number of ads before filtering
-    let filtersApplied = searchInput !== '' || statusFilter !== 'all'; // Check if any filters are applied
+    let totalAds = adsList.length;
+    let filtersApplied = searchInput !== '' || modeFilter !== '' || typeFilter !== '';
 
     adsList.forEach(function (ad) {
-        let status = ad.dataset.adStatus ? ad.dataset.adStatus.toLowerCase() : '';
+        let mode = ad.dataset.workMode ? ad.dataset.workMode.toLowerCase() : '';
+        let type = ad.dataset.jobType ? ad.dataset.jobType.toLowerCase() : '';
+        let modeMatch = modeFilter === 'all' || mode === modeFilter;
+        let typeMatch = typeFilter === 'all' || type === typeFilter;
         let jobTitle = ad.querySelector('h4').textContent.toLowerCase();
-        let textMatch = !searchInput || jobTitle.includes(searchInput);
-        let statusMatch = statusFilter === 'all' || status === statusFilter;
+        let companyName = ad.querySelector('[data-company-name]').getAttribute('data-company-name').toLowerCase();
+        let textMatch = !searchInput || jobTitle.includes(searchInput) || companyName.includes(searchInput);
 
-        if (textMatch && statusMatch) {
+        if (modeMatch && typeMatch && textMatch) {
             ad.style.display = '';
             activeWidgets++;
         } else {
@@ -130,14 +135,12 @@ function filterAds() {
         }
     });
 
-    // Get the "no ads" message element
     const noAdsMessageElement = document.getElementById('noAdsMessage');
 
-    // Check if there are no active widgets, filters are applied, and there are ads available to filter
-    if (activeWidgets === 0 && filtersApplied && totalAds > 0) {
-        noAdsMessageElement.style.display = 'block'; // Show the message
+    if (activeWidgets === 0 && totalAds > 0 && filtersApplied) {
+        noAdsMessageElement.style.display = 'block';
     } else {
-        noAdsMessageElement.style.display = 'none'; // Hide the message
+        noAdsMessageElement.style.display = 'none';
     }
 
     initializePagination(activeWidgets);

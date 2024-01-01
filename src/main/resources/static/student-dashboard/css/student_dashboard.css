@@ -266,3 +266,8 @@ nav ul li.profile a:after {
     font-weight: 500;
     letter-spacing: 5px;
 }
+
+.user-name {
+    font-size: 1.4rem;
+    margin-left: 1rem;
+}

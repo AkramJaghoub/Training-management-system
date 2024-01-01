@@ -158,9 +158,8 @@
                                                                             <div id="imagePreview"></div>
                                                                         </div>
                                                                     </div>
-                                                                    <h5 id="companyNameDisplay2"
-                                                                        style="margin-top:-2.4rem"
-                                                                        disabled th:text="${companyName}"></h5>
+                                                                    <h5 style="margin-top:-2.4rem"
+                                                                        th:text="${companyName}"></h5>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -189,6 +188,7 @@
                                                                             <input class="form-control" id="CompanyName"
                                                                                    name="companyName"
                                                                                    placeholder="Enter your Company name"
+                                                                                   disabled
                                                                                    th:value="${companyName}"
                                                                                    type="text">
                                                                         </div>
@@ -327,7 +327,7 @@
     document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 <script src="/manage-profile/js/manageP.js"></script>
-<script src="/main/js/changePassword.js"></script>
+<script src="/company-dashboard/js/changePassword.js"></script>
 <script src="/main/js/loader.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
