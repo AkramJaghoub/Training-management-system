@@ -179,7 +179,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const alertBox = document.getElementById('successAlert');
         const messageParagraph = document.getElementById('successMessage');
 
-        messageParagraph.textContent = message + ", now redirecting to your dashboard...."; ;
+        messageParagraph.textContent = message + ", now redirecting to your dashboard....";
+
         alertBox.style.display = 'flex'; // Change display to flex to make it visible
         alertBox.style.opacity = 1;
 

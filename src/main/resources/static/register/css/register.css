@@ -61,7 +61,8 @@ input {
     height: 50%;
     margin-top: 3.5rem;
 }
-.box1 h1{
+
+.box1 h1 {
     color: white;
 }
 
@@ -120,12 +121,15 @@ input {
     opacity: 0;
     z-index: 1;
 }
-.sign-up-container .input-with-icon i{
+
+.sign-up-container .input-with-icon i {
     margin-top: 1rem;
 }
-.sign-up-container label{
+
+.sign-up-container label {
     margin-top: 1rem;
 }
+
 .container.right-panel-active .sign-up-container {
     transform: translateX(100%);
     opacity: 1;

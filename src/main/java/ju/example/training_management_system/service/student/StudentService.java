@@ -30,15 +30,15 @@ public class StudentService {
     private final UserRepository userRepository;
     private final AdvertisementRepository advertisementRepository;
 
+    public static String getStudentFullName(String firstName, String lastName) {
+        return firstName + " " + lastName;
+    }
+
     public Student isUserAuthorizedAsStudent(User user, String email) throws UnauthorizedStudentAccessException {
         if (!(user instanceof Student student)) {
             throw new UnauthorizedStudentAccessException("User with email " + email + " wasn't recognized as a student");
         }
         return student;
-    }
-
-    public static String getStudentFullName(String firstName, String lastName) {
-        return firstName + " " + lastName;
     }
 
     public ApiResponse setUpStudentDashboard(Model model, String email) {

@@ -33,16 +33,12 @@ public final class Utils {
         };
     }
 
-    public static boolean isNotNull(String str){
-        return str != null;
-    }
-
     public static boolean isNotEqual(String str1, String str2) {
         return !str1.equals(str2);
     }
 
     public static boolean isEmpty(String str) {
-       return str == null || str.isEmpty();
+        return str == null || str.isEmpty();
     }
 
     public static byte[] saveImage(MultipartFile file) {

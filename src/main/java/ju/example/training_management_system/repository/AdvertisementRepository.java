@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface AdvertisementRepository extends JpaRepository<Advertisement, Long> {
     boolean existsByJobTitleAndCompany(String jobTitle, Company company);
+
     List<Advertisement> findByCompany_CompanyName(String companyName);
+
     void deleteByCompanyId(long userId);
 }

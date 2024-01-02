@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Comparator;
 import java.util.List;
 
 import static ju.example.training_management_system.util.Utils.*;
@@ -53,7 +54,7 @@ public class CompanyService {
                 base64Image = convertToBase64(decompressedImage);
             }
 
-            List<Advertisement> advertisements = advertisementRepository.findByCompany_CompanyName(company.getCompanyName());
+            List<Advertisement> advertisements = getCompanyAdvertisementsPostedByLatest(company.getCompanyName());
             List<Notification> notifications = notificationRepository.findByCompany(company);
 
             model.addAttribute("companyImage", base64Image);
@@ -67,6 +68,12 @@ public class CompanyService {
         } catch (UnauthorizedCompanyAccessException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    private List<Advertisement> getCompanyAdvertisementsPostedByLatest(String companyName) {
+        return advertisementRepository.findByCompany_CompanyName(companyName).stream()
+                .sorted(Comparator.comparing(Advertisement::getPostDate).reversed())
+                .toList();
     }
 
     public ApiResponse setManageProfile(Model model, String email) {

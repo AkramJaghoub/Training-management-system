@@ -17,7 +17,6 @@ import ju.example.training_management_system.repository.users.CompanyRepository;
 import ju.example.training_management_system.repository.users.StudentRepository;
 import ju.example.training_management_system.repository.users.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -25,6 +24,7 @@ import org.springframework.ui.Model;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static ju.example.training_management_system.model.company.advertisement.AdStatus.PENDING;
 import static ju.example.training_management_system.util.Utils.decompressImage;
@@ -49,7 +49,8 @@ public class AdminService {
     }
 
     private void setUpFields(Model model) {
-        List<User> users = userRepository.findAll();
+        List<User> users = getUsersByJoinDate();
+
         List<Advertisement> advertisements = advertisementRepository.findAll();
 
         Map<Long, String> userImages = new HashMap<>();
@@ -77,6 +78,12 @@ public class AdminService {
         model.addAttribute("userImages", userImages);
         model.addAttribute("newUsersCount", newUsers.size());
         model.addAttribute("newAdvertisementsCount", newAdsCount);
+    }
+
+    private List<User> getUsersByJoinDate() {
+        return userRepository.findAll().stream()
+                .sorted(Comparator.comparing(User::getJoinDate).reversed())
+                .collect(Collectors.toList());
     }
 
     private List<User> getNewUsers(List<User> users, Map<Long, String> userImages) {

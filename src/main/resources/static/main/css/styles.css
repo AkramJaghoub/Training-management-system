@@ -415,7 +415,7 @@ button {
     background: none;
 }
 
-.button--form{
+.button--form {
     border: 2px solid white;
     background-color: transparent;
     border-radius: 3rem;
@@ -423,7 +423,7 @@ button {
     color: white;
 }
 
-.button--form:hover{
+.button--form:hover {
     border-color: #b4b3b3;
     color: #b4b3b3;
     background-color: transparent;
@@ -676,6 +676,7 @@ button {
 .newsletter__input::placeholder {
     color: var(--text-color);
 }
+
 /*/=============== FOOTER ===============/*/
 .footer {
     position: fixed;
@@ -692,6 +693,7 @@ button {
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
     z-index: var(--z-fixed);
 }
+
 .footer__logo-img {
     width: 3rem;
 }

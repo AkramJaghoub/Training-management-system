@@ -16,7 +16,7 @@ public class NotificationController {
     private final NotificationService notificationService;
 
     @DeleteMapping("/mark-as-read/{id}")
-    public ResponseEntity<?> markNotificationAsRead(@PathVariable("id") long notificationId){
+    public ResponseEntity<?> markNotificationAsRead(@PathVariable("id") long notificationId) {
         ApiResponse response = notificationService.markNotificationAsRead(notificationId);
         return ResponseEntity.status(response.getStatus()).body(response);
     }

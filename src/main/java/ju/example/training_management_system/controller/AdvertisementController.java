@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpSession;
 import ju.example.training_management_system.dto.AdvertisementDto;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.service.AdvertisementService;
-import ju.example.training_management_system.service.company.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

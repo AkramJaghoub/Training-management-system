@@ -19,9 +19,7 @@ public class AuthenticationService {
     private final DatabaseProperties databaseProperties;
 
     public boolean isValidUser(String email, String password) {
-
         try {
-
             log.info("trying to find user with the email {}", email);
             User storedUser = userRepository.findByEmail(email);
 

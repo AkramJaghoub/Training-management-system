@@ -266,7 +266,7 @@ function askForConfirmation(adId, newStatus, event) {
     actionTypeElement.textContent = actionText;
     companyNameElement.textContent = `[${jobTitle}] for [${companyName}]`;
 
-    confirmBtn.onclick = function() {
+    confirmBtn.onclick = function () {
         updateAdStatus(adId, newStatus);
         confirmationModal.hide();
     };

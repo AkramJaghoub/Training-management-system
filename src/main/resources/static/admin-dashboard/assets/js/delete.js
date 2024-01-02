@@ -1,6 +1,6 @@
 let currentPage = 1;
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const rowsPerPage = 10;
     const paginationContainer = document.getElementById('pagination');
 
@@ -79,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
     displayPage(currentPage);
 
 
-
     function showDeleteDialog(email, userId) {
         const dialog = document.getElementById('deleteDialog');
         const userEmailToDelete = document.getElementById('userEmailToDelete');
@@ -99,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const userTable = document.getElementById('user-list-table');
-    userTable.addEventListener('click', function(event) {
+    userTable.addEventListener('click', function (event) {
         let target = event.target;
 
         while (target != null && !target.classList.contains('btn-icon')) {
@@ -119,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
         hideDeleteDialog();
     });
 
-    document.getElementById('confirmDelete').addEventListener('click', function() {
+    document.getElementById('confirmDelete').addEventListener('click', function () {
         const userId = this.dataset.userId;
 
         fetch(`/admin/delete/user/${userId}`, {

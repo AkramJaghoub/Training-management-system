@@ -16,10 +16,10 @@ public class NotificationService {
     public ApiResponse markNotificationAsRead(long notificationId) {
         try {
             Notification notification = notificationRepository.findById(notificationId)
-                    .orElseThrow(() -> new NotificationDoesNotExistException("Notification with id ]" + notificationId + "] does not exist"));
+                    .orElseThrow(() -> new NotificationDoesNotExistException("Notification with id [" + notificationId + "] does not exist"));
 
             notificationRepository.delete(notification);
-            return new ApiResponse("Notification with id ]" + notificationId + "] was marked as read successfully", HttpStatus.OK);
+            return new ApiResponse("Notification with id [" + notificationId + "] was marked as read successfully", HttpStatus.OK);
         } catch (NotificationDoesNotExistException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
