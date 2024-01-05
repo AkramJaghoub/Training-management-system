@@ -25,6 +25,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static ju.example.training_management_system.model.company.advertisement.AdStatus.APPROVED;
 import static ju.example.training_management_system.model.company.advertisement.AdStatus.PENDING;
 import static ju.example.training_management_system.util.Utils.decompressImage;
 import static ju.example.training_management_system.util.Utils.isEmpty;
@@ -151,7 +152,7 @@ public class AdminService {
 
             advertisementRepository.save(ad);
             return new ApiResponse("Advertisement with [" + adId + "] and name [" + ad.getJobTitle() + "] successfully got " +
-                    (newStatus.equals("APPROVED") ? "approved" : "rejected"), HttpStatus.OK);
+                    (newStatus.equals(APPROVED.name()) ? "approved" : "rejected"), HttpStatus.OK);
         } catch (AdDoesNotExistException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
