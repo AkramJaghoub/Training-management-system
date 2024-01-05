@@ -3,6 +3,8 @@ package ju.example.training_management_system.service;
 import jakarta.servlet.http.HttpSession;
 import ju.example.training_management_system.dto.LoginDto;
 import ju.example.training_management_system.model.ApiResponse;
+import ju.example.training_management_system.service.login.AuthenticationService;
+import ju.example.training_management_system.service.login.LoginService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;

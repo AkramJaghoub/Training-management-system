@@ -1,7 +1,7 @@
 package ju.example.training_management_system.controller;
 
 import ju.example.training_management_system.model.ApiResponse;
-import ju.example.training_management_system.service.company.NotificationService;
+import ju.example.training_management_system.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

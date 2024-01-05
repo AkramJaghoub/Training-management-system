@@ -1,7 +1,7 @@
 package ju.example.training_management_system.controller;
 
 import ju.example.training_management_system.model.TwoFactorAuthentication;
-import ju.example.training_management_system.service.FactorAuthenticationService;
+import ju.example.training_management_system.service.login.FactorAuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

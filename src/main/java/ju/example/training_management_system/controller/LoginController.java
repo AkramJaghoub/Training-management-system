@@ -3,7 +3,7 @@ package ju.example.training_management_system.controller;
 import jakarta.servlet.http.HttpSession;
 import ju.example.training_management_system.dto.LoginDto;
 import ju.example.training_management_system.model.ApiResponse;
-import ju.example.training_management_system.service.LoginService;
+import ju.example.training_management_system.service.login.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

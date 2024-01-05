@@ -1,6 +1,6 @@
 package ju.example.training_management_system.controller;
 
-import ju.example.training_management_system.service.ResetPasswordService;
+import ju.example.training_management_system.service.login.ResetPasswordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

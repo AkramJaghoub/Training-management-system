@@ -1,8 +1,9 @@
-package ju.example.training_management_system.service.company;
+package ju.example.training_management_system.service;
 
 import ju.example.training_management_system.exception.NotificationDoesNotExistException;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.company.advertisement.Notification;
+import ju.example.training_management_system.model.users.Company;
 import ju.example.training_management_system.repository.NotificationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,5 +24,13 @@ public class NotificationService {
         } catch (NotificationDoesNotExistException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    public void notifyUser(String newStatus, String jobTitle, Company company) {
+        Notification notification = new Notification();
+        notification.setMessage("Your Advertisement with job title [" + jobTitle + "] was "
+                + newStatus.toLowerCase());
+        notification.setCompany(company);
+        notificationRepository.save(notification);
     }
 }

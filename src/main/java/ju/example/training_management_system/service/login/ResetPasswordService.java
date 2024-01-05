@@ -1,4 +1,4 @@
-package ju.example.training_management_system.service;
+package ju.example.training_management_system.service.login;
 
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;

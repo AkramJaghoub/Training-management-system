@@ -1,4 +1,4 @@
-package ju.example.training_management_system.service;
+package ju.example.training_management_system.service.login;
 
 import ju.example.training_management_system.database.DatabaseProperties;
 import ju.example.training_management_system.exception.PasswordNotMatchException;

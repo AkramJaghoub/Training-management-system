@@ -4,6 +4,7 @@ import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.company.advertisement.Notification;
 import ju.example.training_management_system.model.users.Company;
 import ju.example.training_management_system.repository.NotificationRepository;
+import ju.example.training_management_system.service.NotificationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
