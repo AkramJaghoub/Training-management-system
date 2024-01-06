@@ -73,6 +73,9 @@
     padding: 0;
     margin: 0;
 }
+html, body {
+    margin: 0;
+}
 
 html {
     scroll-behavior: smooth;
@@ -84,7 +87,10 @@ body {
     font-size: var(--normal-font-size);
     background: var(--body-color);
     color: var(--text-color);
-    padding-bottom: 60px; /* Adjust the value based on the actual height of your footer */
+    /*padding-bottom: 60px; !* Adjust the value based on the actual height of your footer *!*/
+    display: grid;
+    grid-template-rows: 1fr auto;
+    min-height: 100vh;
 }
 
 h1, h2, h3, h4 {
@@ -679,7 +685,7 @@ button {
 
 /*/=============== FOOTER ===============/*/
 .footer {
-    position: fixed;
+    position: relative;
     bottom: 0;
     left: 0;
     right: 0;

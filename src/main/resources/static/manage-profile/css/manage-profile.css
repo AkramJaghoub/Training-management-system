@@ -160,6 +160,9 @@ nav ul li.profile a:after {
     max-width: 1200px; /* Or a specific value like 1200px */
     margin: auto; /* Center the card */
 }
+.card-border{
+    border-color: #3498db;
+}
 
 .card .card-header {
     font-weight: 500;
@@ -267,7 +270,7 @@ nav ul li.profile a:after {
 }
 
 .card-body {
-    padding: 2rem; /* Increase padding inside the card */
+    padding: 2rem;
 }
 
 .card-profile-image svg {
