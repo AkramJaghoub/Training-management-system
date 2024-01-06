@@ -271,6 +271,10 @@ button {
 /* Active link */
 .active-link {
     position: relative;
+    background-color: #b3d7ff; /* Lighter blue color */
+    color: #333; /* Text color */
+    padding: 8px 12px; /* Adjust padding for a more compact look */
+    border-radius: 4px; /* Add rounded corners */
 }
 
 .active-link::before {

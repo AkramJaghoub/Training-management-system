@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <!--=============== FAVICON ===============-->
+    <link href="/main/img/tero.png" rel="shortcut icon" type="image/x-icon">
+
+    <!--=============== BOXICONS ===============-->
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
+
+    <!--=============== SWIPER CSS ===============-->
+    <link href="/main/css/swiper-bundle.min.css" rel="stylesheet">
+
+    <!--=============== CSS ===============-->
+    <link href="/main/css/styles.css" rel="stylesheet">
+
+    <title>Tero internships finder</title>
+</head>
+<body>
+<!--==================== HEADER ====================-->
+<header class="header" id="header">
+    <a class="nav__logo" href="/tero">
+        <img alt="" class="nav__logo-img" src="/main/img/tero.png">
+    </a>
+
+    <div class="nav__menu" id="nav-menu" style="padding-bottom: 10px">
+        <ul class="nav__list">
+            <li class="nav__item">
+                <a class="nav__link" href="/tero">Home</a>
+            </li>
+
+            <li class="nav__item">
+                <a class="nav__link active-link" href="/tero/about">About</a>
+            </li>
+
+            <a class="button button--ghost" href="/login">Login</a>
+        </ul>
+
+        <div class="nav__close" id="nav-close">
+            <i class='bx bx-x'></i>
+        </div>
+
+    </div>
+
+    <div class="nav__toggle" id="nav-toggle">
+        <i class='bx bx-grid-alt'></i>
+    </div>
+</header>
+
+<main class="main">
+
+    <!--==================== ABOUT ====================-->
+    <section class="section about" id="about">
+        <div class="about__container container">
+
+            <div class="about__data">
+                <p>Welcome to the world of TERO, a haven meticulously crafted for students seeking not just internships but a transformative journey into the professional realm.
+                    In this sprawling landscape of possibilities, we invite you to explore the essence of TERO, where innovation, mentorship,
+                    and career growth converge to shape a future that aligns seamlessly with your aspirations.
+                </p>
+                <h2 class="about__title">Our Philosophy<br></h2>
+                <p class="about__description">At the core of TERO lies a profound philosophy that views internships
+                    not merely as a means to gain experience but as a crucial chapter in your professional odyssey.
+                    We believe in the potential of each student, recognizing the power of experiential learning
+                    as a catalyst for personal and career development.
+                    Our commitment is to guide you through this pivotal phase, ensuring that every internship becomes
+                    a stepping stone towards a fulfilling and successful career.
+                </p>
+
+                <h2 class="about__title">Tailored Opportunities<br></h2>
+                <p class="about__description">TERO is not a one-size-fits-all platform.
+                    We understand that each student is unique, with distinct interests, skills, and career goals.
+                    That's why we go beyond the conventional internship search,
+                    curating a personalized selection of opportunities tailored to your individual journey.
+                    Whether you are delving into the complexities of technology,
+                    navigating the dynamics of business, immersing yourself in the vibrant world of creative arts,
+                    or exploring uncharted territories, TERO has your back.
+                </p>
+
+                <h2 class="about__title">Mentorship and Guidance<br></h2>
+                <p class="about__description">What sets TERO apart is not just the opportunities it presents but the mentorship and guidance woven
+                    into the fabric of the platform. We recognize the importance of a supportive community during your internship experience.
+                    TERO connects you with experienced mentors who are passionate about fostering the next generation of professionals.
+                    These mentors are here to share their insights, provide advice, and assist you in
+                    navigating the challenges of the professional world.
+                </p>
+
+                <h2 class="about__title">Beyond Internships<br></h2>
+                <p class="about__description">TERO is more than just an internship platform; it's a community of like-minded individuals united by a passion for growth and excellence. As a TERO member, you gain access to a network that extends beyond your internship period. Connect with fellow students, alumni, and industry professionals who share your interests, creating a support system that lasts throughout your career.
+                </p>
+
+            </div>
+        </div>
+    </section>
+
+<!--==================== FOOTER ====================-->
+<footer>
+    <div class="footer">
+        <a class="footer__logo" href="/tero">
+            <center><img alt="" class="footer__logo-img" src="/main/img/tero.png"></center>
+        </a>
+        &copy;<span id="year"> </span><span> Tero. All rights reserved.</span>
+    </div>
+</footer>
+
+<!--=============== SCROLL UP ===============-->
+<a class="scrollup" href="#" id="scroll-up">
+    <i class='bx bx-up-arrow-alt scrollup__icon'></i>
+</a>
+
+<!--=============== MAIN JS ===============-->
+<script src="/main/js/main.js"></script>
+<script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
