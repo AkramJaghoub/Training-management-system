@@ -175,7 +175,7 @@ button {
 }
 
 .nav__logo-img {
-    width: 5rem;
+    width: 3rem;
 }
 
 .nav__link,
@@ -237,16 +237,16 @@ button {
     color: black;
 }
 
-.nav__link::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    background-color: var(--body-color);
-    transition: width .4s;
-    bottom: -5px;
-    left: 0;
-}
+/*.nav__link::after {*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    width: 0;*/
+/*    height: 2px;*/
+/*    background-color: var(--body-color);*/
+/*    transition: width .4s;*/
+/*    bottom: -5px;*/
+/*    left: 0;*/
+/*}*/
 
 .nav__link:hover {
     color: black;
@@ -271,10 +271,11 @@ button {
 /* Active link */
 .active-link {
     position: relative;
-    background-color: #b3d7ff; /* Lighter blue color */
-    color: #333; /* Text color */
+    /*background-color: #b3d7ff; !* Lighter blue color *!*/
+    color: #424141; /* Text color */
     padding: 8px 12px; /* Adjust padding for a more compact look */
     border-radius: 4px; /* Add rounded corners */
+    border-bottom: 2px solid #444;
 }
 
 .active-link::before {
@@ -705,47 +706,7 @@ button {
 }
 
 .footer__logo-img {
-    width: 3rem;
-}
-
-/*/=============== SCROLL UP ===============/*/
-.scrollup {
-    position: fixed;
-    background: var(--container-color);
-    right: 1rem;
-    bottom: -20%;
-    display: inline-flex;
-    padding: .3rem;
-    border-radius: .25rem;
-    z-index: var(--z-tooltip);
-    opacity: .8;
-    transition: .4s;
-}
-
-.scrollup__icon {
-    font-size: 1.25rem;
-    color: var(--title-color);
-}
-
-.scrollup:hover {
-    background: var(--container-color);
-    opacity: 1;
-}
-
-/* Show Scroll Up*/
-.show-scroll {
-    bottom: 3rem;
-}
-
-/*/=============== SCROLL BAR ===============/*/
-::-webkit-scrollbar {
-    width: 0.6rem;
-    background: #413e3e;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #272525;
-    border-radius: .5rem;
+    width: 2rem;
 }
 
 

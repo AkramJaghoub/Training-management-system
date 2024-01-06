@@ -15,8 +15,9 @@
 
     <!--=============== CSS ===============-->
     <link href="/main/css/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="/about-page/about.css">
 
-    <title>Tero internships finder</title>
+    <title>About TERO</title>
 </head>
 <body>
 <!--==================== HEADER ====================-->
@@ -28,12 +29,13 @@
     <div class="nav__menu" id="nav-menu" style="padding-bottom: 10px">
         <ul class="nav__list">
             <li class="nav__item">
-                <a class="nav__link" href="/tero">Home</a>
+                <a class="nav__link active-link" href="/tero">Home</a>
             </li>
 
             <li class="nav__item">
-                <a class="nav__link active-link" href="/tero/about">About</a>
+                <a class="nav__link" href="/tero/about">About</a>
             </li>
+
 
             <a class="button button--ghost" href="/login">Login</a>
         </ul>
@@ -50,50 +52,60 @@
 </header>
 
 <main class="main">
-
-    <!--==================== ABOUT ====================-->
-    <section class="section about" id="about">
-        <div class="about__container container">
-
-            <div class="about__data">
+    <!--==================== HOME ====================-->
+        <div class="container">
+            <!--==================== SECTION 1 ====================-->
+            <section class="section box box1">
+                <h2>TERO</h2>
                 <p>Welcome to the world of TERO, a haven meticulously crafted for students seeking not just internships but a transformative journey into the professional realm.
                     In this sprawling landscape of possibilities, we invite you to explore the essence of TERO, where innovation, mentorship,
-                    and career growth converge to shape a future that aligns seamlessly with your aspirations.
-                </p>
-                <h2 class="about__title">Our Philosophy<br></h2>
-                <p class="about__description">At the core of TERO lies a profound philosophy that views internships
+                    and career growth</p>
+            </section>
+
+            <!--==================== SECTION 2 ====================-->
+            <section class="section box">
+                <h2>Our Philosophy</h2>
+                <p>At the core of TERO lies a profound philosophy that views internships
                     not merely as a means to gain experience but as a crucial chapter in your professional odyssey.
                     We believe in the potential of each student, recognizing the power of experiential learning
                     as a catalyst for personal and career development.
                     Our commitment is to guide you through this pivotal phase, ensuring that every internship becomes
-                    a stepping stone towards a fulfilling and successful career.
-                </p>
+                    a stepping stone towards a fulfilling and successful career.</p>
+            </section>
 
-                <h2 class="about__title">Tailored Opportunities<br></h2>
-                <p class="about__description">TERO is not a one-size-fits-all platform.
+            <!--==================== SECTION 3 ====================-->
+            <section class="section box">
+                <h2>Tailored Opportunities</h2>
+                <p>TERO is not a one-size-fits-all platform.
                     We understand that each student is unique, with distinct interests, skills, and career goals.
                     That's why we go beyond the conventional internship search,
                     curating a personalized selection of opportunities tailored to your individual journey.
                     Whether you are delving into the complexities of technology,
                     navigating the dynamics of business, immersing yourself in the vibrant world of creative arts,
-                    or exploring uncharted territories, TERO has your back.
-                </p>
+                    or exploring uncharted territories, TERO has your back.</p>
+            </section>
 
-                <h2 class="about__title">Mentorship and Guidance<br></h2>
-                <p class="about__description">What sets TERO apart is not just the opportunities it presents but the mentorship and guidance woven
+            <!--==================== SECTION 4 ====================-->
+            <section class="section box">
+                <h2>Mentorship and Guidance</h2>
+                <p>What sets TERO apart is not just the opportunities it presents but the mentorship and guidance woven
                     into the fabric of the platform. We recognize the importance of a supportive community during your internship experience.
                     TERO connects you with experienced mentors who are passionate about fostering the next generation of professionals.
                     These mentors are here to share their insights, provide advice, and assist you in
-                    navigating the challenges of the professional world.
-                </p>
+                    navigating the challenges of the professional world.</p>
+            </section>
 
-                <h2 class="about__title">Beyond Internships<br></h2>
-                <p class="about__description">TERO is more than just an internship platform; it's a community of like-minded individuals united by a passion for growth and excellence. As a TERO member, you gain access to a network that extends beyond your internship period. Connect with fellow students, alumni, and industry professionals who share your interests, creating a support system that lasts throughout your career.
-                </p>
-
-            </div>
+            <!--==================== SECTION 5 ====================-->
+            <section class="section box">
+                <h2>Beyond Internships</h2>
+                <p>TERO is more than just an internship platform; it's a community of like-minded individuals united by
+                    a passion for growth and excellence. As a TERO member, you gain access to a network that extends beyond your
+                    internship period. Connect with fellow students, alumni, and industry
+                    professionals who share your interests, creating a support system that lasts throughout your career.</p>
+            </section>
         </div>
-    </section>
+    </main>
+
 
 <!--==================== FOOTER ====================-->
 <footer>
@@ -104,11 +116,6 @@
         &copy;<span id="year"> </span><span> Tero. All rights reserved.</span>
     </div>
 </footer>
-
-<!--=============== SCROLL UP ===============-->
-<a class="scrollup" href="#" id="scroll-up">
-    <i class='bx bx-up-arrow-alt scrollup__icon'></i>
-</a>
 
 <!--=============== MAIN JS ===============-->
 <script src="/main/js/main.js"></script>
