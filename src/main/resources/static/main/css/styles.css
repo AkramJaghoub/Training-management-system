@@ -237,16 +237,16 @@ button {
     color: black;
 }
 
-/*.nav__link::after {*/
-/*    content: '';*/
-/*    position: absolute;*/
-/*    width: 0;*/
-/*    height: 2px;*/
-/*    background-color: var(--body-color);*/
-/*    transition: width .4s;*/
-/*    bottom: -5px;*/
-/*    left: 0;*/
-/*}*/
+.nav__link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: var(--body-color);
+    transition: width .4s;
+    bottom: -5px;
+    left: 0;
+}
 
 .nav__link:hover {
     color: black;

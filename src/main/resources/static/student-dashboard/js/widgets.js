@@ -105,7 +105,7 @@ function showDescription(adId) {
     // Set the application link on the Apply button
     const applyButton = document.getElementById('applyButton');
     applyButton.onclick = function() {
-        window.open(applicationLink, '_blank'); // Open the application link in a new tab
+        window.open(applicationLink, '_blank');
     };
 
     new bootstrap.Modal(document.getElementById('descriptionModal')).show();

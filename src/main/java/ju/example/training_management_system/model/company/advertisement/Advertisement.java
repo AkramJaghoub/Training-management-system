@@ -68,7 +68,7 @@ public class Advertisement {
                 .description(postDto.getDescription())
                 .postDate(LocalDateTime.now())
                 .adStatus(PENDING)
-                .applicationLink(applicationLink)
+                .applicationLink(postDto.getApplicationLink())
                 .build();
     }
 }

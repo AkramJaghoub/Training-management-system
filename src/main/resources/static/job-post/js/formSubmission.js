@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
         const formData = new FormData(form);
+        formData.append('description', description);
 
         fetch('/advertisement/post', {
             method: 'POST',

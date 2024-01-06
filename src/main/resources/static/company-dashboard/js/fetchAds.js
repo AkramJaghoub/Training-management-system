@@ -497,8 +497,8 @@ async function showUpdateForm(advertisementId) {
     const selectedCountry = descriptionContainer.getAttribute('data-country');
     const selectedCity = descriptionContainer.getAttribute('data-city');
     const description = descriptionContainer.getAttribute('data-description');
-    const compressedImageData = adWidget.getAttribute('data-image');
     const applicationLink = descriptionContainer.getAttribute('data-application-link');
+    const compressedImageData = adWidget.getAttribute('data-image');
 
     document.getElementById('jobTitle').value = jobTitle;
     document.getElementById('internsRequired').value = internsRequired;
