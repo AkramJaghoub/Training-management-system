@@ -87,14 +87,14 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => {
                 if (response.status === 201) {
-                    response.json().then(apiResponse => {
+                    return response.json().then(apiResponse => {
                         showSuccessAlert(apiResponse.message);
                         form.reset();
                     });
                 } else if (response.status === 400) {
-                    response.text().then(errorMessage => {
+                    return response.json().then(errorResponse => {
                         const jobTitleError = document.getElementById('jobTitleError');
-                        jobTitleError.textContent = errorMessage;
+                        jobTitleError.textContent = errorResponse.message;
                     });
                 } else {
                     console.error("Failed to add advertisement");
