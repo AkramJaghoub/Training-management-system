@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import static ju.example.training_management_system.util.Utils.isNotEqual;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -32,12 +32,13 @@ public class UserService {
             }
 
             String currentHashedPassword = PasswordHashingUtil.hashPassword(currentPassword);
-            if (isNotEqual(currentHashedPassword, user.getPassword()))
+            if (!Objects.equals(currentHashedPassword, user.getPassword())) {
                 throw new PasswordNotMatchException("Current password is incorrect");
+            }
 
             String newHashedPassword = PasswordHashingUtil.hashPassword(newPassword);
-            user.setPassword(newHashedPassword);
 
+            user.setPassword(newHashedPassword);
             userRepository.save(user);
             return new ApiResponse("User with email [" + email + "] password was changed successfully", HttpStatus.OK);
         } catch (UserNotFoundException | PasswordNotMatchException ex) {

@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.Objects;
 
 import static ju.example.training_management_system.model.company.advertisement.AdStatus.PENDING;
 import static ju.example.training_management_system.util.Utils.*;
@@ -90,6 +91,8 @@ public class AdvertisementService {
             return new ApiResponse("Advertisement with job title [" + ad.getJobTitle() + "] was posted successfully", HttpStatus.CREATED);
         } catch (AdAlreadyExistsException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (UnauthorizedCompanyAccessException ex) {
+            return new ApiResponse(ex.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -105,7 +108,7 @@ public class AdvertisementService {
             }
             existingAd.setCompany(company);
 
-            if (isNotEqual(adDto.getJobTitle(), existingAd.getJobTitle()) &&
+            if (!Objects.equals(adDto.getJobTitle(), existingAd.getJobTitle()) &&
                     advertisementRepository.existsByJobTitleAndCompany(adDto.getJobTitle(), company)) {
                 throw new AdAlreadyExistsException("An advertisement with the same title already exists!");
             }
@@ -126,8 +129,10 @@ public class AdvertisementService {
 
             advertisementRepository.save(existingAd); // updated advertisement
             return new ApiResponse("Advertisement with job title [" + existingAd.getJobTitle() + "] was updated successfully", HttpStatus.CREATED);
-        } catch (AdAlreadyExistsException | AdDoesNotExistException | UnauthorizedCompanyAccessException ex) {
+        } catch (AdAlreadyExistsException | AdDoesNotExistException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (UnauthorizedCompanyAccessException ex) {
+            return new ApiResponse(ex.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -145,6 +150,8 @@ public class AdvertisementService {
             return new ApiResponse("Advertisement with job title [" + advertisement.getJobTitle() + "] was delete successfully", HttpStatus.OK);
         } catch (AdDoesNotExistException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (UnauthorizedCompanyAccessException ex) {
+            return new ApiResponse(ex.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
 }
