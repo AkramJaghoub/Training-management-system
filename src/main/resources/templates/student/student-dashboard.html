@@ -188,13 +188,14 @@
                                                 th:text="${advertisement.workMode}"
                                                 th:data-work-mode="${advertisement.workMode}"></span>
                                         </p>
-                                        <div th:id="'description-container-' + ${advertisement.id}"
-                                             style="display: none;"
-                                             th:data-description="${advertisement.description}"
-                                             th:data-company-name="${advertisement.company.companyName}"
+                                        <div style="display: none;"
+                                             th:data-application-link="${advertisement.applicationLink}"
                                              th:data-city="${advertisement.city}"
+                                             th:data-company-name="${advertisement.company.companyName}"
                                              th:data-country="${advertisement.country}"
-                                             th:data-application-link="${advertisement.applicationLink}">
+                                             th:data-description="${advertisement.description}"
+                                             th:data-num-of-employees="${advertisement.company.numOfEmployees}"
+                                             th:id="'description-container-' + ${advertisement.id}">
                                         </div>
 
                                         <button type="button" style="padding-left: 1.5rem;"

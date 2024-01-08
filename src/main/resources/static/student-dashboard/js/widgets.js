@@ -10,8 +10,6 @@ function attachEventListeners() {
         menuIcon.addEventListener('click', function (event) {
             event.stopPropagation();
             const adId = this.dataset.adId;
-
-            // Toggle the kebab menu for the clicked icon
             toggleKebabMenu(adId);
         });
     });
@@ -80,24 +78,29 @@ function closeAllKebabMenus() {
 }
 
 function showDescription(adId) {
-    // Fetch the description text from the hidden container
     const descriptionContainer = document.getElementById('description-container-' + adId);
     const ad = {
         city: descriptionContainer.getAttribute('data-city'),
         country: descriptionContainer.getAttribute('data-country'),
-        // Assuming companyName is stored in a data attribute
         companyName: descriptionContainer.getAttribute('data-company-name'),
         description: descriptionContainer.getAttribute('data-description'),
+        numOfEmployees: descriptionContainer.getAttribute('data-num-of-employees')
     };
 
+    let companyInfo = `<strong>Company:</strong> <span style="color: #000">${ad.companyName}</span>`;
+    if (ad.numOfEmployees) {
+        companyInfo += `(Employees: ${ad.numOfEmployees})`; //TODO add range like linkedin
+    }
+    companyInfo += `<br>`;
+
     const modalContentHtml = `
-        <strong>Company:</strong> <span style="color: #000">${ad.companyName}</span><br>
+        ${companyInfo}
         <strong>Location:</strong> <span style="color: #000">${ad.city}, ${ad.country}</span><br>
-         ${ad.description}  `;
+        ${ad.description}`;
 
     // Set the prepared content in the modal's body
     const modalBody = document.querySelector('#descriptionModal .modal-body');
-    modalBody.innerHTML = modalContentHtml; // Use innerHTML as we are setting HTML content
+    modalBody.innerHTML = modalContentHtml;
 
     const advertisementData = document.getElementById('description-container-' + adId);
     const applicationLink = advertisementData.getAttribute('data-application-link');
