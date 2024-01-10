@@ -1,7 +1,6 @@
 const studentSignUpButton = document.getElementById('studentSignUp');
 const companySignUpButton = document.getElementById('companySignUp');
 const container = document.getElementById('fcontainer');
-console.log("dfcvgb" + companySignUpButton + " " + studentSignUpButton);
 studentSignUpButton.addEventListener('click', () => {
     container.classList.add("right-panel-active");
 });

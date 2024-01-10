@@ -10,8 +10,6 @@ public class StudentInfoDto {
     private String lastName;
     private String university;
     private String major;
-    private String phoneNumber;
-    private String address;
     private Integer graduationYear;
     private MultipartFile studentImage;
 }

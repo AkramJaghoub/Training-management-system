@@ -98,10 +98,8 @@ public class StudentService {
 
             model.addAttribute("email", student.getEmail());
             model.addAttribute("studentName", studentName);
-            model.addAttribute("phoneNumber", student.getPhoneNumber());
             model.addAttribute("university", student.getUniversity());
             model.addAttribute("major", student.getMajor());
-            model.addAttribute("address", student.getAddress());
             model.addAttribute("graduationYear", student.getGraduationYear());
             model.addAttribute("studentImage", base64Image);
 
@@ -125,42 +123,46 @@ public class StudentService {
 
             Student student = isUserAuthorizedAsStudent(existingUser, email);
 
+            boolean isChanged = false;
+
             if (studentInfo.getFirstName() != null) {
                 student.setFirstName(studentInfo.getFirstName());
+                isChanged = true;
             }
 
             if (studentInfo.getLastName() != null) {
                 student.setLastName(studentInfo.getLastName());
+                isChanged = true;
             }
 
             if (infoDto.getStudentImage() != null) {
                 byte[] imageBytes = saveImage(infoDto.getStudentImage());
                 student.setImage(imageBytes);
-            }
-
-            if (studentInfo.getAddress() != null) {
-                student.setAddress(studentInfo.getAddress());
+                isChanged = true;
             }
 
             if (studentInfo.getGraduationYear() != null) {
                 student.setGraduationYear(studentInfo.getGraduationYear());
-            }
-
-            if (studentInfo.getPhoneNumber() != null) {
-                student.setPhoneNumber(studentInfo.getPhoneNumber());
+                isChanged = true;
             }
 
             if (studentInfo.getUniversity() != null) {
                 student.setUniversity(studentInfo.getUniversity());
+                isChanged = true;
             }
 
             if (studentInfo.getMajor() != null) {
                 student.setMajor(studentInfo.getMajor());
+                isChanged = true;
+            }
+
+            if(!isChanged){
+                throw new UnsupportedOperationException("You can't proceed with this operation, you have to at least change one field");
             }
 
             userRepository.save(student);
             return new ApiResponse("Student details updated successfully", HttpStatus.OK);
-        } catch (UserNotFoundException ex) {
+        } catch (UserNotFoundException | UnsupportedOperationException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (UnauthorizedStudentAccessException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.UNAUTHORIZED);

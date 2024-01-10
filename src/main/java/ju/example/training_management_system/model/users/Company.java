@@ -18,18 +18,8 @@ import static ju.example.training_management_system.util.Utils.capitalizeFirstLe
 public class Company extends User {
 
     private String companyName;
-
     private String industry;
-
-    private String phoneNumber;
-
-    private String location;
-
     private Integer numOfEmployees;
-
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] image;
-
     private Integer establishmentYear;
 
     public Company(String email, String password) {
@@ -40,7 +30,6 @@ public class Company extends User {
         Company company = new Company();
         company.setCompanyName(capitalizeFirstLetter((String) properties.get("companyName")));
         company.setEmail((String) properties.get("email"));
-        company.setPhoneNumber((String) properties.get("phoneNumber"));
         company.setPassword((String) properties.get("password"));
         company.setJoinDate(LocalDateTime.now());
         return company;

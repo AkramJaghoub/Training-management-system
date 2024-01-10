@@ -42,27 +42,54 @@ document.addEventListener('DOMContentLoaded', function () {
         imagePreview.style.backgroundImage = defaultImageSvg;
     }
 
+    const originalValues = {
+        major: document.getElementById('majorName').value,
+        university: document.getElementById('inputUniversity').value,
+        graduationYear: document.getElementById('inputGYear').value,
+        studentImage: document.getElementById('studentImage').value
+    };
+
     form.addEventListener('submit', function (e) {
         e.preventDefault();
         const formData = new FormData(this);
 
+        let isChanged = false;
+        for (let [key, originalValue] of Object.entries(originalValues)) {
+            if (key === 'studentImage') {
+                const fileInput = formData.get(key);
+                if (fileInput && fileInput.name) {
+                    isChanged = true;
+                    break;
+                }
+            } else {
+                if (formData.get(key) !== originalValue) {
+                    isChanged = true;
+                    break;
+                }
+            }
+        }
+
+        const dataToSend = isChanged ? formData : new FormData();
+
         fetch('/student/manage-profile', {
             method: 'PUT',
-            body: formData
+            body: dataToSend
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    return response.json().then(data => {
+                        throw new Error(data.message || 'Network response was not ok');
+                    });
                 }
-                return response.text();
+                return response.json();
             })
             .then(data => {
                 if (selectedImageData) {
                     updateProfileImages(selectedImageData);
                 }
+                displaySuccessMessage(data.message); // Display the success message from the JSON response
             })
             .catch(error => {
-                console.error('Error:', error);
             });
     });
 
@@ -92,14 +119,28 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
         imagePreview.style.backgroundImage = defaultImageSvg;
     }
+
+    function displaySuccessMessage(message) {
+        const alertBox = document.getElementById('successAlert');
+        const messageParagraph = document.getElementById('successMessage');
+
+        messageParagraph.textContent = message;
+
+        alertBox.style.display = 'flex';
+        alertBox.style.opacity = 1;
+
+        // Wait 4 seconds before starting to fade out
+        setTimeout(() => {
+            let opacity = 1;
+            const fadeInterval = setInterval(() => {
+                if (opacity <= 0) {
+                    clearInterval(fadeInterval);
+                    alertBox.style.display = 'none';
+                } else {
+                    opacity -= 0.05;
+                    alertBox.style.opacity = opacity;
+                }
+            }, 50);
+        }, 4000);
+    }
 });
-
-function handlePhoneInput(input) {
-    if (!input.value.startsWith("+962")) {
-        input.value = "+962";
-    }
-
-    if (input.value.length > 13) {
-        input.value = input.value.slice(0, 13);
-    }
-}

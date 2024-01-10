@@ -182,7 +182,6 @@
                                                                            th:value="${email}" type="email">
                                                                 </div>
                                                                 <div class="row gx-3 mb-3">
-                                                                    <!-- Form Group (Name) -->
                                                                     <div class="col-md-6">
                                                                         <label class="small mb-1" for="StudentName">Your
                                                                             Name</label>
@@ -193,34 +192,21 @@
                                                                                th:value="${studentName}"
                                                                                type="text">
                                                                     </div>
-                                                                    <!-- Form Group (phone number) -->
-                                                                    <div class="col-md-6">
-                                                                        <label class="small mb-1" for="inputPhone">Phone
-                                                                            number
-                                                                            <span style="color: red">*</span>
-                                                                        </label>
-                                                                        <input class="form-control" id="inputPhone"
-                                                                               name="phoneNumber"
-                                                                               oninput="handlePhoneInput(this)"
-                                                                               placeholder="Enter your phone number"
-                                                                               th:value="${phoneNumber}"
-                                                                               type="tel">
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Form Row -->
-                                                                <div class="row gx-3 mb-3">
-                                                                    <!-- Form Group (University) -->
+
                                                                     <div class="col-md-6">
                                                                         <label class="small mb-1"
-                                                                               for="inputLocation">University
+                                                                               for="inputUniversity">University
                                                                             <span style="color: red">*</span>
                                                                         </label>
-                                                                        <input class="form-control" id="inputLocation"
+                                                                        <input class="form-control" id="inputUniversity"
                                                                                name="university"
                                                                                placeholder="Enter your University"
                                                                                th:value="${university}"
                                                                                type="text">
                                                                     </div>
+                                                                </div>
+                                                                <!-- Form Row -->
+                                                                <div class="row gx-3 mb-3">
                                                                     <!-- Form Group (major) -->
                                                                     <div class="col-md-6">
                                                                         <label class="small mb-1" for="majorName">
@@ -232,18 +218,7 @@
                                                                                th:value="${major}"
                                                                                type="text">
                                                                     </div>
-                                                                </div>
-                                                                <!-- Form Row -->
-                                                                <div class="row gx-3 mb-3">
-                                                                    <!-- Form Group (Address) -->
-                                                                    <div class="col-md-6">
-                                                                        <label class="small mb-1" for="inputLocation">Address</label>
-                                                                        <input class="form-control" id="address"
-                                                                               name="address"
-                                                                               placeholder="city, country"
-                                                                               th:value="${address}" type="text">
-                                                                    </div>
-                                                                    <!-- Form Group (Graduation Year) -->
+
                                                                     <div class="col-md-6">
                                                                         <label class="small mb-1" for="inputGYear">Graduation
                                                                             Year</label>
@@ -361,7 +336,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End of the form tag -->
                     </div>
                 </div>
             </div>

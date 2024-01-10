@@ -20,17 +20,11 @@ public class CompanyInfo {
     private Long id;
 
     private String email;
-
     private String companyName;
-
     private String industry;
-
     private String phoneNumber;
-
     private String location;
-
     private Integer numOfEmployees;
-
     private Integer establishmentYear;
 
     public CompanyInfo toEntity(CompanyInfoDto infoDto) {
@@ -39,8 +33,6 @@ public class CompanyInfo {
                 .email(infoDto.getEmail())
                 .companyName(infoDto.getCompanyName())
                 .industry(infoDto.getIndustry())
-                .phoneNumber(infoDto.getPhoneNumber())
-                .location(infoDto.getLocation())
                 .numOfEmployees(infoDto.getNumOfEmployees())
                 .establishmentYear(infoDto.getEstablishmentYear())
                 .build();

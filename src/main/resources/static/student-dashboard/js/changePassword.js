@@ -64,7 +64,6 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .catch((error) => {
                 console.error('Error:', error);
-                alert("An error occurred while changing the password.");
             });
     });
 
