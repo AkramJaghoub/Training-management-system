@@ -22,8 +22,6 @@ public class StudentInfo {
     private String lastName;
     private String university;
     private String major;
-    private String phoneNumber;
-    private String address;
     private Integer graduationYear;
 
     public StudentInfo toEntity(StudentInfoDto infoDto) {
@@ -32,8 +30,6 @@ public class StudentInfo {
                 .email(infoDto.getEmail())
                 .firstName(infoDto.getFirstName())
                 .lastName(infoDto.getLastName())
-                .phoneNumber(infoDto.getPhoneNumber())
-                .address(infoDto.getAddress())
                 .graduationYear(infoDto.getGraduationYear())
                 .university(infoDto.getUniversity())
                 .major(infoDto.getMajor())

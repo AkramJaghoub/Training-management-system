@@ -98,8 +98,6 @@ public class CompanyService {
             model.addAttribute("email", company.getEmail());
             model.addAttribute("companyName", company.getCompanyName());
             model.addAttribute("industry", company.getIndustry());
-            model.addAttribute("location", company.getLocation());
-            model.addAttribute("phoneNumber", company.getPhoneNumber());
             model.addAttribute("numOfEmployees", company.getNumOfEmployees());
             model.addAttribute("establishmentYear", company.getEstablishmentYear());
             model.addAttribute("companyImage", base64Image);
@@ -126,35 +124,37 @@ public class CompanyService {
 
             Company company = isUserAuthorizedAsCompany(existingUser, email);
 
+            boolean isChanged = false;
+
             if (companyInfo.getCompanyName() != null) {
                 company.setCompanyName(companyInfo.getCompanyName());
+                isChanged = true;
             }
 
             if (infoDto.getCompanyImage() != null) {
                 byte[] imageBytes = saveImage(infoDto.getCompanyImage());
                 company.setImage(imageBytes);
-            }
-
-            if (companyInfo.getLocation() != null) {
-                company.setLocation(companyInfo.getLocation());
+                isChanged = true;
             }
 
             if (companyInfo.getEstablishmentYear() != null) {
                 company.setEstablishmentYear(companyInfo.getEstablishmentYear());
-            }
-
-            if (companyInfo.getPhoneNumber() != null) {
-                company.setPhoneNumber(companyInfo.getPhoneNumber());
+                isChanged = true;
             }
 
             if (companyInfo.getNumOfEmployees() != null) {
                 company.setNumOfEmployees(companyInfo.getNumOfEmployees());
+                isChanged = true;
+            }
+
+            if(!isChanged){
+                throw new UnsupportedOperationException("You can't proceed with this operation, you have to at least change one field");
             }
 
             userRepository.save(company);
             return new ApiResponse("Company details updated successfully", HttpStatus.OK);
 
-        } catch (UserNotFoundException ex) {
+        } catch (UserNotFoundException | UnsupportedOperationException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (UnauthorizedCompanyAccessException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.UNAUTHORIZED);

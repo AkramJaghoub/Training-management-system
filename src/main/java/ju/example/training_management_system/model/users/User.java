@@ -25,6 +25,8 @@ public class User {
     private String email;
     private String password;
     private LocalDateTime joinDate;
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] image;
 
     public User(String email, String password) {
         this.email = email;
