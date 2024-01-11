@@ -1,6 +1,5 @@
 package ju.example.training_management_system.model.users;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +20,7 @@ public class Company extends User {
     private String industry;
     private Integer numOfEmployees;
     private Integer establishmentYear;
+    private double rating;
 
     public Company(String email, String password) {
         super(email, password);
