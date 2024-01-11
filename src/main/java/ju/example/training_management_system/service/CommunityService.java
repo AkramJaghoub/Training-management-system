@@ -13,11 +13,11 @@ import static org.springframework.http.HttpStatus.OK;
 
 @Service
 @RequiredArgsConstructor
-public class RatingService {
+public class CommunityService {
 
     private final CompanyRepository companyRepository;
 
-    public ApiResponse rateCompany(long companyId, double rating) {
+    public ApiResponse provideFeedback(long companyId, double rating) {
         try {
             Company company = companyRepository.findById(companyId)
                     .orElseThrow(() -> new UserNotFoundException("Company was not found"));
