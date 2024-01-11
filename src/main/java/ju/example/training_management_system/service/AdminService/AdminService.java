@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import ju.example.training_management_system.exception.AdDoesNotExistException;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
-import ju.example.training_management_system.model.company.advertisement.AdStatus;
+import ju.example.training_management_system.model.PostStatus;
 import ju.example.training_management_system.model.company.advertisement.Advertisement;
 import ju.example.training_management_system.model.users.Company;
 import ju.example.training_management_system.model.users.Role;
@@ -25,8 +25,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static ju.example.training_management_system.model.company.advertisement.AdStatus.APPROVED;
-import static ju.example.training_management_system.model.company.advertisement.AdStatus.PENDING;
+import static ju.example.training_management_system.model.PostStatus.APPROVED;
+import static ju.example.training_management_system.model.PostStatus.PENDING;
 import static ju.example.training_management_system.util.Utils.decompressImage;
 import static ju.example.training_management_system.util.Utils.isEmpty;
 
@@ -143,9 +143,9 @@ public class AdminService {
                     .orElseThrow(() -> new AdDoesNotExistException("Advertisement with [" + adId + "] was not found"));
 
             if (isEmpty(newStatus)) {
-                ad.setAdStatus(PENDING);
+                ad.setPostStatus(PENDING);
             } else {
-                ad.setAdStatus(AdStatus.valueOf(newStatus));
+                ad.setPostStatus(PostStatus.valueOf(newStatus));
                 //notify the company
                 notificationService.notifyUser(newStatus, ad.getJobTitle(), ad.getCompany());
             }

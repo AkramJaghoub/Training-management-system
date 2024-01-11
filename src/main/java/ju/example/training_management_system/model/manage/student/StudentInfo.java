@@ -25,7 +25,6 @@ public class StudentInfo {
     private Integer graduationYear;
 
     public StudentInfo toEntity(StudentInfoDto infoDto) {
-        System.out.println(infoDto);
         return StudentInfo.builder()
                 .email(infoDto.getEmail())
                 .firstName(infoDto.getFirstName())

@@ -2,6 +2,7 @@ package ju.example.training_management_system.model.company.advertisement;
 
 import jakarta.persistence.*;
 import ju.example.training_management_system.dto.AdvertisementDto;
+import ju.example.training_management_system.model.PostStatus;
 import ju.example.training_management_system.model.users.Company;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-import static ju.example.training_management_system.model.company.advertisement.AdStatus.PENDING;
+import static ju.example.training_management_system.model.PostStatus.PENDING;
 
 @Data
 @NoArgsConstructor
@@ -36,7 +37,7 @@ public class Advertisement {
     private LocalDateTime postDate;
 
     @Enumerated(EnumType.STRING)
-    private AdStatus adStatus;
+    private PostStatus postStatus;
 
     @Enumerated(EnumType.STRING)
     private JobType jobType;
@@ -67,7 +68,7 @@ public class Advertisement {
                 .workMode(postDto.getWorkMode())
                 .description(postDto.getDescription())
                 .postDate(LocalDateTime.now())
-                .adStatus(PENDING)
+                .postStatus(PENDING)
                 .applicationLink(postDto.getApplicationLink())
                 .build();
     }

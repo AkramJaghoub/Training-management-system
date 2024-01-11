@@ -5,7 +5,7 @@ import ju.example.training_management_system.dto.StudentInfoDto;
 import ju.example.training_management_system.exception.UnauthorizedStudentAccessException;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
-import ju.example.training_management_system.model.company.advertisement.AdStatus;
+import ju.example.training_management_system.model.PostStatus;
 import ju.example.training_management_system.model.company.advertisement.Advertisement;
 import ju.example.training_management_system.model.manage.student.StudentInfo;
 import ju.example.training_management_system.model.users.Student;
@@ -75,7 +75,7 @@ public class StudentService {
         return advertisementRepository.findAll()
                 .stream()
                 .sorted(Comparator.comparing(Advertisement::getPostDate).reversed())
-                .filter(ad -> ad.getAdStatus().equals(AdStatus.APPROVED))
+                .filter(ad -> ad.getPostStatus().equals(PostStatus.APPROVED))
                 .toList();
     }
 

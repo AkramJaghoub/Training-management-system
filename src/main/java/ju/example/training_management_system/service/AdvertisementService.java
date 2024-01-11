@@ -22,7 +22,7 @@ import org.springframework.ui.Model;
 import java.util.List;
 import java.util.Objects;
 
-import static ju.example.training_management_system.model.company.advertisement.AdStatus.PENDING;
+import static ju.example.training_management_system.model.PostStatus.PENDING;
 import static ju.example.training_management_system.util.Utils.*;
 
 @Service
@@ -125,7 +125,7 @@ public class AdvertisementService {
             existingAd.setCity(adDto.getCity());
             existingAd.setWorkMode(adDto.getWorkMode());
             existingAd.setApplicationLink(adDto.getApplicationLink());
-            existingAd.setAdStatus(PENDING);
+            existingAd.setPostStatus(PENDING);
 
             advertisementRepository.save(existingAd); // updated advertisement
             return new ApiResponse("Advertisement with job title [" + existingAd.getJobTitle() + "] was updated successfully", HttpStatus.CREATED);

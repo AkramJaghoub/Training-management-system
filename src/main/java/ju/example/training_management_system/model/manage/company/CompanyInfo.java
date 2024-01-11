@@ -28,7 +28,6 @@ public class CompanyInfo {
     private Integer establishmentYear;
 
     public CompanyInfo toEntity(CompanyInfoDto infoDto) {
-        System.out.println(infoDto);
         return CompanyInfo.builder()
                 .email(infoDto.getEmail())
                 .companyName(infoDto.getCompanyName())
