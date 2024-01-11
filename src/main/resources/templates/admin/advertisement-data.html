@@ -196,7 +196,7 @@
                     <div class="card-body">
                         <div class="articles">
                             <div th:if="${#lists.isEmpty(advertisements)}" class="no-ads">No advertisements available.</div>
-                            <div id="noAdsMessage" class="no-ads">No Advertisements match your filters</div>
+                            <div id="noAdsMessage" class="no-ads" style="display: none;">No Advertisements match your filters</div>
                             <div th:each="advertisement : ${advertisements}" class="advertisement-widget"
                                  th:data-ad-status="${advertisement.adStatus}"
                                  th:data-id="${advertisement.id}">

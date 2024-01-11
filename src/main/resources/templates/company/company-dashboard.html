@@ -57,7 +57,8 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown" th:unless="${#lists.isEmpty(notifications)}">
                     <li th:each="notification : ${notifications}">
-                        <a class="dropdown-item notification-drop text-wrap" href="#" th:data-notification-id="${notification.id}"
+                        <a class="dropdown-item notification-drop text-wrap" href="#"
+                           th:data-notification-id="${notification.id}"
                            th:text="${notification.message}">Notification message</a>
                     </li>
                 </ul>
@@ -186,7 +187,9 @@
                                     <div th:if="${#lists.isEmpty(advertisements)}" class="no-ads">No advertisements
                                         available.
                                     </div>
-                                    <div id="noAdsMessage" class="no-ads">No Advertisements match your filters</div>
+                                    <div id="noAdsMessage" class="no-ads" style="display: none;">No Advertisements match
+                                        your filters
+                                    </div>
                                     <div th:each="advertisement : ${advertisements}" class="advertisement-widget"
                                          th:data-work-mode="${advertisement.workMode}"
                                          th:data-job-type="${advertisement.jobType}"
@@ -272,7 +275,8 @@
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="confirmationModalLabel">Confirm
                                                     Action</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal"></button>
                                             </div>
                                             <div class="modal-body">
                                                 Are you sure you want to <span id="actionType"></span> advertisement

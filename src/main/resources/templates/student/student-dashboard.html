@@ -157,7 +157,7 @@
                                     <div th:if="${#lists.isEmpty(advertisements)}" class="no-ads">No advertisements
                                         available.
                                     </div>
-                                    <div id="noAdsMessage" class="no-ads">No Advertisements match your filters</div>
+                                    <div id="noAdsMessage" class="no-ads" style="display: none;">No Advertisements match your filters</div>
                                     <div th:each="advertisement : ${advertisements}" class="advertisement-widget"
                                          th:data-work-mode="${advertisement.workMode}"
                                          th:data-job-type="${advertisement.jobType}"
@@ -212,7 +212,6 @@
                                          viewBox="0 0 16 16">
                                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
                                     </svg>
-                                    `
                                     <span id="errorMessage" style="margin-left: 5px; font-size: 1rem;"></span>
                                 </div>
 
