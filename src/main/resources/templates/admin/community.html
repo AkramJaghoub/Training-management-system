@@ -203,53 +203,55 @@
                                 <div class="card text-dark">
                                     <div class="card-body p-4">
                                         <h5 class="fw-light mb-4 pb-2">Recent comments</h5>
+                                    </div>
+                                    <div style="position: absolute; left: 41%;bottom: 20%;font-size: 1.1rem;font-style: italic;"
+                                         th:if="${#lists.isEmpty(feedbackList)}">
+                                        <p>No feedbacks are added yet.</p>
+                                    </div>
 
-                                        <!-- Message if feedbackList is empty -->
-                                        <div style="position: absolute; left: 41%;bottom: 20%;font-size: 1.1rem;font-style: italic;"
-                                             th:if="${#lists.isEmpty(feedbackList)}">
-                                            <p>No feedbacks are added yet.</p>
-                                        </div>
+                                    <!-- Thymeleaf loop for feedbackList -->
+                                    <div th:unless="${#lists.isEmpty(feedbackList)}">
+                                        <div th:each="feedback : ${feedbackList}">
+                                            <div class="d-flex flex-start">
+                                                <img class="rounded-circle shadow-1-strong me-3"
+                                                     th:src="${feedback.student.image}" alt="avatar" width="60"
+                                                     height="60"/>
+                                                <div>
+                                                    <h6 class="fw-bold mb-1"
+                                                        th:text="${feedback.student.firstName + ' ' + feedback.student.lastName}">
+                                                        Student Name
+                                                    </h6>
+                                                    <div class="d-flex align-items-center mb-3">
+                                                        <p class="mb-0">
+                           <span th:text="${#temporals.format(feedback.postDate, 'MMMM dd, yyyy')}">March 07, 2021
+                           </span>
+                                                            <!-- Check for 'APPROVED' status -->
+                                                            <span th:if="${feedback.status.name() == 'APPROVED'}"
+                                                                  class="badge bg-success" th:text="${feedback.status}">APPROVED</span>
 
-                                        <!-- Thymeleaf loop for feedbackList -->
-                                        <div th:unless="${#lists.isEmpty(feedbackList)}">
-                                            <div th:each="feedback : ${feedbackList}">
-                                                <div class="d-flex flex-start">
-                                                    <img class="rounded-circle shadow-1-strong me-3"
-                                                         th:src="${feedback.student.image}" alt="avatar" width="60"
-                                                         height="60"/>
-                                                    <div>
-                                                        <h6 class="fw-bold mb-1"
-                                                            th:text="${feedback.student.firstName + ' ' + feedback.student.lastName}">
-                                                            Student Name
-                                                        </h6>
-                                                        <div class="d-flex align-items-center mb-3">
-                                                            <p class="mb-0">
-                                                                <span th:text="${#temporals.format(feedback.postDate, 'MMMM dd, yyyy')}">March 07, 2021
-                                                                </span>
-                                                                <span class="badge" th:switch="${feedback.status}">
-                                                                    <span th:case="'PENDING'" class="bg-primary"
-                                                                          th:text="${feedback.status}"></span>
-                                                                    <span th:case="'APPROVED'" class="bg-success"
-                                                                          th:text="${feedback.status}"></span>
-                                                                    <span th:case="'REJECTED'" class="bg-danger"
-                                                                          th:text="${feedback.status}"></span>
-                                                                </span>
-                                                            </p>
+                                                            <!-- Check for 'REJECTED' status -->
+                                                            <span th:if="${feedback.status.name() == 'REJECTED'}"
+                                                                  class="badge bg-danger" th:text="${feedback.status}">REJECTED</span>
 
-                                                            <a href="#edit" class="link-muted"><i
-                                                                    class="fas fa-pencil-alt ms-2"></i></a>
-                                                            <a href="#delete" class="link-muted"><i
-                                                                    class="fas fa-trash-alt ms-2"></i></a>
-                                                            <a href="#like" class="link-muted"><i
-                                                                    class="fas fa-heart ms-2"></i></a></div>
+                                                            <!-- Check for 'PENDING' status -->
+                                                            <span th:if="${feedback.status.name() == 'PENDING'}"
+                                                                  class="badge bg-primary" th:text="${feedback.status}">PENDING</span>
 
-                                                        <p class="mb-0" th:text="${feedback.comment}">
-                                                            Feedback comment will appear here.
                                                         </p>
-                                                    </div>
+
+                                                        <a href="#edit" class="link-muted"><i
+                                                                class="fas fa-pencil-alt ms-2"></i></a>
+                                                        <a href="#delete" class="link-muted"><i
+                                                                class="fas fa-trash-alt ms-2"></i></a>
+                                                        <a href="#like" class="link-muted"><i
+                                                                class="fas fa-heart ms-2"></i></a></div>
+
+                                                    <p class="mb-0" th:text="${feedback.comment}">
+                                                        Feedback comment will appear here.
+                                                    </p>
                                                 </div>
-                                                <hr class="my-0"/>
                                             </div>
+                                            <hr class="my-0"/>
                                         </div>
                                     </div>
                                 </div>

@@ -10,10 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import static java.util.Objects.isNull;
 
@@ -25,7 +22,7 @@ public class CommunityController {
     private final CommunityService communityService;
     private final HttpServletRequest request;
 
-    @GetMapping()
+    @GetMapping("")
     public String getCommunityPage(Model model) {
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("email");
@@ -42,6 +39,12 @@ public class CommunityController {
     @PostMapping("/provide-feedback")
     public ResponseEntity<?> provideFeedback(@RequestBody FeedbackDto feedbackDto) {
         ApiResponse apiResponse = communityService.provideFeedback(feedbackDto);
-        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse.getMessage());
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
+    }
+
+    @DeleteMapping("/delete-feedback")
+    public ResponseEntity<?> deleteFeedback(long feedbackId, long studentId) {
+        ApiResponse apiResponse = communityService.deleteFeedback(feedbackId, studentId);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 }

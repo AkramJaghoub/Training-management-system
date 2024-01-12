@@ -1,6 +1,7 @@
 package ju.example.training_management_system.service;
 
 import ju.example.training_management_system.dto.FeedbackDto;
+import ju.example.training_management_system.exception.FeedbackDoesNotExistException;
 import ju.example.training_management_system.exception.UnauthorizedCompanyAccessException;
 import ju.example.training_management_system.exception.UnauthorizedStudentAccessException;
 import ju.example.training_management_system.exception.UserNotFoundException;
@@ -20,8 +21,11 @@ import org.springframework.ui.Model;
 import java.util.Comparator;
 import java.util.List;
 
-import static java.time.LocalDateTime.now;
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+import static ju.example.training_management_system.model.PostStatus.APPROVED;
+import static ju.example.training_management_system.util.Utils.convertToBase64;
+import static ju.example.training_management_system.util.Utils.decompressImage;
 import static org.springframework.http.HttpStatus.*;
 
 @Service
@@ -41,12 +45,25 @@ public class CommunityService {
                 throw new UserNotFoundException("User with email " + email + " wasn't found");
             }
 
-            if (!(user instanceof Student)) {
+            if (!(user instanceof Student student)) {
                 throw new UnauthorizedStudentAccessException("User with email " + email + " wasn't recognized as a student");
             }
 
-            List<Feedback> feedbackList = getFeedbacksByPostDate();
+            List<Feedback> feedbackList = getFeedbacksByPostDateAndStatus();
+            List<Feedback> studentFeedback = getFeedbacksByStudentIdAndPostDate(user.getId());
+
+            String base64Image = null;
+            if (nonNull(student.getImage())) {
+                byte[] decompressedImage = decompressImage(student.getImage());
+                base64Image = convertToBase64(decompressedImage);
+            }
+
+            String studentName = student.getFirstName() + " " + student.getLastName();
+
+            model.addAttribute("studentName", studentName);
+            model.addAttribute("studentImage", base64Image);
             model.addAttribute("feedbackList", feedbackList);
+            model.addAttribute("studentFeedback", studentFeedback);
 
             return new ApiResponse("Set up was correctly done", OK);
         } catch (UserNotFoundException ex) {
@@ -56,10 +73,18 @@ public class CommunityService {
         }
     }
 
-    private List<Feedback> getFeedbacksByPostDate(){
+    private List<Feedback> getFeedbacksByStudentIdAndPostDate(Long studentId) {
+        return feedbackRepository.findByStudent_Id(studentId)
+                .stream()
+                .sorted(Comparator.comparing(Feedback::getPostDate).reversed())
+                .toList();
+    }
+
+    private List<Feedback> getFeedbacksByPostDateAndStatus() {
         return feedbackRepository.findAll()
                 .stream()
                 .sorted(Comparator.comparing(Feedback::getPostDate).reversed())
+                .filter((feedback) -> feedback.getStatus().equals(APPROVED))
                 .toList();
     }
 
@@ -77,9 +102,33 @@ public class CommunityService {
             feedback.setCompany(company);
 
             feedbackRepository.save(feedback);
-            return new ApiResponse("Student feedback was set successfully", CREATED);
-        } catch (UserNotFoundException | UnauthorizedCompanyAccessException ex) {
+            return new ApiResponse("Student feedback was created successfully", CREATED);
+        } catch (UserNotFoundException ex) {
             return new ApiResponse(ex.getMessage(), BAD_REQUEST);
+        } catch (UnauthorizedCompanyAccessException ex){
+            return new ApiResponse(ex.getMessage(), UNAUTHORIZED);
+        }
+    }
+
+    public ApiResponse deleteFeedback(long feedbackId, long userId) {
+        try {
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new UserNotFoundException("User with id [" + userId + "] was not found"));
+
+            if(!(user instanceof Student)){
+                throw new UnauthorizedStudentAccessException("User is not a student");
+            }
+
+            if (!feedbackRepository.existsById(feedbackId)) {
+                throw new FeedbackDoesNotExistException("Feedback with id [" + feedbackId + "] does not exist");
+            }
+
+            feedbackRepository.deleteById(feedbackId);
+            return new ApiResponse("Feedback was deleted successfully", OK);
+        } catch (FeedbackDoesNotExistException | UserNotFoundException ex) {
+            return new ApiResponse(ex.getMessage(), BAD_REQUEST);
+        } catch (UnauthorizedCompanyAccessException ex){
+            return new ApiResponse(ex.getMessage(), UNAUTHORIZED);
         }
     }
 }
