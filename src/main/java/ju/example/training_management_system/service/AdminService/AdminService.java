@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import ju.example.training_management_system.exception.AdDoesNotExistException;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
+import ju.example.training_management_system.model.Feedback;
 import ju.example.training_management_system.model.PostStatus;
 import ju.example.training_management_system.model.company.advertisement.Advertisement;
 import ju.example.training_management_system.model.users.Company;
@@ -11,6 +12,7 @@ import ju.example.training_management_system.model.users.Role;
 import ju.example.training_management_system.model.users.Student;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.AdvertisementRepository;
+import ju.example.training_management_system.repository.FeedbackRepository;
 import ju.example.training_management_system.repository.users.CompanyRepository;
 import ju.example.training_management_system.repository.users.StudentRepository;
 import ju.example.training_management_system.repository.users.UserRepository;
@@ -39,6 +41,7 @@ public class AdminService {
     private final StudentRepository studentRepository;
     private final CompanyRepository companyRepository;
     private final NotificationService notificationService;
+    private final FeedbackRepository feedbackRepository;
 
     public void setUpAdminDashboardPage(Model model) {
         setUpFields(model);
@@ -105,11 +108,27 @@ public class AdminService {
     }
 
     public void setUpAdsListPage(Model model) {
-        List<Advertisement> advertisements = advertisementRepository.findAll()
+        List<Advertisement> advertisements = getAdvertisementsByPostDate();
+        model.addAttribute("advertisements", advertisements);
+    }
+
+    public List<Advertisement> getAdvertisementsByPostDate(){
+        return advertisementRepository.findAll()
                 .stream()
                 .sorted(Comparator.comparing(Advertisement::getPostDate).reversed())
                 .toList();
-        model.addAttribute("advertisements", advertisements);
+    }
+
+    public void setUpStudentsFeedbackPage(Model model) {
+        List<Feedback> feedbackList = getFeedbackListByPostDate();
+        model.addAttribute("feedbackList", feedbackList);
+    }
+
+    private List<Feedback> getFeedbackListByPostDate() {
+        return feedbackRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparing(Feedback::getPostDate).reversed())
+                .toList();
     }
 
     @Transactional

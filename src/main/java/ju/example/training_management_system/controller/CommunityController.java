@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import static java.util.Objects.isNull;
@@ -34,13 +35,12 @@ public class CommunityController {
         }
 
         ApiResponse response = communityService.setUpCommunityPage(model, email);
-        System.out.println(response.getMessage() + " response " + response.getStatus());
         return response.getStatus() == HttpStatus.OK ? "/student/community"
                 : "redirect:/login";
     }
 
     @PostMapping("/provide-feedback")
-    public ResponseEntity<?> provideFeedback(FeedbackDto feedbackDto) {
+    public ResponseEntity<?> provideFeedback(@RequestBody FeedbackDto feedbackDto) {
         ApiResponse apiResponse = communityService.provideFeedback(feedbackDto);
         return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse.getMessage());
     }

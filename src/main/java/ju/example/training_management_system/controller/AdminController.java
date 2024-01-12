@@ -56,6 +56,18 @@ public class AdminController {
         return "/admin/advertisement-data";
     }
 
+    @GetMapping("/community")
+    public String setUpCommunityPage(Model model){
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("email");
+        if (isNull(email)) {
+            return "redirect:/login";
+        }
+
+        adminService.setUpStudentsFeedbackPage(model);
+        return "/admin/community";
+    }
+
     @DeleteMapping("/delete/user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable("id") long userId) {
         ApiResponse response = adminService.deleteUser(userId);

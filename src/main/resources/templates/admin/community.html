@@ -16,8 +16,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="/admin-dashboard/assets/css/users-list.css">
-
+    <link rel="stylesheet" href="/admin-dashboard/assets/css/admin-dashboard.css">
 </head>
 <body>
 <!-- loader Start -->
@@ -35,7 +34,7 @@
 
             <div class="logo-main">
                 <div class="logo-normal">
-                    <img src="/main/img/tero.png" class="icon-30" alt="Logo">
+                    <img src="/main/img/tero.png" class="logo" alt="Logo">
                 </div>
             </div>
             <!--logo End-->
@@ -63,7 +62,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " aria-current="page" href="/admin/dashboard">
+                    <a class="nav-link " aria-current="page" href="/admin/dashboard"
+                       style="background-color: #b3d7ff;border-radius: 20px;">
                         <i class="icon">
                             <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                                  class="icon-20">
@@ -88,7 +88,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/users" style="background-color: #b3d7ff;border-radius: 20px;">
+                    <a class="nav-link" href="/admin/users">
                         <i class="icon">
                             <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
@@ -129,11 +129,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/community">
                         <i class="icon">
-                            <svg class="icon-20" style="height: 2rem; width: 2rem;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <svg class="icon-20" style="height: 2rem; width: 2rem;" xmlns="http://www.w3.org/2000/svg"
+                                 width="24" height="24" viewBox="0 0 24 24">
                                 <path fill="currentColor" d="M9.5 1.5a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1V7l1.8-1.5h2.2a1
                                 1 0 0 0 1-1v-2a1 1 0 0 0-1-1zM5 4a2 2 0 1 0 0 4a2 2 0 0 0 0-4m2.5 5h-5A1.5
                                 1.5 0 0 0 1 10.5c0 1.116.459 2.01 1.212 2.615C2.953 13.71 3.947 14 5
-                                14c1.053 0 2.047-.29 2.788-.885C8.54 12.51 9 11.616 9 10.5A1.5 1.5 0 0 0 7.5 9"/></svg>
+                                14c1.053 0 2.047-.29 2.788-.885C8.54 12.51 9 11.616 9 10.5A1.5 1.5 0 0 0 7.5 9"/>
+                            </svg>
                         </i>
                         <span class="item-name" style="margin-left: 0; margin-bottom: 0.5rem;">Students Feedback</span>
                     </a>
@@ -150,7 +152,9 @@
                     <path opacity="0.4"
                           d="M16.0756 2H19.4616C20.8639 2 22.0001 3.14585 22.0001 4.55996V7.97452C22.0001 9.38864 20.8639 10.5345 19.4616 10.5345H16.0756C14.6734 10.5345 13.5371 9.38864 13.5371 7.97452V4.55996C13.5371 3.14585 14.6734 2 16.0756 2Z"
                           fill="currentColor"></path>
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0zm0 1.875C17.271 1.875 21.125 5.729 21.125 12S17.271 22.125 12 22.125 0 18.271 0 12 3.854 1.875 9.125 1.875zm4.219 5.44l2.469 2.469H6.44V14.31h7.344l-2.469 2.469 1.375 1.375 5.375-5.375-5.375-5.375-1.375 1.375z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0zm0 1.875C17.271 1.875 21.125 5.729 21.125 12S17.271 22.125 12 22.125 0 18.271 0 12 3.854 1.875 9.125 1.875zm4.219 5.44l2.469 2.469H6.44V14.31h7.344l-2.469 2.469 1.375 1.375 5.375-5.375-5.375-5.375-1.375 1.375z"
+                          fill="currentColor"></path>
 
                 </svg>
             </i>
@@ -158,23 +162,12 @@
         </a>
     </div>
 
-    <div class="sidebar-footer"></div>
+    <div class="sidebar-footer">
+    </div>
 </aside>
 <main class="main-content">
     <div class="position-relative iq-banner">
         <!--Nav Start-->
-        <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
-            <div class="container-fluid navbar-inner">
-                <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
-                    <i class="icon">
-                        <svg width="20px" class="icon-20" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                  d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"/>
-                        </svg>
-                    </i>
-                </div>
-            </div>
-        </nav>
         <div class="iq-navbar-header" style="height: 215px;">
             <div class="container-fluid iq-container">
                 <div class="row">
@@ -183,8 +176,7 @@
                             <div>
                                 <h1>Hello Admin</h1>
                                 <p>Welcome to your dashboard, where you can efficiently manage user accounts, track
-                                    activities, and ensure smooth operation of our services.</p>
-                            </div>
+                                    activities, and ensure smooth operation of our services.</p></div>
                         </div>
                     </div>
                 </div>
@@ -195,118 +187,91 @@
             </div>
         </div>
     </div>
-    <div class="dialog-container" id="deleteDialog">
-        <div class="dialog">
-            <p><span id="userEmailToDelete"></span></p>
-            <button id="confirmDelete">Yes</button>
-            <button id="cancelDelete">No</button>
-        </div>
-    </div>
     <div class="conatiner-fluid content-inner mt-n5 py-0">
-        <div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between">
-                            <div class="header-title">
-                                <h4 class="card-title">User List</h4>
-                                <span id="alertPlaceholder" class="user-alert"></span>
-                            </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <h4 class="card-title">Students Feedback</h4>
+                            <span id="alertPlaceholder" class="user-alert"></span>
                         </div>
-                        <div class="card-body px-0">
-                            <div class="table-responsive">
-                                <table id="user-list-table" class="table table-striped" role="grid"
-                                       data-bs-toggle="data-table">
-                                    <thead>
-                                    <tr class="ligth">
-                                        <th>Profile</th>
-                                        <th>Email</th>
-                                        <th>Name</th>
-                                        <th>Role</th>
-                                        <th>Join Date</th>
-                                        <th style="min-width: 100px">Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="user : ${users}" th:data-user-id="${user.id}"
-                                        th:data-user-email="${user.email}">
-                                        <td>
-                                            <div th:if="${userImages[user.id]}" class="d-flex align-items-center">
-                                                <img class="rounded img-fluid avatar-40 me-3"
-                                                     th:src="|data:image/png;base64,${userImages[user.id]}|"
-                                                     alt="Profile"/>
+                    </div>
+                    <div class="card-body px-0">
+                        <section>
+                            <div class="col-md-12 col-lg-10">
+                                <div class="card text-dark">
+                                    <div class="card-body p-4">
+                                        <h5 class="fw-light mb-4 pb-2">Recent comments</h5>
+
+                                        <!-- Message if feedbackList is empty -->
+                                        <div style="position: absolute; left: 41%;bottom: 20%;font-size: 1.1rem;font-style: italic;"
+                                             th:if="${#lists.isEmpty(feedbackList)}">
+                                            <p>No feedbacks are added yet.</p>
+                                        </div>
+
+                                        <!-- Thymeleaf loop for feedbackList -->
+                                        <div th:unless="${#lists.isEmpty(feedbackList)}">
+                                            <div th:each="feedback : ${feedbackList}">
+                                                <div class="d-flex flex-start">
+                                                    <img class="rounded-circle shadow-1-strong me-3"
+                                                         th:src="${feedback.student.image}" alt="avatar" width="60"
+                                                         height="60"/>
+                                                    <div>
+                                                        <h6 class="fw-bold mb-1"
+                                                            th:text="${feedback.student.firstName + ' ' + feedback.student.lastName}">
+                                                            Student Name
+                                                        </h6>
+                                                        <div class="d-flex align-items-center mb-3">
+                                                            <p class="mb-0">
+                                                                <span th:text="${#temporals.format(feedback.postDate, 'MMMM dd, yyyy')}">March 07, 2021
+                                                                </span>
+                                                                <span class="badge" th:switch="${feedback.status}">
+                                                                    <span th:case="'PENDING'" class="bg-primary"
+                                                                          th:text="${feedback.status}"></span>
+                                                                    <span th:case="'APPROVED'" class="bg-success"
+                                                                          th:text="${feedback.status}"></span>
+                                                                    <span th:case="'REJECTED'" class="bg-danger"
+                                                                          th:text="${feedback.status}"></span>
+                                                                </span>
+                                                            </p>
+
+                                                            <a href="#edit" class="link-muted"><i
+                                                                    class="fas fa-pencil-alt ms-2"></i></a>
+                                                            <a href="#delete" class="link-muted"><i
+                                                                    class="fas fa-trash-alt ms-2"></i></a>
+                                                            <a href="#like" class="link-muted"><i
+                                                                    class="fas fa-heart ms-2"></i></a></div>
+
+                                                        <p class="mb-0" th:text="${feedback.comment}">
+                                                            Feedback comment will appear here.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <hr class="my-0"/>
                                             </div>
-                                            <div th:unless="${userImages[user.id]}"
-                                                 class="d-flex align-items-center">
-                                                <svg class="bi bi-person-circle" fill="black" height="28"
-                                                     viewBox="0 0 16 16" width="28"
-                                                     xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                                                    <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
-                                                          fill-rule="evenodd"/>
-                                                </svg>
-                                            </div>
-                                        </td>
-                                        <td th:text="${user.email}">Email</td>
-                                        <td>
-                                            <div th:switch="${user.role.name()}">
-                                                <span th:case="'STUDENT'"
-                                                      th:text="${user.firstName + ' ' + user.lastName}"></span>
-                                                <span th:case="'COMPANY'" th:text="${user.companyName}"></span>
-                                            </div>
-                                        </td>
-                                        <td th:text="${user.role}">Role</td>
-                                        <td th:text="${#temporals.format(user.joinDate, 'yyyy-MM-dd HH:mm')}">Join
-                                        <td>
-                                            <div class="flex align-items-center list-user-action">
-                                                <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="tooltip"
-                                                   data-bs-placement="top" title="Delete" href="#">
-                                <span class="btn-inner">
-                                   <svg class="icon-20 delete-icon" width="20" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
-                                      <path d="M19.3248 9.46826C19.3248 9.46826 18.7818 16.2033 18.4668 19.0403C18.3168 20.3953 17.4798 21.1893 16.1088 21.2143C13.4998 21.2613 10.8878 21.2643 8.27979 21.2093C6.96079 21.1823 6.13779 20.3783 5.99079 19.0473C5.67379 16.1853 5.13379 9.46826 5.13379 9.46826"
-                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round"></path>
-                                      <path d="M20.708 6.23975H3.75" stroke="currentColor" stroke-width="1.5"
-                                            stroke-linecap="round" stroke-linejoin="round"></path>
-                                      <path d="M17.4406 6.23973C16.6556 6.23973 15.9796 5.68473 15.8256 4.91573L15.5826 3.69973C15.4326 3.13873 14.9246 2.75073 14.3456 2.75073H10.1126C9.53358 2.75073 9.02558 3.13873 8.87558 3.69973L8.63258 4.91573C8.47858 5.68473 7.80258 6.23973 7.01758 6.23973"
-                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                            stroke-linejoin="round"></path>
-                                   </svg>
-                                </span>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-end" id="pagination">
-                                </ul>
-                            </nav>
-                        </div>
+                        </section>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-end" id="pagination">
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
-
     <!-- Footer Section Start -->
     <footer class="footer">
         <div class="footer-body">
             <div class="right-panel">
                 ©
                 <script>document.write(new Date().getFullYear())</script>
-                Tero Admin, Made with
-                <span>
-                      <svg class="icon-15" width="15" viewBox="0 0 24 24" fill="none"
-                           xmlns="http://www.w3.org/2000/svg">
-                          <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M15.85 2.50065C16.481 2.50065 17.111 2.58965 17.71 2.79065C21.401 3.99065 22.731 8.04065 21.62 11.5806C20.99 13.3896 19.96 15.0406 18.611 16.3896C16.68 18.2596 14.561 19.9196 12.28 21.3496L12.03 21.5006L11.77 21.3396C9.48102 19.9196 7.35002 18.2596 5.40102 16.3796C4.06102 15.0306 3.03002 13.3896 2.39002 11.5806C1.26002 8.04065 2.59002 3.99065 6.32102 2.76965C6.61102 2.66965 6.91002 2.59965 7.21002 2.56065H7.33002C7.61102 2.51965 7.89002 2.50065 8.17002 2.50065H8.28002C8.91002 2.51965 9.52002 2.62965 10.111 2.83065H10.17C10.21 2.84965 10.24 2.87065 10.26 2.88965C10.481 2.96065 10.69 3.04065 10.89 3.15065L11.27 3.32065C11.3618 3.36962 11.4649 3.44445 11.554 3.50912C11.6104 3.55009 11.6612 3.58699 11.7 3.61065C11.7163 3.62028 11.7329 3.62996 11.7496 3.63972C11.8354 3.68977 11.9247 3.74191 12 3.79965C13.111 2.95065 14.46 2.49065 15.85 2.50065ZM18.51 9.70065C18.92 9.68965 19.27 9.36065 19.3 8.93965V8.82065C19.33 7.41965 18.481 6.15065 17.19 5.66065C16.78 5.51965 16.33 5.74065 16.18 6.16065C16.04 6.58065 16.26 7.04065 16.68 7.18965C17.321 7.42965 17.75 8.06065 17.75 8.75965V8.79065C17.731 9.01965 17.8 9.24065 17.94 9.41065C18.08 9.58065 18.29 9.67965 18.51 9.70065Z"
-                                fill="currentColor"></path>
-                      </svg>
-                </span>
+                Tero
             </div>
         </div>
     </footer>
@@ -328,18 +293,23 @@
 <!-- fslightbox Script -->
 <script src="/admin-dashboard/assets/js/plugins/fslightbox.js"></script>
 
+
 <!-- Slider-tab Script -->
 <script src="/admin-dashboard/assets/js/plugins/slider-tabs.js"></script>
 
 <!-- Form Wizard Script -->
 <script src="/admin-dashboard/assets/js/plugins/form-wizard.js"></script>
 
-<script src="/admin-dashboard/assets/js/delete.js"></script>
+<!-- AOS Animation Plugin-->
+<script src="/admin-dashboard/assets/vendor/aos/dist/aos.js"></script>
 
 <!-- App Script -->
 <script src="/admin-dashboard/assets/js/hope-ui.js" defer></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
 </body>
-</html>
