@@ -13,12 +13,11 @@ import java.time.LocalDateTime;
 public class PasswordResetToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String token;
     private LocalDateTime expiryDateTime;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 }

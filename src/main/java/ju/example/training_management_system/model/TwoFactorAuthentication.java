@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class TwoFactorAuthentication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String token;
     private LocalDateTime persistenceTime;
@@ -23,6 +23,5 @@ public class TwoFactorAuthentication {
     private TokenStatus tokenExpiryStatus;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 }

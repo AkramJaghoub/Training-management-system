@@ -51,7 +51,6 @@ public class Advertisement {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] image;
 
-    @Lob
     @Column(columnDefinition = "LONGTEXT")
     private String description;
 

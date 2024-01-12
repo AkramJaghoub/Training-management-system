@@ -18,7 +18,7 @@ import static ju.example.training_management_system.model.PostStatus.*;
 public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne
     private Student student;

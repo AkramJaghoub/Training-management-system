@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "users")
 public class User {
 
     @Enumerated(EnumType.STRING)
