@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 import static ju.example.training_management_system.model.PostStatus.PENDING;
+import static ju.example.training_management_system.util.Utils.capitalizeFirstLetter;
 
 @Data
 @NoArgsConstructor
@@ -57,19 +58,19 @@ public class Advertisement {
     @ManyToOne
     private Company company;
 
-    public Advertisement toEntity(AdvertisementDto postDto) {
+    public Advertisement toEntity(AdvertisementDto adDto) {
         return Advertisement.builder()
-                .jobTitle(postDto.getJobTitle())
-                .internsRequired(postDto.getInternsRequired())
-                .jobDuration(postDto.getJobDuration())
-                .country(postDto.getCountry())
-                .city(postDto.getCity())
-                .jobType(postDto.getJobType())
-                .workMode(postDto.getWorkMode())
-                .description(postDto.getDescription())
+                .jobTitle(capitalizeFirstLetter(adDto.getJobTitle()))
+                .internsRequired(adDto.getInternsRequired())
+                .jobDuration(adDto.getJobDuration())
+                .country(adDto.getCountry())
+                .city(adDto.getCity())
+                .jobType(adDto.getJobType())
+                .workMode(adDto.getWorkMode())
+                .description(adDto.getDescription())
                 .postDate(LocalDateTime.now())
                 .postStatus(PENDING)
-                .applicationLink(postDto.getApplicationLink())
+                .applicationLink(adDto.getApplicationLink())
                 .build();
     }
 }

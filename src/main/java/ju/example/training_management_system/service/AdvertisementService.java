@@ -55,7 +55,7 @@ public class AdvertisementService {
                 base64Image = convertToBase64(decompressedImage);
             }
 
-            List<Notification> notifications = notificationRepository.findByCompany(company);
+            List<Notification> notifications = notificationRepository.findByUser(company);
 
             model.addAttribute("companyImage", base64Image);
             model.addAttribute("companyName", company.getCompanyName());
@@ -116,7 +116,7 @@ public class AdvertisementService {
             byte[] imageBytes = saveImage(adDto.getJobImage());
 
             existingAd.setImage(imageBytes);
-            existingAd.setJobTitle(adDto.getJobTitle());
+            existingAd.setJobTitle(capitalizeFirstLetter(adDto.getJobTitle()));
             existingAd.setInternsRequired(adDto.getInternsRequired());
             existingAd.setJobDuration(adDto.getJobDuration());
             existingAd.setDescription(adDto.getDescription());
