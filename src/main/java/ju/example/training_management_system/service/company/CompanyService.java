@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.sql.SQLOutput;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -56,6 +58,7 @@ public class CompanyService {
 
             List<Advertisement> advertisements = getCompanyAdvertisementsPostedByLatest(company.getCompanyName());
             List<Notification> notifications = notificationRepository.findByUser(company);
+            Collections.reverse(notifications);
 
             model.addAttribute("companyImage", base64Image);
             model.addAttribute("advertisements", advertisements);
@@ -88,6 +91,7 @@ public class CompanyService {
             Company company = isUserAuthorizedAsCompany(existingUser, email);
 
             List<Notification> notifications = notificationRepository.findByUser(company);
+            Collections.reverse(notifications);
 
             String base64Image = null;
             if (company.getImage() != null) {

@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -56,6 +57,7 @@ public class AdvertisementService {
             }
 
             List<Notification> notifications = notificationRepository.findByUser(company);
+            Collections.reverse(notifications);
 
             model.addAttribute("companyImage", base64Image);
             model.addAttribute("companyName", company.getCompanyName());

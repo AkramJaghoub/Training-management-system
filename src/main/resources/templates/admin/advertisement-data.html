@@ -198,7 +198,7 @@
                             <div th:if="${#lists.isEmpty(advertisements)}" class="no-ads">No advertisements available.</div>
                             <div id="noAdsMessage" class="no-ads" style="display: none;">No Advertisements match your filters</div>
                             <div th:each="advertisement : ${advertisements}" class="advertisement-widget"
-                                 th:data-ad-status="${advertisement.adStatus}"
+                                 th:data-ad-status="${advertisement.postStatus}"
                                  th:data-id="${advertisement.id}">
 
                                 <div th:id="'menu-icon-' + ${advertisement.id}" class="menu-icon"
@@ -220,12 +220,12 @@
                                                                    th:data-company-name="${advertisement.company.companyName}"></span>
                                 </p>
                                 <p><strong>Posted:</strong> <span th:text="${#temporals.format(advertisement.postDate, 'yyyy-MM-dd HH:mm')}">Post Date</span></p>
-                                <p><strong>Status:</strong> <span class="ad-status" th:text="${advertisement.adStatus}">Ad Status</span></p>
+                                <p><strong>Status:</strong> <span class="ad-status" th:text="${advertisement.postStatus}">Ad Status</span></p>
 
                                 <p><strong>Interns Required:</strong> <span
                                         th:text="${advertisement.internsRequired}"></span></p>
                                 <p><strong>Duration:</strong> <span
-                                        th:text="${advertisement.jobDuration} + ' months'"></span></p>
+                                        th:text="${advertisement.jobDuration} + ' months'"></span> </p>
                                 <p><strong>Job Type:</strong> <span th:text="${advertisement.jobType}"></span></p>
                                 <p><strong>Work Mode:</strong> <span th:text="${advertisement.workMode}"></span></p>
                                 <div th:id="'description-container-' + ${advertisement.id}" style="display: none;"
