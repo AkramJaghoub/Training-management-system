@@ -55,7 +55,7 @@ public class CompanyService {
             }
 
             List<Advertisement> advertisements = getCompanyAdvertisementsPostedByLatest(company.getCompanyName());
-            List<Notification> notifications = notificationRepository.findByCompany(company);
+            List<Notification> notifications = notificationRepository.findByUser(company);
 
             model.addAttribute("companyImage", base64Image);
             model.addAttribute("advertisements", advertisements);
@@ -87,7 +87,7 @@ public class CompanyService {
 
             Company company = isUserAuthorizedAsCompany(existingUser, email);
 
-            List<Notification> notifications = notificationRepository.findByCompany(company);
+            List<Notification> notifications = notificationRepository.findByUser(company);
 
             String base64Image = null;
             if (company.getImage() != null) {

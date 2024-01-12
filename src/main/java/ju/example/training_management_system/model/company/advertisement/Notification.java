@@ -1,7 +1,7 @@
 package ju.example.training_management_system.model.company.advertisement;
 
 import jakarta.persistence.*;
-import ju.example.training_management_system.model.users.Company;
+import ju.example.training_management_system.model.users.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,5 +19,5 @@ public class Notification {
     private Long id;
     private String message;
     @ManyToOne
-    private Company company;
+    private User user;
 }

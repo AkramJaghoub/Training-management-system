@@ -4,6 +4,8 @@ import ju.example.training_management_system.exception.NotificationDoesNotExistE
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.company.advertisement.Notification;
 import ju.example.training_management_system.model.users.Company;
+import ju.example.training_management_system.model.users.Student;
+import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.NotificationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,11 +28,18 @@ public class NotificationService {
         }
     }
 
-    public void notifyUser(String newStatus, String jobTitle, Company company) {
+    public void notifyUser(String newStatus, String criteria, User user) {
         Notification notification = new Notification();
-        notification.setMessage("Your Advertisement with job title [" + jobTitle + "] was "
-                + newStatus.toLowerCase());
-        notification.setCompany(company);
+        if (user instanceof Company company) {
+            notification.setMessage("Your Advertisement with job title [" + criteria + "] was "
+                    + newStatus.toLowerCase());
+            notification.setUser(company);
+        } else if (user instanceof Student student){
+            notification.setMessage("Your Feedback with context [" + criteria + "] was "
+                    + newStatus.toLowerCase());
+            notification.setUser(student);
+        }
+        notification.setUser(user);
         notificationRepository.save(notification);
     }
 }

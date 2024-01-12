@@ -92,11 +92,11 @@ public class AdminService {
                         ChronoUnit.HOURS.between(user.getJoinDate(), LocalDateTime.now()) < 24)
                 .peek(user -> {
                     String base64Image = null;
-                    if (user instanceof Company && ((Company) user).getImage() != null) {
-                        byte[] decompressedImage = decompressImage(((Company) user).getImage());
+                    if (user instanceof Company && user.getImage() != null) {
+                        byte[] decompressedImage = decompressImage(user.getImage());
                         base64Image = Base64.getEncoder().encodeToString(decompressedImage);
-                    } else if (user instanceof Student && ((Student) user).getImage() != null) {
-                        byte[] decompressedImage = decompressImage(((Student) user).getImage());
+                    } else if (user instanceof Student && user.getImage() != null) {
+                        byte[] decompressedImage = decompressImage(user.getImage());
                         base64Image = Base64.getEncoder().encodeToString(decompressedImage);
                     }
                     userImages.put(user.getId(), base64Image);

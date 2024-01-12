@@ -2,7 +2,7 @@ package ju.example.training_management_system.service.company;
 
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.company.advertisement.Notification;
-import ju.example.training_management_system.model.users.Company;
+import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.NotificationRepository;
 import ju.example.training_management_system.service.NotificationService;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,7 +57,7 @@ class NotificationServiceTest {
         return Notification.builder()
                 .id(1L)
                 .message("test")
-                .company(new Company())
+                .user(new User())
                 .build();
     }
 }
