@@ -9,3 +9,10 @@
     align-items: center;
     gap: 5px;
 }
+
+.rounded-circle {
+    border-radius: 50%; /* creates the circle */
+    object-fit: cover;  /* ensures the image covers the area without being stretched */
+    width: 60px;        /* fixed width */
+    height: 60px;       /* fixed height */
+}

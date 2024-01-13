@@ -108,6 +108,8 @@
 <!--==================== Main ====================-->
 
 <main class="main">
+    <input id="hiddenStudentImageUrl" th:value="${studentImage}" type="hidden"/>
+
     <div id="successAlert" class="alert alert-success display-message" role="alert">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
              class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16" style="flex-shrink: 0;">
@@ -182,7 +184,7 @@
                                         <div th:each="feedback : ${feedbackList}">
                                             <div class="d-flex flex-start">
                                                 <img class="rounded-circle shadow-1-strong me-3"
-                                                     th:src="${feedback.student.image}" alt="avatar" width="60"
+                                                     th:src="${studentImage}" alt="avatar" width="60"
                                                      height="60"/>
                                                 <div>
                                                     <h6 class="fw-bold mb-1"
@@ -191,30 +193,10 @@
                                                     </h6>
                                                     <div class="d-flex align-items-center mb-3">
                                                         <p class="mb-0">
-                           <span th:text="${#temporals.format(feedback.postDate, 'MMMM dd, yyyy')}">March 07, 2021
-                           </span>
-                                                            <!-- Check for 'APPROVED' status -->
-                                                            <span th:if="${feedback.status.name() == 'APPROVED'}"
-                                                                  class="badge bg-success" th:text="${feedback.status}">APPROVED</span>
+                                                            <span th:text="${#temporals.format(feedback.postDate, 'MMMM dd, yyyy')}">March 07, 2021</span>
+                                                    </div>
 
-                                                            <!-- Check for 'REJECTED' status -->
-                                                            <span th:if="${feedback.status.name() == 'REJECTED'}"
-                                                                  class="badge bg-danger" th:text="${feedback.status}">REJECTED</span>
-
-                                                            <!-- Check for 'PENDING' status -->
-                                                            <span th:if="${feedback.status.name() == 'PENDING'}"
-                                                                  class="badge bg-primary" th:text="${feedback.status}">PENDING</span>
-
-                                                        </p>
-
-                                                        <a href="#edit" class="link-muted"><i
-                                                                class="fas fa-pencil-alt ms-2"></i></a>
-                                                        <a href="#delete" class="link-muted"><i
-                                                                class="fas fa-trash-alt ms-2"></i></a>
-                                                        <a href="#like" class="link-muted"><i
-                                                                class="fas fa-heart ms-2"></i></a></div>
-
-                                                    <p class="mb-0" th:text="${feedback.comment}">
+                                                    <p style="clear: both;" class="mb-0" th:text="${feedback.comment}">
                                                         Feedback comment will appear here.
                                                     </p>
                                                 </div>
@@ -236,10 +218,11 @@
 
                                     <!-- Thymeleaf loop for studentFeedback -->
                                     <div th:unless="${#lists.isEmpty(studentFeedback)}">
-                                        <div th:each="feedback : ${studentFeedback}" th:id="'feedback-item-' + ${feedback.id}">
+                                        <div th:each="feedback : ${studentFeedback}"
+                                             th:id="'feedback-item-' + ${feedback.id}">
                                             <div class="d-flex flex-start">
                                                 <img class="rounded-circle shadow-1-strong me-3"
-                                                     th:src="${feedback.student.image}" alt="avatar" width="60"
+                                                     th:src="${studentImage}" alt="avatar" width="60"
                                                      height="60"/>
                                                 <div>
                                                     <h6 class="fw-bold mb-1"
@@ -282,10 +265,8 @@
                                                                       stroke-linejoin="round"></path>
                                                             </svg>
                                                         </a>
-                                                        <a href="#like" class="link-muted"><i
-                                                                class="fas fa-heart ms-2"></i></a>
                                                     </div>
-                                                    <p class="mb-0" th:text="${feedback.comment}">
+                                                    <p style="clear: both;" class="mb-0" th:text="${feedback.comment}">
                                                         Feedback comment will appear here.
                                                     </p>
                                                 </div>
@@ -316,7 +297,6 @@
 
 <!--=============== MAIN JS ===============-->
 <script src="/main/js/main.js"></script>
-<script src="/student-dashboard/js/studentName.js"></script>
 <script src="/main/js/profile-pic.js"></script>
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 <script src="/community/js/delete-feedback.js"></script>

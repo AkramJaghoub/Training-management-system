@@ -733,6 +733,12 @@ button {
     width: 2rem;
 }
 
+.bi-person-circle {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 43px;
+    height: 43px;
+}
 
 /*/===============  BREAKPOINTS ===============/*/
 /* For small devices */
