@@ -1,3 +1,17 @@
+.name-date {
+    display: flex; /* This ensures that children are in a row */
+    align-items: center; /* This vertically aligns children */
+    flex-wrap: nowrap; /* This prevents wrapping to a new line */
+    gap: 10px; /* This sets a gap between the items */
+    font-size: 1rem; /* Adjust the font size as needed */
+}
+
+.name-date h6, .name-date span {
+    margin-bottom: 0; /* Removes margin from the bottom of h6 and span */
+    white-space: nowrap; /* Prevents wrapping for each item */
+}
+
+
 .display-message {
     display: none;
     position: fixed;
@@ -18,10 +32,11 @@
 }
 
 .feedback-comment {
-    max-width: 27.8%;
+    max-width: 70%;
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: pre-line;
+    word-break: break-all; /* Breaks the word at any character to prevent overflow */
 }
 
 .text-danger {
