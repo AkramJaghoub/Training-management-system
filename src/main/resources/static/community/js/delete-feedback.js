@@ -25,7 +25,7 @@ document.getElementById('confirmDelete').addEventListener('click', () => {
 function deleteFeedback(feedbackId, studentId) {
     console.log("Deleting feedback with ID:", feedbackId);
     $.ajax({
-        url: `/community/delete-feedback?feedbackId=${feedbackId}&studentId=${studentId}`,
+        url: `/feedback/delete?feedbackId=${feedbackId}&studentId=${studentId}`,
         type: 'DELETE',
         success: function (response) {
             console.log("Delete successful:", response);
@@ -39,7 +39,6 @@ function deleteFeedback(feedbackId, studentId) {
 }
 
 function removeFeedbackElement(feedbackId) {
-    console.log("Removing feedback element with ID:", feedbackId);
     const feedbackElement = document.getElementById(`feedback-item-${feedbackId}`);
     if (feedbackElement) {
         feedbackElement.remove();
