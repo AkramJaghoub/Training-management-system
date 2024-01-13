@@ -2,12 +2,10 @@ package ju.example.training_management_system.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import ju.example.training_management_system.dto.FeedbackDto;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.service.CommunityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

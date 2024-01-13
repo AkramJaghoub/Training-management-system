@@ -2,6 +2,7 @@ package ju.example.training_management_system.controller;
 
 import ju.example.training_management_system.dto.FeedbackDto;
 import ju.example.training_management_system.model.ApiResponse;
+import ju.example.training_management_system.model.Feedback;
 import ju.example.training_management_system.service.student.FeedbackService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,16 @@ public class FeedbackController {
     public ResponseEntity<?> provideFeedback(@RequestBody FeedbackDto feedbackDto) {
         ApiResponse apiResponse = feedbackService.provideFeedback(feedbackDto);
         return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
+    }
+
+    @GetMapping("/latest")
+    public ResponseEntity<Feedback> getLatestFeedback() {
+        Feedback latestFeedback = feedbackService.getLatestFeedback();
+        if (latestFeedback != null) {
+            return ResponseEntity.ok(latestFeedback);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/update")

@@ -18,7 +18,10 @@ import ju.example.training_management_system.repository.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static java.util.Objects.nonNull;
 import static ju.example.training_management_system.model.PostStatus.*;
+import static ju.example.training_management_system.util.Utils.convertToBase64;
+import static ju.example.training_management_system.util.Utils.decompressImage;
 import static org.springframework.http.HttpStatus.*;
 
 @Service
@@ -99,5 +102,16 @@ public class FeedbackService {
         } catch (UnauthorizedCompanyAccessException ex) {
             return new ApiResponse(ex.getMessage(), UNAUTHORIZED);
         }
+    }
+
+    public Feedback getLatestFeedback() {
+        Feedback latestFeedback = feedbackRepository.findTopByOrderByPostDateDesc().orElse(null);
+        if (nonNull(latestFeedback)) {
+            byte[] compressedImage = latestFeedback.getStudent().getImage();
+            byte[] decompressedImage = decompressImage(compressedImage);
+            String base64Image = convertToBase64(decompressedImage);
+            latestFeedback.setDecompressedImageBase64(base64Image);
+        }
+        return latestFeedback;
     }
 }

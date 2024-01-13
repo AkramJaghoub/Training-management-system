@@ -8,9 +8,6 @@
     <!--=============== FAVICON ===============-->
     <link href="/main/img/tero.png" rel="icon" type="image/x-icon">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <!--=============== BOXICONS ===============-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -116,6 +113,7 @@
         </svg>
         <p id="successMessage" style="margin-top: 1rem;"></p>
     </div>
+
     <section>
         <div class="container my-5 py-5">
             <div class="row d-flex justify-content-center">
@@ -148,7 +146,8 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="updateComment" class="form-label">Comment</label>
-                                                    <textarea class="form-control custom-textarea" id="updateComment" name="comment" required></textarea>
+                                                    <textarea class="form-control custom-textarea" id="updateComment"
+                                                              name="comment" required></textarea>
                                                     <div id="commentCounter" class="text-muted">0/250</div>
                                                 </div>
                                                 <input type="hidden" id="updateStudentId" name="studentId">
@@ -199,14 +198,19 @@
                                         Posts
                                     </button>
                                 </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="add-post-tab"
+                                            data-bs-toggle="tab" data-bs-target="#addPost"
+                                            type="button" role="tab" aria-controls="addPost" aria-selected="false">
+                                        Provide Feedback
+                                    </button>
+                                </li>
                             </ul>
 
                             <div class="tab-content" id="myTabContent">
 
                                 <!-- All Posts Tab Pane -->
-                                <div class="tab-pane fade show active" id="allPosts" role="tabpanel"
-                                     aria-labelledby="all-posts-tab">
-                                    <h5 class="fw-light mb-4 pb-2">Recent comments</h5>
+                                <div class="tab-pane fade show active" id="allPosts" role="tabpanel" aria-labelledby="all-posts-tab">                                    <h5 class="fw-light mb-4 pb-2">Recent comments</h5>
 
                                     <!-- Content for All Posts -->
                                     <div th:if="${#lists.isEmpty(feedbackList)}"
@@ -221,12 +225,13 @@
                                                 <img class="rounded-circle shadow-1-strong me-3"
                                                      th:if="${allUserImages.containsKey(feedback.student.id)}"
                                                      th:src="@{'data:image/jpeg;base64,' + allUserImages[feedback.student.id]}"
-                                                     alt="avatar" width="60" height="60"/>
+                                                     alt="" width="60" height="60"/>
                                                 <div>
                                                     <h6 th:text="${feedback.student.firstName + ' ' + feedback.student.lastName}">
-                                                            Student Name
+                                                        Student Name
                                                     </h6>
-                                                    <span class="boxs" th:text="${#temporals.format(feedback.postDate, 'MMMM dd, yyyy')}">
+                                                    <span class="boxs"
+                                                          th:text="${#temporals.format(feedback.postDate, 'MMMM dd, yyyy')}">
                                                              March 07, 2021
                                                     </span>
                                                     <p style="margin-bottom: 0;" th:text="${feedback.comment}">
@@ -241,16 +246,20 @@
 
                                 <div class="tab-pane fade" id="yourPosts" role="tabpanel"
                                      aria-labelledby="your-posts-tab">
-                                    <h5 class="fw-light mb-4 pb-2">Your Comments</h5>
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <h5 class="fw-light mb-0">Your Comments</h5>
+                                    </div>
+                                    <!-- Rest of your content -->
 
                                     <div th:if="${#lists.isEmpty(studentFeedback)}"
                                          style="position: absolute; left: 41%;bottom: 20%;font-size: 1.1rem;font-style: italic;">
                                         <p>No personal feedbacks added yet.</p>
                                     </div>
 
-                                    <div th:unless="${#lists.isEmpty(studentFeedback)}">
+                                    <div class="feedback-list-container" th:unless="${#lists.isEmpty(studentFeedback)}">
                                         <div th:each="feedback : ${studentFeedback}"
                                              th:id="'feedback-item-' + ${feedback.id}">
+                                            <input type="hidden" id="hiddenStudentId" th:value="${feedback.student.id}"/>
                                             <div class="d-flex flex-start">
                                                 <img class="rounded-circle shadow-1-strong me-3"
                                                      th:src="${studentImage}" alt="avatar" width="60"
@@ -273,7 +282,8 @@
                                                             <i class="fas fa-pencil-alt ms-2"></i>
                                                         </a>
 
-                                                        <a href="" class="link-muted delete-icon" style="color: red;margin-right: 1rem"
+                                                        <a href="" class="link-muted delete-icon"
+                                                           style="color: red;margin-right: 1rem"
                                                            th:data-feedback-id="${feedback.id}"
                                                            th:data-student-id="${feedback.student.id}">
                                                             <svg class="icon-20 delete-icon ms-2" width="20"
@@ -305,14 +315,18 @@
                                                     </div>
                                                     <div class="d-flex align-items-center mb-1">
                                                         <div style="margin-left: 36rem">
-                                                        <span class="company-name me-2" style="font-weight: bold; margin-left: 9rem"
+                                                        <span class="company-name me-2"
+                                                              style="font-weight: bold; margin-left: 9rem"
                                                               th:text="${feedback.company.companyName}">
                                                             Company Name
                                                         </span>
                                                             <span>
                                                                 <span th:text="'Rating: ' + ${feedback.rating}"></span>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style=" margin-bottom: .5rem">
-                                                                    <path fill="#ffd43b" d="M9.153 5.408C10.42 3.136 11.053 2 12 2c.947 0 1.58 1.136 2.847 3.408l.328.588c.36.646.54.969.82 1.182c.28.213.63.292 1.33.45l.636.144c2.46.557 3.689.835 3.982 1.776c.292.94-.546 1.921-2.223 3.882l-.434.507c-.476.557-.715.836-.822 1.18c-.107.345-.071.717.001 1.46l.066.677c.253 2.617.38 3.925-.386 4.506c-.766.582-1.918.051-4.22-1.009l-.597-.274c-.654-.302-.981-.452-1.328-.452c-.347 0-.674.15-1.328.452l-.596.274c-2.303 1.06-3.455 1.59-4.22 1.01c-.767-.582-.64-1.89-.387-4.507l.066-.676c.072-.744.108-1.116 0-1.46c-.106-.345-.345-.624-.821-1.18l-.434-.508c-1.677-1.96-2.515-2.941-2.223-3.882c.293-.941 1.523-1.22 3.983-1.776l.636-.144c.699-.158 1.048-.237 1.329-.45c.28-.213.46-.536.82-1.182z"/>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                     height="24" viewBox="0 0 24 24"
+                                                                     style=" margin-bottom: .5rem">
+                                                                    <path fill="#ffd43b"
+                                                                          d="M9.153 5.408C10.42 3.136 11.053 2 12 2c.947 0 1.58 1.136 2.847 3.408l.328.588c.36.646.54.969.82 1.182c.28.213.63.292 1.33.45l.636.144c2.46.557 3.689.835 3.982 1.776c.292.94-.546 1.921-2.223 3.882l-.434.507c-.476.557-.715.836-.822 1.18c-.107.345-.071.717.001 1.46l.066.677c.253 2.617.38 3.925-.386 4.506c-.766.582-1.918.051-4.22-1.009l-.597-.274c-.654-.302-.981-.452-1.328-.452c-.347 0-.674.15-1.328.452l-.596.274c-2.303 1.06-3.455 1.59-4.22 1.01c-.767-.582-.64-1.89-.387-4.507l.066-.676c.072-.744.108-1.116 0-1.46c-.106-.345-.345-.624-.821-1.18l-.434-.508c-1.677-1.96-2.515-2.941-2.223-3.882c.293-.941 1.523-1.22 3.983-1.776l.636-.144c.699-.158 1.048-.237 1.329-.45c.28-.213.46-.536.82-1.182z"/>
                                                                 </svg>
                                                             </span>
                                                         </div>
@@ -324,6 +338,27 @@
                                             <hr class="my-0"/>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="addPost" role="tabpanel" aria-labelledby="add-post-tab">
+                                    <h5 class="fw-light mb-4 pb-2">Provide Your Feedback</h5>
+                                    <form id="addFeedbackForm">
+                                        <input type="hidden" id="addStudentId" name="studentId">
+                                        <div class="mb-3">
+                                            <label for="addCompanyName" class="form-label">Company Name</label>
+                                            <input type="text" class="form-control" id="addCompanyName" name="companyName" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="addRating" class="form-label">Rating</label>
+                                            <input type="number" class="form-control" id="addRating" name="rating" step="0.1" min="0" max="5" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="addComment" class="form-label">Comment</label>
+                                            <textarea class="form-control custom-textarea" id="addComment" name="comment" required></textarea>
+                                            <div id="addCommentCounter" class="text-muted">0/250</div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Add</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -347,10 +382,11 @@
 
 <!--=============== MAIN JS ===============-->
 <script src="/main/js/main.js"></script>
-<script src="/main/js/profile-pic.js"></script>
+<script async src="/main/js/profile-pic.js"></script>
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 <script src="/community/js/delete-feedback.js"></script>
 <script src="/community/js/update-feedback.js"></script>
+<script src="/community/js/add-feedback.js"></script>
 <script src="/main/js/menu-toggle.js"></script>
 <script>
     document.getElementById("year").textContent = new Date().getFullYear();

@@ -30,6 +30,9 @@ public class Feedback {
     private LocalDateTime postDate;
     private PostStatus status;
 
+    @Transient
+    private String decompressedImageBase64;
+
     public Feedback toEntity(FeedbackDto feedbackDto) {
         return Feedback.builder()
                 .comment(feedbackDto.getComment())

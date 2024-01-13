@@ -1,18 +1,12 @@
 package ju.example.training_management_system.service;
 
-import ju.example.training_management_system.dto.FeedbackDto;
-import ju.example.training_management_system.exception.FeedbackDoesNotExistException;
-import ju.example.training_management_system.exception.UnauthorizedCompanyAccessException;
 import ju.example.training_management_system.exception.UnauthorizedStudentAccessException;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.Feedback;
-import ju.example.training_management_system.model.users.Company;
 import ju.example.training_management_system.model.users.Student;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.FeedbackRepository;
-import ju.example.training_management_system.repository.users.CompanyRepository;
-import ju.example.training_management_system.repository.users.StudentRepository;
 import ju.example.training_management_system.repository.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -78,7 +72,7 @@ public class CommunityService {
     private Optional<String> getUserImageBase64(User user) {
         if (nonNull(user.getImage())) {
             byte[] decompressedImage = decompressImage(user.getImage());
-            String base64Image = Base64.getEncoder().encodeToString(decompressedImage);
+            String base64Image = convertToBase64(decompressedImage);
             return Optional.of(base64Image);
         }
         return Optional.empty();
