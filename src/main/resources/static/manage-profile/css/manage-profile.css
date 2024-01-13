@@ -74,7 +74,7 @@ nav ul li.profile a:after {
 
 .sub-menu {
     position: relative;
-    height: 13.1rem;
+    height: 17.1rem;
     background: #FAF9F6;
     padding: 0 20px;
     margin: 10px;
@@ -84,7 +84,7 @@ nav ul li.profile a:after {
 
 .user-info {
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* Aligns items to the top */
 }
 
 .user-info h3 {
@@ -518,4 +518,34 @@ p {
 .user-name {
     font-size: 1.4rem;
     margin-left: 1rem;
+    margin-bottom: 1rem; /* Remove any bottom margin to pull the "cis" and "ju" up */
+}
+h6 {
+    margin-bottom: 0.2rem; /* Add some space below each h6 */
+    text-align: left; /* Align text to the left */
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px; /* Adjust as needed */
+}
+
+.additional-info {
+    font-family: sans-serif;
+    color: #000;
+}
+
+.additional-info h6 {
+    margin-top: 0; /* Removes space above "cis" and "ju" */
+    margin-bottom: 0; /* Removes space below "cis" and "ju" */
+    margin-left:0;
+    text-align: left; /* Ensures text is aligned to the left */
+}
+.hr {
+    border: 0;
+    height: 1px;
+    width: 100%;
+    background: #ccc;
+    margin: 15px 0 10px;
 }

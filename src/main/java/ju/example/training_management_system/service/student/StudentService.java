@@ -58,10 +58,14 @@ public class StudentService {
 
             List<Advertisement> advertisements = getAdvertisementsPostedByLatestAndApproved();
             String studentName = getStudentFullName(student.getFirstName(), student.getLastName());
+            String studentMajor = student.getMajor();
+            String studentUniversity = student.getUniversity();
 
             model.addAttribute("studentImage", base64Image);
             model.addAttribute("advertisements", advertisements);
             model.addAttribute("studentName", studentName);
+            model.addAttribute("studentMajor", studentMajor);
+            model.addAttribute("studentUniversity", studentUniversity);
 
             return new ApiResponse("Set up was correctly done", HttpStatus.OK);
         } catch (UserNotFoundException ex) {
