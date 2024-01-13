@@ -35,16 +35,4 @@ public class CommunityController {
         return response.getStatus() == HttpStatus.OK ? "/student/community"
                 : "redirect:/login";
     }
-
-    @PostMapping("/provide-feedback")
-    public ResponseEntity<?> provideFeedback(@RequestBody FeedbackDto feedbackDto) {
-        ApiResponse apiResponse = communityService.provideFeedback(feedbackDto);
-        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
-    }
-
-    @DeleteMapping("/delete-feedback")
-    public ResponseEntity<?> deleteFeedback(long feedbackId, long studentId) {
-        ApiResponse apiResponse = communityService.deleteFeedback(feedbackId, studentId);
-        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
-    }
 }

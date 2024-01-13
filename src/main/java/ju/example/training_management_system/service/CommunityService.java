@@ -33,8 +33,6 @@ import static org.springframework.http.HttpStatus.*;
 public class CommunityService {
 
     private final UserRepository userRepository;
-    private final CompanyRepository companyRepository;
-    private final StudentRepository studentRepository;
     private final FeedbackRepository feedbackRepository;
 
     public ApiResponse setUpCommunityPage(Model model, String email) {
@@ -86,49 +84,5 @@ public class CommunityService {
                 .sorted(Comparator.comparing(Feedback::getPostDate).reversed())
                 .filter((feedback) -> feedback.getStatus().equals(APPROVED))
                 .toList();
-    }
-
-    public ApiResponse provideFeedback(FeedbackDto feedbackDto) {
-        try {
-            long studentId = feedbackDto.getStudentId();
-
-            Student student = studentRepository.findById(studentId)
-                    .orElseThrow(() -> new UserNotFoundException("Student with id [" + studentId + "] was not found"));
-
-            Company company = companyRepository.findByCompanyName(feedbackDto.getCompanyName());
-
-            Feedback feedback = new Feedback().toEntity(feedbackDto);
-            feedback.setStudent(student);
-            feedback.setCompany(company);
-
-            feedbackRepository.save(feedback);
-            return new ApiResponse("Student feedback was created successfully", CREATED);
-        } catch (UserNotFoundException ex) {
-            return new ApiResponse(ex.getMessage(), BAD_REQUEST);
-        } catch (UnauthorizedCompanyAccessException ex){
-            return new ApiResponse(ex.getMessage(), UNAUTHORIZED);
-        }
-    }
-
-    public ApiResponse deleteFeedback(long feedbackId, long userId) {
-        try {
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new UserNotFoundException("User with id [" + userId + "] was not found"));
-
-            if(!(user instanceof Student)){
-                throw new UnauthorizedStudentAccessException("User is not a student");
-            }
-
-            if (!feedbackRepository.existsById(feedbackId)) {
-                throw new FeedbackDoesNotExistException("Feedback with id [" + feedbackId + "] does not exist");
-            }
-
-            feedbackRepository.deleteById(feedbackId);
-            return new ApiResponse("Feedback was deleted successfully", OK);
-        } catch (FeedbackDoesNotExistException | UserNotFoundException ex) {
-            return new ApiResponse(ex.getMessage(), BAD_REQUEST);
-        } catch (UnauthorizedCompanyAccessException ex){
-            return new ApiResponse(ex.getMessage(), UNAUTHORIZED);
-        }
     }
 }
