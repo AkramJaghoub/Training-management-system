@@ -686,7 +686,6 @@ button {
     right: 0;
 }
 
-/*/=============== NEWSLETTER ===============/*/
 .newsletter__description {
     text-align: center;
     color: #FFFFFF;
@@ -712,7 +711,6 @@ button {
     color: var(--text-color);
 }
 
-/*/=============== FOOTER ===============/*/
 .footer {
     position: relative;
     bottom: 0;
