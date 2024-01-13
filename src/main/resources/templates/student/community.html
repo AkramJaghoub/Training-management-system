@@ -44,7 +44,6 @@
                 <a class="nav__link nav__link--active" href='/community'>Community</a>
             </li>
 
-
             <li class="nav__item">
                 <a href="#" id="profileLink" onclick="toggleMenu(event)">
                     <div class="circle-icon">
@@ -220,8 +219,9 @@
                                         <div th:each="feedback : ${feedbackList}">
                                             <div class="d-flex flex-start">
                                                 <img class="rounded-circle shadow-1-strong me-3"
-                                                     th:src="${studentImage}" alt="avatar" width="60"
-                                                     height="60"/>
+                                                     th:if="${allUserImages.containsKey(feedback.student.id)}"
+                                                     th:src="@{'data:image/jpeg;base64,' + allUserImages[feedback.student.id]}"
+                                                     alt="avatar" width="60" height="60"/>
                                                 <div>
                                                     <h6 th:text="${feedback.student.firstName + ' ' + feedback.student.lastName}">
                                                             Student Name

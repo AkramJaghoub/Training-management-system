@@ -79,4 +79,11 @@ public class AdminController {
         ApiResponse response = adminService.updateAdStatus(adId, newStatus);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
+
+    @PutMapping("/update/feedback-status/{feedbackId}")
+    public ResponseEntity<?> updateFeedbackStatus(@PathVariable("feedbackId") long feedbackId,
+                                                  @RequestHeader("newStatus") String newStatus) {
+        ApiResponse response = adminService.updateFeedbackStatus(feedbackId, newStatus);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
 }
