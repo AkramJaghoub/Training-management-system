@@ -298,7 +298,8 @@
                                             </td>
                                             <td>
                                                 <div th:if="${userImages[user.id]}" class="d-flex align-items-center">
-                                                    <img class="rounded img-fluid avatar-40 me-3"
+                                                    <img style="border-radius: 50%; object-fit: cover; width: 30px; height: 30px;"
+                                                         class="img-fluid me-3"
                                                          th:src="|data:image/png;base64,${userImages[user.id]}|"
                                                          alt="Profile"/>
                                                 </div>
