@@ -47,6 +47,7 @@ public class CommunityService {
             Map<Long, String> allUserImages = getUserImages(feedbackList);
 
             model.addAttribute("studentName", studentName);
+            model.addAttribute("studentId", user.getId());
             model.addAttribute("studentImage", getUserImageBase64(user).orElse(null));
             model.addAttribute("feedbackList", feedbackList);
             model.addAttribute("studentFeedback", studentFeedback);

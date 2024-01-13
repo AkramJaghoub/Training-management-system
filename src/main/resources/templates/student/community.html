@@ -224,7 +224,7 @@
                                             <div class="d-flex flex-start">
                                                 <img class="rounded-circle shadow-1-strong me-3"
                                                      th:if="${allUserImages.containsKey(feedback.student.id)}"
-                                                     th:src="@{'data:image/jpeg;base64,' + allUserImages[feedback.student.id]}"
+                                                     th:src="|data:image/jpeg;base64,${allUserImages[feedback.student.id]}|"
                                                      alt="" width="60" height="60"/>
                                                 <div>
                                                     <h6 th:text="${feedback.student.firstName + ' ' + feedback.student.lastName}">
@@ -255,11 +255,11 @@
                                          style="position: absolute; left: 41%;bottom: 20%;font-size: 1.1rem;font-style: italic;">
                                         <p>No personal feedbacks added yet.</p>
                                     </div>
+                                    <input type="hidden" id="hiddenStudentId" th:value="${studentId}"/>
 
                                     <div class="feedback-list-container" th:unless="${#lists.isEmpty(studentFeedback)}">
                                         <div th:each="feedback : ${studentFeedback}"
                                              th:id="'feedback-item-' + ${feedback.id}">
-                                            <input type="hidden" id="hiddenStudentId" th:value="${feedback.student.id}"/>
                                             <div class="d-flex flex-start">
                                                 <img class="rounded-circle shadow-1-strong me-3"
                                                      th:src="${studentImage}" alt="avatar" width="60"
@@ -391,6 +391,12 @@
 <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 </script>
+<script id="templateData" type="application/json">
+    {
+        "studentImage": "${studentImage}"
+    }
+</script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

@@ -243,7 +243,6 @@
                                          th:if="${#lists.isEmpty(feedbackList)}">
                                         <p>No feedbacks are added yet.</p>
                                     </div>
-
                                     <div th:unless="${#lists.isEmpty(feedbackList)}" style="padding-left: 1rem;">
                                         <div th:each="feedback : ${feedbackList}"
                                              th:id="'feedback-item-' + ${feedback.id}">
