@@ -98,11 +98,6 @@
     </div>
 </footer>
 
-<!--=============== SCROLL UP ===============-->
-<a class="scrollup" href="#" id="scroll-up">
-    <i class='bx bx-up-arrow-alt scrollup__icon'></i>
-</a>
-
 <!--=============== SCROLL REVEAL ===============-->
 <script src="/main/js/scrollreveal.min.js"></script>
 
@@ -112,61 +107,8 @@
 <!--=============== MAIN JS ===============-->
 <script src="/main/js/main.js"></script>
 
-<script src="/2FA/css/2FA.css"></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const form = document.querySelector('form');
-        const emailInput = document.getElementById('email');
-        const emailError = document.getElementById('emailError');
-        const urlParams = new URLSearchParams(window.location.search);
-        const authErrorBox = document.getElementById('authErrorBox');
-        const authErrorText = authErrorBox ? authErrorBox.querySelector('.text') : null;
-        console.log("Setting authFailed in session storage");
-        sessionStorage.setItem('authFailed', 'true');
-        console.log(sessionStorage.getItem('authFailed') + " Ssssss")
-        // Check if redirected here due to authentication failure
-        if (urlParams.has('authFailed')) {
-            // Display appropriate error message
-            if (authErrorText) {
-                authErrorText.textContent = 'User is not authenticated — Enter your email to verify yourself';
-                authErrorBox.style.display = 'block';
-            }
-        } else if (urlParams.has('tokenExpired')) {
-            // Handle token expiration message
-            if (authErrorText) {
-                authErrorText.textContent = 'Token has expired, please send an email to generate a new one';
-                authErrorBox.style.display = 'block';
-            }
-        }
-
-        function validateEmail() {
-            const emailValue = emailInput.value.trim();
-            emailError.textContent = '';
-
-            if (!emailValue) {
-                emailError.textContent = 'Email field is required';
-                return false;
-            }
-
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(emailValue)) {
-                emailError.textContent = 'Please enter a valid email address';
-                return false;
-            }
-
-            return true;
-        }
-
-        form.addEventListener('submit', function (event) {
-            if (!validateEmail()) {
-                event.preventDefault(); // Prevent form submission
-            }
-        });
-    });
-</script>
-
-
+<script src="/2FA/js/2FA.js"></script>
+<script src="/2FA/js/redirection.js"></script>
 <script crossorigin="anonymous"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>

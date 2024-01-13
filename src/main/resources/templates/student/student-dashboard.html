@@ -47,7 +47,7 @@
 
 
             <li class="nav__item">
-                <a href="#" id="profileLink" onclick="toggleMenu()">
+                <a href="#" id="profileLink" onclick="toggleMenu(event)">
                     <div class="circle-icon">
                         <svg class="bi bi-person-circle" fill="black" height="28" viewBox="0 0 16 16" width="28"
                              xmlns="http://www.w3.org/2000/svg">
@@ -294,16 +294,8 @@
 </footer>
 
 <script>
-    let suMenu = document.getElementById("subMenu");
-
-    function toggleMenu() {
-        subMenu.classList.toggle("open-menu");
-    }
+    document.getElementById("year").textContent = new Date().getFullYear();
 </script>
-
-<!--<a class="scrollup" href="#" id="scroll-up">-->
-<!--    <i class='bx bx-up-arrow-alt scrollup__icon'></i>-->
-<!--</a>-->
 
 <!--=============== MAIN JS ===============-->
 <script src="/main/js/main.js"></script>
@@ -311,8 +303,7 @@
 <script src="/student-dashboard/js/widgets.js"></script>
 <script src="/main/js/profile-pic.js"> </script>
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-<script src="/job-post/js/country-api.js"></script>
-<script src="/student-dashboard/js/profile-pic.js"></script>
+<script src="/main/js/menu-toggle.js"></script>
 <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 </script>

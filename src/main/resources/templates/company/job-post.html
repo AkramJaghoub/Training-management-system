@@ -58,7 +58,7 @@
             </li>
 
             <li class="nav__item">
-                <a href="#" id="profileLink" onclick="toggleMenu()">
+                <a href="#" id="profileLink" onclick="toggleMenu(event)">
                     <div class="circle-icon">
                         <svg class="bi bi-person-circle" fill="black" height="28" viewBox="0 0 16 16" width="28"
                              xmlns="http://www.w3.org/2000/svg">
@@ -264,29 +264,6 @@
 </footer>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const descriptionTextarea = document.getElementById('description');
-        const maxHeight = 170;
-
-        function resizeTextarea() {
-            if (descriptionTextarea.scrollHeight < maxHeight) {
-                descriptionTextarea.style.height = 'auto';
-                descriptionTextarea.style.height = descriptionTextarea.scrollHeight + 'px';
-            } else {
-                descriptionTextarea.style.overflowY = 'scroll';
-                descriptionTextarea.style.height = maxHeight + 'px';
-            }
-        }
-
-        descriptionTextarea.addEventListener('input', resizeTextarea, false);
-    });
-
-    let subMenu = document.getElementById("subMenu");
-
-    function toggleMenu() {
-        subMenu.classList.toggle("open-menu");
-    }
-
     document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 
@@ -297,6 +274,7 @@
 <script src="/main/js/profile-pic.js" defer></script>
 <script src="https://cdn.tiny.cloud/1/fll71bhwrljxg6ssyfvcooesy7xpgf9l7d196w32tav4gng5/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="/main/js/editor.js"></script>
+<script src="/main/js/menu-toggle.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

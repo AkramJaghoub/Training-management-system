@@ -40,7 +40,7 @@
             </li>
 
             <li class="nav__item">
-                <a href="#" id="profileLink" onclick="toggleMenu()">
+                <a href="#" id="profileLink" onclick="toggleMenu(event)">
                     <div class="circle-icon">
                         <svg class="bi bi-person-circle" fill="black" height="28" viewBox="0 0 16 16" width="28"
                              xmlns="http://www.w3.org/2000/svg">
@@ -353,16 +353,13 @@
         &copy;<span id="year"> </span><span> Tero. All rights reserved.</span>
     </div>
 </footer>
-<script>
-    function toggleMenu() {
-        subMenu.classList.toggle("open-menu");
-    }
-</script>
+
 <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 <script src="/student-dashboard/js/changePassword.js"></script>
 <script src="/student-dashboard/js/studentName.js"></script>
+<script src="/main/js/menu-toggle.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>

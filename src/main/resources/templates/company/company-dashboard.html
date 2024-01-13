@@ -65,7 +65,7 @@
             </li>
 
             <li class="nav__item">
-                <a href="#" id="profileLink" onclick="toggleMenu()">
+                <a href="#" id="profileLink" onclick="toggleMenu(event)">
                     <div class="circle-icon">
                         <svg class="bi bi-person-circle" fill="black" height="28" viewBox="0 0 16 16" width="28"
                              xmlns="http://www.w3.org/2000/svg">
@@ -459,13 +459,7 @@
         &copy;<span id="year"> </span><span> Tero. All rights reserved.</span>
     </div>
 </footer>
-<script>
-    let subMenu = document.getElementById("subMenu");
 
-    function toggleMenu() {
-        subMenu.classList.toggle("open-menu");
-    }
-</script>
 <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 </script>
@@ -478,6 +472,7 @@
 <script src="/job-post/js/country-api.js"></script>
 <script src="/main/js/profile-pic.js" defer></script>
 <script src="/main/js/editor.js"></script>
+<script src="/main/js/menu-toggle.js"></script>
 <script src="https://cdn.tiny.cloud/1/fll71bhwrljxg6ssyfvcooesy7xpgf9l7d196w32tav4gng5/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
