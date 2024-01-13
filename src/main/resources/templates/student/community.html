@@ -124,6 +124,42 @@
                     <div class="card text-dark">
                         <div class="card-body p-4">
 
+                            <div class="modal fade" id="updateFeedbackModal" tabindex="-1"
+                                 aria-labelledby="updateFeedbackModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="updateFeedbackModalLabel">Update Feedback</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="updateFeedbackForm">
+                                                <input type="hidden" id="updateFeedbackId" name="feedbackId">
+                                                <div class="mb-3">
+                                                    <label for="updateCompanyName" class="form-label">Company
+                                                        Name</label>
+                                                    <input type="text" class="form-control" id="updateCompanyName"
+                                                           name="companyName" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="updateRating" class="form-label">Rating</label>
+                                                    <input type="number" class="form-control" id="updateRating"
+                                                           name="rating" step="0.1" min="0" max="5" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="updateComment" class="form-label">Comment</label>
+                                                    <textarea class="form-control custom-textarea" id="updateComment" name="comment" required></textarea>
+                                                    <div id="commentCounter" class="text-muted">0/250</div>
+                                                </div>
+                                                <input type="hidden" id="updateStudentId" name="studentId">
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog"
                                  aria-labelledby="deleteModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -210,13 +246,11 @@
                                      aria-labelledby="your-posts-tab">
                                     <h5 class="fw-light mb-4 pb-2">Your Comments</h5>
 
-                                    <!-- Content for Your Posts -->
                                     <div th:if="${#lists.isEmpty(studentFeedback)}"
                                          style="position: absolute; left: 41%;bottom: 20%;font-size: 1.1rem;font-style: italic;">
                                         <p>No personal feedbacks added yet.</p>
                                     </div>
 
-                                    <!-- Thymeleaf loop for studentFeedback -->
                                     <div th:unless="${#lists.isEmpty(studentFeedback)}">
                                         <div th:each="feedback : ${studentFeedback}"
                                              th:id="'feedback-item-' + ${feedback.id}">
@@ -225,25 +259,40 @@
                                                      th:src="${studentImage}" alt="avatar" width="60"
                                                      height="60"/>
                                                 <div>
-                                                    <h6 class="fw-bold mb-1"
-                                                        th:text="${feedback.student.firstName + ' ' + feedback.student.lastName}">
-                                                        Student Name
-                                                    </h6>
+                                                    <div class="d-flex align-items-center mb-1">
+                                                        <h6 class="fw-bold mb-0 me-2"
+                                                            th:text="${feedback.student.firstName + ' ' + feedback.student.lastName}">
+                                                            Student Name
+                                                        </h6>
+                                                        <span class="company-name me-2"
+                                                              th:text="${feedback.company.companyName}">
+                                                            Company Name
+                                                        </span>
+                                                        <span class="rating" th:text="'Rating: ' + ${feedback.rating}">
+                                                            Rating
+                                                        </span>
+                                                    </div>
                                                     <div class="d-flex align-items-center mb-3">
                                                         <p class="mb-0">
                                                             <span th:text="${#temporals.format(feedback.postDate, 'MMMM dd, yyyy')}">Date</span>
-                                                            <!-- Status badges, similar to the 'All Posts' tab -->
                                                             <span th:if="${feedback.status.name() == 'APPROVED'}"
                                                                   class="badge bg-success" th:text="${feedback.status}">APPROVED</span>
                                                             <span th:if="${feedback.status.name() == 'REJECTED'}"
                                                                   class="badge bg-danger" th:text="${feedback.status}">REJECTED</span>
-                                                            <!-- Grey badge for 'PENDING' status -->
                                                             <span th:if="${feedback.status.name() == 'PENDING'}"
                                                                   class="badge bg-secondary"
                                                                   th:text="${feedback.status}">PENDING</span>
                                                         </p>
-                                                        <a href="#edit" class="link-muted" style="color: green"><i
-                                                                class="fas fa-pencil-alt ms-2"></i></a>
+                                                        <a href="#edit" class="link-muted edit-icon"
+                                                           style="color: green"
+                                                           th:data-feedback-id="${feedback.id}"
+                                                           th:data-student-id="${feedback.student.id}"
+                                                           th:data-student-name="${feedback.student.firstName + ' ' + feedback.student.lastName}"
+                                                           th:data-company-name="${feedback.company.companyName}"
+                                                           th:data-comment="${feedback.comment}"
+                                                           th:data-rating="${feedback.rating}">
+                                                            <i class="fas fa-pencil-alt ms-2"></i>
+                                                        </a>
 
                                                         <a href="" class="link-muted delete-icon" style="color: red"
                                                            th:data-feedback-id="${feedback.id}"
@@ -266,7 +315,7 @@
                                                             </svg>
                                                         </a>
                                                     </div>
-                                                    <p style="clear: both;" class="mb-0" th:text="${feedback.comment}">
+                                                    <p class="mb-0 feedback-comment" th:text="${feedback.comment}">
                                                         Feedback comment will appear here.
                                                     </p>
                                                 </div>
@@ -300,6 +349,7 @@
 <script src="/main/js/profile-pic.js"></script>
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 <script src="/community/js/delete-feedback.js"></script>
+<script src="/community/js/update-feedback.js"></script>
 <script src="/main/js/menu-toggle.js"></script>
 <script>
     document.getElementById("year").textContent = new Date().getFullYear();

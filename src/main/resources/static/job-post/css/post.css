@@ -171,14 +171,6 @@ label {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-#imagePreview {
-    width: 100%; /* Adjust as needed */
-    height: 100%; /* Adjust as needed */
-    background-size: contain; /* Or 'cover' depending on your need */
-    background-position: center center;
-    background-repeat: no-repeat;
-}
-
 .display-message {
     display: none;
     position: fixed;

@@ -740,6 +740,14 @@ button {
     height: 43px;
 }
 
+#imagePreview {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
 /*/===============  BREAKPOINTS ===============/*/
 /* For small devices */
 @media screen and (max-width: 320px) {

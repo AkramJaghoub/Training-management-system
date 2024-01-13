@@ -191,14 +191,6 @@ nav ul li.profile a:after {
     margin-left: -3.4rem;
 }
 
-#imagePreview {
-    width: 100%; /* Adjust as needed */
-    height: 100%; /* Adjust as needed */
-    background-size: contain; /* Or 'cover' depending on your need */
-    background-position: center center;
-    background-repeat: no-repeat;
-}
-
 .circle-icon {
     width: 42px; /* Adjust the size of the circle */
     height: 42px;

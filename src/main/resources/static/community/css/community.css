@@ -11,8 +11,27 @@
 }
 
 .rounded-circle {
-    border-radius: 50%; /* creates the circle */
-    object-fit: cover;  /* ensures the image covers the area without being stretched */
-    width: 60px;        /* fixed width */
-    height: 60px;       /* fixed height */
+    border-radius: 50%;
+    object-fit: cover;
+    width: 60px;
+    height: 60px;
+}
+
+.feedback-comment {
+    max-width: 27.8%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-line;
+}
+
+.text-danger {
+    color: #dc3545;
+}
+
+.text-muted {
+    color: #6c757d;
+}
+
+.custom-textarea {
+    height: 150px;
 }
