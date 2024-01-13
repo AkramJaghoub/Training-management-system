@@ -28,6 +28,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.nonNull;
 import static ju.example.training_management_system.model.PostStatus.APPROVED;
 import static ju.example.training_management_system.model.PostStatus.PENDING;
 import static ju.example.training_management_system.util.Utils.*;
@@ -89,21 +90,21 @@ public class AdminService {
                 .collect(Collectors.toList());
     }
 
+    private Optional<String> getUserImageBase64(User user) {
+        if (nonNull(user.getImage())) {
+            byte[] decompressedImage = decompressImage(user.getImage());
+            String base64Image = Base64.getEncoder().encodeToString(decompressedImage);
+            return Optional.of(base64Image);
+        }
+        return Optional.empty();
+    }
+
     private List<User> getNewUsers(List<User> users, Map<Long, String> userImages) {
         return users.stream()
                 .filter(user -> user.getJoinDate() != null &&
                         ChronoUnit.HOURS.between(user.getJoinDate(), LocalDateTime.now()) < 24)
-                .peek(user -> {
-                    String base64Image = null;
-                    if (user instanceof Company && user.getImage() != null) {
-                        byte[] decompressedImage = decompressImage(user.getImage());
-                        base64Image = Base64.getEncoder().encodeToString(decompressedImage);
-                    } else if (user instanceof Student && user.getImage() != null) {
-                        byte[] decompressedImage = decompressImage(user.getImage());
-                        base64Image = Base64.getEncoder().encodeToString(decompressedImage);
-                    }
-                    userImages.put(user.getId(), base64Image);
-                })
+                .peek(user -> getUserImageBase64(user)
+                        .ifPresent(base64Image -> userImages.put(user.getId(), base64Image)))
                 .toList();
     }
 
@@ -121,7 +122,17 @@ public class AdminService {
 
     public void setUpStudentsFeedbackPage(Model model) {
         List<Feedback> feedbackList = getFeedbackListByPostDate();
+
+        Map<Long, String> studentImages = new HashMap<>();
+        for (Feedback feedback : feedbackList) {
+            Student student = feedback.getStudent();
+            if (nonNull(student)) {
+                getUserImageBase64(student).ifPresent(base64Image -> studentImages.put(student.getId(), base64Image));
+            }
+        }
+
         model.addAttribute("feedbackList", feedbackList);
+        model.addAttribute("studentImages", studentImages);
     }
 
     private List<Feedback> getFeedbackListByPostDate() {
