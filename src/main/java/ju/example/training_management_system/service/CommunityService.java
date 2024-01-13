@@ -18,8 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -50,25 +49,39 @@ public class CommunityService {
             List<Feedback> feedbackList = getFeedbacksByPostDateAndStatus();
             List<Feedback> studentFeedback = getFeedbacksByStudentIdAndPostDate(user.getId());
 
-            String base64Image = null;
-            if (nonNull(student.getImage())) {
-                byte[] decompressedImage = decompressImage(student.getImage());
-                base64Image = convertToBase64(decompressedImage);
-            }
-
             String studentName = student.getFirstName() + " " + student.getLastName();
+            Map<Long, String> allUserImages = getUserImages(feedbackList);
 
             model.addAttribute("studentName", studentName);
-            model.addAttribute("studentImage", base64Image);
+            model.addAttribute("studentImage", getUserImageBase64(user).orElse(null));
             model.addAttribute("feedbackList", feedbackList);
             model.addAttribute("studentFeedback", studentFeedback);
+            model.addAttribute("allUserImages", allUserImages);
 
             return new ApiResponse("Set up was correctly done", OK);
-        } catch (UserNotFoundException ex) {
-            return new ApiResponse(ex.getMessage(), BAD_REQUEST);
-        } catch (UnauthorizedStudentAccessException ex) {
-            return new ApiResponse(ex.getMessage(), UNAUTHORIZED);
+        } catch (UserNotFoundException | UnauthorizedStudentAccessException ex) {
+            return new ApiResponse(ex.getMessage(), ex instanceof UserNotFoundException ? BAD_REQUEST : UNAUTHORIZED);
         }
+    }
+
+    private Map<Long, String> getUserImages(List<Feedback> feedbackList) {
+        Map<Long, String> allUserImages = new HashMap<>();
+
+        for (Feedback feedback : feedbackList) {
+            User feedbackUser = feedback.getStudent();
+            allUserImages.put(feedbackUser.getId(), getUserImageBase64(feedbackUser).orElse(null));
+        }
+
+        return allUserImages;
+    }
+
+    private Optional<String> getUserImageBase64(User user) {
+        if (nonNull(user.getImage())) {
+            byte[] decompressedImage = decompressImage(user.getImage());
+            String base64Image = Base64.getEncoder().encodeToString(decompressedImage);
+            return Optional.of(base64Image);
+        }
+        return Optional.empty();
     }
 
     private List<Feedback> getFeedbacksByStudentIdAndPostDate(Long studentId) {
