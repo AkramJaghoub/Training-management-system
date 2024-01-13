@@ -2,6 +2,7 @@ package ju.example.training_management_system.service.AdminService;
 
 import jakarta.transaction.Transactional;
 import ju.example.training_management_system.exception.AdDoesNotExistException;
+import ju.example.training_management_system.exception.FeedbackDoesNotExistException;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.Feedback;
@@ -29,8 +30,7 @@ import java.util.stream.Collectors;
 
 import static ju.example.training_management_system.model.PostStatus.APPROVED;
 import static ju.example.training_management_system.model.PostStatus.PENDING;
-import static ju.example.training_management_system.util.Utils.decompressImage;
-import static ju.example.training_management_system.util.Utils.isEmpty;
+import static ju.example.training_management_system.util.Utils.*;
 
 @Service
 @RequiredArgsConstructor
@@ -173,6 +173,29 @@ public class AdminService {
             return new ApiResponse("Advertisement with [" + adId + "] and name [" + ad.getJobTitle() + "] successfully got " +
                     (newStatus.equals(APPROVED.name()) ? "approved" : "rejected"), HttpStatus.OK);
         } catch (AdDoesNotExistException ex) {
+            return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public ApiResponse updateFeedbackStatus(long feedbackId, String newStatus) {
+        try {
+            Feedback feedback = feedbackRepository.findById(feedbackId)
+                    .orElseThrow(() -> new FeedbackDoesNotExistException("Advertisement with [" + feedbackId + "] was not found"));
+
+            if (!isEmpty(newStatus)) {
+                feedback.setStatus(PostStatus.valueOf(newStatus));
+                //notify the student
+                String criteria  = "company: " + feedback.getCompany().getCompanyName()
+                        + " and rating of [" + feedback.getRating() + "]";
+                notificationService.notifyUser(newStatus, criteria, feedback.getStudent());
+            } else {
+                feedback.setStatus(PENDING);
+            }
+
+            feedbackRepository.save(feedback);
+            return new ApiResponse("Feedback with [" + feedbackId + "] successfully got " +
+                    (newStatus.equals(APPROVED.name()) ? "approved" : "rejected"), HttpStatus.OK);
+        } catch (FeedbackDoesNotExistException ex) {
             return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
