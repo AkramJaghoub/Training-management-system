@@ -11,8 +11,8 @@
     transform-origin: center;
     transition: all 0.4s ease-in-out;
     overflow: hidden;
-    padding-left: 1rem;
-    padding-top: 1rem;
+    padding-left: 0;
+    padding-top: 0;
     flex: 0 0 calc(33.333% - 10px); /* Do not grow or shrink, keep the basis as calculated */
     margin-bottom: 20px; /* Add vertical spacing between ads */
 }
@@ -410,4 +410,27 @@ hr {
 
 #descriptionModal .modal-body li {
     margin-bottom: 5px; /* Spacing between list items */
+}
+
+.ad-image-container {
+    width: 100%; /* Full width of the widget */
+    height: 200px; /* Fixed height for the image */
+    display: block; /* Remove flex properties if not needed */
+    position: relative; /* Position relative to allow absolute positioning of children */
+    overflow: hidden; /* Hide overflow to maintain container size */
+    background-color: #f4f4f4; /* Light background for the image container */
+    padding: 0;
+    margin: 0;
+}
+
+.ad-image {
+    width: 100%; /* Full width of the container */
+    height: 100%; /* Full height of the container */
+    object-fit: cover; /* Cover the container while maintaining aspect ratio */
+    object-position: center; /* Adjust this if you need to change image positioning */
+}
+
+.header-card {
+    padding-left: 1rem;
+    padding-top: 1rem;
 }

@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (data.redirectUrl) {
                             setTimeout(() => {
                                 window.location.href = data.redirectUrl;
-                            }, 5000);
+                            }, 2000);
                         }
                     }
                 }

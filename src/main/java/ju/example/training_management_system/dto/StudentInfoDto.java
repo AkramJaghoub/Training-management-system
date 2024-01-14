@@ -5,11 +5,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class StudentInfoDto {
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String university;
-    private String major;
-    private Integer graduationYear;
-    private MultipartFile studentImage;
+  private String email;
+  private String firstName;
+  private String lastName;
+  private String university;
+  private String major;
+  private Integer graduationYear;
+  private MultipartFile studentImage;
 }

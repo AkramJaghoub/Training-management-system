@@ -14,35 +14,35 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class FeedbackController {
 
-    private final FeedbackService feedbackService;
+  private final FeedbackService feedbackService;
 
-    @PostMapping("/provide")
-    public ResponseEntity<?> provideFeedback(@RequestBody FeedbackDto feedbackDto) {
-        ApiResponse apiResponse = feedbackService.provideFeedback(feedbackDto);
-        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
-    }
+  @PostMapping("/provide")
+  public ResponseEntity<?> provideFeedback(@RequestBody FeedbackDto feedbackDto) {
+    ApiResponse apiResponse = feedbackService.provideFeedback(feedbackDto);
+    return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
+  }
 
-    @GetMapping("/latest")
-    public ResponseEntity<Feedback> getLatestFeedback() {
-        Feedback latestFeedback = feedbackService.getLatestFeedback();
-        if (latestFeedback != null) {
-            return ResponseEntity.ok(latestFeedback);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+  @GetMapping("/latest")
+  public ResponseEntity<Feedback> getLatestFeedback() {
+    Feedback latestFeedback = feedbackService.getLatestFeedback();
+    if (latestFeedback != null) {
+      return ResponseEntity.ok(latestFeedback);
+    } else {
+      return ResponseEntity.notFound().build();
     }
+  }
 
-    @PutMapping("/update")
-    public ResponseEntity<?> updateFeedback(@RequestBody FeedbackDto feedbackDto,
-                                            @RequestParam("feedbackId") long feedbackId){
-        ApiResponse apiResponse = feedbackService.updateFeedback(feedbackDto, feedbackId);
-        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
-    }
+  @PutMapping("/update")
+  public ResponseEntity<?> updateFeedback(
+      @RequestBody FeedbackDto feedbackDto, @RequestParam("feedbackId") long feedbackId) {
+    ApiResponse apiResponse = feedbackService.updateFeedback(feedbackDto, feedbackId);
+    return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
+  }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteFeedback(@RequestParam("feedbackId") long feedbackId,
-                                            @RequestParam("studentId") long studentId) {
-        ApiResponse apiResponse = feedbackService.deleteFeedback(feedbackId, studentId);
-        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
-    }
+  @DeleteMapping("/delete")
+  public ResponseEntity<?> deleteFeedback(
+      @RequestParam("feedbackId") long feedbackId, @RequestParam("studentId") long studentId) {
+    ApiResponse apiResponse = feedbackService.deleteFeedback(feedbackId, studentId);
+    return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
+  }
 }

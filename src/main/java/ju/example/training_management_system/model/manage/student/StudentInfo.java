@@ -14,24 +14,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class StudentInfo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String university;
-    private String major;
-    private Integer graduationYear;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    public StudentInfo toEntity(StudentInfoDto infoDto) {
-        return StudentInfo.builder()
-                .email(infoDto.getEmail())
-                .firstName(infoDto.getFirstName())
-                .lastName(infoDto.getLastName())
-                .graduationYear(infoDto.getGraduationYear())
-                .university(infoDto.getUniversity())
-                .major(infoDto.getMajor())
-                .build();
-    }
+  private String email;
+  private String firstName;
+  private String lastName;
+  private String university;
+  private String major;
+  private Integer graduationYear;
+
+  public StudentInfo toEntity(StudentInfoDto infoDto) {
+    return StudentInfo.builder()
+        .email(infoDto.getEmail())
+        .firstName(infoDto.getFirstName())
+        .lastName(infoDto.getLastName())
+        .graduationYear(infoDto.getGraduationYear())
+        .university(infoDto.getUniversity())
+        .major(infoDto.getMajor())
+        .build();
+  }
 }

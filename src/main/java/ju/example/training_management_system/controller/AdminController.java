@@ -1,5 +1,7 @@
 package ju.example.training_management_system.controller;
 
+import static java.util.Objects.isNull;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import ju.example.training_management_system.model.ApiResponse;
@@ -10,80 +12,79 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import static java.util.Objects.isNull;
-
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final AdminService adminService;
-    private final HttpServletRequest request;
+  private final AdminService adminService;
+  private final HttpServletRequest request;
 
-    @GetMapping("/dashboard")
-    public String setUpAdminDashboard(Model model) {
-        HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("email");
-        if (isNull(email)) {
-            return "redirect:/login";
-        }
-
-        adminService.setUpAdminDashboardPage(model);
-        return "/admin/admin-dashboard";
+  @GetMapping("/dashboard")
+  public String setUpAdminDashboard(Model model) {
+    HttpSession session = request.getSession();
+    String email = (String) session.getAttribute("email");
+    if (isNull(email)) {
+      return "redirect:/login";
     }
 
-    @GetMapping("/users")
-    public String setUpAdminUserList(Model model) {
-        HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("email");
-        if (isNull(email)) {
-            return "redirect:/login";
-        }
+    adminService.setUpAdminDashboardPage(model);
+    return "/admin/admin-dashboard";
+  }
 
-        adminService.setUpUserListPage(model);
-        return "/admin/users";
+  @GetMapping("/users")
+  public String setUpAdminUserList(Model model) {
+    HttpSession session = request.getSession();
+    String email = (String) session.getAttribute("email");
+    if (isNull(email)) {
+      return "redirect:/login";
     }
 
-    @GetMapping("/advertisements")
-    public String setUpAdminAdvertisementList(Model model) {
-        HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("email");
-        if (isNull(email)) {
-            return "redirect:/login";
-        }
+    adminService.setUpUserListPage(model);
+    return "/admin/users";
+  }
 
-        adminService.setUpAdsListPage(model);
-        return "/admin/advertisement-data";
+  @GetMapping("/advertisements")
+  public String setUpAdminAdvertisementList(Model model) {
+    HttpSession session = request.getSession();
+    String email = (String) session.getAttribute("email");
+    if (isNull(email)) {
+      return "redirect:/login";
     }
 
-    @GetMapping("/community")
-    public String setUpCommunityPage(Model model){
-        HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("email");
-        if (isNull(email)) {
-            return "redirect:/login";
-        }
+    adminService.setUpAdsListPage(model);
+    return "/admin/advertisement-data";
+  }
 
-        adminService.setUpStudentsFeedbackPage(model);
-        return "/admin/community";
+  @GetMapping("/community")
+  public String setUpCommunityPage(Model model) {
+    HttpSession session = request.getSession();
+    String email = (String) session.getAttribute("email");
+    if (isNull(email)) {
+      return "redirect:/login";
     }
 
-    @DeleteMapping("/delete/user/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable("id") long userId) {
-        ApiResponse response = adminService.deleteUser(userId);
-        return ResponseEntity.status(response.getStatus()).body(response.getMessage());
-    }
+    adminService.setUpStudentsFeedbackPage(model);
+    return "/admin/community";
+  }
 
-    @PutMapping("/update/ad-status/{id}")
-    public ResponseEntity<?> updateAdStatus(@PathVariable("id") long adId, @RequestHeader("newStatus") String newStatus) {
-        ApiResponse response = adminService.updateAdStatus(adId, newStatus);
-        return ResponseEntity.status(response.getStatus()).body(response);
-    }
+  @DeleteMapping("/delete/user/{id}")
+  public ResponseEntity<?> deleteUser(@PathVariable("id") long userId) {
+    ApiResponse response = adminService.deleteUser(userId);
+    return ResponseEntity.status(response.getStatus()).body(response.getMessage());
+  }
 
-    @PutMapping("/update/feedback-status/{feedbackId}")
-    public ResponseEntity<?> updateFeedbackStatus(@PathVariable("feedbackId") long feedbackId,
-                                                  @RequestHeader("newStatus") String newStatus) {
-        ApiResponse response = adminService.updateFeedbackStatus(feedbackId, newStatus);
-        return ResponseEntity.status(response.getStatus()).body(response);
-    }
+  @PutMapping("/update/ad-status/{id}")
+  public ResponseEntity<?> updateAdStatus(
+      @PathVariable("id") long adId, @RequestHeader("newStatus") String newStatus) {
+    ApiResponse response = adminService.updateAdStatus(adId, newStatus);
+    return ResponseEntity.status(response.getStatus()).body(response);
+  }
+
+  @PutMapping("/update/feedback-status/{feedbackId}")
+  public ResponseEntity<?> updateFeedbackStatus(
+      @PathVariable("feedbackId") long feedbackId, @RequestHeader("newStatus") String newStatus) {
+    ApiResponse response = adminService.updateFeedbackStatus(feedbackId, newStatus);
+    return ResponseEntity.status(response.getStatus()).body(response);
+  }
 }

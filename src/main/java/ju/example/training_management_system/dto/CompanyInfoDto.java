@@ -5,10 +5,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class CompanyInfoDto {
-    private String email;
-    private String companyName;
-    private String industry;
-    private Integer numOfEmployees;
-    private Integer establishmentYear;
-    private MultipartFile companyImage;
+  private String email;
+  private String companyName;
+  private String industry;
+  private Integer numOfEmployees;
+  private Integer establishmentYear;
+  private MultipartFile companyImage;
 }

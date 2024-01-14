@@ -15,25 +15,25 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CompanyInfo {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String email;
-    private String companyName;
-    private String industry;
-    private String phoneNumber;
-    private String location;
-    private Integer numOfEmployees;
-    private Integer establishmentYear;
+  private String email;
+  private String companyName;
+  private String industry;
+  private String phoneNumber;
+  private String location;
+  private Integer numOfEmployees;
+  private Integer establishmentYear;
 
-    public CompanyInfo toEntity(CompanyInfoDto infoDto) {
-        return CompanyInfo.builder()
-                .email(infoDto.getEmail())
-                .companyName(infoDto.getCompanyName())
-                .industry(infoDto.getIndustry())
-                .numOfEmployees(infoDto.getNumOfEmployees())
-                .establishmentYear(infoDto.getEstablishmentYear())
-                .build();
-    }
+  public CompanyInfo toEntity(CompanyInfoDto infoDto) {
+    return CompanyInfo.builder()
+        .email(infoDto.getEmail())
+        .companyName(infoDto.getCompanyName())
+        .industry(infoDto.getIndustry())
+        .numOfEmployees(infoDto.getNumOfEmployees())
+        .establishmentYear(infoDto.getEstablishmentYear())
+        .build();
+  }
 }

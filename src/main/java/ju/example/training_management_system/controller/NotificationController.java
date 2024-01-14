@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @RequestMapping("/notification")
 public class NotificationController {
-    private final NotificationService notificationService;
+  private final NotificationService notificationService;
 
-    @DeleteMapping("/mark-as-read/{id}")
-    public ResponseEntity<?> markNotificationAsRead(@PathVariable("id") long notificationId) {
-        ApiResponse response = notificationService.markNotificationAsRead(notificationId);
-        return ResponseEntity.status(response.getStatus()).body(response);
-    }
+  @DeleteMapping("/mark-as-read/{id}")
+  public ResponseEntity<?> markNotificationAsRead(@PathVariable("id") long notificationId) {
+    ApiResponse response = notificationService.markNotificationAsRead(notificationId);
+    return ResponseEntity.status(response.getStatus()).body(response);
+  }
 }

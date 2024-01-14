@@ -164,52 +164,66 @@
                                     <div th:if="${#lists.isEmpty(advertisements)}" class="no-ads">No advertisements
                                         available.
                                     </div>
-                                    <div id="noAdsMessage" class="no-ads" style="display: none;">No Advertisements match your filters</div>
+                                    <div id="noAdsMessage" class="no-ads" style="display: none;">No Advertisements match
+                                        your filters
+                                    </div>
                                     <div th:each="advertisement : ${advertisements}" class="advertisement-widget"
                                          th:data-work-mode="${advertisement.workMode}"
                                          th:data-job-type="${advertisement.jobType}"
                                          th:data-id="${advertisement.id}"
                                          th:data-image="${advertisement.image}">
 
-                                        <h4 style="margin-bottom: 1.5rem;" th:text="${advertisement.jobTitle}"
-                                            th:data-job-title="${advertisement.jobTitle}">Job Title</h4>
-                                        <p><strong>Company:</strong> <span
-                                                th:text="${advertisement.company.companyName}"
-                                                th:data-company-name="${advertisement.company.companyName}"></span>
-                                        </p>
-                                        <p><strong>Posted:</strong> <span
-                                                th:text="${#temporals.format(advertisement.postDate, 'yyyy-MM-dd HH:mm')}">Post Date</span>
-                                        </p>
-                                        <p><strong>Interns Required:</strong> <span
-                                                th:text="${advertisement.internsRequired}"
-                                                th:data-interns-required="${advertisement.internsRequired}"></span>
-                                        </p>
-                                        <p><strong>Duration:</strong> <span
-                                                th:text="${advertisement.jobDuration}"
-                                                th:data-job-duration="${advertisement.jobDuration} + ' months'"></span> </p>
-                                        <p><strong>Job Type:</strong> <span
-                                                th:text="${advertisement.jobType}"
-                                                th:data-job-type="${advertisement.jobType}"></span>
-                                        </p>
-                                        <p><strong>Work Mode:</strong> <span
-                                                th:text="${advertisement.workMode}"
-                                                th:data-work-mode="${advertisement.workMode}"></span>
-                                        </p>
-                                        <div style="display: none;"
-                                             th:data-application-link="${advertisement.applicationLink}"
-                                             th:data-city="${advertisement.city}"
-                                             th:data-company-name="${advertisement.company.companyName}"
-                                             th:data-country="${advertisement.country}"
-                                             th:data-description="${advertisement.description}"
-                                             th:data-num-of-employees="${advertisement.company.numOfEmployees}"
-                                             th:id="'description-container-' + ${advertisement.id}">
+                                        <div class="ad-image-container">
+                                            <img th:if="${advertisementImagesBase64.containsKey(advertisement.id)}"
+                                                 th:attr="data-src=${advertisementImagesBase64[advertisement.id]}"
+                                                 alt="Advertisement Image" class="ad-image" width="60" height="60"/>
+                                            <div th:unless="${advertisementImagesBase64.containsKey(advertisement.id)}">
+                                                <!-- Placeholder if no image exists -->
+                                            </div>
                                         </div>
 
-                                        <button type="button" style="padding-left: 1.5rem;"
-                                                class="btn btn-primary article-button view-description-button"
-                                                th:onclick="'showDescription(' + ${advertisement.id} + ');'">View
-                                            Description
-                                        </button>
+                                        <div class="header-card">
+                                            <h4 style="margin-bottom: 1.5rem;" th:text="${advertisement.jobTitle}"
+                                                th:data-job-title="${advertisement.jobTitle}">Job Title</h4>
+                                            <p><strong>Company:</strong> <span
+                                                    th:text="${advertisement.company.companyName}"
+                                                    th:data-company-name="${advertisement.company.companyName}"></span>
+                                            </p>
+                                            <p><strong>Posted:</strong> <span
+                                                    th:text="${#temporals.format(advertisement.postDate, 'yyyy-MM-dd HH:mm')}">Post Date</span>
+                                            </p>
+                                            <p><strong>Interns Required:</strong> <span
+                                                    th:text="${advertisement.internsRequired}"
+                                                    th:data-interns-required="${advertisement.internsRequired}"></span>
+                                            </p>
+                                            <p><strong>Duration:</strong> <span
+                                                    th:text="${advertisement.jobDuration}"
+                                                    th:data-job-duration="${advertisement.jobDuration} + ' months'"></span>
+                                            </p>
+                                            <p><strong>Job Type:</strong> <span
+                                                    th:text="${advertisement.jobType}"
+                                                    th:data-job-type="${advertisement.jobType}"></span>
+                                            </p>
+                                            <p><strong>Work Mode:</strong> <span
+                                                    th:text="${advertisement.workMode}"
+                                                    th:data-work-mode="${advertisement.workMode}"></span>
+                                            </p>
+                                            <div style="display: none;"
+                                                 th:data-application-link="${advertisement.applicationLink}"
+                                                 th:data-city="${advertisement.city}"
+                                                 th:data-company-name="${advertisement.company.companyName}"
+                                                 th:data-country="${advertisement.country}"
+                                                 th:data-description="${advertisement.description}"
+                                                 th:data-num-of-employees="${advertisement.company.numOfEmployees}"
+                                                 th:id="'description-container-' + ${advertisement.id}">
+                                            </div>
+
+                                            <button type="button" style="padding-left: 1.5rem;"
+                                                    class="btn btn-primary article-button view-description-button"
+                                                    th:onclick="'showDescription(' + ${advertisement.id} + ');'">View
+                                                Description
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -312,8 +326,9 @@
 
 <!--=============== MAIN JS ===============-->
 <script src="/main/js/main.js"></script>
+<script src="/student-dashboard/js/adImage.js"></script>
 <script src="/student-dashboard/js/widgets.js"></script>
-<script src="/main/js/profile-pic.js"> </script>
+<script src="/main/js/profile-pic.js"></script>
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 <script src="/main/js/menu-toggle.js"></script>
 <script>

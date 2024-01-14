@@ -1,12 +1,11 @@
 package ju.example.training_management_system.model.users;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -16,19 +15,22 @@ import java.time.LocalDateTime;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
-    @Enumerated(EnumType.STRING)
-    public Role role;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String email;
-    private String password;
-    private LocalDateTime joinDate;
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] image;
+  @Enumerated(EnumType.STRING)
+  public Role role;
 
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
+  private String email;
+  private String password;
+  private LocalDateTime joinDate;
+
+  @Column(columnDefinition = "LONGBLOB")
+  private byte[] image;
+
+  public User(String email, String password) {
+    this.email = email;
+    this.password = password;
+  }
 }

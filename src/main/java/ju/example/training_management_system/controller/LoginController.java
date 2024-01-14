@@ -10,26 +10,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
 
-    private final LoginService loginService;
+  private final LoginService loginService;
 
-    @GetMapping("/login")
-    public String getLoginPage() {
-        return "login-page";
-    }
+  @GetMapping("/login")
+  public String getLoginPage() {
+    return "login-page";
+  }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDto loginDto, HttpSession session) {
-        ApiResponse response = loginService.loginUser(loginDto, session);
-//        if (response.getStatus() == TEMPORARY_REDIRECT) {
-//            redirectToPage("/auth/2fa/confirm-email");
-//        }
+  @PostMapping("/login")
+  public ResponseEntity<?> login(@RequestBody LoginDto loginDto, HttpSession session) {
+    ApiResponse response = loginService.loginUser(loginDto, session);
+    //        if (response.getStatus() == TEMPORARY_REDIRECT) {
+    //            redirectToPage("/auth/2fa/confirm-email");
+    //        }
 
-        return new ResponseEntity<>(response, response.getStatus());
-    }
+    return new ResponseEntity<>(response, response.getStatus());
+  }
 }

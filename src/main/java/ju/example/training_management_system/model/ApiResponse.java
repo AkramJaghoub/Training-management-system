@@ -7,6 +7,6 @@ import org.springframework.http.HttpStatus;
 @Data
 @AllArgsConstructor
 public class ApiResponse {
-    private String message;
-    private HttpStatus status;
+  private String message;
+  private HttpStatus status;
 }
