@@ -3,6 +3,7 @@ package ju.example.training_management_system.service;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static ju.example.training_management_system.model.PostStatus.APPROVED;
+import static ju.example.training_management_system.service.student.StudentService.getStudentEducation;
 import static ju.example.training_management_system.service.student.StudentService.getStudentFullName;
 import static ju.example.training_management_system.util.Utils.convertToBase64;
 import static ju.example.training_management_system.util.Utils.decompressImage;
@@ -45,6 +46,8 @@ public class CommunityService {
       List<Feedback> studentFeedback = getFeedbacksByStudentIdAndPostDate(user.getId());
 
       String studentName = getStudentFullName(student.getFirstName(), student.getLastName());
+      String studentEducation = getStudentEducation(student.getMajor(), student.getUniversity());
+
       Map<Long, String> allUserImages = getUserImages(feedbackList);
 
       model.addAttribute("studentName", studentName);
@@ -53,6 +56,7 @@ public class CommunityService {
       model.addAttribute("feedbackList", feedbackList);
       model.addAttribute("studentFeedback", studentFeedback);
       model.addAttribute("allUserImages", allUserImages);
+      model.addAttribute("studentEducation", studentEducation);
 
       return new ApiResponse("Set up was correctly done", OK);
     } catch (UserNotFoundException | UnauthorizedStudentAccessException ex) {

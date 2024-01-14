@@ -74,12 +74,13 @@ nav ul li.profile a:after {
 
 .sub-menu {
     position: relative;
-    height: 17.1rem;
+    min-height: 13.1rem;
     background: #FAF9F6;
     padding: 0 20px;
     margin: 10px;
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
 }
 
 .user-info {
@@ -424,7 +425,7 @@ p {
 
 
 .circle-icon {
-    width: 42px; /* Adjust the size of the circle */
+    min-width: 42px; /* Adjust the size of the circle */
     height: 42px;
     display: flex;
     align-items: center;
@@ -537,7 +538,7 @@ h6 {
 }
 
 .additional-info h6 {
-    margin-top: 0; /* Removes space above "cis" and "ju" */
+    margin-top: -.5rem; /* Removes space above "cis" and "ju" */
     margin-bottom: 0; /* Removes space below "cis" and "ju" */
     margin-left:0;
     text-align: left; /* Ensures text is aligned to the left */

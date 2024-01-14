@@ -31,8 +31,13 @@ public class StudentService {
   private final UserRepository userRepository;
   private final AdvertisementRepository advertisementRepository;
 
+
   public static String getStudentFullName(String firstName, String lastName) {
     return firstName + " " + lastName;
+  }
+
+  public static String getStudentEducation(String studentMajor, String studentUniversity){
+    return studentMajor + ", " + studentUniversity;
   }
 
   public Student isUserAuthorizedAsStudent(User user, String email)
@@ -72,15 +77,14 @@ public class StudentService {
       }
 
       String studentName = getStudentFullName(student.getFirstName(), student.getLastName());
-            String studentMajor = student.getMajor();
-            String studentUniversity = student.getUniversity();
+      String studentEducation = getStudentEducation(student.getMajor(), student.getUniversity());
 
       model.addAttribute("studentImage", base64Image);
       model.addAttribute("advertisements", advertisements);
       model.addAttribute("studentName", studentName);
       model.addAttribute("advertisementImagesBase64", advertisementImagesBase64);
-            model.addAttribute("studentMajor", studentMajor);
-            model.addAttribute("studentUniversity", studentUniversity);
+      model.addAttribute("studentEducation", studentEducation);
+
 
       return new ApiResponse("Set up was correctly done", HttpStatus.OK);
     } catch (UserNotFoundException ex) {
@@ -105,6 +109,8 @@ public class StudentService {
       }
 
       Student student = isUserAuthorizedAsStudent(existingUser, email);
+      String studentEducation = getStudentEducation(student.getMajor(), student.getUniversity());
+
 
       String base64Image = null;
       if (student.getImage() != null) {
@@ -119,6 +125,7 @@ public class StudentService {
       model.addAttribute("major", student.getMajor());
       model.addAttribute("graduationYear", student.getGraduationYear());
       model.addAttribute("studentImage", base64Image);
+      model.addAttribute("studentEducation", studentEducation);
 
       return new ApiResponse("Set up was correctly done", HttpStatus.OK);
     } catch (UserNotFoundException ex) {

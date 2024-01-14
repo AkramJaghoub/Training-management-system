@@ -738,7 +738,7 @@ button {
 .bi-person-circle {
     border-radius: 50%;
     object-fit: cover;
-    width: 43px;
+    min-width: 43px;
     height: 43px;
 }
 

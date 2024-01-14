@@ -72,15 +72,11 @@
                             <div class="user-info">
                                 <div class="user-details">
                             <h3 class="user-name" th:text="${studentName}">Student Name</h3>
-                                    <hr class="hr">
                                 <div class="additional-info">
-                                    <ul style="list-style-type: disc; margin-left: -4rem">
-                                    <li><h6 th:if="${studentMajor}" th:text="${studentMajor}">Major</h6></li>
-                                    <li><h6 th:if="${studentUniversity}" th:text="${studentUniversity}">University</h6></li>
-                                    </ul>
+                                    <h6 th:if="${studentEducation}" th:text="${studentEducation}">Major</h6>
                                 </div>
                                 </div>
-                        </div>
+                            </div>
 
 
                         </div>

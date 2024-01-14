@@ -64,7 +64,14 @@
                                           fill-rule="evenodd"/>
                                 </svg>
                             </div>
-                            <h3 class="user-name" th:text="${studentName}"></h3>
+                            <div class="user-info">
+                                <div class="user-details">
+                                    <h3 class="user-name" th:text="${studentName}">Student Name</h3>
+                                    <div class="additional-info">
+                                        <h6 th:if="${studentEducation}" th:text="${studentEducation}">Major</h6>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <hr>
 
