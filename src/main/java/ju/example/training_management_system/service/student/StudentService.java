@@ -36,8 +36,20 @@ public class StudentService {
     return firstName + " " + lastName;
   }
 
-  public static String getStudentEducation(String studentMajor, String studentUniversity){
-    return studentMajor + ", " + studentUniversity;
+  public static String getStudentEducation(String studentMajor, String studentUniversity) {
+    StringBuilder educationBuilder = new StringBuilder();
+
+    if (studentMajor != null) {
+      educationBuilder.append(studentMajor);
+    }
+
+    if (studentUniversity != null) {
+      if (!educationBuilder.isEmpty()) {
+        educationBuilder.append(", ");
+      }
+      educationBuilder.append(studentUniversity);
+    }
+    return educationBuilder.toString();
   }
 
   public Student isUserAuthorizedAsStudent(User user, String email)
@@ -58,31 +70,17 @@ public class StudentService {
 
       Student student = isUserAuthorizedAsStudent(existingUser, email);
 
-      String base64Image = null;
-      if (student.getImage() != null) {
-        byte[] decompressedImage = decompressImage(student.getImage());
-        base64Image = convertToBase64(decompressedImage);
-      }
-
       List<Advertisement> advertisements = getAdvertisementsPostedByLatestAndApproved();
-      Map<Long, String> advertisementImagesBase64 = new HashMap<>();
 
-      for (Advertisement advertisement : advertisements) {
-        String base64ImageAds = null;
-        if (advertisement.getImage() != null) {
-          byte[] decompressedImage = decompressImage(advertisement.getImage());
-          base64ImageAds = convertToBase64(decompressedImage);
-        }
-        advertisementImagesBase64.put(advertisement.getId(), base64ImageAds);
-      }
+      Map<Long, String> advertisementImages = getImages(advertisements);
 
       String studentName = getStudentFullName(student.getFirstName(), student.getLastName());
       String studentEducation = getStudentEducation(student.getMajor(), student.getUniversity());
 
-      model.addAttribute("studentImage", base64Image);
+      model.addAttribute("studentImage", student.getImageUrl());
       model.addAttribute("advertisements", advertisements);
       model.addAttribute("studentName", studentName);
-      model.addAttribute("advertisementImagesBase64", advertisementImagesBase64);
+      model.addAttribute("advertisementImages", advertisementImages);
       model.addAttribute("studentEducation", studentEducation);
 
 
@@ -92,6 +90,14 @@ public class StudentService {
     } catch (UnauthorizedStudentAccessException ex) {
       return new ApiResponse(ex.getMessage(), HttpStatus.UNAUTHORIZED);
     }
+  }
+
+  public Map<Long, String> getImages(List<Advertisement> advertisements){
+    Map<Long, String> advertisementImages = new HashMap<>();
+    for (Advertisement ad : advertisements) {
+      advertisementImages.put(ad.getId(), ad.getImageUrl());
+    }
+    return advertisementImages;
   }
 
   private List<Advertisement> getAdvertisementsPostedByLatestAndApproved() {
@@ -112,19 +118,13 @@ public class StudentService {
       String studentEducation = getStudentEducation(student.getMajor(), student.getUniversity());
 
 
-      String base64Image = null;
-      if (student.getImage() != null) {
-        byte[] decompressedImage = decompressImage(student.getImage());
-        base64Image = convertToBase64(decompressedImage);
-      }
-
       String studentName = getStudentFullName(student.getFirstName(), student.getLastName());
       model.addAttribute("email", student.getEmail());
       model.addAttribute("studentName", studentName);
       model.addAttribute("university", student.getUniversity());
       model.addAttribute("major", student.getMajor());
       model.addAttribute("graduationYear", student.getGraduationYear());
-      model.addAttribute("studentImage", base64Image);
+      model.addAttribute("studentImage", student.getImageUrl());
       model.addAttribute("studentEducation", studentEducation);
 
       return new ApiResponse("Set up was correctly done", HttpStatus.OK);
@@ -160,8 +160,8 @@ public class StudentService {
       }
 
       if (infoDto.getStudentImage() != null) {
-        byte[] imageBytes = saveImage(infoDto.getStudentImage());
-        student.setImage(imageBytes);
+        String imageUrl = saveImage(infoDto.getStudentImage(), String.valueOf(student.getId()));
+        student.setImageUrl(imageUrl);
         isChanged = true;
       }
 

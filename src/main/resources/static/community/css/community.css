@@ -48,6 +48,16 @@ img::before {
     margin-top: 1rem;
 }
 
+.avatar-container {
+    position: relative;
+    display: inline-block;
+}
+
+.rounded-circle {
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
 .feedback-comment {
     max-width: 70%;
     word-wrap: break-word;
@@ -78,4 +88,9 @@ img::before {
 .cr{
     margin-left: auto;
     width: max-content;
+}
+
+.avatar-container {
+    position: relative; /* To position the shadow */
+    display: inline-block; /* To make the container take the size of the image */
 }

@@ -50,18 +50,12 @@ public class CompanyService {
 
       Company company = isUserAuthorizedAsCompany(existingUser, email);
 
-      String base64Image = null;
-      if (company.getImage() != null) {
-        byte[] decompressedImage = decompressImage(company.getImage());
-        base64Image = convertToBase64(decompressedImage);
-      }
-
       List<Advertisement> advertisements =
           getCompanyAdvertisementsPostedByLatest(company.getCompanyName());
       List<Notification> notifications = notificationRepository.findByUser(company);
       Collections.reverse(notifications);
 
-      model.addAttribute("companyImage", base64Image);
+      model.addAttribute("companyImage", company.getImageUrl());
       model.addAttribute("advertisements", advertisements);
       model.addAttribute("companyName", company.getCompanyName());
       model.addAttribute("notifications", notifications);
@@ -94,18 +88,12 @@ public class CompanyService {
       List<Notification> notifications = notificationRepository.findByUser(company);
       Collections.reverse(notifications);
 
-      String base64Image = null;
-      if (company.getImage() != null) {
-        byte[] decompressedImage = decompressImage(company.getImage());
-        base64Image = convertToBase64(decompressedImage);
-      }
-
       model.addAttribute("email", company.getEmail());
       model.addAttribute("companyName", company.getCompanyName());
       model.addAttribute("industry", company.getIndustry());
       model.addAttribute("numOfEmployees", company.getNumOfEmployees());
       model.addAttribute("establishmentYear", company.getEstablishmentYear());
-      model.addAttribute("companyImage", base64Image);
+      model.addAttribute("companyImage", company.getImageUrl());
       model.addAttribute("notifications", notifications);
 
       return new ApiResponse("Set up was correctly done", HttpStatus.OK);
@@ -137,8 +125,8 @@ public class CompanyService {
       }
 
       if (infoDto.getCompanyImage() != null) {
-        byte[] imageBytes = saveImage(infoDto.getCompanyImage());
-        company.setImage(imageBytes);
+        String imageUrl = saveImage(infoDto.getCompanyImage(), String.valueOf(company.getId()));
+        company.setImageUrl(imageUrl);
         isChanged = true;
       }
 

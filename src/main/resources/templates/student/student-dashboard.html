@@ -32,7 +32,7 @@
 
 <!--==================== HEADER ====================-->
 <header class="header" id="header">
-    <a class="nav__logo" href="/student/dashboard">
+    <a class="nav__logo" href="/company/dashboard">
         <img alt="" class="nav__logo-img" src="/main/img/tero.png">
     </a>
 
@@ -45,10 +45,12 @@
                 <a class="nav__link" href='/community'>Community</a>
             </li>
 
-
             <li class="nav__item">
                 <a href="#" id="profileLink" onclick="toggleMenu(event)">
-                    <div class="circle-icon">
+                    <div class="circle-icon" th:if="${studentImage}">
+                        <img th:src="${studentImage}" alt="Profile Image" class="profile-image"/>
+                    </div>
+                    <div class="circle-icon" th:unless="${studentImage}">
                         <svg class="bi bi-person-circle" fill="black" height="28" viewBox="0 0 16 16" width="28"
                              xmlns="http://www.w3.org/2000/svg">
                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -57,28 +59,32 @@
                         </svg>
                     </div>
                 </a>
+
                 <div class="sub-menu-wrap" id="subMenu">
                     <div class="sub-menu">
                         <span class="profile-arrow">&#9660;</span>
                         <div class="user-info">
-                            <div class="circle-icon">
-                                <svg class="bi bi-person-circle" fill="gray" height="28" viewBox="0 0 16 16"
-                                     width="28" xmlns="http://www.w3.org/2000/svg">
+                            <div class="circle-icon" th:if="${studentImage}">
+                                <img th:src="${studentImage}" alt="Profile Image" class="profile-image"/>
+                            </div>
+                            <div class="circle-icon" th:unless="${studentImage}">
+                                <svg class="bi bi-person-circle" fill="black" height="28" viewBox="0 0 16 16" width="28"
+                                     xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                                     <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
                                           fill-rule="evenodd"/>
                                 </svg>
                             </div>
-                            <div class="user-info">
-                                <div class="user-details">
-                            <h3 class="user-name" th:text="${studentName}">Student Name</h3>
+                            <div class="user-details">
+                                <h3 class="user-name" th:text="${studentName}">Student Name</h3>
+
                                 <div class="additional-info">
-                                    <h6 th:if="${studentEducation}" th:text="${studentEducation}">Major</h6>
-                                </div>
+                                    <div class="additional-info">
+                                        <h6 th:if="${studentEducation != null and studentEducation != ''}"
+                                            th:text="${studentEducation}">Major</h6>
+                                    </div>
                                 </div>
                             </div>
-
-
                         </div>
                         <hr>
 
@@ -167,14 +173,15 @@
                                          th:data-work-mode="${advertisement.workMode}"
                                          th:data-job-type="${advertisement.jobType}"
                                          th:data-id="${advertisement.id}"
-                                         th:data-image="${advertisement.image}">
+                                         th:data-image="${advertisement.imageUrl}">
 
                                         <div class="ad-image-container">
-                                            <img th:if="${advertisementImagesBase64.containsKey(advertisement.id)}"
-                                                 th:attr="data-src=${advertisementImagesBase64[advertisement.id]}"
-                                                 alt="Advertisement Image" class="ad-image" width="60" height="60"/>
-                                            <div th:unless="${advertisementImagesBase64.containsKey(advertisement.id)}">
-                                                <!-- Placeholder if no image exists -->
+                                            <div th:if="${advertisementImages.containsKey(advertisement.id)}">
+                                                <img th:src="${advertisementImages[advertisement.id]}"
+                                                     alt="Advertisement Image"
+                                                     class="ad-image" width="60" height="60"/>
+                                            </div>
+                                            <div th:unless="${advertisementImages.containsKey(advertisement.id)}">
                                             </div>
                                         </div>
 
@@ -182,18 +189,20 @@
                                             <h4 style="margin-bottom: 1.5rem;" th:text="${advertisement.jobTitle}"
                                                 th:data-job-title="${advertisement.jobTitle}">Job Title</h4>
                                             <div class="company-name-and-rating">
-                                            <p><strong>Company:</strong> <span
-                                                    th:text="${advertisement.company.companyName}"
-                                                    th:data-company-name="${advertisement.company.companyName}"></span>
-                                                <strong><span class="company-rating" th:text="${advertisement.company.averageRating}">4.5</span></strong>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                     height="24" viewBox="0 0 24 24"
-                                                     style=" margin-bottom: .3rem; margin-left: -.5rem">
-                                                    <path fill="#ffd43b"
-                                                          d="M9.153 5.408C10.42 3.136 11.053 2 12 2c.947 0 1.58 1.136 2.847 3.408l.328.588c.36.646.54.969.82 1.182c.28.213.63.292 1.33.45l.636.144c2.46.557 3.689.835 3.982 1.776c.292.94-.546 1.921-2.223 3.882l-.434.507c-.476.557-.715.836-.822 1.18c-.107.345-.071.717.001 1.46l.066.677c.253 2.617.38 3.925-.386 4.506c-.766.582-1.918.051-4.22-1.009l-.597-.274c-.654-.302-.981-.452-1.328-.452c-.347 0-.674.15-1.328.452l-.596.274c-2.303 1.06-3.455 1.59-4.22 1.01c-.767-.582-.64-1.89-.387-4.507l.066-.676c.072-.744.108-1.116 0-1.46c-.106-.345-.345-.624-.821-1.18l-.434-.508c-1.677-1.96-2.515-2.941-2.223-3.882c.293-.941 1.523-1.22 3.983-1.776l.636-.144c.699-.158 1.048-.237 1.329-.45c.28-.213.46-.536.82-1.182z"/>
-                                                </svg>
-
-                                            </p>
+                                                <p><strong>Company:</strong> <span
+                                                        th:text="${advertisement.company.companyName}"
+                                                        th:data-company-name="${advertisement.company.companyName}"></span>
+                                                    <span th:if="${advertisement.company.averageRating != null and advertisement.company.averageRating > 0}">
+                                                        <strong>
+                                                          <span class="company-rating" th:text="${advertisement.company.averageRating}">4.5</span>
+                                                        </strong>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                                             style="margin-bottom: .3rem; margin-left: -.5rem">
+                                                          <path fill="#ffd43b"
+                                                                d="M9.153 5.408C10.42 3.136 11.053 2 12 2c.947 0 1.58 1.136 2.847 3.408l.328.588c.36.646.54.969.82 1.182c.28.213.63.292 1.33.45l.636.144c2.46.557 3.689.835 3.982 1.776c.292.94-.546 1.921-2.223 3.882l-.434.507c-.476.557-.715.836-.822 1.18c-.107.345-.071.717.001 1.46l.066.677c.253 2.617.38 3.925-.386 4.506c-.766.582-1.918.051-4.22-1.009l-.597-.274c-.654-.302-.981-.452-1.328-.452c-.347 0-.674.15-1.328.452l-.596.274c-2.303 1.06-3.455 1.59-4.22 1.01c-.767-.582-.64-1.89-.387-4.507l.066-.676c.072-.744.108-1.116 0-1.46c-.106-.345-.345-.624-.821-1.18l-.434-.508c-1.677-1.96-2.515-2.941-2.223-3.882c.293-.941 1.523-1.22 3.983-1.776l.636-.144c.699-.158 1.048-.237 1.329-.45c.28-.213.46-.536.82-1.182z"/>
+                                                        </svg>
+                                                      </span>
+                                                </p>
                                             </div>
                                             <p><strong>Posted:</strong> <span
                                                     th:text="${#temporals.format(advertisement.postDate, 'yyyy-MM-dd HH:mm')}">Post Date</span>
@@ -332,9 +341,7 @@
 
 <!--=============== MAIN JS ===============-->
 <script src="/main/js/main.js"></script>
-<script src="/student-dashboard/js/adImage.js"></script>
 <script src="/student-dashboard/js/widgets.js"></script>
-<script src="/main/js/profile-pic.js"></script>
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 <script src="/main/js/menu-toggle.js"></script>
 <script>

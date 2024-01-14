@@ -128,18 +128,6 @@ public class FeedbackService {
   }
 
   public Feedback getLatestFeedback() {
-    Feedback latestFeedback = feedbackRepository.findTopByOrderByPostDateDesc().orElse(null);
-    if (nonNull(latestFeedback)) {
-      byte[] compressedImage = latestFeedback.getStudent().getImage();
-
-      if (nonNull(compressedImage)) {
-        byte[] decompressedImage = decompressImage(compressedImage);
-        String base64Image = convertToBase64(decompressedImage);
-        latestFeedback.setDecompressedImageBase64(base64Image);
-      } else {
-        latestFeedback.setDecompressedImageBase64(null);
-      }
-    }
-    return latestFeedback;
+      return feedbackRepository.findTopByOrderByPostDateDesc().orElse(null);
   }
 }

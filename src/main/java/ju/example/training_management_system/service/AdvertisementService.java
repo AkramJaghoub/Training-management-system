@@ -51,16 +51,10 @@ public class AdvertisementService {
 
       Company company = isUserAuthorizedAsCompany(existingUser, email);
 
-      String base64Image = null;
-      if (company.getImage() != null) {
-        byte[] decompressedImage = decompressImage(company.getImage());
-        base64Image = convertToBase64(decompressedImage);
-      }
-
       List<Notification> notifications = notificationRepository.findByUser(company);
       Collections.reverse(notifications);
 
-      model.addAttribute("companyImage", base64Image);
+      model.addAttribute("companyImage", company.getImageUrl());
       model.addAttribute("companyName", company.getCompanyName());
       model.addAttribute("notifications", notifications);
 
@@ -77,8 +71,8 @@ public class AdvertisementService {
     try {
       Advertisement ad = new Advertisement().toEntity(adDto);
 
-      byte[] imageBytes = saveImage(adDto.getJobImage());
-      ad.setImage(imageBytes);
+      String imageUrl = saveImage(adDto.getJobImage(), "company");
+      ad.setImageUrl(imageUrl);
 
       User user = userRepository.findByEmail(email);
       if (!(user instanceof Company company)) {
@@ -122,9 +116,9 @@ public class AdvertisementService {
         throw new AdAlreadyExistsException("An advertisement with the same title already exists!");
       }
 
-      byte[] imageBytes = saveImage(adDto.getJobImage());
+      String imageUrl = saveImage(adDto.getJobImage(), "");
 
-      existingAd.setImage(imageBytes);
+      existingAd.setImageUrl(imageUrl);
       existingAd.setJobTitle(capitalizeFirstLetter(adDto.getJobTitle()));
       existingAd.setInternsRequired(adDto.getInternsRequired());
       existingAd.setJobDuration(adDto.getJobDuration());

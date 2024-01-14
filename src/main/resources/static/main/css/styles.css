@@ -692,10 +692,6 @@ button {
     margin-bottom: var(--mb-1-5);
 }
 
-.bi-person-circle path {
-    display: none;
-}
-
 .newsletter__form {
     background: var(--container-color);
     padding: 1rem;

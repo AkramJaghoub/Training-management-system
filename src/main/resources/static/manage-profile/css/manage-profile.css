@@ -15,7 +15,6 @@
 
 .user-pic {
     width: 35px;
-
     border-radius: 50%;
     cursor: pointer;
     position: relative;
@@ -85,21 +84,20 @@ nav ul li.profile a:after {
 
 .user-info {
     display: flex;
-    align-items: flex-start; /* Aligns items to the top */
+    align-items: flex-start;
 }
 
 .user-info h3 {
-    font-weight: 500;
-    color: rgb(128, 128, 128);
+    font-weight: 50;
+    color: #000;
     margin-top: .4rem;
 }
 
 .user-info img {
-    width: 60px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    margin-right: 15px;
-    border: 2px solid #000;
-    padding: 2px;
+    object-fit: cover;
 }
 
 .sub-menu hr {
@@ -156,11 +154,11 @@ nav ul li.profile a:after {
 
 .card {
     box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
-    /* Increase the width and max-width as needed */
     width: auto; /* Or a specific value like 80% */
     max-width: 1200px; /* Or a specific value like 1200px */
     margin: auto; /* Center the card */
 }
+
 .card-border{
     border-color: #3498db;
 }
@@ -406,8 +404,19 @@ p {
     position: relative;
     border-radius: 100%;
     border: 6px solid #F8F8F8;
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
     margin-top: -2.4rem;
+    overflow: hidden;
+}
+
+.avatar-upload .avatar-preview svg {
+    width: 100%;
+    height: 100%;
+}
+
+.avatar-upload .avatar-preview img {
+    width: 100%;
+    height: 100%;
 }
 
 .avatar-upload .avatar-preview > div {
@@ -420,12 +429,11 @@ p {
 }
 
 .container-xl {
-    max-width: 1140px; /* Adjust this to a larger value if needed */
+    max-width: 1140px;
 }
 
-
 .circle-icon {
-    min-width: 42px; /* Adjust the size of the circle */
+    width: 42px;
     height: 42px;
     display: flex;
     align-items: center;

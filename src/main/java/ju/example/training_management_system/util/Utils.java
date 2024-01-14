@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
-import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 import ju.example.training_management_system.exception.StorageException;
 import ju.example.training_management_system.model.users.Role;
@@ -35,19 +34,11 @@ public final class Utils {
     return str == null || str.isEmpty();
   }
 
-  public static byte[] saveImage(MultipartFile file) {
+  public static String saveImage(MultipartFile file, String mapper) {
     try {
-      // Compress the byte array
-      ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-      try (DeflaterOutputStream deflaterOutputStream =
-          new DeflaterOutputStream(byteArrayOutputStream)) {
-        deflaterOutputStream.write(file.getBytes());
-      }
-
-      return byteArrayOutputStream.toByteArray();
-
+      return GCPFileUploader.uploadFile(file, mapper);
     } catch (IOException e) {
-      throw new StorageException("Failed to store and compress file");
+      throw new StorageException("Failed to upload file to GCP");
     }
   }
 

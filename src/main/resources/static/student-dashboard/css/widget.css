@@ -409,26 +409,28 @@ hr {
 }
 
 #descriptionModal .modal-body li {
-    margin-bottom: 5px; /* Spacing between list items */
+    margin-bottom: 5px;
 }
 
 .ad-image-container {
-    width: 100%; /* Full width of the widget */
-    height: 200px; /* Fixed height for the image */
-    display: block; /* Remove flex properties if not needed */
-    position: relative; /* Position relative to allow absolute positioning of children */
-    overflow: hidden; /* Hide overflow to maintain container size */
-    background-color: #f4f4f4; /* Light background for the image container */
-    padding: 0;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: #f4f4f4;
+    padding-top: 56.25%;
     margin: 0;
 }
 
 .ad-image {
-    width: 100%; /* Full width of the container */
-    height: 100%; /* Full height of the container */
-    object-fit: cover; /* Cover the container while maintaining aspect ratio */
-    object-position: center; /* Adjust this if you need to change image positioning */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
 }
+
 
 .header-card {
     padding-left: 1rem;

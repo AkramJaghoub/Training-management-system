@@ -44,7 +44,10 @@
 
             <li class="nav__item">
                 <a href="#" id="profileLink" onclick="toggleMenu(event)">
-                    <div class="circle-icon">
+                    <div class="circle-icon" th:if="${studentImage}">
+                        <img th:src="${studentImage}" alt="Profile Image" class="profile-image"/>
+                    </div>
+                    <div class="circle-icon" th:unless="${studentImage}">
                         <svg class="bi bi-person-circle" fill="black" height="28" viewBox="0 0 16 16" width="28"
                              xmlns="http://www.w3.org/2000/svg">
                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -57,9 +60,12 @@
                     <div class="sub-menu">
                         <span class="profile-arrow">&#9660;</span>
                         <div class="user-info">
-                            <div class="circle-icon">
-                                <svg class="bi bi-person-circle" fill="gray" height="28" viewBox="0 0 16 16"
-                                     width="28" xmlns="http://www.w3.org/2000/svg">
+                            <div class="circle-icon" th:if="${studentImage}">
+                                <img th:src="${studentImage}" alt="Profile Image" class="profile-image"/>
+                            </div>
+                            <div class="circle-icon" th:unless="${studentImage}">
+                                <svg class="bi bi-person-circle" fill="black" height="28" viewBox="0 0 16 16" width="28"
+                                     xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                                     <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
                                           fill-rule="evenodd"/>
@@ -76,7 +82,7 @@
                         </div>
                         <hr>
 
-                        <a class="sub-menu-link" href="/company/manage-profile">
+                        <a class="sub-menu-link" href="/student/manage-profile">
                             <svg class="bi bi-pencil" fill="currentColor" height="28" viewBox="0 0 16 16"
                                  width="28" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
@@ -117,7 +123,8 @@
                 <div class="hero">
                     <div class="container my-5">
                         <div class="card card-border">
-                            <div class="card-header text-white" style="background-color: #3498db; border-bottom-color: #3498db">
+                            <div class="card-header text-white"
+                                 style="background-color: #3498db; border-bottom-color: #3498db">
                                 Manage Profile
                             </div>
                             <div class="card-body">
@@ -150,18 +157,25 @@
                                                                 <!-- Profile picture upload input -->
                                                                 <div class="avatar-upload">
                                                                     <div class="avatar-edit">
-                                                                        <input accept="\*" id="studentImage"
-                                                                               name="studentImage"
-                                                                               type='file'/>
+                                                                        <input accept="*" id="studentImage" name="studentImage" type='file'/>
                                                                         <label for="studentImage"></label>
                                                                     </div>
-                                                                    <input id="hiddenStudentImageUrl"
-                                                                           th:value="${studentImage}"
-                                                                           type="hidden"/>
+                                                                    <input id="hiddenStudentImageUrl" th:value="${studentImage}" type="hidden"/>
                                                                     <div class="avatar-preview">
-                                                                        <div id="imagePreview"></div>
+                                                                        <div id="imagePreview">
+                                                                            <!-- Render the SVG if companyImage is null or empty -->
+                                                                            <svg th:if="${studentImage == null or studentImage.isEmpty()}" class="bi bi-person-circle" fill="black" height="100%" viewBox="0 0 16 16" width="100%"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                                                                <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+                                                                                      fill-rule="evenodd"/>
+                                                                            </svg>
+                                                                            <!-- Render the uploaded image if companyImage is present -->
+                                                                            <img th:if="${studentImage}" th:src="${studentImage}" alt="Student Image" class="avatar-image"/>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
+
                                                                 <h5 th:text="${studentName}"
                                                                     style="font-size: 1.4rem;"></h5>
                                                             </div>
@@ -324,12 +338,15 @@
                                                 <input type="password" class="form-control" id="confirmPassword">
                                                 <span id="errorConfirmPassword" class="text-danger"></span>
                                             </div>
-                                            <button type="submit" class="btn btn-primary btn-cool">Change Password</button>
+                                            <button type="submit" class="btn btn-primary btn-cool">Change Password
+                                            </button>
                                         </form>
                                     </div>
 
                                     <div id="successAlert" class="alert alert-success display-message" role="alert">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16" style="flex-shrink: 0;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                             fill="currentColor" class="bi bi-exclamation-circle-fill"
+                                             viewBox="0 0 16 16" style="flex-shrink: 0;">
                                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
                                         </svg>
                                         <p id="successMessage" style="margin-top: 1rem;"></p>
@@ -359,9 +376,11 @@
 <script src="/student-dashboard/js/changePassword.js"></script>
 <script src="/student-dashboard/js/manageP.js"></script>
 <script src="/main/js/menu-toggle.js"></script>
-<script src="/main/js/profile-pic.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
 </body>
 </html>

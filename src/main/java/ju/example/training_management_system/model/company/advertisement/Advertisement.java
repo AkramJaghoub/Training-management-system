@@ -47,8 +47,8 @@ public class Advertisement {
 
   private String applicationLink;
 
-  @Column(columnDefinition = "LONGBLOB")
-  private byte[] image;
+  @Column(columnDefinition = "TEXT")
+  private String imageUrl;
 
   @Column(columnDefinition = "LONGTEXT")
   private String description;

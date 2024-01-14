@@ -46,8 +46,8 @@
                    role="button"
                    data-bs-toggle="dropdown"
                    aria-expanded="false"
-                   th:classappend="${#lists.isEmpty(notifications) ? 'disabled' : ''}"> <!-- Disable if empty -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                   th:classappend="${#lists.isEmpty(notifications) ? 'disabled' : ''}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="gray"
                          class="bi bi-bell-fill" viewBox="0 0 16 16">
                         <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
                     </svg>
@@ -66,7 +66,10 @@
 
             <li class="nav__item">
                 <a href="#" id="profileLink" onclick="toggleMenu(event)">
-                    <div class="circle-icon">
+                    <div class="circle-icon" th:if="${companyImage}">
+                        <img th:src="${companyImage}" alt="Profile Image" class="profile-image"/>
+                    </div>
+                    <div class="circle-icon" th:unless="${companyImage}">
                         <svg class="bi bi-person-circle" fill="black" height="28" viewBox="0 0 16 16" width="28"
                              xmlns="http://www.w3.org/2000/svg">
                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -79,9 +82,12 @@
                     <div class="sub-menu">
                         <span class="profile-arrow">&#9660;</span>
                         <div class="user-info">
-                            <div class="circle-icon">
-                                <svg class="bi bi-person-circle" fill="gray" height="28" viewBox="0 0 16 16"
-                                     width="28" xmlns="http://www.w3.org/2000/svg">
+                            <div class="circle-icon" th:if="${companyImage}">
+                                <img th:src="${companyImage}" alt="Profile Image" class="profile-image"/>
+                            </div>
+                            <div class="circle-icon" th:unless="${companyImage}">
+                                <svg class="bi bi-person-circle" fill="black" height="28" viewBox="0 0 16 16" width="28"
+                                     xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                                     <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
                                           fill-rule="evenodd"/>
@@ -89,6 +95,7 @@
                             </div>
                             <h3 style="margin-left: 1rem;" th:text="${companyName}"></h3>
                         </div>
+
                         <hr>
 
                         <a class="sub-menu-link" href="/company/manage-profile">
@@ -186,7 +193,7 @@
                                          th:data-job-type="${advertisement.jobType}"
                                          th:data-ad-status="${advertisement.postStatus}"
                                          th:data-id="${advertisement.id}"
-                                         th:data-image="${advertisement.image}">
+                                         th:data-image="${advertisement.imageUrl}">
 
                                         <div th:id="'menu-icon-' + ${advertisement.id}" class="menu-icon"
                                              th:data-ad-id="${advertisement.id}">
@@ -225,7 +232,8 @@
                                                 th:data-interns-required="${advertisement.internsRequired}"></span></p>
                                         <p><strong>Duration:</strong> <span
                                                 th:text="${advertisement.jobDuration}"
-                                                th:data-job-duration="${advertisement.jobDuration} + ' months'"></span> </p>
+                                                th:data-job-duration="${advertisement.jobDuration} + ' months'"></span>
+                                        </p>
                                         <p><strong>Job Type:</strong> <span
                                                 th:text="${advertisement.jobType}"
                                                 th:data-job-type="${advertisement.jobType}"></span>
@@ -470,7 +478,6 @@
 <script src="/company-dashboard/js/notification.js"></script>
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 <script src="/job-post/js/country-api.js"></script>
-<script src="/main/js/profile-pic.js" defer></script>
 <script src="/main/js/editor.js"></script>
 <script src="/main/js/menu-toggle.js"></script>
 <script src="https://cdn.tiny.cloud/1/fll71bhwrljxg6ssyfvcooesy7xpgf9l7d196w32tav4gng5/tinymce/6/tinymce.min.js"

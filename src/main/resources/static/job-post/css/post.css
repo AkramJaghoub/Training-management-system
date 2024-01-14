@@ -83,19 +83,18 @@ nav ul li.profile a:after {
 }
 
 .user-info h3 {
-    font-weight: 500;
-    color: rgb(128, 128, 128);
+    font-weight: 50;
+    color: #000;
     margin-left: 1rem;
     margin-top: .4rem;
 }
 
-/*.user-info img{*/
-/*    width: 60px;*/
-/*    border-radius: 50%;*/
-/*    margin-right: 15px;*/
-/*    border: 2px solid #000;*/
-/*    padding: 2px;*/
-/*}*/
+.user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 
 .sub-menu hr {
     border: 0;

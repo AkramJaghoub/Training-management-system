@@ -52,7 +52,7 @@ public class CommunityService {
 
       model.addAttribute("studentName", studentName);
       model.addAttribute("studentId", user.getId());
-      model.addAttribute("studentImage", getUserImageBase64(user).orElse(null));
+      model.addAttribute("studentImage", getUserImage(user).orElse(null));
       model.addAttribute("feedbackList", feedbackList);
       model.addAttribute("studentFeedback", studentFeedback);
       model.addAttribute("allUserImages", allUserImages);
@@ -69,18 +69,16 @@ public class CommunityService {
     Map<Long, String> allUserImages = new HashMap<>();
 
     for (Feedback feedback : feedbackList) {
-      User feedbackUser = feedback.getStudent();
-      allUserImages.put(feedbackUser.getId(), getUserImageBase64(feedbackUser).orElse(null));
+      User user = feedback.getStudent();
+      allUserImages.put(user.getId(), getUserImage(user).orElse(null));
     }
 
     return allUserImages;
   }
 
-  private Optional<String> getUserImageBase64(User user) {
-    if (nonNull(user.getImage())) {
-      byte[] decompressedImage = decompressImage(user.getImage());
-      String base64Image = convertToBase64(decompressedImage);
-      return Optional.of(base64Image);
+  private Optional<String> getUserImage(User user) {
+    if (nonNull(user.getImageUrl())) {
+      return Optional.of(user.getImageUrl());
     }
     return Optional.empty();
   }

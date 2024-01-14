@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "tero-system",
+  "private_key_id": "cb9716b15b42d0764a082522062dfcc1f572c4d3",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCjGfah7V6lDkEW\n8H8PmaXgY5MmVxQBhqKvWK7fVMROJSX2RmVFzHMZGAhqOhMw9MfHFcyM3C7zDUh3\nGZPMMM2yqLgIA9/OZ6tMYEa8laCvLIgjDE0c/QFTrIhYAz7yeeXcQhPPj79DoUAD\nvBKh6OhFc1q0pcLXT/saU1XAAN9GDnCHL85ckzg5kIkuMe3KFeCW+vhuDv5DDjif\n0cTvAMT46+1MWMLkqThGPDa4m65+D9lX6UV1twqeun7qZIUQK9OaJBfByeXKFPjY\n8t2rmY3ZnzbHwtX7c0JhKAQ+9PdvKUXfjsLTTHqe3HhxpeXvTDnsPb3ZcqvX/tAq\nRsUyVocVAgMBAAECggEAFbLCzbSNSpKcpK9ejAYCHBnLLgbYJcLSWlcHPrVhf07w\nX7TqTLCgIFbC6dTrkDAEcu8qvROe2F1sRlH8CGZ2ux24i/JuACDpGFpXlsemLp/T\nRaxhhul+13Gk2ualpW8DnjuZNJwYUyg84rJO3UTlv7WSu+UwiGH+0zgCeK51BbX4\nIZ3JWfcLfEDp9/dTuoZiQ9h+ArNOUQ5yW+Fd7W+2R9yV8nDkPmMlJGIbsVAZ3zd7\nMEFbjroa2uWZYayOI0S2PVzB3syjKquytIg5Y4aYb6Rpg2R5HIlNaguMfa12nzOd\npJeKLnR+/tG2Cg8+k7Oc/Zh59LGc0DgTtLg3+3dlOQKBgQDWow1qg+iLgzz22WgM\ntpzO8Fzt8r74HLOGuPFsxYDSmKOon5TIwNQfFwkC+C7KVrPm1GJnAvYwnRbo3vBN\n7x5HhOPtQA5lYg2ukD/gmxwZQj5cWPDN3fisfvDZqVWpZwovH8jP1PORxicj2mSh\nB+RH/5wEEvMomnE+aJSKCNDIXQKBgQDCiHJQeYeNQ5rN/bEzuiSfZYOkMYgAj3Zo\nZi7x3QH2dIvG8irZTDc9chRNwumZ1iXubO5xCv2VoSvl/U2nZIB6KaSEv82xPbMk\nbfnv0nh6zT9U+yCPbf/U68gAL7kIJTKRWfZjcz82QAyXVH/bjBtMFONVZXgmYXVo\nGRCpJZduGQKBgHqz+EV+Z4DqY/3Sx/MMqpR7QQUfEyGQdul77Tj7p+u9K0KJCGvE\nIQAtEQ/LhiRScMJzhFXTkZ61D5XNbZ+AJdVJGWxWhGRdK+kxufLTebrO7gupJPDs\nBu/GGja04a3YpC/QgeKeoSgjGdkbTw/oDQ9EB5MkqjH6KOc+rjxDUehZAoGATwop\niFEYpmkFiRS+3wmOv8T7S8dkPvYLYjfCczsdBQotkNPsXQX+m9SyMzYyu/Kqzskr\nyHpytk0aDQRyfMT0/q3Uzqsv5AfxtaeJmcumcB7c0KaIgD5taBG03X6Ga6zRcwVe\neuHkmSJE+2e123p9zNff1l64BsAqd/VXM6K2eGECgYEAkqufGNI2DDKlcMVXp2Qk\nIRq1GJYr/To6T7Be4b3TUvs08JZXylGAL7HrIHLHeLTOwQXyzrFNmD1MPX7Gy4ll\ncFiZanqvqRtu/AkomUC6m3qZeMfY7M7aqJcvaipHfatkrdtOW1ATgauVRNE360e9\nV4uz4sxEt/kwFmoINog4xro=\n-----END PRIVATE KEY-----\n",
+  "client_email": "tero-admin@tero-system.iam.gserviceaccount.com",
+  "client_id": "114993138924412877934",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/tero-admin%40tero-system.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

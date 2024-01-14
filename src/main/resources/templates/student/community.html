@@ -28,7 +28,7 @@
 
 <!--==================== HEADER ====================-->
 <header class="header" id="header">
-    <a class="nav__logo" href="/student/dashboard">
+    <a class="nav__logo" href="/company/dashboard">
         <img alt="" class="nav__logo-img" src="/main/img/tero.png">
     </a>
 
@@ -43,7 +43,10 @@
 
             <li class="nav__item">
                 <a href="#" id="profileLink" onclick="toggleMenu(event)">
-                    <div class="circle-icon">
+                    <div class="circle-icon" th:if="${studentImage}">
+                        <img th:src="${studentImage}" alt="Profile Image" class="profile-image"/>
+                    </div>
+                    <div class="circle-icon" th:unless="${studentImage}">
                         <svg class="bi bi-person-circle" fill="black" height="28" viewBox="0 0 16 16" width="28"
                              xmlns="http://www.w3.org/2000/svg">
                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -56,9 +59,12 @@
                     <div class="sub-menu">
                         <span class="profile-arrow">&#9660;</span>
                         <div class="user-info">
-                            <div class="circle-icon">
-                                <svg class="bi bi-person-circle" fill="gray" height="28" viewBox="0 0 16 16"
-                                     width="28" xmlns="http://www.w3.org/2000/svg">
+                            <div class="circle-icon" th:if="${studentImage}">
+                                <img th:src="${studentImage}" alt="Profile Image" class="profile-image"/>
+                            </div>
+                            <div class="circle-icon" th:unless="${studentImage}">
+                                <svg class="bi bi-person-circle" fill="black" height="28" viewBox="0 0 16 16" width="28"
+                                     xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                                     <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
                                           fill-rule="evenodd"/>
@@ -217,7 +223,8 @@
                             <div class="tab-content" id="myTabContent">
 
                                 <!-- All Posts Tab Pane -->
-                                <div class="tab-pane fade show active" id="allPosts" role="tabpanel" aria-labelledby="all-posts-tab">                                    <h5 class="fw-light mb-4 pb-2">Recent comments</h5>
+                                <div class="tab-pane fade show active" id="allPosts" role="tabpanel"
+                                     aria-labelledby="all-posts-tab"><h5 class="fw-light mb-4 pb-2">Recent comments</h5>
 
                                     <!-- Content for All Posts -->
                                     <div th:if="${#lists.isEmpty(feedbackList)}"
@@ -229,17 +236,19 @@
                                     <div th:unless="${#lists.isEmpty(feedbackList)}">
                                         <div th:each="feedback : ${feedbackList}">
                                             <div class="d-flex flex-start">
-                                                <img class="rounded-circle shadow-1-strong me-3"
-                                                     th:if="${allUserImages.containsKey(feedback.student.id)}"
-                                                     th:src="|data:image/jpeg;base64,${allUserImages[feedback.student.id]}|"
-                                                     alt="" width="60" height="60"/>
+                                                <div th:if="${allUserImages.containsKey(feedback.student.id)}">
+                                                    <img th:src="${allUserImages[feedback.student.id]}" alt="User Image"
+                                                         class="rounded-circle shadow-1-strong me-3" width="60"
+                                                         height="60"/>
+                                                </div>
                                                 <div>
                                                     <div class="name-date d-flex align-items-center mb-1">
-                                                    <h6 style="font-weight: bold" th:text="${feedback.student.firstName + ' ' + feedback.student.lastName}">
-                                                        Student Name
-                                                    </h6>
-                                                    <span class="boxs"
-                                                          th:text="${#temporals.format(feedback.postDate, 'MMMM dd, yyyy')}">
+                                                        <h6 style="font-weight: bold"
+                                                            th:text="${feedback.student.firstName + ' ' + feedback.student.lastName}">
+                                                            Student Name
+                                                        </h6>
+                                                        <span class="boxs"
+                                                              th:text="${#temporals.format(feedback.postDate, 'MMMM dd, yyyy')}">
                                                              March 07, 2021
                                                     </span>
                                                     </div>
@@ -373,15 +382,18 @@
                                         <input type="hidden" id="addStudentId" name="studentId">
                                         <div class="mb-3">
                                             <label for="addCompanyName" class="form-label">Company Name</label>
-                                            <input type="text" class="form-control" id="addCompanyName" name="companyName" required>
+                                            <input type="text" class="form-control" id="addCompanyName"
+                                                   name="companyName" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="addRating" class="form-label">Rating</label>
-                                            <input type="number" class="form-control" id="addRating" name="rating" step="0.1" min="0" max="5" required>
+                                            <input type="number" class="form-control" id="addRating" name="rating"
+                                                   step="0.1" min="0" max="5" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="addComment" class="form-label">Comment</label>
-                                            <textarea class="form-control custom-textarea" id="addComment" name="comment" required></textarea>
+                                            <textarea class="form-control custom-textarea" id="addComment"
+                                                      name="comment" required></textarea>
                                             <div id="addCommentCounter" class="text-muted">0/250</div>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Add</button>
@@ -409,7 +421,6 @@
 
 <!--=============== MAIN JS ===============-->
 <script src="/main/js/main.js"></script>
-<script async src="/main/js/profile-pic.js"></script>
 <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 <script src="/community/js/delete-feedback.js"></script>
 <script src="/community/js/update-feedback.js"></script>
