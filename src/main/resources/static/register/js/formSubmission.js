@@ -20,23 +20,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let userData = {};
 
+        let confirmPassword;
+        let passwordConfirmationErrorId;
+
         if (formType === 'STUDENT') {
             document.getElementById('studentLastNameError').textContent = '';
             document.getElementById('studentFirstNameError').textContent = '';
             document.getElementById('studentPasswordError').textContent = '';
             document.getElementById('studentEmailError').textContent = '';
+            document.getElementById('studentConfirmationPasswordError').textContent = '';
 
             const form = document.getElementById('studentRegisterForm');
             const email = form.elements['email'].value;
             const password = form.elements['password'].value;
             const firstName = form.elements['firstName'].value;
             const lastName = form.elements['lastName'].value;
+            confirmPassword = form.elements['confirmPassword'].value;
+            passwordConfirmationErrorId = 'studentConfirmationPasswordError';
 
             userData.email = form.elements['email'].value;
             userData.password = form.elements['password'].value;
             userData.role = formType;
             userData.firstName = form.elements['firstName'].value;
             userData.lastName = form.elements['lastName'].value;
+
+            document.getElementById(passwordConfirmationErrorId).textContent = '';
 
             if (email.trim() === "") {
                 document.getElementById('studentEmailError').textContent = 'email is required';
@@ -68,10 +76,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 isValid = false;
             }
 
+            if (password !== confirmPassword) {
+                document.getElementById('studentConfirmationPasswordError').textContent = 'Password does not match';
+                isValid = false;
+            }
         } else {
             document.getElementById('companyEmailError').textContent = '';
             document.getElementById('companyNameError').textContent = '';
             document.getElementById('companyPasswordError').textContent = '';
+            document.getElementById('companyConfirmationPasswordError').textContent = '';
 
             const form = document.getElementById('companyRegisterForm');
 
@@ -82,6 +95,10 @@ document.addEventListener('DOMContentLoaded', function () {
             userData.password = form.elements['password'].value;
             userData.role = formType;
             userData.companyName = form.elements['name'].value;
+            confirmPassword = form.elements['confirmPassword'].value;
+            passwordConfirmationErrorId = 'companyConfirmationPasswordError';
+
+            document.getElementById(passwordConfirmationErrorId).textContent = '';
 
             if (email.trim() === "") {
                 document.getElementById('companyEmailError').textContent = 'Email is required';
@@ -108,6 +125,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     'Password requires: [8+ chars, 1+ uppercase,<br> 1+ number, 1+ special char]';
                 isValid = false;
             }
+            if (password !== confirmPassword) {
+                document.getElementById('companyConfirmationPasswordError').textContent = 'Password does not match';
+                isValid = false;
+            }
+
         }
 
         if (!isValid) {

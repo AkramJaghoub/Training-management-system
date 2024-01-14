@@ -297,3 +297,14 @@ h6 {
 li{
     color: #000;
 }
+.company-name-and-rating {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.company-rating {
+    margin-left: 1rem; /* This will push the rating to the rightmost side */
+    margin-right: .5rem;
+    margin-bottom: .5rem;
+}

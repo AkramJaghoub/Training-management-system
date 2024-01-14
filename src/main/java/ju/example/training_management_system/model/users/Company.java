@@ -20,6 +20,8 @@ public class Company extends User {
   private Integer numOfEmployees;
   private Integer establishmentYear;
   private double rating;
+  private double averageRating;
+  private int ratingCount;
 
   public Company(String email, String password) {
     super(email, password);
@@ -32,5 +34,10 @@ public class Company extends User {
     company.setPassword((String) properties.get("password"));
     company.setJoinDate(LocalDateTime.now());
     return company;
+  }
+
+  public void addRating(double rating) {
+    this.averageRating = (this.averageRating * this.ratingCount + rating) / (this.ratingCount + 1);
+    this.ratingCount++;
   }
 }

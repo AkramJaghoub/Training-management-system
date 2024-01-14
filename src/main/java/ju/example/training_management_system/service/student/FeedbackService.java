@@ -51,6 +51,11 @@ public class FeedbackService {
       feedback.setCompany(company);
 
       feedbackRepository.save(feedback);
+
+      // Update company rating
+      company.addRating(feedbackDto.getRating());
+      companyRepository.save(company);
+
       return new ApiResponse("Student feedback was created successfully", CREATED);
     } catch (UserNotFoundException ex) {
       return new ApiResponse(ex.getMessage(), BAD_REQUEST);
