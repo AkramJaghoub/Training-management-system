@@ -4,6 +4,7 @@
     flex-wrap: nowrap; /* This prevents wrapping to a new line */
     gap: 10px; /* This sets a gap between the items */
     font-size: 1rem; /* Adjust the font size as needed */
+    margin-top: 1rem;
 }
 
 .name-date h6, .name-date span {
@@ -44,6 +45,7 @@ img::before {
     object-fit: cover;
     width: 50px;
     height: 50px;
+    margin-top: 1rem;
 }
 
 .feedback-comment {
@@ -72,4 +74,8 @@ img::before {
 
 .status-rejected {
     color: red;
+}
+.cr{
+    margin-left: auto;
+    width: max-content;
 }
