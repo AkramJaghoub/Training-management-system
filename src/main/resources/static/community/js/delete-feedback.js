@@ -12,6 +12,10 @@ document.querySelectorAll('.delete-icon').forEach(item => {
     });
 });
 
+document.getElementById('cancelDelete').addEventListener('click', () => {
+    $('#deleteConfirmationModal').modal('hide');
+});
+
 document.getElementById('confirmDelete').addEventListener('click', () => {
     const modal = $('#deleteConfirmationModal');
     const feedbackId = modal.data('feedback-id');

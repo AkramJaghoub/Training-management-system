@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.TwoFactorAuthentication;
@@ -63,7 +64,7 @@ public class FactorAuthenticationService {
     }
 
     authenticationTokens.stream()
-        .filter(token -> token.getId() != latestToken.getId())
+        .filter(token -> !Objects.equals(token.getId(), latestToken.getId()))
         .forEach(factorAuthenticationRepository::delete);
   }
 
@@ -130,7 +131,7 @@ public class FactorAuthenticationService {
               MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
               StandardCharsets.UTF_8.name());
 
-      helper.setFrom("akram.jaghoub51@gmail.com");
+      helper.setFrom("teamterospprt@gmail.com");
       helper.setTo(user.getEmail());
       helper.setSubject("Authentication Code");
 

@@ -14,12 +14,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    console.log(urlParams.get('authFailed'));
     let timerDuration;
-    console.log("authFailed in session storage:", sessionStorage.getItem('authFailed'));
-    if (sessionStorage.getItem('authFailed') === 'true') {
-        timerDuration = 180; // Resetting timer to 3 minutes
-        sessionStorage.removeItem('authFailed'); // Clear the flag
+    if (urlParams.get('authFailed') === 'true') {
+        // Reset timer to 3 minutes if authFailed parameter is true
+        timerDuration = 180;
     } else {
+        // Otherwise, use the existing timer duration or default to 180 seconds
         timerDuration = parseInt(localStorage.getItem('timerDuration'), 10) || 180;
     }
 
@@ -29,7 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (--timerDuration <= 0) {
             clearInterval(countdown);
             localStorage.removeItem('timerDuration');
-            sessionStorage.removeItem('fromConfirmEmail');
             window.location.href = "/auth/2fa/confirm-email?tokenExpired=true";
             return;
         }

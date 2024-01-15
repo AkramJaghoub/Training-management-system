@@ -3,21 +3,23 @@ package ju.example.training_management_system.service.student;
 import static ju.example.training_management_system.util.Utils.*;
 
 import jakarta.transaction.Transactional;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
+
 import ju.example.training_management_system.dto.StudentInfoDto;
 import ju.example.training_management_system.exception.UnauthorizedStudentAccessException;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.PostStatus;
 import ju.example.training_management_system.model.company.advertisement.Advertisement;
+import ju.example.training_management_system.model.company.advertisement.Notification;
 import ju.example.training_management_system.model.manage.student.StudentInfo;
 import ju.example.training_management_system.model.users.Student;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.AdvertisementRepository;
+import ju.example.training_management_system.repository.NotificationRepository;
 import ju.example.training_management_system.repository.users.UserRepository;
+import ju.example.training_management_system.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,7 @@ public class StudentService {
 
   private final UserRepository userRepository;
   private final AdvertisementRepository advertisementRepository;
+  private final NotificationRepository notificationRepository;
 
 
   public static String getStudentFullName(String firstName, String lastName) {
@@ -72,17 +75,20 @@ public class StudentService {
 
       List<Advertisement> advertisements = getAdvertisementsPostedByLatestAndApproved();
 
+      List<Notification> notifications = notificationRepository.findByUser(student);
+      Collections.reverse(notifications);
+
       Map<Long, String> advertisementImages = getImages(advertisements);
 
       String studentName = getStudentFullName(student.getFirstName(), student.getLastName());
       String studentEducation = getStudentEducation(student.getMajor(), student.getUniversity());
 
+      model.addAttribute("notifications", notifications);
       model.addAttribute("studentImage", student.getImageUrl());
       model.addAttribute("advertisements", advertisements);
       model.addAttribute("studentName", studentName);
       model.addAttribute("advertisementImages", advertisementImages);
       model.addAttribute("studentEducation", studentEducation);
-
 
       return new ApiResponse("Set up was correctly done", HttpStatus.OK);
     } catch (UserNotFoundException ex) {
@@ -116,7 +122,8 @@ public class StudentService {
 
       Student student = isUserAuthorizedAsStudent(existingUser, email);
       String studentEducation = getStudentEducation(student.getMajor(), student.getUniversity());
-
+      List<Notification> notifications = notificationRepository.findByUser(student);
+      Collections.reverse(notifications);
 
       String studentName = getStudentFullName(student.getFirstName(), student.getLastName());
       model.addAttribute("email", student.getEmail());
@@ -126,6 +133,7 @@ public class StudentService {
       model.addAttribute("graduationYear", student.getGraduationYear());
       model.addAttribute("studentImage", student.getImageUrl());
       model.addAttribute("studentEducation", studentEducation);
+      model.addAttribute("notifications", notifications);
 
       return new ApiResponse("Set up was correctly done", HttpStatus.OK);
     } catch (UserNotFoundException ex) {

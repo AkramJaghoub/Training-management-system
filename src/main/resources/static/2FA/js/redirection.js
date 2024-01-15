@@ -5,9 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const authErrorBox = document.getElementById('authErrorBox');
     const authErrorText = authErrorBox ? authErrorBox.querySelector('.text') : null;
-    console.log("Setting authFailed in session storage");
-    sessionStorage.setItem('authFailed', 'true');
-    console.log(sessionStorage.getItem('authFailed') + " Ssssss")
+
     // Check if redirected here due to authentication failure
     if (urlParams.has('authFailed')) {
         // Display appropriate error message
@@ -43,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     form.addEventListener('submit', function (event) {
         if (!validateEmail()) {
-            event.preventDefault(); // Prevent form submission
+            event.preventDefault();
         }
     });
 });

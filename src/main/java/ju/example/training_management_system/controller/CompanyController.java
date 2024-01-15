@@ -36,7 +36,6 @@ public class CompanyController {
     }
 
     ApiResponse response = companyService.setUpCompanyDashboard(model, email);
-    System.out.println(response.getMessage() + " response " + response.getStatus());
     return response.getStatus() == HttpStatus.OK ? "/company/company-dashboard" : "redirect:/login";
   }
 
