@@ -3,9 +3,7 @@ package ju.example.training_management_system.service.student;
 import static ju.example.training_management_system.util.Utils.*;
 
 import jakarta.transaction.Transactional;
-
 import java.util.*;
-
 import ju.example.training_management_system.dto.StudentInfoDto;
 import ju.example.training_management_system.exception.UnauthorizedStudentAccessException;
 import ju.example.training_management_system.exception.UserNotFoundException;
@@ -19,7 +17,6 @@ import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.AdvertisementRepository;
 import ju.example.training_management_system.repository.NotificationRepository;
 import ju.example.training_management_system.repository.users.UserRepository;
-import ju.example.training_management_system.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -33,7 +30,6 @@ public class StudentService {
   private final UserRepository userRepository;
   private final AdvertisementRepository advertisementRepository;
   private final NotificationRepository notificationRepository;
-
 
   public static String getStudentFullName(String firstName, String lastName) {
     return firstName + " " + lastName;
@@ -98,7 +94,7 @@ public class StudentService {
     }
   }
 
-  public Map<Long, String> getImages(List<Advertisement> advertisements){
+  public Map<Long, String> getImages(List<Advertisement> advertisements) {
     Map<Long, String> advertisementImages = new HashMap<>();
     for (Advertisement ad : advertisements) {
       advertisementImages.put(ad.getId(), ad.getImageUrl());

@@ -17,7 +17,6 @@ import ju.example.training_management_system.model.users.Company;
 import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.AdvertisementRepository;
 import ju.example.training_management_system.repository.NotificationRepository;
-import ju.example.training_management_system.repository.users.CompanyRepository;
 import ju.example.training_management_system.repository.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -8,8 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import ju.example.training_management_system.dto.LoginDto;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.service.login.AuthenticationService;
-//import ju.example.training_management_system.service.login.FactorAuthenticationService;
-import ju.example.training_management_system.service.login.FactorAuthenticationService;
+// import ju.example.training_management_system.service.login.FactorAuthenticationService;
 import ju.example.training_management_system.service.login.LoginService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,14 +19,14 @@ class LoginServiceTest {
   private LoginService loginService;
   private UserService userService;
   private AuthenticationService authenticationService;
-//  private FactorAuthenticationService factorAuthenticationService;
+  //  private FactorAuthenticationService factorAuthenticationService;
   private HttpSession httpSession;
 
   @BeforeEach
   void setUp() {
     userService = mock(UserService.class);
     authenticationService = mock(AuthenticationService.class);
-//    factorAuthenticationService = mock(FactorAuthenticationService.class);
+    //    factorAuthenticationService = mock(FactorAuthenticationService.class);
     httpSession = mock(HttpSession.class);
     loginService = new LoginService(authenticationService, userService);
   }
@@ -56,7 +55,7 @@ class LoginServiceTest {
 
     when(authenticationService.isValidUser(email, password)).thenReturn(true);
     when(userService.getUserRole(email)).thenReturn(STUDENT);
-//    when(factorAuthenticationService.isTokenPersisted(email)).thenReturn(true);
+    //    when(factorAuthenticationService.isTokenPersisted(email)).thenReturn(true);
 
     ApiResponse response = loginService.loginUser(loginDto, httpSession);
 

@@ -5,8 +5,6 @@ import static java.util.Objects.nonNull;
 import static ju.example.training_management_system.model.PostStatus.APPROVED;
 import static ju.example.training_management_system.service.student.StudentService.getStudentEducation;
 import static ju.example.training_management_system.service.student.StudentService.getStudentFullName;
-import static ju.example.training_management_system.util.Utils.convertToBase64;
-import static ju.example.training_management_system.util.Utils.decompressImage;
 import static org.springframework.http.HttpStatus.*;
 
 import java.util.*;
@@ -59,7 +57,6 @@ public class CommunityService {
       Collections.reverse(notifications);
 
       List<String> companyNames = getCompanyNames();
-      System.out.println(companyNames + " Sssssssssss");
 
       model.addAttribute("companyNames", companyNames);
       model.addAttribute("studentName", studentName);
@@ -78,11 +75,8 @@ public class CommunityService {
     }
   }
 
-  private List<String> getCompanyNames(){
-    return companyRepository.findAll()
-            .stream()
-            .map(Company::getCompanyName)
-            .toList();
+  private List<String> getCompanyNames() {
+    return companyRepository.findAll().stream().map(Company::getCompanyName).toList();
   }
 
   private Map<Long, String> getUserImages(List<Feedback> feedbackList) {

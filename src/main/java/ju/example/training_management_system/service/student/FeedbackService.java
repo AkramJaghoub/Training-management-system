@@ -1,9 +1,6 @@
 package ju.example.training_management_system.service.student;
 
-import static java.util.Objects.nonNull;
 import static ju.example.training_management_system.model.PostStatus.*;
-import static ju.example.training_management_system.util.Utils.convertToBase64;
-import static ju.example.training_management_system.util.Utils.decompressImage;
 import static org.springframework.http.HttpStatus.*;
 
 import ju.example.training_management_system.dto.FeedbackDto;
@@ -128,6 +125,6 @@ public class FeedbackService {
   }
 
   public Feedback getLatestFeedback() {
-      return feedbackRepository.findTopByOrderByPostDateDesc().orElse(null);
+    return feedbackRepository.findTopByOrderByPostDateDesc().orElse(null);
   }
 }
