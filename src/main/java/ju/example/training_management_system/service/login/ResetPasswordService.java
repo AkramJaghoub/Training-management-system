@@ -11,13 +11,13 @@ import jakarta.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import ju.example.training_management_system.entity.PasswordResetTokenEntity;
+import ju.example.training_management_system.entity.users.CompanyEntity;
+import ju.example.training_management_system.entity.users.StudentEntity;
+import ju.example.training_management_system.entity.users.UserEntity;
 import ju.example.training_management_system.exception.PasswordReusedException;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
-import ju.example.training_management_system.model.PasswordResetToken;
-import ju.example.training_management_system.model.users.Company;
-import ju.example.training_management_system.model.users.Student;
-import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.TokenRepository;
 import ju.example.training_management_system.repository.users.UserRepository;
 import ju.example.training_management_system.util.PasswordHashingUtil;
@@ -40,22 +40,22 @@ public class ResetPasswordService {
 
   public ApiResponse sendEmail(String email) {
     try {
-      User user = userRepository.findByEmail(email);
+      UserEntity user = userRepository.findByEmail(email);
       if (isNull(user)) {
         throw new UserNotFoundException("Email doesn't exist");
       }
 
-      PasswordResetToken existingToken = tokenRepository.findByUserId(user.getId());
+      PasswordResetTokenEntity existingToken = tokenRepository.findByUserId(user.getId());
 
       String resetLink = determineResetLink(user, existingToken);
 
       String name = null;
 
-      if ((user instanceof Company company)) {
+      if ((user instanceof CompanyEntity company)) {
         name = company.getCompanyName();
       }
 
-      if ((user instanceof Student student)) {
+      if ((user instanceof StudentEntity student)) {
         name = student.getFirstName() + " " + student.getLastName();
       }
 
@@ -85,7 +85,7 @@ public class ResetPasswordService {
     }
   }
 
-  private String determineResetLink(User user, PasswordResetToken existingToken) {
+  private String determineResetLink(UserEntity user, PasswordResetTokenEntity existingToken) {
     if (nonNull(existingToken) && !this.hasExpired(existingToken.getExpiryDateTime())) {
       return "http://localhost:8080/reset-password?token=" + existingToken.getToken();
     } else {
@@ -96,21 +96,21 @@ public class ResetPasswordService {
     }
   }
 
-  private String generateResetToken(User user) {
+  private String generateResetToken(UserEntity user) {
     UUID uuid = UUID.randomUUID();
     LocalDateTime currentDateTime = LocalDateTime.now();
     LocalDateTime expiryDateTime = currentDateTime.plusMinutes(30);
-    PasswordResetToken resetToken = new PasswordResetToken();
+    PasswordResetTokenEntity resetToken = new PasswordResetTokenEntity();
     resetToken.setUser(user);
     resetToken.setToken(uuid.toString());
     resetToken.setExpiryDateTime(expiryDateTime);
-    PasswordResetToken token = tokenRepository.save(resetToken);
-    return "http://localhost:8080/reset-password?token=" + token.getToken();
+    tokenRepository.save(resetToken);
+    return "http://localhost:8080/reset-password?token=" + resetToken.getToken();
   }
 
   public boolean isTokenExpired(String token) {
     try {
-      PasswordResetToken resetToken = tokenRepository.findByToken(token);
+      PasswordResetTokenEntity resetToken = tokenRepository.findByToken(token);
       if (this.hasExpired(resetToken.getExpiryDateTime()) && nonNull(token)) {
         tokenRepository.delete(resetToken);
         return true;
@@ -129,9 +129,9 @@ public class ResetPasswordService {
   @Transactional
   public ApiResponse resetPassword(String email, String newPassword) {
     try {
-      User user = userRepository.findByEmail(email);
+      UserEntity user = userRepository.findByEmail(email);
       if (isNull(user)) {
-        throw new UserNotFoundException("User with email [" + email + "] was not found");
+        throw new UserNotFoundException("UserEntity with email [" + email + "] was not found");
       }
       String hashedPassword = PasswordHashingUtil.hashPassword(newPassword);
       if (hashedPassword.equals(user.getPassword())) {
@@ -148,7 +148,7 @@ public class ResetPasswordService {
   }
 
   public String getEmailFromToken(String token) {
-    PasswordResetToken resetToken = tokenRepository.findByToken(token);
+    PasswordResetTokenEntity resetToken = tokenRepository.findByToken(token);
     if (nonNull(resetToken) && nonNull(resetToken.getUser())) {
       return resetToken.getUser().getEmail();
     }

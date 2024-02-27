@@ -1,9 +1,9 @@
 package ju.example.training_management_system.service.login;
 
 import ju.example.training_management_system.database.DatabaseProperties;
+import ju.example.training_management_system.entity.users.UserEntity;
 import ju.example.training_management_system.exception.PasswordNotMatchException;
 import ju.example.training_management_system.exception.UserNotFoundException;
-import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.users.UserRepository;
 import ju.example.training_management_system.util.PasswordHashingUtil;
 import lombok.RequiredArgsConstructor;
@@ -21,11 +21,11 @@ public class AuthenticationService {
   public boolean isValidUser(String email, String password) {
     try {
       log.info("trying to find user with the email {}", email);
-      User storedUser = userRepository.findByEmail(email);
+      UserEntity storedUser = userRepository.findByEmail(email);
 
       if (storedUser == null) {
         log.info("user with the email {} wasn't found", email);
-        throw new UserNotFoundException("User with email " + email + " wasn't found");
+        throw new UserNotFoundException("UserEntity with email " + email + " wasn't found");
       }
 
       log.info("user with the email {} was found now validating their password", email);

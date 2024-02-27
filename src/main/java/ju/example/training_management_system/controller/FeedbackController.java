@@ -1,6 +1,6 @@
 package ju.example.training_management_system.controller;
 
-import ju.example.training_management_system.dto.FeedbackDto;
+import ju.example.training_management_system.entity.FeedbackEntity;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.Feedback;
 import ju.example.training_management_system.service.student.FeedbackService;
@@ -17,14 +17,14 @@ public class FeedbackController {
   private final FeedbackService feedbackService;
 
   @PostMapping("/provide")
-  public ResponseEntity<?> provideFeedback(@RequestBody FeedbackDto feedbackDto) {
-    ApiResponse apiResponse = feedbackService.provideFeedback(feedbackDto);
+  public ResponseEntity<?> provideFeedback(@RequestBody Feedback feedback) {
+    ApiResponse apiResponse = feedbackService.provideFeedback(feedback);
     return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
   }
 
   @GetMapping("/latest")
-  public ResponseEntity<Feedback> getLatestFeedback() {
-    Feedback latestFeedback = feedbackService.getLatestFeedback();
+  public ResponseEntity<FeedbackEntity> getLatestFeedback() {
+    FeedbackEntity latestFeedback = feedbackService.getLatestFeedback();
     if (latestFeedback != null) {
       return ResponseEntity.ok(latestFeedback);
     } else {
@@ -34,8 +34,8 @@ public class FeedbackController {
 
   @PutMapping("/update")
   public ResponseEntity<?> updateFeedback(
-      @RequestBody FeedbackDto feedbackDto, @RequestParam("feedbackId") long feedbackId) {
-    ApiResponse apiResponse = feedbackService.updateFeedback(feedbackDto, feedbackId);
+      @RequestBody Feedback feedback, @RequestParam("feedbackId") long feedbackId) {
+    ApiResponse apiResponse = feedbackService.updateFeedback(feedback, feedbackId);
     return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
   }
 

@@ -4,11 +4,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import java.util.Map;
+import ju.example.training_management_system.entity.users.UserEntity;
 import ju.example.training_management_system.exception.UserAlreadyExistException;
 import ju.example.training_management_system.model.ApiResponse;
-import ju.example.training_management_system.model.users.Role;
-import ju.example.training_management_system.model.users.User;
-import ju.example.training_management_system.model.users.UserFactory;
+import ju.example.training_management_system.model.Role;
+import ju.example.training_management_system.model.UserFactory;
 import ju.example.training_management_system.repository.users.UserRepository;
 import ju.example.training_management_system.util.PasswordHashingUtil;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class RegisterService {
   public ApiResponse registerUser(Map<String, Object> userData) {
     String roleStr = (String) userData.get("role");
     Role role = Role.toRole(roleStr);
-    User user = UserFactory.createUser(role, userData);
+    UserEntity user = UserFactory.createUser(role, userData);
     String hashedPassword = PasswordHashingUtil.hashPassword(user.getPassword());
     user.setPassword(hashedPassword);
     try {

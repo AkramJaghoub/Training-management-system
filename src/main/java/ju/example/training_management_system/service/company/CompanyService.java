@@ -7,14 +7,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import ju.example.training_management_system.dto.CompanyInfoDto;
+import ju.example.training_management_system.entity.advertisement.AdvertisementEntity;
+import ju.example.training_management_system.entity.advertisement.NotificationEntity;
+import ju.example.training_management_system.entity.users.CompanyEntity;
+import ju.example.training_management_system.entity.users.UserEntity;
 import ju.example.training_management_system.exception.UnauthorizedCompanyAccessException;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
-import ju.example.training_management_system.model.company.advertisement.Advertisement;
-import ju.example.training_management_system.model.company.advertisement.Notification;
-import ju.example.training_management_system.model.manage.company.CompanyInfo;
-import ju.example.training_management_system.model.users.Company;
-import ju.example.training_management_system.model.users.User;
+import ju.example.training_management_system.model.CompanyInfo;
 import ju.example.training_management_system.repository.AdvertisementRepository;
 import ju.example.training_management_system.repository.NotificationRepository;
 import ju.example.training_management_system.repository.users.UserRepository;
@@ -32,27 +32,27 @@ public class CompanyService {
   private final AdvertisementRepository advertisementRepository;
   private final NotificationRepository notificationRepository;
 
-  public Company isUserAuthorizedAsCompany(User user, String email)
+  public CompanyEntity isUserAuthorizedAsCompany(UserEntity user, String email)
       throws UnauthorizedCompanyAccessException {
-    if (!(user instanceof Company company)) {
+    if (!(user instanceof CompanyEntity company)) {
       throw new UnauthorizedCompanyAccessException(
-          "User with email " + email + " wasn't recognized as a company");
+          "UserEntity with email " + email + " wasn't recognized as a company");
     }
     return company;
   }
 
   public ApiResponse setUpCompanyDashboard(Model model, String email) {
     try {
-      User existingUser = userRepository.findByEmail(email);
+      UserEntity existingUser = userRepository.findByEmail(email);
       if (existingUser == null) {
-        throw new UserNotFoundException("User with email " + email + " wasn't found");
+        throw new UserNotFoundException("UserEntity with email " + email + " wasn't found");
       }
 
-      Company company = isUserAuthorizedAsCompany(existingUser, email);
+      CompanyEntity company = isUserAuthorizedAsCompany(existingUser, email);
 
-      List<Advertisement> advertisements =
+      List<AdvertisementEntity> advertisements =
           getCompanyAdvertisementsPostedByLatest(company.getCompanyName());
-      List<Notification> notifications = notificationRepository.findByUser(company);
+      List<NotificationEntity> notifications = notificationRepository.findByUser(company);
       Collections.reverse(notifications);
 
       model.addAttribute("companyImage", company.getImageUrl());
@@ -68,24 +68,24 @@ public class CompanyService {
     }
   }
 
-  private List<Advertisement> getCompanyAdvertisementsPostedByLatest(String companyName) {
+  private List<AdvertisementEntity> getCompanyAdvertisementsPostedByLatest(String companyName) {
     return advertisementRepository.findByCompany_CompanyName(companyName).stream()
-        .sorted(Comparator.comparing(Advertisement::getPostDate).reversed())
+        .sorted(Comparator.comparing(AdvertisementEntity::getPostDate).reversed())
         .toList();
   }
 
   public ApiResponse setManageProfile(Model model, String email) {
 
     try {
-      User existingUser = userRepository.findByEmail(email);
+      UserEntity existingUser = userRepository.findByEmail(email);
 
       if (existingUser == null) {
-        throw new UserNotFoundException("User with email " + email + " wasn't found");
+        throw new UserNotFoundException("UserEntity with email " + email + " wasn't found");
       }
 
-      Company company = isUserAuthorizedAsCompany(existingUser, email);
+      CompanyEntity company = isUserAuthorizedAsCompany(existingUser, email);
 
-      List<Notification> notifications = notificationRepository.findByUser(company);
+      List<NotificationEntity> notifications = notificationRepository.findByUser(company);
       Collections.reverse(notifications);
 
       model.addAttribute("email", company.getEmail());
@@ -108,14 +108,14 @@ public class CompanyService {
   public ApiResponse updateCompanyDetails(@RequestBody CompanyInfoDto infoDto, String email) {
     try {
 
-      CompanyInfo companyInfo = new CompanyInfo().toEntity(infoDto);
+      CompanyInfo companyInfo = new CompanyInfo().toModel(infoDto);
 
-      User existingUser = userRepository.findByEmail(email);
+      UserEntity existingUser = userRepository.findByEmail(email);
       if (existingUser == null) {
         throw new UserNotFoundException("User with email " + email + " wasn't found");
       }
 
-      Company company = isUserAuthorizedAsCompany(existingUser, email);
+      CompanyEntity company = isUserAuthorizedAsCompany(existingUser, email);
 
       boolean isChanged = false;
 

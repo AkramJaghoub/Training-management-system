@@ -10,16 +10,16 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
+import ju.example.training_management_system.entity.FeedbackEntity;
+import ju.example.training_management_system.entity.advertisement.AdvertisementEntity;
+import ju.example.training_management_system.entity.users.StudentEntity;
+import ju.example.training_management_system.entity.users.UserEntity;
 import ju.example.training_management_system.exception.AdDoesNotExistException;
 import ju.example.training_management_system.exception.FeedbackDoesNotExistException;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
-import ju.example.training_management_system.model.Feedback;
 import ju.example.training_management_system.model.PostStatus;
-import ju.example.training_management_system.model.company.advertisement.Advertisement;
-import ju.example.training_management_system.model.users.Role;
-import ju.example.training_management_system.model.users.Student;
-import ju.example.training_management_system.model.users.User;
+import ju.example.training_management_system.model.Role;
 import ju.example.training_management_system.repository.AdvertisementRepository;
 import ju.example.training_management_system.repository.FeedbackRepository;
 import ju.example.training_management_system.repository.users.CompanyRepository;
@@ -51,12 +51,12 @@ public class AdminService {
   }
 
   private void setUpFields(Model model) {
-    List<User> users = getUsersByJoinDate();
+    List<UserEntity> users = getUsersByJoinDate();
 
-    List<Advertisement> advertisements = advertisementRepository.findAll();
+    List<AdvertisementEntity> advertisements = advertisementRepository.findAll();
 
     Map<Long, String> userImages = fetchUserImages(users);
-    List<User> newUsers = getNewUsers(users);
+    List<UserEntity> newUsers = getNewUsers(users);
 
     long numOfCompanies = users.stream().filter(user -> user.getRole() == Role.COMPANY).count();
 
@@ -81,29 +81,27 @@ public class AdminService {
     model.addAttribute("newAdvertisementsCount", newAdsCount);
   }
 
-  private Map<Long, String> fetchUserImages(List<User> users) {
+  private Map<Long, String> fetchUserImages(List<UserEntity> users) {
     Map<Long, String> userImages = new HashMap<>();
     users.forEach(
-        user -> {
-          getUserImage(user).ifPresent(imageUrl -> userImages.put(user.getId(), imageUrl));
-        });
+        user -> getUserImage(user).ifPresent(imageUrl -> userImages.put(user.getId(), imageUrl)));
     return userImages;
   }
 
-  private List<User> getUsersByJoinDate() {
+  private List<UserEntity> getUsersByJoinDate() {
     return userRepository.findAll().stream()
-        .sorted(Comparator.comparing(User::getJoinDate).reversed())
+        .sorted(Comparator.comparing(UserEntity::getJoinDate).reversed())
         .collect(Collectors.toList());
   }
 
-  private Optional<String> getUserImage(User user) {
+  private Optional<String> getUserImage(UserEntity user) {
     if (nonNull(user.getImageUrl())) {
       return Optional.of(user.getImageUrl());
     }
     return Optional.empty();
   }
 
-  private List<User> getNewUsers(List<User> users) {
+  private List<UserEntity> getNewUsers(List<UserEntity> users) {
     return users.stream()
         .filter(
             user ->
@@ -113,22 +111,22 @@ public class AdminService {
   }
 
   public void setUpAdsListPage(Model model) {
-    List<Advertisement> advertisements = getAdvertisementsByPostDate();
+    List<AdvertisementEntity> advertisements = getAdvertisementsByPostDate();
     model.addAttribute("advertisements", advertisements);
   }
 
-  public List<Advertisement> getAdvertisementsByPostDate() {
+  public List<AdvertisementEntity> getAdvertisementsByPostDate() {
     return advertisementRepository.findAll().stream()
-        .sorted(Comparator.comparing(Advertisement::getPostDate).reversed())
+        .sorted(Comparator.comparing(AdvertisementEntity::getPostDate).reversed())
         .toList();
   }
 
   public void setUpStudentsFeedbackPage(Model model) {
-    List<Feedback> feedbackList = getFeedbackListByPostDate();
+    List<FeedbackEntity> feedbackList = getFeedbackListByPostDate();
 
     Map<Long, String> studentImages = new HashMap<>();
-    for (Feedback feedback : feedbackList) {
-      Student student = feedback.getStudent();
+    for (FeedbackEntity feedback : feedbackList) {
+      StudentEntity student = feedback.getStudent();
       if (nonNull(student)) {
         getUserImage(student).ifPresent(imageUrl -> studentImages.put(student.getId(), imageUrl));
       }
@@ -138,21 +136,21 @@ public class AdminService {
     model.addAttribute("studentImages", studentImages);
   }
 
-  private List<Feedback> getFeedbackListByPostDate() {
+  private List<FeedbackEntity> getFeedbackListByPostDate() {
     return feedbackRepository.findAll().stream()
-        .sorted(Comparator.comparing(Feedback::getPostDate).reversed())
+        .sorted(Comparator.comparing(FeedbackEntity::getPostDate).reversed())
         .toList();
   }
 
   @Transactional
   public ApiResponse deleteUser(long userId) {
     try {
-      Optional<User> usersOpt = userRepository.findById(userId);
+      Optional<UserEntity> usersOpt = userRepository.findById(userId);
       if (usersOpt.isEmpty()) {
-        throw new UserNotFoundException("User with id [" + userId + "] was not found");
+        throw new UserNotFoundException("UserEntity with id [" + userId + "] was not found");
       }
 
-      User user = usersOpt.get();
+      UserEntity user = usersOpt.get();
 
       if (user.getRole() == Role.STUDENT) {
         studentRepository.deleteById(userId);
@@ -163,7 +161,7 @@ public class AdminService {
 
       userRepository.deleteById(userId);
       return new ApiResponse(
-          "User with id [" + userId + "] was deleted successfully", HttpStatus.OK);
+          "UserEntity with id [" + userId + "] was deleted successfully", HttpStatus.OK);
 
     } catch (UserNotFoundException ex) {
       return new ApiResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
@@ -172,13 +170,13 @@ public class AdminService {
 
   public ApiResponse updateAdStatus(long adId, String newStatus) {
     try {
-      Advertisement ad =
+      AdvertisementEntity ad =
           advertisementRepository
               .findById(adId)
               .orElseThrow(
                   () ->
                       new AdDoesNotExistException(
-                          "Advertisement with [" + adId + "] was not found"));
+                          "AdvertisementEntity with [" + adId + "] was not found"));
 
       if (isEmpty(newStatus)) {
         ad.setPostStatus(PENDING);
@@ -190,7 +188,7 @@ public class AdminService {
 
       advertisementRepository.save(ad);
       return new ApiResponse(
-          "Advertisement with ["
+          "AdvertisementEntity with ["
               + adId
               + "] and name ["
               + ad.getJobTitle()
@@ -204,13 +202,13 @@ public class AdminService {
 
   public ApiResponse updateFeedbackStatus(long feedbackId, String newStatus) {
     try {
-      Feedback feedback =
+      FeedbackEntity feedback =
           feedbackRepository
               .findById(feedbackId)
               .orElseThrow(
                   () ->
                       new FeedbackDoesNotExistException(
-                          "Advertisement with [" + feedbackId + "] was not found"));
+                          "AdvertisementEntity with [" + feedbackId + "] was not found"));
 
       if (!isEmpty(newStatus)) {
         feedback.setStatus(PostStatus.valueOf(newStatus));

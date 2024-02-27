@@ -8,14 +8,14 @@ import static ju.example.training_management_system.service.student.StudentServi
 import static org.springframework.http.HttpStatus.*;
 
 import java.util.*;
+import ju.example.training_management_system.entity.FeedbackEntity;
+import ju.example.training_management_system.entity.advertisement.NotificationEntity;
+import ju.example.training_management_system.entity.users.CompanyEntity;
+import ju.example.training_management_system.entity.users.StudentEntity;
+import ju.example.training_management_system.entity.users.UserEntity;
 import ju.example.training_management_system.exception.UnauthorizedStudentAccessException;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
-import ju.example.training_management_system.model.Feedback;
-import ju.example.training_management_system.model.company.advertisement.Notification;
-import ju.example.training_management_system.model.users.Company;
-import ju.example.training_management_system.model.users.Student;
-import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.FeedbackRepository;
 import ju.example.training_management_system.repository.NotificationRepository;
 import ju.example.training_management_system.repository.users.CompanyRepository;
@@ -35,25 +35,25 @@ public class CommunityService {
 
   public ApiResponse setUpCommunityPage(Model model, String email) {
     try {
-      User user = userRepository.findByEmail(email);
+      UserEntity user = userRepository.findByEmail(email);
 
       if (isNull(user)) {
-        throw new UserNotFoundException("User with email " + email + " wasn't found");
+        throw new UserNotFoundException("UserEntity with email " + email + " wasn't found");
       }
 
-      if (!(user instanceof Student student)) {
+      if (!(user instanceof StudentEntity student)) {
         throw new UnauthorizedStudentAccessException(
-            "User with email " + email + " wasn't recognized as a student");
+            "UserEntity with email " + email + " wasn't recognized as a student");
       }
 
-      List<Feedback> feedbackList = getFeedbacksByPostDateAndStatus();
-      List<Feedback> studentFeedback = getFeedbacksByStudentIdAndPostDate(user.getId());
+      List<FeedbackEntity> feedbackList = getFeedbacksByPostDateAndStatus();
+      List<FeedbackEntity> studentFeedback = getFeedbacksByStudentIdAndPostDate(user.getId());
 
       String studentName = getStudentFullName(student.getFirstName(), student.getLastName());
       String studentEducation = getStudentEducation(student.getMajor(), student.getUniversity());
 
       Map<Long, String> allUserImages = getUserImages(feedbackList);
-      List<Notification> notifications = notificationRepository.findByUser(student);
+      List<NotificationEntity> notifications = notificationRepository.findByUser(student);
       Collections.reverse(notifications);
 
       List<String> companyNames = getCompanyNames();
@@ -76,36 +76,36 @@ public class CommunityService {
   }
 
   private List<String> getCompanyNames() {
-    return companyRepository.findAll().stream().map(Company::getCompanyName).toList();
+    return companyRepository.findAll().stream().map(CompanyEntity::getCompanyName).toList();
   }
 
-  private Map<Long, String> getUserImages(List<Feedback> feedbackList) {
+  private Map<Long, String> getUserImages(List<FeedbackEntity> feedbackList) {
     Map<Long, String> allUserImages = new HashMap<>();
 
-    for (Feedback feedback : feedbackList) {
-      User user = feedback.getStudent();
+    for (FeedbackEntity feedback : feedbackList) {
+      UserEntity user = feedback.getStudent();
       allUserImages.put(user.getId(), getUserImage(user).orElse(null));
     }
 
     return allUserImages;
   }
 
-  private Optional<String> getUserImage(User user) {
+  private Optional<String> getUserImage(UserEntity user) {
     if (nonNull(user.getImageUrl())) {
       return Optional.of(user.getImageUrl());
     }
     return Optional.empty();
   }
 
-  private List<Feedback> getFeedbacksByStudentIdAndPostDate(Long studentId) {
+  private List<FeedbackEntity> getFeedbacksByStudentIdAndPostDate(Long studentId) {
     return feedbackRepository.findByStudent_Id(studentId).stream()
-        .sorted(Comparator.comparing(Feedback::getPostDate).reversed())
+        .sorted(Comparator.comparing(FeedbackEntity::getPostDate).reversed())
         .toList();
   }
 
-  private List<Feedback> getFeedbacksByPostDateAndStatus() {
+  private List<FeedbackEntity> getFeedbacksByPostDateAndStatus() {
     return feedbackRepository.findAll().stream()
-        .sorted(Comparator.comparing(Feedback::getPostDate).reversed())
+        .sorted(Comparator.comparing(FeedbackEntity::getPostDate).reversed())
         .filter((feedback) -> feedback.getStatus().equals(APPROVED))
         .toList();
   }

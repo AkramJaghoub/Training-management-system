@@ -5,7 +5,7 @@ import static ju.example.training_management_system.util.Utils.redirectToPage;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import ju.example.training_management_system.dto.AdvertisementDto;
+import ju.example.training_management_system.model.Advertisement;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.service.AdvertisementService;
 import lombok.RequiredArgsConstructor;
@@ -37,14 +37,14 @@ public class AdvertisementController {
   }
 
   @PostMapping("/post")
-  public ResponseEntity<?> postAds(@ModelAttribute AdvertisementDto postDto) {
+  public ResponseEntity<?> postAds(@ModelAttribute Advertisement advertisement) {
     HttpSession session = request.getSession();
     String email = (String) session.getAttribute("email");
     if (isNull(email)) {
       return redirectToPage("/login");
     }
 
-    ApiResponse response = adsPostService.postAd(postDto, email);
+    ApiResponse response = adsPostService.postAd(advertisement, email);
     return ResponseEntity.status(response.getStatus()).body(response);
   }
 
@@ -61,14 +61,14 @@ public class AdvertisementController {
   }
 
   @PutMapping("/update")
-  public ResponseEntity<?> updateAd(@ModelAttribute AdvertisementDto adDto) {
+  public ResponseEntity<?> updateAd(@ModelAttribute Advertisement advertisement) {
     HttpSession session = request.getSession();
     String email = (String) session.getAttribute("email");
     if (isNull(email)) {
       return redirectToPage("/login");
     }
 
-    ApiResponse response = adsPostService.updateAd(adDto, email);
+    ApiResponse response = adsPostService.updateAd(advertisement, email);
     return ResponseEntity.status(response.getStatus()).body(response);
   }
 }

@@ -1,12 +1,12 @@
 package ju.example.training_management_system.service;
 
-import static ju.example.training_management_system.model.users.Role.STUDENT;
+import static ju.example.training_management_system.model.Role.STUDENT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
+import ju.example.training_management_system.entity.users.UserEntity;
 import ju.example.training_management_system.model.ApiResponse;
-import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.users.UserRepository;
 import ju.example.training_management_system.util.PasswordHashingUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +28,7 @@ class UserServiceTest {
 
   @Test
   void valid_change_password() {
-    User user = getUser();
+    UserEntity user = getUser();
     String currentPassword = "test123";
     String newPassword = "new123";
 
@@ -44,7 +44,7 @@ class UserServiceTest {
 
   @Test
   void invalid_change_password_when_currentPassword_doesnt_match() {
-    User user = getUser();
+    UserEntity user = getUser();
     String currentPassword = "wrong password";
     String newPassword = "new123";
 
@@ -53,13 +53,13 @@ class UserServiceTest {
     ApiResponse response =
         userService.changePassword(user.getEmail(), currentPassword, newPassword);
 
-    verify(userRepository, never()).save(any(User.class));
+    verify(userRepository, never()).save(any(UserEntity.class));
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatus());
   }
 
-  private User getUser() {
-    return User.builder()
+  private UserEntity getUser() {
+    return UserEntity.builder()
         .email("test123@gmail.com")
         .password(PasswordHashingUtil.hashPassword("test123"))
         .role(STUDENT)

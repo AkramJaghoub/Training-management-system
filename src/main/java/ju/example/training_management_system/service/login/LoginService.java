@@ -5,7 +5,7 @@ import static ju.example.training_management_system.util.Utils.getRequiredDashbo
 import jakarta.servlet.http.HttpSession;
 import ju.example.training_management_system.dto.LoginDto;
 import ju.example.training_management_system.model.ApiResponse;
-import ju.example.training_management_system.model.users.Role;
+import ju.example.training_management_system.model.Role;
 import ju.example.training_management_system.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

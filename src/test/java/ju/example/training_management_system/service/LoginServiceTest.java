@@ -1,6 +1,6 @@
 package ju.example.training_management_system.service;
 
-import static ju.example.training_management_system.model.users.Role.STUDENT;
+import static ju.example.training_management_system.model.Role.STUDENT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 

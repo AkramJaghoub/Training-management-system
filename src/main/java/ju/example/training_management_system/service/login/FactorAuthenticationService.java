@@ -11,11 +11,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import ju.example.training_management_system.entity.TwoFactorAuthenticationEntity;
+import ju.example.training_management_system.entity.users.CompanyEntity;
+import ju.example.training_management_system.entity.users.StudentEntity;
+import ju.example.training_management_system.entity.users.UserEntity;
 import ju.example.training_management_system.exception.UserNotFoundException;
-import ju.example.training_management_system.model.TwoFactorAuthentication;
-import ju.example.training_management_system.model.users.Company;
-import ju.example.training_management_system.model.users.Student;
-import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.FactorAuthenticationRepository;
 import ju.example.training_management_system.repository.users.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,28 +34,15 @@ public class FactorAuthenticationService {
   private final FactorAuthenticationRepository factorAuthenticationRepository;
   private final SpringTemplateEngine templateEngine;
 
-  public boolean isTokenPersisted(String email) {
-    User user = userRepository.findByEmail(email);
-    List<TwoFactorAuthentication> authenticationTokens =
-        factorAuthenticationRepository.findAllByUserId(user.getId());
-
-    TwoFactorAuthentication latestToken =
-        authenticationTokens.stream()
-            .max(Comparator.comparing(TwoFactorAuthentication::getExpiryTime))
-            .orElse(null);
-
-    return latestToken != null && !this.hasExpired(latestToken.getPersistenceTime());
-  }
-
   @Transactional
   public void process2FA(String email) {
-    User user = userRepository.findByEmail(email);
-    List<TwoFactorAuthentication> authenticationTokens =
+    UserEntity user = userRepository.findByEmail(email);
+    List<TwoFactorAuthenticationEntity> authenticationTokens =
         factorAuthenticationRepository.findAllByUserId(user.getId());
 
-    TwoFactorAuthentication latestToken =
+    TwoFactorAuthenticationEntity latestToken =
         authenticationTokens.stream()
-            .max(Comparator.comparing(TwoFactorAuthentication::getExpiryTime))
+            .max(Comparator.comparing(TwoFactorAuthenticationEntity::getExpiryTime))
             .orElse(null);
 
     if (latestToken != null) {
@@ -68,7 +55,7 @@ public class FactorAuthenticationService {
         .forEach(factorAuthenticationRepository::delete);
   }
 
-  private String generate2FAToken(User user) {
+  private String generate2FAToken(UserEntity user) {
     int number = new Random().nextInt(90000) + 10000;
     String authenticationToken = String.valueOf(number);
 
@@ -76,7 +63,7 @@ public class FactorAuthenticationService {
     LocalDateTime expiryDateTime = currentDateTime.plusMinutes(3);
     LocalDateTime persistenceTime = currentDateTime.plusDays(15);
 
-    TwoFactorAuthentication factorAuthentication = new TwoFactorAuthentication();
+    TwoFactorAuthenticationEntity factorAuthentication = new TwoFactorAuthenticationEntity();
     factorAuthentication.setUser(user);
     factorAuthentication.setToken(authenticationToken);
     factorAuthentication.setPersistenceTime(persistenceTime);
@@ -87,13 +74,13 @@ public class FactorAuthenticationService {
   }
 
   public boolean isTokenExpired(String email) {
-    User user = userRepository.findByEmail(email);
-    List<TwoFactorAuthentication> authenticationTokens =
+    UserEntity user = userRepository.findByEmail(email);
+    List<TwoFactorAuthenticationEntity> authenticationTokens =
         factorAuthenticationRepository.findAllByUserId(user.getId());
 
-    TwoFactorAuthentication latestToken =
+    TwoFactorAuthenticationEntity latestToken =
         authenticationTokens.stream()
-            .max(Comparator.comparing(TwoFactorAuthentication::getExpiryTime))
+            .max(Comparator.comparing(TwoFactorAuthenticationEntity::getExpiryTime))
             .orElse(null);
 
     if (latestToken != null && this.hasExpired(latestToken.getExpiryTime())) {
@@ -109,18 +96,18 @@ public class FactorAuthenticationService {
     return !localDateTime.isAfter(currentDateTime);
   }
 
-  public TwoFactorAuthentication getTokenByEmail(String email) {
-    User user = userRepository.findByEmail(email);
-    List<TwoFactorAuthentication> authenticationTokens =
+  public TwoFactorAuthenticationEntity getTokenByEmail(String email) {
+    UserEntity user = userRepository.findByEmail(email);
+    List<TwoFactorAuthenticationEntity> authenticationTokens =
         factorAuthenticationRepository.findAllByUserId(user.getId());
 
     return authenticationTokens.stream()
-        .max(Comparator.comparing(TwoFactorAuthentication::getPersistenceTime))
+        .max(Comparator.comparing(TwoFactorAuthenticationEntity::getPersistenceTime))
         .orElse(null);
   }
 
   public void sendEmail(String email) {
-    User user = userRepository.findByEmail(email);
+    UserEntity user = userRepository.findByEmail(email);
     String token = generate2FAToken(user);
 
     try {
@@ -138,17 +125,17 @@ public class FactorAuthenticationService {
       Context context = new Context();
 
       String name = null;
-      User existingUser = userRepository.findByEmail(email);
+      UserEntity existingUser = userRepository.findByEmail(email);
 
       if (existingUser == null) {
-        throw new UserNotFoundException("User with email " + email + " wasn't found");
+        throw new UserNotFoundException("UserEntity with email " + email + " wasn't found");
       }
 
-      if ((existingUser instanceof Company company)) {
+      if ((existingUser instanceof CompanyEntity company)) {
         name = company.getCompanyName();
       }
 
-      if ((existingUser instanceof Student student)) {
+      if ((existingUser instanceof StudentEntity student)) {
         name = student.getFirstName() + " " + student.getLastName();
       }
 

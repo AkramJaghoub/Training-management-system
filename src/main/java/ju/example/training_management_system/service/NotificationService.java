@@ -1,11 +1,11 @@
 package ju.example.training_management_system.service;
 
+import ju.example.training_management_system.entity.advertisement.NotificationEntity;
+import ju.example.training_management_system.entity.users.CompanyEntity;
+import ju.example.training_management_system.entity.users.StudentEntity;
+import ju.example.training_management_system.entity.users.UserEntity;
 import ju.example.training_management_system.exception.NotificationDoesNotExistException;
 import ju.example.training_management_system.model.ApiResponse;
-import ju.example.training_management_system.model.company.advertisement.Notification;
-import ju.example.training_management_system.model.users.Company;
-import ju.example.training_management_system.model.users.Student;
-import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.NotificationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ public class NotificationService {
 
   public ApiResponse markNotificationAsRead(long notificationId) {
     try {
-      Notification notification =
+      NotificationEntity notificationEntity =
           notificationRepository
               .findById(notificationId)
               .orElseThrow(
@@ -26,7 +26,7 @@ public class NotificationService {
                       new NotificationDoesNotExistException(
                           "Notification with id [" + notificationId + "] does not exist"));
 
-      notificationRepository.delete(notification);
+      notificationRepository.delete(notificationEntity);
       return new ApiResponse(
           "Notification with id [" + notificationId + "] was marked as read successfully",
           HttpStatus.OK);
@@ -35,18 +35,21 @@ public class NotificationService {
     }
   }
 
-  public void notifyUser(String newStatus, String criteria, User user) {
-    Notification notification = new Notification();
-    if (user instanceof Company company) {
-      notification.setMessage(
-          "Your Advertisement with job title [" + criteria + "] was " + newStatus.toLowerCase());
-      notification.setUser(company);
-    } else if (user instanceof Student student) {
-      notification.setMessage(
+  public void notifyUser(String newStatus, String criteria, UserEntity user) {
+    NotificationEntity notificationEntity = new NotificationEntity();
+    if (user instanceof CompanyEntity company) {
+      notificationEntity.setMessage(
+          "Your AdvertisementEntity with job title ["
+              + criteria
+              + "] was "
+              + newStatus.toLowerCase());
+      notificationEntity.setUser(company);
+    } else if (user instanceof StudentEntity student) {
+      notificationEntity.setMessage(
           "Your Feedback with context [" + criteria + "] was " + newStatus.toLowerCase());
-      notification.setUser(student);
+      notificationEntity.setUser(student);
     }
-    notification.setUser(user);
-    notificationRepository.save(notification);
+    notificationEntity.setUser(user);
+    notificationRepository.save(notificationEntity);
   }
 }

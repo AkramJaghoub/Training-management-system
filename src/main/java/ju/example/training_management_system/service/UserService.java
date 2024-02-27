@@ -1,11 +1,11 @@
 package ju.example.training_management_system.service;
 
 import java.util.Objects;
+import ju.example.training_management_system.entity.users.UserEntity;
 import ju.example.training_management_system.exception.PasswordNotMatchException;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
-import ju.example.training_management_system.model.users.Role;
-import ju.example.training_management_system.model.users.User;
+import ju.example.training_management_system.model.Role;
 import ju.example.training_management_system.repository.users.UserRepository;
 import ju.example.training_management_system.util.PasswordHashingUtil;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +19,13 @@ public class UserService {
   private final UserRepository userRepository;
 
   public Role getUserRole(String email) {
-    User user = userRepository.findByEmail(email);
+    UserEntity user = userRepository.findByEmail(email);
     return user.getRole();
   }
 
   public ApiResponse changePassword(String email, String currentPassword, String newPassword) {
     try {
-      User user = userRepository.findByEmail(email);
+      UserEntity user = userRepository.findByEmail(email);
       if (user == null) {
         throw new UserNotFoundException("User with email [" + email + "] was not found");
       }

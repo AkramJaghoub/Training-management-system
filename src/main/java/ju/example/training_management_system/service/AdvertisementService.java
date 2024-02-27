@@ -7,16 +7,16 @@ import jakarta.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import ju.example.training_management_system.dto.AdvertisementDto;
+import ju.example.training_management_system.entity.advertisement.AdvertisementEntity;
+import ju.example.training_management_system.entity.advertisement.NotificationEntity;
+import ju.example.training_management_system.entity.users.CompanyEntity;
+import ju.example.training_management_system.entity.users.UserEntity;
 import ju.example.training_management_system.exception.AdAlreadyExistsException;
 import ju.example.training_management_system.exception.AdDoesNotExistException;
 import ju.example.training_management_system.exception.UnauthorizedCompanyAccessException;
 import ju.example.training_management_system.exception.UserNotFoundException;
+import ju.example.training_management_system.model.Advertisement;
 import ju.example.training_management_system.model.ApiResponse;
-import ju.example.training_management_system.model.company.advertisement.Advertisement;
-import ju.example.training_management_system.model.company.advertisement.Notification;
-import ju.example.training_management_system.model.users.Company;
-import ju.example.training_management_system.model.users.User;
 import ju.example.training_management_system.repository.AdvertisementRepository;
 import ju.example.training_management_system.repository.NotificationRepository;
 import ju.example.training_management_system.repository.users.UserRepository;
@@ -33,9 +33,9 @@ public class AdvertisementService {
   private final UserRepository userRepository;
   private final NotificationRepository notificationRepository;
 
-  public Company isUserAuthorizedAsCompany(User user, String email)
+  public CompanyEntity isUserAuthorizedAsCompany(UserEntity user, String email)
       throws UnauthorizedCompanyAccessException {
-    if (!(user instanceof Company company)) {
+    if (!(user instanceof CompanyEntity company)) {
       throw new UnauthorizedCompanyAccessException(
           "User with email " + email + " wasn't recognized as a company");
     }
@@ -44,14 +44,14 @@ public class AdvertisementService {
 
   public ApiResponse setUpPostAdsPage(Model model, String email) {
     try {
-      User existingUser = userRepository.findByEmail(email);
+      UserEntity existingUser = userRepository.findByEmail(email);
       if (existingUser == null) {
         throw new UserNotFoundException("User with email " + email + " wasn't found");
       }
 
-      Company company = isUserAuthorizedAsCompany(existingUser, email);
+      CompanyEntity company = isUserAuthorizedAsCompany(existingUser, email);
 
-      List<Notification> notifications = notificationRepository.findByUser(company);
+      List<NotificationEntity> notifications = notificationRepository.findByUser(company);
       Collections.reverse(notifications);
 
       model.addAttribute("companyImage", company.getImageUrl());
@@ -67,15 +67,15 @@ public class AdvertisementService {
   }
 
   @Transactional
-  public ApiResponse postAd(AdvertisementDto adDto, String email) {
+  public ApiResponse postAd(Advertisement advertisement, String email) {
     try {
-      Advertisement ad = new Advertisement().toEntity(adDto);
+      AdvertisementEntity ad = new AdvertisementEntity().toEntity(advertisement);
 
-      String imageUrl = saveImage(adDto.getJobImage(), "company");
+      String imageUrl = saveImage(advertisement.getJobImage(), "company");
       ad.setImageUrl(imageUrl);
 
-      User user = userRepository.findByEmail(email);
-      if (!(user instanceof Company company)) {
+      UserEntity user = userRepository.findByEmail(email);
+      if (!(user instanceof CompanyEntity company)) {
         throw new UnauthorizedCompanyAccessException(
             "User with email " + email + " wasn't recognized as a company");
       }
@@ -97,37 +97,38 @@ public class AdvertisementService {
   }
 
   @Transactional
-  public ApiResponse updateAd(AdvertisementDto adDto, String email) {
+  public ApiResponse updateAd(Advertisement advertisement, String email) {
     try {
-      Advertisement existingAd =
+      AdvertisementEntity existingAd =
           advertisementRepository
-              .findById(adDto.getId())
+              .findById(advertisement.getId())
               .orElseThrow(() -> new AdDoesNotExistException("Advertisement not found"));
 
-      User user = userRepository.findByEmail(email);
-      if (!(user instanceof Company company)) {
+      UserEntity user = userRepository.findByEmail(email);
+      if (!(user instanceof CompanyEntity company)) {
         throw new UnauthorizedCompanyAccessException(
             "User with email " + email + " wasn't recognized as a company");
       }
       existingAd.setCompany(company);
 
-      if (!Objects.equals(adDto.getJobTitle(), existingAd.getJobTitle())
-          && advertisementRepository.existsByJobTitleAndCompany(adDto.getJobTitle(), company)) {
+      if (!Objects.equals(advertisement.getJobTitle(), existingAd.getJobTitle())
+          && advertisementRepository.existsByJobTitleAndCompany(
+              advertisement.getJobTitle(), company)) {
         throw new AdAlreadyExistsException("An advertisement with the same title already exists!");
       }
 
-      String imageUrl = saveImage(adDto.getJobImage(), "");
+      String imageUrl = saveImage(advertisement.getJobImage(), "");
 
       existingAd.setImageUrl(imageUrl);
-      existingAd.setJobTitle(capitalizeFirstLetter(adDto.getJobTitle()));
-      existingAd.setInternsRequired(adDto.getInternsRequired());
-      existingAd.setJobDuration(adDto.getJobDuration());
-      existingAd.setDescription(adDto.getDescription());
-      existingAd.setJobType(adDto.getJobType());
-      existingAd.setCountry(adDto.getCountry());
-      existingAd.setCity(adDto.getCity());
-      existingAd.setWorkMode(adDto.getWorkMode());
-      existingAd.setApplicationLink(adDto.getApplicationLink());
+      existingAd.setJobTitle(capitalizeFirstLetter(advertisement.getJobTitle()));
+      existingAd.setInternsRequired(advertisement.getInternsRequired());
+      existingAd.setJobDuration(advertisement.getJobDuration());
+      existingAd.setDescription(advertisement.getDescription());
+      existingAd.setJobType(advertisement.getJobType());
+      existingAd.setCountry(advertisement.getCountry());
+      existingAd.setCity(advertisement.getCity());
+      existingAd.setWorkMode(advertisement.getWorkMode());
+      existingAd.setApplicationLink(advertisement.getApplicationLink());
       existingAd.setPostStatus(PENDING);
 
       advertisementRepository.save(existingAd); // updated advertisement
@@ -145,7 +146,7 @@ public class AdvertisementService {
 
   public ApiResponse deleteAd(long adId, String email) {
     try {
-      Advertisement advertisement =
+      AdvertisementEntity advertisement =
           advertisementRepository
               .findById(adId)
               .orElseThrow(
@@ -153,8 +154,8 @@ public class AdvertisementService {
                       new AdDoesNotExistException(
                           "Advertisement with id [" + adId + "] does not exist"));
 
-      User user = userRepository.findByEmail(email);
-      if (!(user instanceof Company)) {
+      UserEntity user = userRepository.findByEmail(email);
+      if (!(user instanceof CompanyEntity)) {
         throw new UnauthorizedCompanyAccessException(
             "User with email " + email + " wasn't recognized as a company");
       }

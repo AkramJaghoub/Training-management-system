@@ -1,6 +1,6 @@
 package ju.example.training_management_system.controller;
 
-import ju.example.training_management_system.model.TwoFactorAuthentication;
+import ju.example.training_management_system.entity.TwoFactorAuthenticationEntity;
 import ju.example.training_management_system.service.login.FactorAuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -38,7 +38,7 @@ public class FactorAuthenticationController {
       model.addAttribute("errorMessage", "Authentication token has expired.");
       return "redirect:/auth/2fa/confirm-email?email=" + email + "&tokenExpired=true";
     }
-    TwoFactorAuthentication token = factorAuthenticationService.getTokenByEmail(email);
+    TwoFactorAuthenticationEntity token = factorAuthenticationService.getTokenByEmail(email);
     model.addAttribute("token", token.getToken());
     model.addAttribute("email", email);
     return "2FA";

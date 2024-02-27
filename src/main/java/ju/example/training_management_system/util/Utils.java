@@ -1,12 +1,8 @@
 package ju.example.training_management_system.util;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Base64;
-import java.util.zip.InflaterInputStream;
 import ju.example.training_management_system.exception.StorageException;
-import ju.example.training_management_system.model.users.Role;
+import ju.example.training_management_system.model.Role;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,25 +36,6 @@ public final class Utils {
     } catch (IOException e) {
       throw new StorageException("Failed to upload file to GCP");
     }
-  }
-
-  public static byte[] decompressImage(byte[] compressedImage) {
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    try (InflaterInputStream inflaterInputStream =
-        new InflaterInputStream(new ByteArrayInputStream(compressedImage))) {
-      byte[] buffer = new byte[1024];
-      int len;
-      while ((len = inflaterInputStream.read(buffer)) > 0) {
-        outputStream.write(buffer, 0, len);
-      }
-    } catch (IOException e) {
-      throw new StorageException("Failed to decompress image");
-    }
-    return outputStream.toByteArray();
-  }
-
-  public static String convertToBase64(byte[] imageBytes) {
-    return Base64.getEncoder().encodeToString(imageBytes);
   }
 
   public static String capitalizeFirstLetter(String input) {

@@ -5,15 +5,15 @@ import static ju.example.training_management_system.util.Utils.*;
 import jakarta.transaction.Transactional;
 import java.util.*;
 import ju.example.training_management_system.dto.StudentInfoDto;
+import ju.example.training_management_system.entity.advertisement.AdvertisementEntity;
+import ju.example.training_management_system.entity.advertisement.NotificationEntity;
+import ju.example.training_management_system.entity.users.StudentEntity;
+import ju.example.training_management_system.entity.users.UserEntity;
 import ju.example.training_management_system.exception.UnauthorizedStudentAccessException;
 import ju.example.training_management_system.exception.UserNotFoundException;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.model.PostStatus;
-import ju.example.training_management_system.model.company.advertisement.Advertisement;
-import ju.example.training_management_system.model.company.advertisement.Notification;
-import ju.example.training_management_system.model.manage.student.StudentInfo;
-import ju.example.training_management_system.model.users.Student;
-import ju.example.training_management_system.model.users.User;
+import ju.example.training_management_system.model.StudentInfo;
 import ju.example.training_management_system.repository.AdvertisementRepository;
 import ju.example.training_management_system.repository.NotificationRepository;
 import ju.example.training_management_system.repository.users.UserRepository;
@@ -51,27 +51,27 @@ public class StudentService {
     return educationBuilder.toString();
   }
 
-  public Student isUserAuthorizedAsStudent(User user, String email)
+  public StudentEntity isUserAuthorizedAsStudent(UserEntity user, String email)
       throws UnauthorizedStudentAccessException {
-    if (!(user instanceof Student student)) {
+    if (!(user instanceof StudentEntity student)) {
       throw new UnauthorizedStudentAccessException(
-          "User with email " + email + " wasn't recognized as a student");
+          "UserEntity with email " + email + " wasn't recognized as a student");
     }
     return student;
   }
 
   public ApiResponse setUpStudentDashboard(Model model, String email) {
     try {
-      User existingUser = userRepository.findByEmail(email);
+      UserEntity existingUser = userRepository.findByEmail(email);
       if (existingUser == null) {
-        throw new UserNotFoundException("User with email " + email + " wasn't found");
+        throw new UserNotFoundException("UserEntity with email " + email + " wasn't found");
       }
 
-      Student student = isUserAuthorizedAsStudent(existingUser, email);
+      StudentEntity student = isUserAuthorizedAsStudent(existingUser, email);
 
-      List<Advertisement> advertisements = getAdvertisementsPostedByLatestAndApproved();
+      List<AdvertisementEntity> advertisements = getAdvertisementsPostedByLatestAndApproved();
 
-      List<Notification> notifications = notificationRepository.findByUser(student);
+      List<NotificationEntity> notifications = notificationRepository.findByUser(student);
       Collections.reverse(notifications);
 
       Map<Long, String> advertisementImages = getImages(advertisements);
@@ -94,31 +94,31 @@ public class StudentService {
     }
   }
 
-  public Map<Long, String> getImages(List<Advertisement> advertisements) {
+  public Map<Long, String> getImages(List<AdvertisementEntity> advertisements) {
     Map<Long, String> advertisementImages = new HashMap<>();
-    for (Advertisement ad : advertisements) {
+    for (AdvertisementEntity ad : advertisements) {
       advertisementImages.put(ad.getId(), ad.getImageUrl());
     }
     return advertisementImages;
   }
 
-  private List<Advertisement> getAdvertisementsPostedByLatestAndApproved() {
+  private List<AdvertisementEntity> getAdvertisementsPostedByLatestAndApproved() {
     return advertisementRepository.findAll().stream()
-        .sorted(Comparator.comparing(Advertisement::getPostDate).reversed())
+        .sorted(Comparator.comparing(AdvertisementEntity::getPostDate).reversed())
         .filter(ad -> ad.getPostStatus().equals(PostStatus.APPROVED))
         .toList();
   }
 
   public ApiResponse setManageProfile(Model model, String email) {
     try {
-      User existingUser = userRepository.findByEmail(email);
+      UserEntity existingUser = userRepository.findByEmail(email);
       if (existingUser == null) {
-        throw new UserNotFoundException("User with email " + email + " wasn't found");
+        throw new UserNotFoundException("UserEntity with email " + email + " wasn't found");
       }
 
-      Student student = isUserAuthorizedAsStudent(existingUser, email);
+      StudentEntity student = isUserAuthorizedAsStudent(existingUser, email);
       String studentEducation = getStudentEducation(student.getMajor(), student.getUniversity());
-      List<Notification> notifications = notificationRepository.findByUser(student);
+      List<NotificationEntity> notifications = notificationRepository.findByUser(student);
       Collections.reverse(notifications);
 
       String studentName = getStudentFullName(student.getFirstName(), student.getLastName());
@@ -142,14 +142,14 @@ public class StudentService {
   @Transactional
   public ApiResponse updateStudentDetails(@RequestBody StudentInfoDto infoDto, String email) {
     try {
-      StudentInfo studentInfo = new StudentInfo().toEntity(infoDto);
+      StudentInfo studentInfo = new StudentInfo().toModel(infoDto);
 
-      User existingUser = userRepository.findByEmail(email);
+      UserEntity existingUser = userRepository.findByEmail(email);
       if (existingUser == null) {
-        throw new UserNotFoundException("User with email " + email + " wasn't found");
+        throw new UserNotFoundException("UserEntity with email " + email + " wasn't found");
       }
 
-      Student student = isUserAuthorizedAsStudent(existingUser, email);
+      StudentEntity student = isUserAuthorizedAsStudent(existingUser, email);
 
       boolean isChanged = false;
 
