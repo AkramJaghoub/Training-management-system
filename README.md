@@ -39,7 +39,7 @@ To get started with Tero, please follow the instructions below:
 1. **Clone the Repository**
 
 ```
-git clone https://github.com/yourgithubprofile/tero.git
+git clone https://github.com/AkramJaghoub/Training-management-system
 ```
 
 2. **Access the website**
