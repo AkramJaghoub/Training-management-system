@@ -11,7 +11,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 import ju.example.training_management_system.entity.FeedbackEntity;
-import ju.example.training_management_system.entity.advertisement.AdvertisementEntity;
+import ju.example.training_management_system.entity.AdvertisementEntity;
 import ju.example.training_management_system.entity.users.StudentEntity;
 import ju.example.training_management_system.entity.users.UserEntity;
 import ju.example.training_management_system.exception.AdDoesNotExistException;

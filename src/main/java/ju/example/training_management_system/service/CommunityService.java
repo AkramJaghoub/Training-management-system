@@ -9,7 +9,7 @@ import static org.springframework.http.HttpStatus.*;
 
 import java.util.*;
 import ju.example.training_management_system.entity.FeedbackEntity;
-import ju.example.training_management_system.entity.advertisement.NotificationEntity;
+import ju.example.training_management_system.entity.NotificationEntity;
 import ju.example.training_management_system.entity.users.CompanyEntity;
 import ju.example.training_management_system.entity.users.StudentEntity;
 import ju.example.training_management_system.entity.users.UserEntity;

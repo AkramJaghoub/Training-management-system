@@ -10,6 +10,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(name = "TWO_FACTOR_AUTHENTICATION")
 public class TwoFactorAuthenticationEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,7 +4,7 @@ import static java.util.Optional.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-import ju.example.training_management_system.entity.advertisement.NotificationEntity;
+import ju.example.training_management_system.entity.NotificationEntity;
 import ju.example.training_management_system.entity.users.UserEntity;
 import ju.example.training_management_system.model.ApiResponse;
 import ju.example.training_management_system.repository.NotificationRepository;

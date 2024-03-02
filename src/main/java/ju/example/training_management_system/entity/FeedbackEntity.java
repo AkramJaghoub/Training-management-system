@@ -16,6 +16,7 @@ import org.springframework.data.annotation.CreatedDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "FEEDBACK")
 public class FeedbackEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

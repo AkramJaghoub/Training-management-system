@@ -1,6 +1,6 @@
 package ju.example.training_management_system.service;
 
-import ju.example.training_management_system.entity.advertisement.NotificationEntity;
+import ju.example.training_management_system.entity.NotificationEntity;
 import ju.example.training_management_system.entity.users.CompanyEntity;
 import ju.example.training_management_system.entity.users.StudentEntity;
 import ju.example.training_management_system.entity.users.UserEntity;

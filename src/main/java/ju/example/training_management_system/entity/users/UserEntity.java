@@ -15,11 +15,8 @@ import org.springframework.data.annotation.CreatedDate;
 @AllArgsConstructor
 @Builder
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "USER")
 public class UserEntity {
-
-  @Enumerated(EnumType.STRING)
-  public Role role;
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -27,6 +24,9 @@ public class UserEntity {
   private String email;
   private String password;
   @CreatedDate private LocalDateTime joinDate;
+
+  @Enumerated(EnumType.STRING)
+  public Role role;
 
   @Column(columnDefinition = "TEXT")
   private String imageUrl;

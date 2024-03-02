@@ -4,6 +4,8 @@ import static ju.example.training_management_system.util.Utils.capitalizeFirstLe
 
 import jakarta.persistence.Entity;
 import java.util.Map;
+
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,8 +14,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "COMPANY")
 public class CompanyEntity extends UserEntity {
-
   private String companyName;
   private String industry;
   private Integer numOfEmployees;
