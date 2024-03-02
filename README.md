@@ -38,7 +38,39 @@ To get started with Tero, please follow the instructions below:
 git clone https://github.com/AkramJaghoub/Training-management-system
 ```
 
-2. **Access the website**
+2. **Use the below docker commands in order to access the database locally**
+
+- **get mysql image**
+```
+docker pull mysql
+```
+
+- **run the container**
+```
+docker run --name container_name -e MYSQL_ROOT_PASSWORD=db_password -p 3306:3306 -d mysql
+```
+
+- access mysql bash
+```
+docker exec -it container_name mysql -u root -p
+```
+
+- create a database
+```
+create database database_name;
+```
+
+3. **update the application.proprties file**
+
+```
+spring.datasource.url=jdbc:mysql://localhost:3306/database_name
+spring.datasource.username=root
+spring.datasource.password=db_password from docker run
+```
+
+4. **run the program**
+
+5. **Access the website**
 
 ```
 localhost:8080/
